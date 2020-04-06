@@ -1,0 +1,27 @@
+parameters:
+ cluster: openshift
+ pool: default                                                                                                                                 
+ disk_size: 30
+ extra_disks: []
+ provisioning_net: provisioning
+ provisioning_macs: []
+ provisioning_mac_prefix: aa:aa:aa:aa:aa
+ baremetal_net: baremetal
+ virtual_numcpus: 8
+ virtual_memory: 32768
+
+{%- for num in range(0, 3) %}
+{{ cluster }}-master-{{ num }}:
+ numcpus: {{ virtual_numcpus }}
+ start: false
+ memory: {{ virtual_memory }}
+ nets:
+  - name: {{ provisioning_net }}
+    mac: {{ provisioning_mac_prefix + ":" + "%02.d" | format(num + 1)| string }}
+  - name: {{ baremetal_net }}
+ disks:
+{%- for size in [disk_size] + extra_disks %}
+  - size: {{ size }}
+    interface: scsi
+{%- endfor %}
+{%- endfor %}
