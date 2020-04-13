@@ -98,14 +98,14 @@ The deployed vm comes with a set of helpers for you:
 |virtual_memory           |32768                                        |
 |cache                    |True                                         |
 |notify                   |True                                         |
-|deploy                   |False                                        |
-|wait_workers             |False                                        |
+|deploy                   |True                                         |
+|wait_workers             |True                                         |
 |disconnected             |False                                        |
 |registry_user            |dummy                                        |
 |registry_password        |dummy                                        |
+|nfs                      |True                                         |
 |imageregistry            |False                                        |
 |build                    |False                                        |
 |go_version               |1.13.8                                       |
 |prs                      |[]                                           |
 |imagecontentsources      |[]                                           |
-|extra_manifests          |False                                        |

@@ -40,11 +40,12 @@ parameters:
  virtual_memory: 32768
  cache: true
  notify: true
- deploy: false
- wait_workers: false
+ deploy: true
+ wait_workers: true
  disconnected: false
  registry_user: dummy
  registry_password: dummy
+ nfs: true
  imageregistry: false
  build: false
  go_version: 1.13.8
