@@ -13,11 +13,12 @@ To deploy baremetal using `bare minimum` on the provisioning node
 
 ## Requirements
 
-### Data
+### for kcli
 
-- a valid install-config.yaml 
-- a pull secret to put in openshift_pull.json
-- if you're running again your local hypervisor, you need to copy your public key to root user authorized keys (since the installer vm will try to interact with libvirt over ssh) and allow such access
+- an openshift pull secret (stored by default in openshift_pull.json)
+- if you're running against your local hypervisor, since the installer vm will try to interact with libvirt over ssh, you need to:
+  - copy your public key to root user authorized keys
+  - add the *config_host* variable in your parameter file pointing to a routable ip of the hypervisor
 
 ### on the provisioning node
 
@@ -42,6 +43,20 @@ sudo nmcli con up provisioning
 ```
 
 ## Launch
+
+Prepare a valid parameter file with the information needed. At least, you need to specify the following elements:
+
+- api_ip
+- ingress_ip
+- dns_ip
+- an array of your masters (if they are not virtual)
+- an array of your workers
+- ipmi_user
+- ipmi_password
+
+Call the resulting file `kcli_parameters.yml` to avoid specifying in the creation command.
+
+Then you can launch deployment with:
 
 ```
 kcli create plan
