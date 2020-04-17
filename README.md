@@ -17,6 +17,7 @@ To deploy baremetal using `bare minimum` on the provisioning node
 
 - a valid install-config.yaml 
 - a pull secret to put in openshift_pull.json
+- if you're running again your local hypervisor, you need to copy your public key to root user authorized keys (since the installer vm will try to interact with libvirt over ssh) and allow such access
 
 ### on the provisioning node
 

@@ -3,7 +3,7 @@ echo export OPENSHIFT_INSTALL_RELEASE_IMAGE_OVERRIDE={{ openshift_image }} >> /r
 echo export OS_CLOUD=metal3-bootstrap >> /root/.bashrc
 echo export OS_ENDPOINT=http://172.22.0.2:6385 >> /root/.bashrc
 echo export PATH=/usr/local/bin:/root/bin:\$PATH >> /root/.bashrc
-echo export LIBVIRT_DEFAULT_URI=qemu+ssh://root@{{ config_host }}/system >> /root/.bashrc
+echo export LIBVIRT_DEFAULT_URI=qemu+ssh://root@{{ config_host | default('192.168.122.1') }}/system >> /root/.bashrc
 bash /root/network.sh
 export PATH=/root/bin:$PATH
 mkdir /root/bin
