@@ -1,0 +1,4 @@
+kcli_parameters.yml
+parameters_*.yml
+install-config.yaml.*
+openshift_pull.json*
