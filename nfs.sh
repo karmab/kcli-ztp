@@ -4,7 +4,7 @@ yum -y install nfs-utils
 systemctl enable --now nfs-server
 export MODE="ReadWriteOnce"
 for i in `seq 1 20` ; do
-    export PV=`printf "%03d" ${i}`
+    export PV=pv`printf "%03d" ${i}`
     mkdir /$PV
     echo "/$PV *(rw,no_root_squash)"  >>  /etc/exports
     chcon -t svirt_sandbox_file_t /$PV
