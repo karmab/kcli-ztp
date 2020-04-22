@@ -1,9 +1,26 @@
 parameters:
+ info: |
+     This deploys a vm where:
+     - openshift-baremetal-install is downloaded or compiled)
+     - caches the rhcos images
+     - stop the nodes to deploy through ipmi
+     - launch the install against a set of baremetal nodes (and optionally virtual masters)
+     It can be used with a centos8 or rhel8 vm (in which case you will need to set your rhn credentials in your kcli config)
+     default location for your pull secret is openshift_pull.json but you can choose another with the pullsecret variable
+     You will need to define api_ip, dns_ip and ingress_ip and use the masters and workers array to specify your nodes.
+     Nfs can be set to true to create 10 rwx pvs and 10 rwo pvs on the provisioning vm
+     default network type is OVNKubernetes but you can also specify OpenShiftSDN
+     You can also use ca and imagecontentsources to customize your environments or drop specific manifests in the manifests directory
+     If using virtual masters, the masters array can be omitted.
+     For virtual masters, You can:
+     - force the baremetal macs of your masters using baremetal_macs variable
+     - set a pattern for their provisioning macs when you plan to host several cluster with virtual masters on the same hypervisor
+     If build is set to true, the openshift install binary will be compiled from sources, optionally with the prs from prs variable array
  image: centos8
  openshift_image: registry.svc.ci.openshift.org/ocp/release:4.4
  cluster: openshift
  domain: karmalabs.com
- network_type: OpenShiftSDN
+ network_type: OVNKubernetes
  keys: []
  api_ip:
  dns_ip:
