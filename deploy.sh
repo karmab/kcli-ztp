@@ -6,6 +6,7 @@ echo export PATH=/usr/local/bin:/root/bin:\$PATH >> /root/.bashrc
 echo export LIBVIRT_DEFAULT_URI=qemu+ssh://root@{{ config_host }}/system >> /root/.bashrc
 bash /root/network.sh
 export PATH=/root/bin:$PATH
+export KUBECONFIG=/root/ocp/auth/kubeconfig
 mkdir /root/bin
 cd /root/bin
 bash /root/get_clients.sh
