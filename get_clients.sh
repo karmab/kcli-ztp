@@ -5,6 +5,9 @@ tar zxf oc.tar.gz
 rm -rf oc.tar.gz
 chmod +x oc
 
+curl -L https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl > /usr/bin/kubectl
+chmod u+x /usr/bin/kubectl
+
 curl -Ls https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 > jq
 chmod u+x jq
 curl -Ls https://github.com/mikefarah/yq/releases/download/2.4.1/yq_linux_amd64 > yq
