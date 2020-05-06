@@ -58,6 +58,7 @@ parameters:
  cache: true
  notify: true
  deploy: true
+ lab: false
  wait_workers: true
  disconnected: false
  registry_user: dummy
@@ -129,7 +130,9 @@ apps:
  memory: {{ memory }}
  privatekey: true
  notify: {{ notify }}
-{%- if deploy %}
+{%- if lab %}
+ notifycmd: echo machine $(hostname) ready at $(hostname -I)
+{%- elif deploy %}
  notifyscript: {{ notifyscript }}
 {%- else %}
  notifycmd: ls /root/bin/openshift-baremetal-install
@@ -137,61 +140,61 @@ apps:
  nets:                                                                                                                                         
  - name: {{ baremetal_net }}                                                                                                                    
  - name: {{ provisioning_net }}
-   noconf: yes                                                                                                                                   
- disks:                                                                                                                                           
- - {{ disk_size }}                                                                                                                                          
- files:                                                                                                                                             
+   noconf: yes
+ disks:
+ - {{ disk_size }}
+ files:
+ - .bashrc
  - origin: {{ pullsecret }}
    path: /root/openshift_pull.json                                                                                                                    
  - install-config.yaml                                                                                                                           
- - path: /root/patch_installconfig.sh
-   origin: patch_installconfig.sh
-   mode: 700
- - path: /root/ipmi.py
-   origin: ipmi.py
+ - path: /root/bin/ipmi.py
+   origin: helpers/ipmi.py
    mode: 700
  - metal3-config.yaml.sample
  - clouds.yaml
- - path: /root/deploy_openshift.sh
-   origin: deploy_openshift.sh
-   mode: 700
- - path: /root/clean.sh
-   origin: clean.sh
-   mode: 700
- - path: /root/get_clients.sh
-   origin: get_clients.sh
-   mode: 700
- - path: /root/get_installer.sh
-   origin: get_installer.sh
-   mode: 700
- - path: /root/network.sh
-   origin: network.sh
-   mode: 700
- - path: /root/cache.sh
-   origin: cache.sh
-   mode: 700
- - path: /root/disconnected.sh
-   origin: disconnected.sh
-   mode: 700
- - path: /root/nfs.sh
-   origin: nfs.sh
-   mode: 700
- - path: /root/nfs.yml
-   origin: nfs.yml
+ - path: /root/bin/clean.sh
+   origin: helpers/clean.sh
    mode: 700
  - path: /root/manifests
    origin: manifests
    mode: 700
-{%- if virtual  %}
- - path: /root/virtual.sh
-   origin: virtual.sh
+ - path: /root/bin/nfs.sh
+   origin: helpers/nfs.sh
    mode: 700
- - path: /root/vbmc.py
-   origin: vbmc.py
+ - path: /root/bin/nfs.yml
+   origin: helpers/nfs.yml
+   mode: 700
+ - path: /root/00_prep.sh
+   origin: 00_prep.sh
+   mode: 700
+ - path: /root/01_get_clients.sh
+   origin: 01_get_clients.sh
+   mode: 700
+ - path: /root/02_cache.sh
+   origin: 02_cache.sh
+   mode: 700
+ - path: /root/03_disconnected.sh
+   origin: 03_disconnected.sh
+   mode: 700
+ - path: /root/04_patch_installconfig.sh
+   origin: 04_patch_installconfig.sh
+   mode: 700
+{%- if virtual  %}
+ - path: /root/05_virtual.sh
+   origin: 05_virtual.sh
+   mode: 700
+ - path: /root/bin/vbmc.py
+   origin: helpers/vbmc.py
    mode: 700
 {%- endif %}
+ - path: /root/06_deploy_openshift.sh
+   origin: 06_deploy_openshift.sh
+   mode: 700
+{%- if not lab %}
  scripts:
 {%- if build %}
- - build.sh
+ - helpers/build.sh
 {%- endif %}
  - deploy.sh
+{%- endif %}

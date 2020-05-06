@@ -3,7 +3,7 @@
 import os
 import yaml
 
-installfile = "install-config.yaml"
+installfile = "/root/install-config.yaml"
 with open(installfile) as f:
     data = yaml.safe_load(f)
     uri = data['platform']['baremetal']['libvirtURI']

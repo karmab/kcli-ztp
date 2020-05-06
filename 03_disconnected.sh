@@ -1,5 +1,7 @@
 export PATH=/root/bin:$PATH
 yum -y install podman httpd httpd-tools jq
+KEY=$( echo -n {{ registry_user }}:{{ registry_password }} | base64)
+jq ".auths += {\"$(hostname -f):5000\": {\"auth\": \"$KEY\",\"email\": \"jhendrix@karmalabs.com\"}}" < $PULL_SECRET > /root/temp.json
 mkdir -p /opt/registry/{auth,certs,data}
 openssl req -newkey rsa:4096 -nodes -sha256 -keyout /opt/registry/certs/domain.key -x509 -days 365 -out /opt/registry/certs/domain.crt -subj "/C=US/ST=Madrid/L=San Bernardo/O=Karmalabs/OU=Guitar/CN=$(hostname -f )" -addext "subjectAltName=DNS:$(hostname -f)"
 cp /opt/registry/certs/domain.crt /etc/pki/ca-trust/source/anchors/
@@ -13,8 +15,6 @@ export LOCAL_REG="$(hostname -f):5000"
 export LOCAL_REPO='ocp/release'
 export PULL_SECRET="/root/openshift_pull.json"
 export OPENSHIFT_INSTALL_RELEASE_IMAGE_OVERRIDE=${LOCAL_REG}/${LOCAL_REPO}:${OCP_RELEASE}
-KEY=$( echo -n {{ registry_user }}:{{ registry_password }} | base64)
-jq ".auths += {\"$(hostname -f):5000\": {\"auth\": \"$KEY\",\"email\": \"jhendrix@karmalabs.com\"}}" < $PULL_SECRET > /root/temp.json
 mv /root/temp.json $PULL_SECRET
 oc adm release mirror -a $PULL_SECRET --from=$OPENSHIFT_RELEASE_IMAGE --to-release-image=$LOCAL_REG/$LOCAL_REPO:$OCP_RELEASE --to=$LOCAL_REG/$LOCAL_REPO
 echo "{\"auths\": {\"$(hostname -f):5000\": {\"auth\": \"$KEY\", \"email\": \"jhendrix@karmalabs.com\"}}}" > /root/temp.json
