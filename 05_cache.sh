@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-yum -y install httpd
+dnf -y install httpd
 systemctl enable --now httpd
 cd /var/www/html
 if [ -z "$COMMIT_ID" ] ; then

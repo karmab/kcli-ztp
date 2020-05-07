@@ -60,54 +60,61 @@ sessions.
 **NOTE:** In the remainder of the lab, we assume you are connected
 (through ssh) to the installer vm
 
-Preparation of the node
-=======================
+Virtual Masters preparation
+===========================
 
 ::
 
-    bash /root/00_prep.sh
+    /root/00_virtual.sh
+
+Initial installconfig patching
+==============================
+
+::
+
+    01_patch_installconfig.sh
+
+Package requisites
+==================
+
+::
+
+    02_packages.sh
+
+Network requisites
+==================
+
+::
+
+    03_network.sh
 
 Binaries retrieval
 ==================
 
 ::
 
-    01_get_clients.sh
+    04_get_clients.sh
 
-Caching of images
-=================
-
-::
-
-    02_cache.sh
-
-Disconnected procedure
-======================
+Images caching
+==============
 
 ::
 
-    03_disconnected.sh
+    05_cache.sh
 
-Install config patching
-=======================
-
-::
-
-    04_patch_installconfig.sh
-
-Virtual masters handling
+Disconnected environment
 ========================
 
 ::
 
-    05_virtual.sh
+    06_disconnected.sh
 
 Openshift deployment
 ====================
 
 ::
 
-    06_deploy_openshift.sh
+    07_deploy_openshift.sh
 
 Review
 ======

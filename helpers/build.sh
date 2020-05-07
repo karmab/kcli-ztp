@@ -1,4 +1,4 @@
-yum -y install libvirt-client libvirt-devel gcc-c++ git wget
+dnf -y install libvirt-client libvirt-devel gcc-c++ git wget
 wget https://dl.google.com/go/go{{ go_version }}.linux-amd64.tar.gz
 tar -C /usr/local -xzf go{{ go_version }}.linux-amd64.tar.gz
 export GOPATH=/root/go

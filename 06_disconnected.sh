@@ -1,5 +1,6 @@
 export PATH=/root/bin:$PATH
-yum -y install podman httpd httpd-tools jq
+export PULL_SECRET="/root/openshift_pull.json"
+dnf -y install podman httpd httpd-tools jq
 KEY=$( echo -n {{ registry_user }}:{{ registry_password }} | base64)
 jq ".auths += {\"$(hostname -f):5000\": {\"auth\": \"$KEY\",\"email\": \"jhendrix@karmalabs.com\"}}" < $PULL_SECRET > /root/temp.json
 mkdir -p /opt/registry/{auth,certs,data}
@@ -13,20 +14,32 @@ export OPENSHIFT_RELEASE_IMAGE={{ openshift_image }}
 export OCP_RELEASE=$( echo $OPENSHIFT_RELEASE_IMAGE | cut -d: -f2)
 export LOCAL_REG="$(hostname -f):5000"
 export LOCAL_REPO='ocp/release'
-export PULL_SECRET="/root/openshift_pull.json"
 export OPENSHIFT_INSTALL_RELEASE_IMAGE_OVERRIDE=${LOCAL_REG}/${LOCAL_REPO}:${OCP_RELEASE}
 mv /root/temp.json $PULL_SECRET
 oc adm release mirror -a $PULL_SECRET --from=$OPENSHIFT_RELEASE_IMAGE --to-release-image=$LOCAL_REG/$LOCAL_REPO:$OCP_RELEASE --to=$LOCAL_REG/$LOCAL_REPO
 echo "{\"auths\": {\"$(hostname -f):5000\": {\"auth\": \"$KEY\", \"email\": \"jhendrix@karmalabs.com\"}}}" > /root/temp.json
 
-echo "additionalTrustBundle: |" >> /root/results.txt
-sed -e 's/^/  /' /opt/registry/certs/domain.crt >>  /root/results.txt
-cat << EOF >> /root/results.txt
+grep -q imageContentSources /root/install-config.yaml
+if [ "$?" != "0" ] ; then
+cat << EOF >> /root/install-config.yaml
 imageContentSources:
 - mirrors:
-  - $(hostname -f):5000/ocp/release
+  - $(hostname -f):5000/ocp4/openshift4
   source: quay.io/openshift-release-dev/ocp-v4.0-art-dev
 - mirrors:
-  - $(hostname -f):5000/ocp/release
+  - $(hostname -f):5000/ocp4/openshift4
   source: registry.svc.ci.openshift.org/ocp/release
 EOF
+else
+  IMAGECONTENTSOURCES="- mirrors:\n  - $(hostname -f):5000/ocp4/openshift4\n  source: quay.io/openshift-release-dev/ocp-v4.0-art-dev\n- mirrors:\n  - $(hostname -f):5000/ocp4/openshift4\n  source: registry.svc.ci.openshift.org/ocp/release"
+  sed -i "/imageContentSources/a${IMAGECONTENTSOURCES}" /root/install-config.yaml
+fi
+grep -q additionalTrustBundle /root/install-config.yaml
+if [ "$?" != "0" ] ; then
+  echo "additionalTrustBundle: |" >> /root/install-config.yaml
+  sed -e 's/^/  /' /opt/registry/certs/domain.crt >>  /root/install-config.yaml
+else
+  LOCALCERT="-----BEGIN CERTIFICATE-----\n $(grep -v CERTIFICATE /opt/registry/certs/domain.crt | tr -d '[:space:]')\n  -----END CERTIFICATE-----"
+  sed -i "/additionalTrustBundle/a${LOCALCERT}" /root/install-config.yaml
+  sed -i 's/^-----BEGIN/ -----BEGIN/' /root/install-config.yaml
+fi
