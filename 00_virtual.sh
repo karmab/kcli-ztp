@@ -2,6 +2,10 @@
 
 # set -euo pipefail
 
+{% if not 'rhel' in image %}
+dnf clean all
+sleep 30
+{% endif %}
 dnf -y install pkgconf-pkg-config libvirt-devel gcc python3-libvirt python3 ipmitool
 pip3 install virtualbmc
 /usr/local/bin/vbmcd
