@@ -2,7 +2,7 @@
 
 [ -d /root/ocp ] && rm -rf /root/ocp
 export LIBVIRT_DEFAULT_URI=qemu+ssh://root@{{ config_host }}/system
-cluster=$(yq r install-config.yaml metadata.name)
+cluster={{ cluster }}
 bootstrap=$(virsh list --name | grep "$cluster.*bootstrap")
 if [ "$bootstrap" != "" ] ; then
 for vm in $bootstrap ; do

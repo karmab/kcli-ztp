@@ -2,6 +2,8 @@
 
 #set -euo pipefail
 
+cd /root
+export PATH=/root/bin:$PATH
 export HOME=/root
 export KUBECONFIG=/root/ocp/auth/kubeconfig
 export OS_CLOUD=metal3-bootstrap

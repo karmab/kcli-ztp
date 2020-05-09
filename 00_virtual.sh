@@ -9,8 +9,8 @@ sleep 30
 dnf -y install pkgconf-pkg-config libvirt-devel gcc python3-libvirt python3 ipmitool
 pip3 install virtualbmc
 /usr/local/bin/vbmcd
-ssh-keyscan -H {{ config_host }} >> ~/.ssh/known_hosts
-echo -e "Host=*\nStrictHostKeyChecking=no\n" > .ssh/config
+ssh-keyscan -H {{ config_host }} >> /root/~/.ssh/known_hosts
+echo -e "Host=*\nStrictHostKeyChecking=no\n" > /root/.ssh/config
 python3 /root/bin/vbmc.py
 api_vip=$(grep apiVIP /root/install-config.yaml | awk -F: '{print $2}' | xargs)
 cluster=$(grep -m 1 name /root/install-config.yaml | awk -F: '{print $2}' | xargs)

@@ -5,7 +5,7 @@ import sys
 import yaml
 
 action = sys.argv[1] if len(sys.argv) > 1 else 'status'
-installfile = "install-config.yaml"
+installfile = "/root/install-config.yaml"
 with open(installfile) as f:
     data = yaml.load(f)
     hosts = data['platform']['baremetal']['hosts']

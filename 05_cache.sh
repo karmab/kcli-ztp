@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+export PATH=/root/bin:$PATH
 dnf -y install httpd
 systemctl enable --now httpd
 cd /var/www/html
