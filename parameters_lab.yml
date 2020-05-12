@@ -1,0 +1,22 @@
+lab: true
+deploy: false
+openshift_image: registry.svc.ci.openshift.org/ocp/release:4.4
+network_type: OpenShiftSDN
+virtual: true
+imageregistry: true
+domain: cnftigerteam.com 
+cluster: lab
+ipmi_user: jimi
+ipmi_password: hendrix
+baremetal_cidr: 192.168.122.0/24
+api_ip: 192.168.122.253
+dns_ip: 192.168.122.252
+ingress_ip: 192.168.122.251
+ipmi_user: root
+ipmi_password: calvin
+provisioning_mac_prefix: aa:aa:aa:aa:aa
+baremetal_ips: []
+baremetal_macs:
+- aa:bb:cc:dd:ab:01
+- aa:bb:cc:dd:ab:02
+- aa:bb:cc:dd:ab:03
