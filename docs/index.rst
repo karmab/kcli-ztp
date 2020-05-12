@@ -6,8 +6,11 @@ IPI. The goal is to make you understand Baremetal IPI internals and
 workflow so that you can easily make use of it with real Baremetal and
 troubleshoot issues.
 
-This guide is a reference, you will need to make substitutions where
-needed below.
+We emulate baremetal by using 3 empty virtual machines used as master
+nodes.
+
+In order for the reader to understand details, we use a dedicated bash
+script for each part of the workflow.
 
 General Prerequisites
 ---------------------
@@ -15,9 +18,11 @@ General Prerequisites
 You will need the following items to be able to complete the lab from
 beginning to end:
 
+-  A powerful enough libvirt hypervisor (you will need around 50G of RAM
+   if you actually launch Openshift deployment step)
 -  Access to a libvirt instance
 -  Pull secret from try.openshift.com
--  A libvirt hypervisor
+-  git tool (for cloning the repo only)
 
 Preparing the lab
 =================
@@ -27,10 +32,10 @@ You can skip this section if lab has been prepared for you.
 Get kcli
 --------
 
-kcli is used to prepare the lab.
+We leverage kcli to easily create the assets needed by the lab.
 
 Install it following instructions
-`here <https://github.com/karmab/kcli#quick-start>`__
+`here <https://github.com/karmab/kcli#quick-start>`__.
 
 Deploy The lab plan
 -------------------
@@ -39,7 +44,9 @@ Deploy The lab plan
 
 ::
 
-    kcli create plan -P lab lab
+    git clone https://github.com/karmab/kcli-openshift4-baremetal
+    cd kcli-openshift4-baremetal
+    kcli create plan --paramfile parameters_lab.yml lab
 
 Expected Output
 
@@ -113,7 +120,7 @@ Virtual Masters preparation
 ===========================
 
 In this section, we install and configure vbmc, which is an utility
-aimed at emulating ipmi when interacting with virtual machines
+aimed at emulating ipmi when interacting with virtual machines.
 
 Launch the following command:
 
@@ -365,14 +372,14 @@ Output
 
 This script performs the following tasks:
 
--  install libvirt requirements as needed by the installer
--  install virtualbmc and launch vbmcd daemon
--  launch an helper script which registers the vms acting as masters in
-   vbmc
--  path accordingly the install-config.yaml
+-  Install libvirt requirements as needed by the installer.
+-  Install virtualbmc and launch vbmcd daemon.
+-  Launch an helper script which registers the vms acting as masters in
+   vbmc.
+-  Patch accordingly install-config.yaml.
 
 After the script is finished, we can verify that our masters are
-actually defined in vbmc with the following command
+actually defined in vbmc with the following command:
 
 ::
 
@@ -393,7 +400,7 @@ Output
 Virtual BMC allows us to treat those virtual masters as if they were
 physical nodes at IPMI level.
 
-For instance, we can check power status of our first master
+For instance, we can check power status of our first master:
 
 ::
 
@@ -408,7 +415,7 @@ Output
 
 Futhermore, you can make use of the helper script ipmi.py which will
 actually report power status of all the nodes defined in your
-install-config.yaml
+*install-config.yaml*
 
 ::
 
@@ -432,15 +439,15 @@ In the real world, we wouldn’t need virtualbmc but only access through
 IPMI to the nodes of the install. The helper script is still usable in
 this context.
 
-Initial installconfig patching
-==============================
+Initial installconfig modifications
+===================================
 
 In this section, we do a basic patching of install-config.yaml to add
-mandatory elements to it
+mandatory elements to it:
 
 ::
 
-    01_patch_installconfig.sh
+    /root/01_patch_installconfig.sh
 
 Output
 
@@ -450,17 +457,17 @@ Output
     # 192.168.1.6:22 SSH-2.0-OpenSSH_8.0
     # 192.168.1.6:22 SSH-2.0-OpenSSH_8.0
 
-This script adds pull secret and public key to the install-config.yaml
+This script adds pull secret and public key to the
+*install-config.yaml*.
 
 Package requisites
 ==================
 
-In this section, we add required packages in order to do the
-installation
+In this section, we add some required packages:
 
 ::
 
-    02_packages.sh
+    /root/02_packages.sh
 
 Output
 
@@ -852,19 +859,21 @@ Output
     Successfully installed appdirs-1.4.4 debtcollector-2.0.1 decorator-4.4.2 dogpile.cache-0.9.2 iso8601-0.1.12 jmespath-0.9.5 keystoneauth1-4.0.0 msgpack-1.0.0 munch-2.5.0 netaddr-0.7.19 openstacksdk-0.46.0 os-service-types-1.7.0 osc-lib-2.0.0 oslo.config-8.0.2 oslo.i18n-4.0.1 oslo.serialization-3.1.1 oslo.utils-4.1.1 python-cinderclient-7.0.0 python-ironicclient-4.1.0 python-keystoneclient-4.0.0 python-novaclient-17.0.0 python-openstackclient-5.2.0 requestsexceptions-1.4.0 rfc3986-1.4.0 simplejson-3.17.0 wrapt-1.12.1
 
 Beyond typical packages, we also install openstack and ironic client for
-troubleshooting purposes only. It’s not strictly needed as Ironic is to
-be seen as an implementation detail, but is still helpful to check check
-progress of the masters deployment.
+troubleshooting purposes only.
+
+It’s not strictly needed as Ironic is to be seen as an implementation
+detail, but can still be helpful to check check progress of the masters
+deployment.
 
 Network requisites
 ==================
 
 In this section, we configure networking with nmcli the same way it
-would be done in the provisioning node by creating appropriate bridges
+would be done in the provisioning node by creating appropriate bridges:
 
 ::
 
-    03_network.sh
+    /root/03_network.sh
 
 Output
 
@@ -882,20 +891,20 @@ Output
 
 Two bridges get created:
 
--  baremetal on top of the default interface of the node
+-  baremetal on top of the default interface of the node.
 -  provisioning, which is indeed where provisioning of the nodes will be
    done. No dhcp needs to exist on this bridge, since this is where the
    provisioning artifacts will be deployed. We configure a static ip in
-   172.22.0.0/24 range
+   172.22.0.0/24 range.
 
 Binaries retrieval
 ==================
 
-In this section, we fetch binaries we need for the install
+In this section, we fetch binaries we need for the install:
 
 ::
 
-    04_get_clients.sh
+    /root/04_get_clients.sh
 
 Output
 
@@ -908,19 +917,19 @@ Output
 The script downloads the following artifacts:
 
 -  oc
--  kubectl (as it can be used by ACM for instance)
+-  kubectl.
 -  openshift-baremetal-install using oc and by specifying which
-   OPENSHIFT_RELEASE_IMAGE to use
+   OPENSHIFT_RELEASE_IMAGE to use.
 
 Images caching
 ==============
 
 In this section, we gather rhcos images needed for the install to speed
-up deployment time
+up deployment time:
 
 ::
 
-    05_cache.sh
+    /root/05_cache.sh
 
 Output
 
@@ -1032,11 +1041,11 @@ Disconnected environment (Optional)
 ===================================
 
 In this optional section, we enable a registry and sync content so we
-can deploy Openshift in a disconnected environment.
+can deploy Openshift in a disconnected environment:
 
 ::
 
-    06_disconnected.sh
+    /root/06_disconnected.sh
 
 Output
 
@@ -1880,17 +1889,17 @@ This scripts does the following:
    imagecontentsources and ca as additionalTrustBundle are added to the
    file.
 
-In order to make use of this during the install, we also need the DNS in
+In order to make use of this during the install, we also need DNS in
 place to provide resolution for the fqdn of this local registry.
 
 Openshift deployment
 ====================
 
-Now, we can finally launch the deployment
+Now, we can finally launch the deployment!!!
 
 ::
 
-    07_deploy_openshift.sh
+    /root/07_deploy_openshift.sh
 
 Output
 
@@ -3251,4 +3260,4 @@ In this lab, you have accomplished the following activities.
 1. Properly prepare a successful Baremetal ipi.
 2. Deploy Openshift!
 3. Understand internal aspects of the workflow and how to troubleshoot
-   issues
+   issues.
