@@ -19,11 +19,37 @@ You will need the following items to be able to complete the lab from beginning 
 
 You can skip this section if lab has been prepared for you.
 
+## Prepare the hypervisor
+
+We install and launch libvirt, as needed for the bootstrap vm
+
+```
+sudo yum -y install libvirt libvirt-daemon-driver-qemu qemu-kvm
+systemctl enable --now libvirtd
+```
+
 ## Get kcli
 
 We leverage kcli to easily create the assets needed by the lab.
 
 Install it following instructions [here](https://github.com/karmab/kcli#quick-start).
+
+## Create a fake dhcp baremetal network
+
+We run the following to create a libvirt dhcp network representing our external network
+
+```
+kcli create network -c 192.168.123.0/24 baremetal
+```
+
+## Configure bridges needed on the hypervisor
+
+We also configure two bridges, as needed by the installer
+
+```
+nmcli connection add ifname baremetal type bridge con-name baremetal
+nmcli connection add ifname provisioning type bridge con-name provisioning
+```
 
 ## Deploy The lab plan
 
@@ -63,7 +89,7 @@ Expected Output
 +---------------+--------+-----------------+--------------------------------------------------------+------------------+---------------+
 |      Name     | Status |       Ips       |                         Source                         |       Plan       |   Profile     |
 +---------------+--------+-----------------+--------------------------------------------------------+------------------+---------------+
-| lab-installer |   up   |  192.168.126.46 | CentOS-8-GenericCloud-8.1.1911-20200113.3.x86_64.qcow2 |       lab        | local_centos8 |
+| lab-installer |   up   |  192.168.123.46 | CentOS-8-GenericCloud-8.1.1911-20200113.3.x86_64.qcow2 |       lab        | local_centos8 |
 |  lab-master-0 |  down  |                 |                                                        |       lab        |    kvirt      |
 |  lab-master-1 |  down  |                 |                                                        |       lab        |    kvirt      |
 |  lab-master-2 |  down  |                 |                                                        |       lab        |    kvirt      |
@@ -91,7 +117,10 @@ kcli ssh root@lab-installer
 As you are connected to the installer vm, look at the following elements:
 
 - There are several numbered scripts that we will execute in the next sections.
-- Check */root/install-config.yaml* to be used when deploying Openshift. It contains initial information but we will make it evolve with each section until deploying. Revisit this file at the end of each section to see the modifications done.
+- Check */root/install-config.yaml* to be used when deploying Openshift:
+  - It contains initial information but we will make it evolve with each section until deploying.
+  - Check the section containing credential information for your masters and the replicas attribute. We would define information from workers using the same pattern( and specifying worker as *role*)
+  - Revisit this file at the end of each section to see the modifications done.
 
 # Virtual Masters preparation
 
@@ -394,11 +423,11 @@ ipmi.py status
 Output
 
 ```
-ipmitool -H 192.168.126.234 -U root -P calvin -I lanplus -p 6230 chassis power status
+ipmitool -H 192.168.123.234 -U root -P calvin -I lanplus -p 6230 chassis power status
 Chassis Power is off
-ipmitool -H 192.168.126.234 -U root -P calvin -I lanplus -p 6231 chassis power status
+ipmitool -H 192.168.123.234 -U root -P calvin -I lanplus -p 6231 chassis power status
 Chassis Power is off
-ipmitool -H 192.168.126.234 -U root -P calvin -I lanplus -p 6232 chassis power status
+ipmitool -H 192.168.123.234 -U root -P calvin -I lanplus -p 6232 chassis power status
 Chassis Power is off
 ```
 
