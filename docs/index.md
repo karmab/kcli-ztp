@@ -10,8 +10,7 @@ In order for the reader to understand details, we use a dedicated bash script fo
 
 You will need the following items to be able to complete the lab from beginning to end:
 
-* A powerful enough libvirt hypervisor (you will need around 50G of RAM if you actually launch Openshift deployment step)
-* Access to a libvirt instance
+* A powerful enough libvirt hypervisor (you will need around 50G of RAM if you actually launch Openshift deployment step) with ssh access.
 * Pull secret from try.openshift.com
 * git tool (for cloning the repo only)
 
@@ -30,9 +29,19 @@ systemctl enable --now libvirtd
 
 ## Get kcli
 
-We leverage kcli to easily create the assets needed by the lab.
+We will leverage kcli to easily create and customize vms needed by the lab.
 
 Install it following instructions [here](https://github.com/karmab/kcli#quick-start).
+
+## Copy your public key for root access
+
+**NOTE:** This step is only needed when you're running kcli against your local hypervisor and because of the specifics of this lab.
+
+Since the openshift installer will access our hypervisor over ssh from a dedicated vm during the lab, we need to copy our public key to root using the following:
+
+```
+sudo sh -c 'cat ~/.ssh/id_rsa.pub >> /root/.ssh/authorized_keys'
+```
 
 ## Create a fake dhcp baremetal network
 
@@ -42,6 +51,8 @@ We run the following to create a libvirt dhcp network representing our external 
 kcli create network -c 192.168.123.0/24 baremetal
 ```
 
+**NOTE:** We could omit this step in order to connect the vms to a real external network
+
 ## Configure bridges needed on the hypervisor
 
 We also configure two bridges, as needed by the installer
@@ -50,6 +61,8 @@ We also configure two bridges, as needed by the installer
 nmcli connection add ifname baremetal type bridge con-name baremetal
 nmcli connection add ifname provisioning type bridge con-name provisioning
 ```
+
+**NOTE:** We could add physical nics to both bridges to provide access to the external network and enable provisioning on a dedicated physical network
 
 ## Deploy The lab plan
 
