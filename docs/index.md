@@ -4,19 +4,19 @@ This hands on lab guides the user in deploying Openshift using baremetal IPI. Th
 
 We emulate baremetal by using 3 empty virtual machines used as master nodes.
 
-In order for the reader to understand details, we use a dedicated bash script for each part of the workflow.
+An additional vm is used to drive the installation, using a dedicated bash script for each part of the workflow.
 
 ## General Prerequisites
 
-You will need the following items to be able to complete the lab from beginning to end:
+The following items are needed in order to be able to complete the lab from beginning to end:
 
-* A powerful enough libvirt hypervisor (you will need around 50G of RAM if you actually launch Openshift deployment step) with ssh access.
-* Pull secret from try.openshift.com
+* A powerful enough libvirt hypervisor with ssh access.
+* Valid Pull secret from try.openshift.com
 * git tool (for cloning the repo only)
 
 # Preparing the lab
 
-You can skip this section if lab has been prepared for you.
+**NOTE:** This section can be skipped if lab has been prepared for you.
 
 ## Prepare the hypervisor
 
@@ -35,7 +35,7 @@ Install it following instructions [here](https://github.com/karmab/kcli#quick-st
 
 ## Copy your public key for root access
 
-**NOTE:** This step is only needed when you're running kcli against your local hypervisor and because of the specifics of this lab.
+**NOTE:** This step is only needed when kcli is running against a local hypervisor.
 
 Since the openshift installer will access our hypervisor over ssh from a dedicated vm during the lab, we need to copy our public key to root using the following:
 
@@ -86,9 +86,7 @@ lab-master-2 deployed on local
 lab-installer deployed on local
 ```
 
-This will deploy 3 empty masters to emulate baremetal along with a centos8/rhel8 installer vm where the lab will actually run.
-
-This additional vm contains all the scripts to be launched in the next sessions.
+This will deploy 3 empty masters to emulate baremetal along with a centos8/rhel8 installer vm where the lab will be run.
 
 - Check the created vms
 
@@ -121,13 +119,13 @@ kcli info vm lab-installer --fields ip --value
 kcli ssh root@lab-installer
 ```
 
-**NOTE:** In the remainder of the lab, we assume you are connected (through ssh) to the installer vm in /root directory
+**NOTE:** In the remainder of the lab, we assume the user is connected (through ssh) to the installer vm in /root directory
 
-**NOTE:** In each of the sections, you are encouraged to read the corresponding script to get a better understanding of what it does.
+**NOTE:** In each of the sections, user is encouraged to read the corresponding script to get a better understanding of what's done.
 
 # Explore the environment
 
-As you are connected to the installer vm, look at the following elements:
+In the installer vm, Let's look at the following elements:
 
 - There are several numbered scripts that we will execute in the next sections.
 - Check */root/install-config.yaml* to be used when deploying Openshift:
@@ -414,7 +412,7 @@ Output
 
 Virtual BMC allows us to treat those virtual masters as if they were physical nodes at IPMI level.
 
-For instance, we can check power status of our first master:
+For instance, we can check power status of our first master, which we associated to port *6230*:
 
 ```
 IP=$(hostname -I)
@@ -427,7 +425,7 @@ Output
 Chassis Power is off
 ```
 
-Futhermore, you can make use of the helper script ipmi.py which will actually report power status of all the nodes defined in your *install-config.yaml*
+Futhermore, the helper script `ipmi.py` can be used to report power status of all the nodes defined in *install-config.yaml*
 
 ```
 ipmi.py status
@@ -446,7 +444,7 @@ Chassis Power is off
 
 We will use this same script prior to deploying Openshift to make sure all the nodes are powered off prior to launching deployment.
 
-In the real world, we wouldn't need virtualbmc but only access through IPMI to the nodes of the install. The helper script is still usable in this context.
+In a full baremetal setup, virtualbmc wouldn't be needed but only access through IPMI to the nodes of the install. The helper script is still usable in this context.
 
 # Initial installconfig modifications
 
@@ -464,7 +462,7 @@ Output
 # 192.168.1.6:22 SSH-2.0-OpenSSH_8.0
 ```
 
-This script adds pull secret and public key to the *install-config.yaml*.
+This script adds pull secret and public key to *install-config.yaml*.
 
 # Package requisites
 
@@ -865,7 +863,7 @@ Successfully installed appdirs-1.4.4 debtcollector-2.0.1 decorator-4.4.2 dogpile
 
 Beyond typical packages, we also install openstack and ironic client for troubleshooting purposes only.
 
-It's not strictly needed as Ironic is to be seen as an implementation detail, but can still be helpful to check check progress of the masters deployment.
+openstack client is not strictly needed, since ironic is to be seen as an implementation detail for the installer, but this can still be helpful to check progress of the masters or workers deployment.
 
 # Network requisites
 
@@ -896,7 +894,7 @@ Two bridges get created:
 
 # Binaries retrieval
 
-In this section, we fetch binaries we need for the install:
+In this section, we fetch binaries required for the install:
 
 ```
 /root/04_get_clients.sh
@@ -910,7 +908,7 @@ Output
 100 41.9M  100 41.9M    0     0  44.6M      0 --:--:-- --:--:-- --:--:-- 44.5M
 ```
 
-The script downloads the following artifacts:
+The script downloads the following objects:
 
 - oc
 - kubectl.
@@ -1029,7 +1027,7 @@ This script does the following things:
 
 # Disconnected environment (Optional)
 
-In this optional section, we enable a registry and sync content so we can deploy Openshift in a disconnected environment:
+In this section, we enable a registry and sync content so we can deploy Openshift in a disconnected environment:
 
 ```
 /root/06_disconnected.sh
@@ -1872,7 +1870,7 @@ This scripts does the following:
 - Leverages `oc adm release mirror` to fetch Openshift content and push it to our local registry.
 - Patches the *install-config.yaml* so that it makes use of our internal registry during deployment. In particular, imagecontentsources and ca as additionalTrustBundle are added to the file.
 
-In order to make use of this during the install, we also need DNS in place to provide resolution for the fqdn of this local registry. 
+**NOTE:** In order to make use of this during the install, DNS resolution in place is needed to provide resolution for the fqdn of this local registry. 
 
 # Openshift deployment
 
@@ -3208,7 +3206,7 @@ This script does the following things:
 During the deployment, you can use typical openshift troubleshooting:
 
 1. Connect to the bootstrap vm with `virsh list` and `virsh console $BOOTSTRAP_VM`
-2. Connect to it using `ssh core@172.22.0.2` (You need to wait for the ironic containers to start for this to work).
+2. Connect to it using `ssh core@172.22.0.2` (Wait for the ironic containers to start for this to work).
 3. Review bootstrap logs using the command showed upon connecting to the bootstrap vm.
 
 Once ironic has started on the bootstrap vm, you can also check with the following command the progress of the provisioning of the masters with the following (which makes use of the definition found in */root/clouds.yaml*)
@@ -3224,6 +3222,11 @@ This concludes the lab !
 
 In this lab, you have accomplished the following activities.
 
-1. Properly prepare a successful Baremetal ipi.
+1. Properly prepare a successful Baremetal ipi deployment.
 2. Deploy Openshift!
 3. Understand internal aspects of the workflow and how to troubleshoot issues.
+
+# Additional resources
+
+- [https://github.com/openshift/installer/blob/master/docs/user/metal/install_ipi.md](https://github.com/openshift/installer/blob/master/docs/user/metal/install_ipi.md)
+- [https://openshift-kni.github.io/baremetal-deploy](https://openshift-kni.github.io/baremetal-deploy)
