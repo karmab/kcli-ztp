@@ -13,3 +13,11 @@ dns_ip: 192.168.129.252
 ingress_ip: 192.168.129.251
 ipmi_user: jimi
 ipmi_password: hendrix
+baremetal_ips:
+- 192.168.129.20
+- 192.168.129.21
+- 192.168.129.22
+baremetal_macs:
+- aa:aa:aa:aa:bb:01
+- aa:aa:aa:aa:bb:02
+- aa:aa:aa:aa:bb:03
