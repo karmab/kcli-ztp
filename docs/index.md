@@ -11,7 +11,7 @@ An additional vm is used to drive the installation, using a dedicated bash scrip
 The following items are needed in order to be able to complete the lab from beginning to end:
 
 * A powerful enough libvirt hypervisor with ssh access.
-* Valid Pull secret from try.openshift.com
+* a valid Pull secret from try.openshift.com to keep in a file named 'openshift_pull.json'
 * git tool (for cloning the repo only)
 
 # Preparing the lab
@@ -43,13 +43,13 @@ Since the openshift installer will access our hypervisor over ssh from a dedicat
 sudo sh -c 'cat ~/.ssh/id_rsa.pub >> /root/.ssh/authorized_keys'
 ```
 
-## Configure lab bridges needed on the hypervisor
+## Configure required lab bridges
 
-We also configure two bridges, as needed by the installer
+**NOTE:** The following steps need to be run directly on the hypervisor
 
 ```
-echo -e "DEVICE=lab-baremetal\nTYPE=Bridge\nONBOOT=yes\nNM_CONTROLLED=no" | sudo dd of=/etc/sysconfig/network-scripts/ifcfg-lab-baremetal
-nmcli connection add ifname lab-prov type bridge con-name lab-prov
+sudo sh -c 'echo -e "DEVICE=lab-baremetal\nTYPE=Bridge\nONBOOT=yes\nNM_CONTROLLED=no" > /etc/sysconfig/network-scripts/ifcfg-lab-baremetal'
+sudo nmcli connection add ifname lab-prov type bridge con-name lab-prov
 ```
 
 **NOTE:** We would add physical nics to both bridges to provide access to a real external network and enable provisioning on a dedicated physical network
@@ -138,7 +138,8 @@ kcli ssh root@lab-installer
 
 In the installer vm, Let's look at the following elements:
 
-- There are several numbered scripts that we will execute in the next sections.
+- There are several numbered scripts in `/root` that we will execute in the next sections.
+- The pull secret was copied in /root/openshift_pull.json* . Make sure it's not quoted.
 - Check */root/install-config.yaml* to be used when deploying Openshift:
   - It contains initial information but we will make it evolve with each section until deploying.
   - Check the section containing credential information for your masters and the replicas attribute. We would define information from workers using the same pattern( and specifying worker as *role*)
@@ -154,7 +155,7 @@ Launch the following command:
 /root/00_virtual.sh
 ```
 
-Output
+Expected Output
 
 ```
 0 files removed
@@ -400,7 +401,7 @@ This script performs the following tasks:
 
 - Install libvirt requirements as needed by the installer.
 - Install virtualbmc and launch vbmcd daemon.
-- Launch an helper script which registers the vms acting as masters in vbmc.
+- Launch an helper script which registers the vms acting as masters in vbmc with default credentials set to jimi/hendrix (Yeah!)
 - Patch accordingly install-config.yaml.
 
 After the script is finished, we can verify that our masters are actually defined in vbmc with the following command:
@@ -409,7 +410,7 @@ After the script is finished, we can verify that our masters are actually define
 vbmc list
 ```
 
-Output
+Expected Output
 
 ```
 +--------------+---------+---------+------+
@@ -427,10 +428,10 @@ For instance, we can check power status of our first master, which we associated
 
 ```
 IP=$(hostname -I)
-ipmitool -H $IP -U root -P calvin -I lanplus -p 6230 chassis power status
+ipmitool -H $IP -U jimi -P hendrix -I lanplus -p 6230 chassis power status
 ```
 
-Output
+Expected Output
 
 ```
 Chassis Power is off
@@ -442,7 +443,7 @@ Futhermore, the helper script `ipmi.py` can be used to report power status of al
 ipmi.py status
 ```
 
-Output
+Expected Output
 
 ```
 ipmitool -H 192.168.123.234 -U root -P calvin -I lanplus -p 6230 chassis power status
@@ -465,7 +466,7 @@ In this section, we do a basic patching of install-config.yaml to add mandatory 
 /root/01_patch_installconfig.sh
 ```
 
-Output
+Expected Output
 
 ```
 # 192.168.1.6:22 SSH-2.0-OpenSSH_8.0
@@ -483,7 +484,7 @@ In this section, we add some required packages:
 /root/02_packages.sh
 ```
 
-Output
+Expected Output
 
 ```
 Last metadata expiration check: 0:24:05 ago on Tue 12 May 2020 01:50:05 PM UTC.
@@ -884,7 +885,7 @@ In this section, we configure networking with nmcli the same way it would be don
 /root/03_network.sh
 ```
 
-Output
+Expected Output
 
 ```
 Connection 'lab-prov' (32ef4a95-272d-48bd-bfca-c62728992a6d) successfully added.
@@ -911,7 +912,7 @@ In this section, we fetch binaries required for the install:
 /root/04_get_clients.sh
 ```
 
-Output
+Expected Output
 
 ```
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
@@ -933,7 +934,7 @@ In this section, we gather rhcos images needed for the install to speed up deplo
 /root/05_cache.sh
 ```
 
-Output
+Expected Output
 
 ```
 CentOS-8 - AppStream                                                                                                                                            37 kB/s | 4.3 kB     00:00
@@ -1040,11 +1041,13 @@ This script does the following things:
 
 In this section, we enable a registry and sync content so we can deploy Openshift in a disconnected environment:
 
+**NOTE:** In order to make use of this during the install, DNS resolution in place is needed to provide resolution for the fqdn of this local registry. 
+
 ```
 /root/06_disconnected.sh
 ```
 
-Output
+Expected Output
 
 ```
 CentOS-8 - AppStream                                                                                                                                           6.2 MB/s | 7.0 MB     00:01
@@ -1881,8 +1884,6 @@ This scripts does the following:
 - Leverages `oc adm release mirror` to fetch Openshift content and push it to our local registry.
 - Patches the *install-config.yaml* so that it makes use of our internal registry during deployment. In particular, imagecontentsources and ca as additionalTrustBundle are added to the file.
 
-**NOTE:** In order to make use of this during the install, DNS resolution in place is needed to provide resolution for the fqdn of this local registry. 
-
 # Openshift deployment
 
 Now, we can finally launch the deployment!!!
@@ -1891,7 +1892,7 @@ Now, we can finally launch the deployment!!!
 /root/07_deploy_openshift.sh
 ```
 
-Output
+Expected Output
 
 ```
 time="2020-05-12T09:56:03Z" level=debug msg="OpenShift Installer 4.5.0-0.nightly-2020-05-12-065413"

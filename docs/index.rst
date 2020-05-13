@@ -19,7 +19,8 @@ The following items are needed in order to be able to complete the lab
 from beginning to end:
 
 -  A powerful enough libvirt hypervisor with ssh access.
--  Valid Pull secret from try.openshift.com
+-  a valid Pull secret from try.openshift.com to keep in a file named
+   ‘openshift_pull.json’
 -  git tool (for cloning the repo only)
 
 Preparing the lab
@@ -59,15 +60,15 @@ using the following:
 
     sudo sh -c 'cat ~/.ssh/id_rsa.pub >> /root/.ssh/authorized_keys'
 
-Configure lab bridges needed on the hypervisor
-----------------------------------------------
+Configure required lab bridges
+------------------------------
 
-We also configure two bridges, as needed by the installer
+**NOTE:** The following steps need to be run directly on the hypervisor
 
 ::
 
-    echo -e "DEVICE=lab-baremetal\nTYPE=Bridge\nONBOOT=yes\nNM_CONTROLLED=no" | sudo dd of=/etc/sysconfig/network-scripts/ifcfg-lab-baremetal
-    nmcli connection add ifname lab-prov type bridge con-name lab-prov
+    sudo sh -c 'echo -e "DEVICE=lab-baremetal\nTYPE=Bridge\nONBOOT=yes\nNM_CONTROLLED=no" > /etc/sysconfig/network-scripts/ifcfg-lab-baremetal'
+    sudo nmcli connection add ifname lab-prov type bridge con-name lab-prov
 
 **NOTE:** We would add physical nics to both bridges to provide access
 to a real external network and enable provisioning on a dedicated
@@ -162,8 +163,10 @@ Explore the environment
 
 In the installer vm, Let’s look at the following elements:
 
--  There are several numbered scripts that we will execute in the next
-   sections.
+-  There are several numbered scripts in ``/root`` that we will execute
+   in the next sections.
+-  The pull secret was copied in /root/openshift_pull.json\* . Make sure
+   it’s not quoted.
 -  Check */root/install-config.yaml* to be used when deploying
    Openshift:
 
@@ -188,7 +191,7 @@ Launch the following command:
 
     /root/00_virtual.sh
 
-Output
+Expected Output
 
 ::
 
@@ -435,7 +438,7 @@ This script performs the following tasks:
 -  Install libvirt requirements as needed by the installer.
 -  Install virtualbmc and launch vbmcd daemon.
 -  Launch an helper script which registers the vms acting as masters in
-   vbmc.
+   vbmc with default credentials set to jimi/hendrix (Yeah!)
 -  Patch accordingly install-config.yaml.
 
 After the script is finished, we can verify that our masters are
@@ -445,7 +448,7 @@ actually defined in vbmc with the following command:
 
     vbmc list
 
-Output
+Expected Output
 
 ::
 
@@ -466,9 +469,9 @@ associated to port *6230*:
 ::
 
     IP=$(hostname -I)
-    ipmitool -H $IP -U root -P calvin -I lanplus -p 6230 chassis power status
+    ipmitool -H $IP -U jimi -P hendrix -I lanplus -p 6230 chassis power status
 
-Output
+Expected Output
 
 ::
 
@@ -481,7 +484,7 @@ status of all the nodes defined in *install-config.yaml*
 
     ipmi.py status
 
-Output
+Expected Output
 
 ::
 
@@ -509,7 +512,7 @@ mandatory elements to it:
 
     /root/01_patch_installconfig.sh
 
-Output
+Expected Output
 
 ::
 
@@ -528,7 +531,7 @@ In this section, we add some required packages:
 
     /root/02_packages.sh
 
-Output
+Expected Output
 
 ::
 
@@ -934,7 +937,7 @@ would be done in the provisioning node by creating appropriate bridges:
 
     /root/03_network.sh
 
-Output
+Expected Output
 
 ::
 
@@ -965,7 +968,7 @@ In this section, we fetch binaries required for the install:
 
     /root/04_get_clients.sh
 
-Output
+Expected Output
 
 ::
 
@@ -990,7 +993,7 @@ up deployment time:
 
     /root/05_cache.sh
 
-Output
+Expected Output
 
 ::
 
@@ -1102,11 +1105,15 @@ Disconnected environment (Optional)
 In this section, we enable a registry and sync content so we can deploy
 Openshift in a disconnected environment:
 
+**NOTE:** In order to make use of this during the install, DNS
+resolution in place is needed to provide resolution for the fqdn of this
+local registry.
+
 ::
 
     /root/06_disconnected.sh
 
-Output
+Expected Output
 
 ::
 
@@ -1948,10 +1955,6 @@ This scripts does the following:
    imagecontentsources and ca as additionalTrustBundle are added to the
    file.
 
-**NOTE:** In order to make use of this during the install, DNS
-resolution in place is needed to provide resolution for the fqdn of this
-local registry.
-
 Openshift deployment
 ====================
 
@@ -1961,7 +1964,7 @@ Now, we can finally launch the deployment!!!
 
     /root/07_deploy_openshift.sh
 
-Output
+Expected Output
 
 ::
 
