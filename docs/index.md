@@ -29,7 +29,7 @@ systemctl enable --now libvirtd
 
 ## Get kcli
 
-We will leverage kcli to easily create and customize vms needed by the lab.
+We will leverage kcli to easily create the assets needed for the lab.
 
 Install it following instructions [here](https://github.com/karmab/kcli#quick-start).
 
@@ -43,26 +43,16 @@ Since the openshift installer will access our hypervisor over ssh from a dedicat
 sudo sh -c 'cat ~/.ssh/id_rsa.pub >> /root/.ssh/authorized_keys'
 ```
 
-## Create a fake dhcp baremetal network
-
-We run the following to create a libvirt dhcp network representing our external network
-
-```
-kcli create network -c 192.168.123.0/24 baremetal
-```
-
-**NOTE:** We could omit this step in order to connect the vms to a real external network
-
-## Configure bridges needed on the hypervisor
+## Configure lab bridges needed on the hypervisor
 
 We also configure two bridges, as needed by the installer
 
 ```
-nmcli connection add ifname baremetal type bridge con-name baremetal
-nmcli connection add ifname provisioning type bridge con-name provisioning
+echo -e "DEVICE=lab-baremetal\nTYPE=Bridge\nONBOOT=yes\nNM_CONTROLLED=no" | sudo dd of=/etc/sysconfig/network-scripts/ifcfg-lab-baremetal
+nmcli connection add ifname lab-prov type bridge con-name lab-prov
 ```
 
-**NOTE:** We could add physical nics to both bridges to provide access to the external network and enable provisioning on a dedicated physical network
+**NOTE:** We would add physical nics to both bridges to provide access to a real external network and enable provisioning on a dedicated physical network
 
 ## Deploy The lab plan
 
@@ -71,12 +61,15 @@ nmcli connection add ifname provisioning type bridge con-name provisioning
 ```
 git clone https://github.com/karmab/kcli-openshift4-baremetal
 cd kcli-openshift4-baremetal
-kcli create plan --paramfile parameters_lab.yml lab
+kcli create plan --paramfile lab.yml lab
 ```
 
 Expected Output
 
 ```
+Deploying Networks...
+Network  lab-baremetal deployed
+Network  lab-prov deployed
 Deploying Images...
 Image centos8 skipped!
 Deploying Vms...
@@ -105,6 +98,24 @@ Expected Output
 |  lab-master-1 |  down  |                 |                                                        |       lab        |    kvirt      |
 |  lab-master-2 |  down  |                 |                                                        |       lab        |    kvirt      |
 +---------------+--------+-----------------+--------------------------------------------------------+------------------+---------------+
+```
+
+- Check the created networks
+
+```
+kcli list networks
+```
+
+Expected Output
+
+```
++------------------+---------+------------------+-------+------------------+------+
+| Network          |   Type  |       Cidr       |  Dhcp |      Domain      | Mode |
++------------------+---------+------------------+-------+------------------+------+
+| default          |  routed | 192.168.122.0/24 |  True |     default      | nat  |
+| lab-baremetal    |  routed | 192.168.129.0/24 |  True |  lab-baremetal   | nat  |
+| lab-prov         |  routed |  172.22.0.0/24   | False | lab-prov         | nat  |
++------------------+---------+------------------+-------+------------------+------+
 ```
 
 - Get the ip for the installer vm and connect to it
@@ -876,12 +887,12 @@ In this section, we configure networking with nmcli the same way it would be don
 Output
 
 ```
-Connection 'provisioning' (32ef4a95-272d-48bd-bfca-c62728992a6d) successfully added.
+Connection 'lab-prov' (32ef4a95-272d-48bd-bfca-c62728992a6d) successfully added.
 Connection 'bridge-slave-eth1' (7e36a352-15f9-41fa-8c48-d6769324871f) successfully added.
-Connection 'baremetal' (37664e02-9f73-4edd-bf02-928d36f85c99) successfully added.
+Connection 'lab-baremetal' (37664e02-9f73-4edd-bf02-928d36f85c99) successfully added.
 Connection 'bridge-slave-eth0' (afc32624-c3cc-45c1-87e1-691255a77c4f) successfully added.
 Connection 'System eth0' successfully deactivated (D-Bus active path: /org/freedesktop/NetworkManager/ActiveConnection/1)
-Connection 'provisioning' successfully deactivated (D-Bus active path: /org/freedesktop/NetworkManager/ActiveConnection/55)
+Connection 'lab-prov' successfully deactivated (D-Bus active path: /org/freedesktop/NetworkManager/ActiveConnection/55)
 
 (process:18180): GLib-GIO-WARNING **: 15:25:20.286: gdbusobjectmanagerclient.c:1589: Processing InterfaceRemoved signal for path /org/freedesktop/NetworkManager/ActiveConnection/55 but no object proxy exists
 Connection successfully activated (master waiting for slaves) (D-Bus active path: /org/freedesktop/NetworkManager/ActiveConnection/59)
@@ -889,8 +900,8 @@ Connection successfully activated (master waiting for slaves) (D-Bus active path
 
 Two bridges get created:
 
-- baremetal on top of the default interface of the node.
-- provisioning, which is indeed where provisioning of the nodes will be done. No dhcp needs to exist on this bridge, since this is where the provisioning artifacts will be deployed. We configure a static ip in 172.22.0.0/24 range.
+- lab-baremetal on top of the default interface of the node.
+- lab-prov, which is where provisioning of the nodes will be done. No dhcp needs to exist on this bridge, since this is where the provisioning artifacts will be deployed. We configure a static ip in 172.22.0.0/24 range.
 
 # Binaries retrieval
 

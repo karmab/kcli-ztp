@@ -1,4 +1,4 @@
-{%- if api_ip is defined and ':' in api_ip -%}
+{%- if api_ip != None and ':' in api_ip -%}
 {%- set ipv6 = True %}
 {%- else -%}
 {%- set ipv6 = False %}

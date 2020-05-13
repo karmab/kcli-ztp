@@ -70,11 +70,17 @@ parameters:
  prs: []
  imagecontentsources: []
 
+{% if lab -%}
+{{ baremetal_net }}:
+ type: network
+ cidr: {{ baremetal_cidr }}
+{%- endif %}
+
 {{ image }}:
  type: image
  url: {{ image_url }}
 
-{% if baremetal_ips and baremetal_ips|length >0 %}
+{% if lab or (baremetal_ips and baremetal_ips|length >0) %}
 api:
  type: dns
  net: {{ baremetal_net }}
@@ -88,7 +94,7 @@ apps:
  net: {{ baremetal_net }}
  ip: {{ ingress_ip }}
  alias:
- - console-openshift-console.apps..{{ cluster }}.{{ domain }}
+ - console-openshift-console.apps.{{ cluster }}.{{ domain }}
  - oauth-openshift.apps.{{ cluster }}.{{ domain }}
  - prometheus-k8s-openshift-monitoring.{{ cluster }}.{{ domain }}
 {%- endif %}

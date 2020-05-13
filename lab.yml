@@ -1,0 +1,15 @@
+lab: true
+config_host: 192.168.129.1
+virtual: true
+deploy: false
+cluster: lab
+domain: cnftigerteam.com 
+openshift_image: registry.svc.ci.openshift.org/ocp/release:4.4
+baremetal_cidr: 192.168.129.0/24
+baremetal_net: lab-baremetal
+provisioning_net: lab-prov
+api_ip: 192.168.129.253
+dns_ip: 192.168.129.252
+ingress_ip: 192.168.129.251
+ipmi_user: jimi
+ipmi_password: hendrix
