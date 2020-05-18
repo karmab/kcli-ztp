@@ -8,6 +8,8 @@ openshift_image: registry.svc.ci.openshift.org/ocp/release:4.4
 baremetal_cidr: 192.168.129.0/24
 baremetal_net: lab-baremetal
 provisioning_net: lab-prov
+virtual_memory: 16384
+virtual_numcpus: 8
 api_ip: 192.168.129.253
 dns_ip: 192.168.129.252
 ingress_ip: 192.168.129.251

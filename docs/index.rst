@@ -23,6 +23,11 @@ from beginning to end:
    ‘openshift_pull.json’
 -  git tool (for cloning the repo only)
 
+**NOTE:** You will need at least 50Gb of RAM in order for openshift to
+actually deploy. If you don’t meet those requirements, you can still run
+through the lab but be warned that the final openshift deployment will
+not succeed.
+
 Preparing the lab
 =================
 
@@ -432,9 +437,9 @@ Expected Output
     Installing collected packages: python-dateutil, pyghmi, pbr, stevedore, pyparsing, wcwidth, pyperclip, cmd2, cliff, pyzmq, virtualbmc
       Running setup.py install for pyperclip ... done
     Successfully installed cliff-3.1.0 cmd2-0.8.9 pbr-5.4.5 pyghmi-1.5.14 pyparsing-2.4.7 pyperclip-1.8.0 python-dateutil-2.8.1 pyzmq-19.0.1 stevedore-1.32.0 virtualbmc-2.1.0 wcwidth-0.1.9
-    # 192.168.1.6:22 SSH-2.0-OpenSSH_8.0
-    # 192.168.1.6:22 SSH-2.0-OpenSSH_8.0
-    # 192.168.1.6:22 SSH-2.0-OpenSSH_8.0
+    # 192.168.129.1:22 SSH-2.0-OpenSSH_8.0
+    # 192.168.129.1:22 SSH-2.0-OpenSSH_8.0
+    # 192.168.129.1:22 SSH-2.0-OpenSSH_8.0
 
 This script performs the following tasks:
 
