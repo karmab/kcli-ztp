@@ -72,7 +72,10 @@ Configure required lab bridges
 
 **NOTE:** We would add physical nics to both bridges to provide access
 to a real external network and enable provisioning on a dedicated
-physical network
+physical network.
+
+**NOTE:** This will only create the lab-prov bridge, lab-baremetal
+brodge will get fully prepared in the next step.
 
 Deploy The lab plan
 -------------------
@@ -116,10 +119,10 @@ Expected Output
     +---------------+--------+-----------------+--------------------------------------------------------+------------------+---------------+
     |      Name     | Status |       Ips       |                         Source                         |       Plan       |   Profile     |
     +---------------+--------+-----------------+--------------------------------------------------------+------------------+---------------+
-    | lab-installer |   up   |  192.168.123.46 | CentOS-8-GenericCloud-8.1.1911-20200113.3.x86_64.qcow2 |       lab        | local_centos8 |
-    |  lab-master-0 |  down  |                 |                                                        |       lab        |    kvirt      |
-    |  lab-master-1 |  down  |                 |                                                        |       lab        |    kvirt      |
-    |  lab-master-2 |  down  |                 |                                                        |       lab        |    kvirt      |
+    | lab-installer |   up   |  192.168.129.46 | CentOS-8-GenericCloud-8.1.1911-20200113.3.x86_64.qcow2 |       lab        | local_centos8 |
+    |  lab-master-0 |  down  |  192.168.129.20 |                                                        |       lab        |    kvirt      |
+    |  lab-master-1 |  down  |  192.168.129.21 |                                                        |       lab        |    kvirt      |
+    |  lab-master-2 |  down  |  192.168.129.22 |                                                        |       lab        |    kvirt      |
     +---------------+--------+-----------------+--------------------------------------------------------+------------------+---------------+
 
 -  Check the created networks
@@ -137,7 +140,7 @@ Expected Output
     +------------------+---------+------------------+-------+------------------+------+
     | default          |  routed | 192.168.122.0/24 |  True |     default      | nat  |
     | lab-baremetal    |  routed | 192.168.129.0/24 |  True |  lab-baremetal   | nat  |
-    | lab-prov         |  routed |  172.22.0.0/24   | False | lab-prov         | nat  |
+    | lab-prov         | bridged |       N/A        | N/A   |      N/A         | N/A  | 
     +------------------+---------+------------------+-------+------------------+------+
 
 -  Get the ip for the installer vm and connect to it
@@ -3328,5 +3331,16 @@ In this lab, you have accomplished the following activities.
 Additional resources
 ====================
 
+Documentation
+-------------
+
 -  https://github.com/openshift/installer/blob/master/docs/user/metal/install_ipi.md
 -  https://openshift-kni.github.io/baremetal-deploy
+-  .. rubric:: Cleaning the lab
+      :name: cleaning-the-lab
+
+::
+
+    kcli delete plan --yes lab
+    sudo rm -rf /etc/sysconfig/network-scripts/ifcfg-lab-baremetal
+    sudo nmcli conn delete lab-prov

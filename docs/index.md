@@ -52,7 +52,9 @@ sudo sh -c 'echo -e "DEVICE=lab-baremetal\nTYPE=Bridge\nONBOOT=yes\nNM_CONTROLLE
 sudo nmcli connection add ifname lab-prov type bridge con-name lab-prov
 ```
 
-**NOTE:** We would add physical nics to both bridges to provide access to a real external network and enable provisioning on a dedicated physical network
+**NOTE:** We would add physical nics to both bridges to provide access to a real external network and enable provisioning on a dedicated physical network.
+
+**NOTE:** This will only create the lab-prov bridge, lab-baremetal brodge will get fully prepared in the next step.
 
 ## Deploy The lab plan
 
@@ -3240,5 +3242,15 @@ In this lab, you have accomplished the following activities.
 
 # Additional resources
 
+## Documentation
+
 - [https://github.com/openshift/installer/blob/master/docs/user/metal/install_ipi.md](https://github.com/openshift/installer/blob/master/docs/user/metal/install_ipi.md)
 - [https://openshift-kni.github.io/baremetal-deploy](https://openshift-kni.github.io/baremetal-deploy)
+-
+## Cleaning the lab
+
+```
+kcli delete plan --yes lab
+sudo rm -rf /etc/sysconfig/network-scripts/ifcfg-lab-baremetal
+sudo nmcli conn delete lab-prov
+```
