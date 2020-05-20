@@ -3,9 +3,7 @@
 This repository provides a plan which deploys a vm where:
 - openshift-baremetal-install is downloaded or compiled from source (with an additional list of PR numbers to apply)
 - stop the nodes to deploy through ipmi
-- launch the install against a set of baremetal nodes
-
-It can also be used to deploy virtual masters with physical workers.
+- launch the install against a set of baremetal nodes. Virtual masters can also be deployed.
 
 ## Why
 
@@ -15,10 +13,11 @@ To deploy baremetal using `bare minimum` on the provisioning node
 
 ### for kcli
 
+- kcli installed (for rhel8/cento8/fedora, look [here](https://kcli.readthedocs.io/en/latest/#package-install-method))
 - an openshift pull secret (stored by default in openshift_pull.json)
 - if you're running against your local hypervisor, since the installer vm will try to interact with libvirt over ssh, you need to:
-  - copy your public key to root user authorized keys
-  - add the *config_host* variable in your parameter file pointing to a routable ip of the hypervisor
+  - copy your public key to root user authorized keys.
+  - add the *config_host* variable in your parameter file pointing to a routable ip of the hypervisor.
 
 ### on the provisioning node
 
@@ -27,7 +26,7 @@ To deploy baremetal using `bare minimum` on the provisioning node
     - baremetal with a nic from the external network
     - provisioning with a nic from the provisioning network. Ideally assign it an ip of 172.22.0.1/24
 
-Here's a script you can run on the provisioning node for that
+Here's a script you can run on the provisioning node for that (adjust the nics variable as per your environment)
 
 ```
 export PROV_CONN=eno1
@@ -50,11 +49,16 @@ Prepare a valid parameter file with the information needed. At least, you need t
 - ingress_ip
 - dns_ip
 - an array of your masters (if they are not virtual)
-- an array of your workers
+- an array of your workers (can be left empty if you only want to deploy masters)
 - ipmi_user
 - ipmi_password
 
-Call the resulting file `kcli_parameters.yml` to avoid specifying in the creation command.
+You can have a look at:
+
+- [parameters.yml.sample](parameters.yml.sample) for a parameter file targetting baremetal nodes only
+- [parameters_virtual.yml.sample](parameters_virtual.yml.sample) for one combining virtual masters and physical workers.
+
+Call the resulting file `kcli_parameters.yml` to avoid having to specify it in the creation command.
 
 Then you can launch deployment with:
 
