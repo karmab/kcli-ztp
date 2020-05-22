@@ -13,10 +13,16 @@ chmod +x /usr/bin/oc
 curl -L https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl > /usr/bin/kubectl
 chmod u+x /usr/bin/kubectl
 
-{% if not build %}
-echo 35.196.103.194 registry.svc.ci.openshift.org >> /etc/hosts
+{% if not build -%}
 export PULL_SECRET="/root/openshift_pull.json"
+{% if lab -%}
+export VERSION="latest-4.4"
+export OPENSHIFT_RELEASE_IMAGE=$(curl -s https://mirror.openshift.com/pub/openshift-v4/clients/ocp/$VERSION/release.txt | grep 'Pull From: quay.io' | awk -F ' ' '{print $3}')
+{%- else -%}
+echo 35.196.103.194 registry.svc.ci.openshift.org >> /etc/hosts
 export OPENSHIFT_RELEASE_IMAGE={{ openshift_image }}
+{%- endif -%}
+
 oc adm release extract --registry-config $PULL_SECRET --command=oc --to /tmp $OPENSHIFT_RELEASE_IMAGE
 mv /tmp/oc /root/bin
 oc adm release extract --registry-config $PULL_SECRET --command=openshift-baremetal-install --to /root/bin $OPENSHIFT_RELEASE_IMAGE
