@@ -21,7 +21,7 @@ export OPENSHIFT_RELEASE_IMAGE=$(curl -s https://mirror.openshift.com/pub/opensh
 {%- else -%}
 echo 35.196.103.194 registry.svc.ci.openshift.org >> /etc/hosts
 export OPENSHIFT_RELEASE_IMAGE={{ openshift_image }}
-{%- endif -%}
+{%- endif %}
 
 oc adm release extract --registry-config $PULL_SECRET --command=oc --to /tmp $OPENSHIFT_RELEASE_IMAGE
 mv /tmp/oc /root/bin
