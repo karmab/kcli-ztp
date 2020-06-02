@@ -1,0 +1,24 @@
+openshift_image: quay.io/openshift/okd:4.4.0-0.okd-2020-05-23-055148-beta5
+network_type: OVNKubernetes
+pool: default
+virtual: true
+baremetal_net: lab-baremetal
+provisioning_net: lab-prov
+virtual_numcpus: 8
+virtual_memory: 8192
+domain: kni.lab.eng.bos.redhat.com 
+cluster: pep
+ipmi_user: root
+ipmi_password: calvin
+baremetal_cidr: 192.168.129.0/24
+dns_ip: 192.168.129.2
+api_ip: 192.168.129.3
+ingress_ip: 192.168.129.4
+ipmi_user: root
+ipmi_password: calvin
+provisioning_mac_prefix: aa:aa:aa:aa:aa
+baremetal_ips: []
+baremetal_macs:
+- aa:bb:cc:dd:ab:01
+- aa:bb:cc:dd:ab:02
+- aa:bb:cc:dd:ab:03
