@@ -74,6 +74,10 @@ parameters:
 {{ baremetal_net }}:
  type: network
  cidr: {{ baremetal_cidr }}
+{{ provisioning_net }}:
+ type: network
+ cidr: {{ provisioning_cidr }}
+ dhcp: false
 {%- endif %}
 
 {{ image }}:
