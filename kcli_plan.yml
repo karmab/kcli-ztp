@@ -69,6 +69,7 @@ parameters:
  go_version: 1.13.8
  prs: []
  imagecontentsources: []
+ fips: false
 
 {% if lab -%}
 {{ baremetal_net }}:

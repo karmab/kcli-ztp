@@ -7,6 +7,9 @@
 {%- set masters = [{},{},{}] %}
 {%- endif -%}
 apiVersion: v1
+{%- if fips %}
+fips: True
+{%- endif %}
 baseDomain: {{ domain }}
 networking:
   networkType: {{ network_type }}
