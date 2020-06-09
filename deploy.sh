@@ -20,7 +20,9 @@ export KUBECONFIG=/root/ocp/auth/kubeconfig
 bash /root/07_deploy_openshift.sh
 sed -i "s/metal3-bootstrap/metal3/" /root/.bashrc
 sed -i "s/172.22.0.2/172.22.0.3/" /root/.bashrc
+{% if nfs %}
 bash /root/08_nfs.sh
+{% endif %}
 {% if imageregistry %}
 oc patch configs.imageregistry.operator.openshift.io cluster --type merge -p '{"spec":{"managementState":"Managed","storage":{"pvc":{}}}}'
 {% endif %}
