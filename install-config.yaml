@@ -65,9 +65,11 @@ platform:
       bootMACAddress: {{ worker['provisioning_mac'] | default(provisioning_mac_prefix + ":" + "%02.d" | format(num|int + 11)| string) }}
       hardwareProfile: unknown
 {%- endfor %}
-{%- if ca is defined %}
+{%- if cas is defined %}
 additionalTrustBundle: |
- {{ ca | replace('\n', '\n ') }}
+{%- for ca in cas %}
+ {{ ca | certificate | replace('\n', '\n ') }}
+{%- endfor %}
 {%- endif %}
 {%- if disconnected_url is defined -%}
 imageContentSources:

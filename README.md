@@ -78,10 +78,10 @@ The deployed vm comes with a set of helpers for you:
 |Parameter                |Default Value                                |
 |-------------------------|---------------------------------------------|
 |image                    |centos8                                      |
-|openshift_image          |registry.svc.ci.openshift.org/ocp/release:4.4|
+|openshift_image          |registry.svc.ci.openshift.org/ocp/release:4.5|
 |cluster                  |openshift                                    |
 |domain                   |karmalabs.com                                |
-|network_type             |OpenShiftSDN                                 |
+|network_type             |OVNKubernetes                                |
 |keys                     |[]                                           |
 |api_ip                   |None                                         |
 |dns_ip                   |None                                         |
@@ -119,6 +119,7 @@ The deployed vm comes with a set of helpers for you:
 |cache                    |True                                         |
 |notify                   |True                                         |
 |deploy                   |True                                         |
+|lab                      |False                                        |
 |wait_workers             |True                                         |
 |disconnected             |False                                        |
 |registry_user            |dummy                                        |
@@ -129,3 +130,5 @@ The deployed vm comes with a set of helpers for you:
 |go_version               |1.13.8                                       |
 |prs                      |[]                                           |
 |imagecontentsources      |[]                                           |
+|fips                     |False                                        |
+|cas                      |[]                                           |
