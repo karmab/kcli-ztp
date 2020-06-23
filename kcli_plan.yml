@@ -12,7 +12,7 @@ parameters:
      default network type is OVNKubernetes but you can also specify OpenShiftSDN
      You can also use ca and imagecontentsources to customize your environments or drop specific manifests in the manifests directory
      If using virtual masters, the masters array can be omitted.
-     For virtual masters, You can:
+     For virtual masters, You can
      - force the baremetal macs of your masters using baremetal_macs variable
      - set a pattern for their provisioning macs when you plan to host several cluster with virtual masters on the same hypervisor
      If build is set to true, the openshift install binary will be compiled from sources, optionally with the prs from prs variable array
@@ -43,7 +43,6 @@ parameters:
  provisioning_range: 172.22.0.10,172.22.0.100
  provisioning_installer_ip: 172.22.0.253
  provisioning_macs: []
- provisioning_mac_prefix: aa:aa:aa:aa:aa
  ipmi_user: root
  ipmi_password: calvin
  baremetal_net: baremetal
@@ -52,14 +51,21 @@ parameters:
  baremetal_ips: []
  pullsecret: openshift_pull.json
  notifyscript: notify.sh
- virtual: false
- virtual_numcpus: 8
- virtual_memory: 32768
+ virtual_masters: false
+ virtual_masters_number: 3
+ virtual_masters_numcpus: 8
+ virtual_masters_memory: 32768
+ virtual_masters_mac_prefix: aa:aa:aa:aa:aa
+ virtual_workers: false
+ virtual_workers_number: 1
+ virtual_workers_numcpus: 8
+ virtual_workers_memory: 16384
+ virtual_workers_mac_prefix: aa:aa:aa:bb:bb
+ virtual_workers_deploy: false
  cache: true
  notify: true
  deploy: true
  lab: false
- wait_workers: true
  disconnected: false
  registry_user: dummy
  registry_password: dummy
@@ -105,16 +111,16 @@ apps:
  - prometheus-k8s-openshift-monitoring.{{ cluster }}.{{ domain }}
 {%- endif %}
 
-{% if virtual %}
-{%- for num in range(0, 3) %}
+{% if virtual_masters %}
+{%- for num in range(0, virtual_masters_number) %}
 {{ cluster }}-master-{{ num }}:
  pool: {{ pool }} 
- numcpus: {{ virtual_numcpus }}
+ numcpus: {{ virtual_masters_numcpus }}
  start: false
- memory: {{ virtual_memory }}
+ memory: {{ virtual_masters_memory }}
  nets:
   - name: {{ provisioning_net }}
-    mac: {{ provisioning_mac_prefix + ":" + "%02.d" | format(num + 1)| string }}
+    mac: {{ virtual_masters_mac_prefix + ":" + "%02.d" | format(num + 1)| string }}
   - name: {{ baremetal_net }}
 {%- if baremetal_macs and baremetal_macs|length >= num %}
     mac: {{ baremetal_macs[num] }}
@@ -123,6 +129,25 @@ apps:
     ip: {{ baremetal_ips[num] }}
     reserveip: true
 {%- endif %}
+ disks:
+{%- for size in [disk_size] + extra_disks %}
+  - size: {{ size }}
+    interface: scsi
+{%- endfor %}
+{%- endfor %}
+{%- endif %}
+
+{% if virtual_workers %}
+{%- for num in range(0, virtual_masters_number) %}
+{{ cluster }}-worker-{{ num }}:
+ pool: {{ pool }} 
+ numcpus: {{ virtual_workers_numcpus }}
+ start: false
+ memory: {{ virtual_workers_memory }}
+ nets:
+  - name: {{ provisioning_net }}
+    mac: {{ virtual_workers_mac_prefix + ":" + "%02.d" | format(num + 1)| string }}
+  - name: {{ baremetal_net }}
  disks:
 {%- for size in [disk_size] + extra_disks %}
   - size: {{ size }}
@@ -169,9 +194,9 @@ apps:
  - 08_nfs.sh
  - 08_nfs.yml
  - install-config.yaml                                                                                                                           
- - metal3-config.yaml.sample
  - clouds.yaml
  - .bashrc
+ - extra_worker.yml
  - origin: {{ pullsecret }}
    path: /root/openshift_pull.json                                                                                                                    
  - path: /root/bin/ipmi.py

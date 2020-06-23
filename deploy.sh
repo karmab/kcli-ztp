@@ -1,4 +1,4 @@
-{% if virtual %}
+{% if virtual_masters %}
 bash /root/00_virtual.sh
 {% endif %}
 

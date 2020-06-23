@@ -1,9 +1,10 @@
 lab: true
 config_host: 192.168.129.1
-virtual: true
+virtual_masters: true
+virtual_workers: true
 deploy: false
 cluster: lab
-domain: cnftigerteam.com 
+domain: karmalabs.com 
 openshift_image: registry.svc.ci.openshift.org/ocp/release:4.5
 baremetal_cidr: 192.168.129.0/24
 baremetal_net: lab-baremetal

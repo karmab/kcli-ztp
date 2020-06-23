@@ -13,16 +13,14 @@ mkdir -p ocp/openshift
 python3 /root/bin/ipmi.py off
 cp install-config.yaml ocp
 openshift-baremetal-install --dir ocp --log-level debug create manifests
-cp metal3-config.yaml ocp/openshift/99_metal3-config.yaml
 ls manifests/*y*ml >/dev/null && cp manifests/*y*ml ocp/openshift
 openshift-baremetal-install --dir ocp --log-level debug create cluster || true
 openshift-baremetal-install --dir ocp --log-level debug wait-for install-complete || openshift-baremetal-install --dir ocp --log-level debug wait-for install-complete
-{% if virtual %}
+{% if virtual_masters %}
 for node in $(oc get nodes --selector='node-role.kubernetes.io/master' -o name) ; do
   oc label $node node-role.kubernetes.io/virtual=""
 done
 {% endif %}
-{% if wait_workers %}
 TOTAL_WORKERS=$(grep 'role: worker' /root/install-config.yaml | wc -l)
 if [ "$TOTAL_WORKERS" -gt "0" ] ; then
  until [ "$CURRENT_WORKERS" == "$TOTAL_WORKERS" ] ; do
@@ -31,4 +29,3 @@ if [ "$TOTAL_WORKERS" -gt "0" ] ; then
   sleep 5
 done
 fi
-{% endif %}
