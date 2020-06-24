@@ -18,13 +18,3 @@ SPACES=$(grep apiVIP /root/install-config.yaml | sed 's/apiVIP.*//' | sed 's/ /\
 export BAREMETAL_IP=$(ip -o addr show {{ baremetal_net }} | head -1 | awk '{print $4}' | cut -d'/' -f1)
 sed -i "/apiVIP/i${SPACES}bootstrapOSImage: http://${BAREMETAL_IP}/${RHCOS_QEMU_URI}?sha256=${RHCOS_QEMU_SHA_UNCOMPRESSED}" /root/install-config.yaml
 sed -i "/apiVIP/i${SPACES}clusterOSImage: http://${BAREMETAL_IP}/${RHCOS_OPENSTACK_URI}?sha256=${RHCOS_OPENSTACK_SHA_COMPRESSED}" /root/install-config.yaml
-
-# only needed for 4.3
-cd /root
-if [ -z "$COMMIT_ID" ] ; then
-export COMMIT_ID=$(openshift-baremetal-install version | grep '^built from commit' | awk '{print $4}')
-fi
-export RHCOS_URI=$(curl -s -S https://raw.githubusercontent.com/openshift/installer/$COMMIT_ID/data/data/rhcos.json | jq .images.openstack.path | sed 's/"//g')
-export RHCOS_PATH=$(curl -s -S https://raw.githubusercontent.com/openshift/installer/$COMMIT_ID/data/data/rhcos.json | jq .baseURI | sed 's/"//g')
-export PRIMARY_IP=$(hostname -I | cut -d" " -f1)
-envsubst < metal3-config.yaml.sample > metal3-config.yaml

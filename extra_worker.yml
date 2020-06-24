@@ -1,0 +1,23 @@
+apiVersion: v1
+data:
+  password: {{ ipmi_password | base64 }}
+  username: {{ ipmi_user | base64 }}
+kind: Secret
+metadata:
+  manager: baremetal-operator
+  name: {{ cluster }}-worker-1-bmc-secret
+  namespace: openshift-machine-api
+type: Opaque
+---
+apiVersion: metal3.io/v1alpha1
+kind: BareMetalHost
+metadata:
+  name: {{ cluster }}-worker-1
+  namespace: openshift-machine-api
+spec:
+  bmc:
+    address: ipmi://DONTCHANGEME:6240
+    credentialsName: {{ cluster }}-worker-1-bmc-secret
+  bootMACAddress: {{ virtual_workers_mac_prefix }}:01
+  hardwareProfile: unknown
+  online: true
