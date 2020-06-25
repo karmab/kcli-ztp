@@ -138,7 +138,7 @@ apps:
 {%- endif %}
 
 {% if virtual_workers %}
-{%- for num in range(0, virtual_masters_number) %}
+{%- for num in range(0, virtual_workers_number) %}
 {{ cluster }}-worker-{{ num }}:
  pool: {{ pool }} 
  numcpus: {{ virtual_workers_numcpus }}
