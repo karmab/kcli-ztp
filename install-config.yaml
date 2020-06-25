@@ -7,7 +7,7 @@
 {%- set masters = [{},{},{}] %}
 {%- endif -%}
 {%- if virtual_workers and virtual_workers_deploy %}
-{%- set workers = workers + [{}] %}
+{%- set workers = [{}] + workers %}
 {%- endif -%}
 apiVersion: v1
 {%- if fips %}
