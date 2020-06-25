@@ -7,4 +7,4 @@ oc get clusterversion
 echo "Nodes info:"
 oc get nodes
 echo "Update time:"
-uptime
+uptime | awk '{ print $3 }' | sed 's/,//'
