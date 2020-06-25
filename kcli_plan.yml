@@ -61,7 +61,7 @@ parameters:
  virtual_workers_numcpus: 8
  virtual_workers_memory: 16384
  virtual_workers_mac_prefix: aa:aa:aa:bb:bb
- virtual_workers_deploy: false
+ virtual_workers_deploy: true
  cache: true
  notify: true
  deploy: true
