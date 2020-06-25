@@ -7,7 +7,11 @@
 {%- set masters = [{},{},{}] %}
 {%- endif -%}
 {%- if virtual_workers and virtual_workers_deploy %}
-{%- set workers = [{}] + workers %}
+{%- set extra_workers = [] %}
+{%- for num in range(0, virtual_workers_number) %}
+{%- do extra_workers.append({}) %}
+{%- endfor %}
+{%- set workers = extra_workers + workers %}
 {%- endif -%}
 apiVersion: v1
 {%- if fips %}
