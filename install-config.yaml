@@ -4,7 +4,11 @@
 {%- set ipv6 = False %}
 {%- endif -%}
 {%- if virtual_masters %}
-{%- set masters = [{},{},{}] %}
+{%- set extra_masters = [] %}
+{%- for num in range(0, virtual_masters_number) %}
+{%- do extra_masters.append({}) %}
+{%- endfor %}
+{%- set masters = extra_masters + masters %}
 {%- endif -%}
 {%- if virtual_workers and virtual_workers_deploy %}
 {%- set extra_workers = [] %}
