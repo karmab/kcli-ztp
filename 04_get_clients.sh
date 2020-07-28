@@ -24,3 +24,5 @@ oc adm release extract --registry-config $PULL_SECRET --command=oc --to /tmp $OP
 mv /tmp/oc /root/bin
 oc adm release extract --registry-config $PULL_SECRET --command=openshift-baremetal-install --to /root/bin $OPENSHIFT_RELEASE_IMAGE
 {% endif %}
+
+oc completion bash >>/etc/bash_completion.d/oc_completion
