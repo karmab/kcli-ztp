@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+# set -euo pipefail
+
+{% if not 'rhel' in image %}
+dnf clean all
+sleep 30
+{% endif %}
+dnf -y install pkgconf-pkg-config libvirt-devel gcc python3-libvirt python3 git
+pip3 install sushy-tools
+# pip3 install git+https://opendev.org/openstack/sushy-tools.git@b3bbb5b108216e39e5d6a98ae34e3ec38b568cf5
+cp /root/bin/sushy.service  /usr/lib/systemd/system
+restorecon -Frv /usr/lib/systemd/system/sushy.service
+systemctl enable --now sushy
+sleep 20
+ssh-keyscan -H {{ config_host }} >> /root/.ssh/known_hosts
+echo -e "Host=*\nStrictHostKeyChecking=no\n" > /root/.ssh/config
+python3 /root/bin/redfish.py
+api_vip=$(grep apiVIP /root/install-config.yaml | awk -F: '{print $2}' | xargs)
+cluster=$(grep -m 1 name /root/install-config.yaml | awk -F: '{print $2}' | xargs)
+domain=$(grep baseDomain /root/install-config.yaml | awk -F: '{print $2}' | xargs)
+IP=$(ip -o addr show eth0 | head -1 | awk '{print $4}' | cut -d "/" -f 1 | head -1)
+sed -i "s/DONTCHANGEME/$IP/" /root/install-config.yaml
+sed -i "s/DONTCHANGEME/$IP/" /root/extra_worker.yml
+echo $api_vip api.$cluster.$domain >> /etc/hosts

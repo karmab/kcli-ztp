@@ -77,6 +77,9 @@ platform:
       role: worker
       bmc:
         address: ipmi://{{ worker['ipmi_address'] | default('DONTCHANGEME:624' + num)}}
+        {%- if virtual_protocol == 'redfish'%}
+        disableCertificateVerification: True
+        {%- endif -%}
         username: {{ ipmi_user }}
         password: {{ ipmi_password }}
       bootMACAddress: {{ worker['provisioning_mac'] | default(virtual_workers_mac_prefix + ":" + "%02.d" | format(num|int + 1)| string) }}

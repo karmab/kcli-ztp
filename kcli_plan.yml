@@ -110,7 +110,8 @@ apps:
  disks:
  - {{ disk_size }}
  files:
- - 00_virtual.sh
+ - path: /root/00_virtual.sh
+   origin: {{ '00_virtual.sh.' + virtual_protocol }}
  - 01_patch_installconfig.sh
  - 02_packages.sh
  - 03_network.sh
@@ -132,6 +133,10 @@ apps:
    origin: helpers/ipmi.py
  - path: /root/bin/vbmc.py
    origin: helpers/vbmc.py
+ - path: /root/bin/redfish.py
+   origin: helpers/redfish.py
+ - path: /root/bin/sushy.service
+   origin: helpers/sushy.service
  - path: /root/bin/clean.sh
    origin: helpers/clean.sh
  - path: /root/bin/set_ironic_creds.sh
