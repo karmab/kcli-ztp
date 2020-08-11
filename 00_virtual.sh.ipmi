@@ -7,8 +7,6 @@ dnf clean all
 sleep 30
 {% endif %}
 dnf -y install pkgconf-pkg-config libvirt-devel gcc python3-libvirt python3 ipmitool python3-devel
-export CRYPTOGRAPHY_DONT_BUILD_RUST=1
-pip3 install -U pip
 pip3 install virtualbmc
 /usr/local/bin/vbmcd
 ssh-keyscan -H {{ config_host|default(baremetal_net|local_ip) }} >> /root/.ssh/known_hosts
