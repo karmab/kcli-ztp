@@ -6,7 +6,7 @@
 dnf clean all
 sleep 30
 {% endif %}
-dnf -y install pkgconf-pkg-config libvirt-devel gcc python3-libvirt python3 ipmitool
+dnf -y install pkgconf-pkg-config libvirt-devel gcc python3-libvirt python3 ipmitool python3-devel
 pip3 install virtualbmc
 /usr/local/bin/vbmcd
 ssh-keyscan -H {{ config_host }} >> /root/.ssh/known_hosts
