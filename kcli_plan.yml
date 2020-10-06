@@ -164,7 +164,7 @@ apps:
  keys: {{ keys }}
 {%- if 'rhel' in image %}
  rhnregister: {{ rhnregister }}
- rhnwait: {{ rhnwait }}
+ networkwait: {{ rhnwait }}
 {%- endif %}
  memory: {{ memory }}
  privatekey: true
