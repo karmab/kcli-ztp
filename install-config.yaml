@@ -64,6 +64,10 @@ platform:
         username: {{ ipmi_user }}
         password: {{ ipmi_password }}
       bootMACAddress: {{ master['provisioning_mac'] | default(virtual_masters_mac_prefix + ":" + "%02.d" | format(num|int + 1)| string) }}
+      {%- if 'disk' in master %}
+      rootDeviceHints:
+        deviceName: "/dev/{{ master['disk'] | basename }}"
+      {%- endif -%}
 {%- endfor %}
 {%- for worker in workers %}
 {%- set num = loop.index0|string %}
@@ -75,6 +79,10 @@ platform:
         password: {{ ipmi_password }}
       bootMACAddress: {{ worker['provisioning_mac'] | default(virtual_workers_mac_prefix + ":" + "%02.d" | format(num|int + 1)| string) }}
       hardwareProfile: unknown
+      {%- if 'disk' in worker %}
+      rootDeviceHints:
+        deviceName: "/dev/{{ worker['disk'] | basename }}"
+      {%- endif -%}
 {%- endfor %}
 {%- if cas is defined %}
 additionalTrustBundle: |

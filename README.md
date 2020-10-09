@@ -48,10 +48,21 @@ Prepare a valid parameter file with the information needed. At least, you need t
 - api_ip
 - ingress_ip
 - dns_ip
-- an array of your masters (if they are not virtual)
-- an array of your workers (can be left empty if you only want to deploy masters)
 - ipmi_user
 - ipmi_password
+- an array of your masters (if thet are not virtual). Each entry in this array needs at least the provisioning_mac and ipmi_address. Optionally you can indicate for each entry a specific ipmi_user, ipmi_password and disk (to be used as rootdevice hint) either as /dev/XXX or simply XXX
+- an array of your workers (can be left empty if you only want to deploy masters). The format of those entries follow the one indicated for masters.
+
+Here's a snippet what the workers variable might look like:
+
+```
+workers:
+- ipmi_address: 192.168.1.5
+  provisioning_mac: 98:03:9b:62:ab:19
+- ipmi_address: 192.168.1.6
+  provisioning_mac: 98:03:9b:62:ab:17
+  disk: /dev/sde
+```
 
 You can have a look at:
 
