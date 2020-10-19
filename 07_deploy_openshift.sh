@@ -21,6 +21,8 @@ for node in $(oc get nodes --selector='node-role.kubernetes.io/master' -o name) 
   oc label $node node-role.kubernetes.io/virtual=""
 done
 {% endif %}
+bash /root/bin/set_ironic_creds.sh
+export OS_CLOUD=metal3
 TOTAL_WORKERS=$(grep 'role: worker' /root/install-config.yaml | wc -l)
 if [ "$TOTAL_WORKERS" -gt "0" ] ; then
  until [ "$CURRENT_WORKERS" == "$TOTAL_WORKERS" ] ; do

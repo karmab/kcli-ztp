@@ -4,6 +4,16 @@ clouds:
     baremetal_endpoint_override: http://172.22.0.2:6385
     baremetal_introspection_endpoint_override: http://172.22.0.2:5050
   metal3:
-    auth_type: none
+    auth_type: http_basic
+    auth:
+      username: ${IRONIC_USER}
+      password: ${IRONIC_PASSWORD}
+    baremetal_endpoint_override: http://172.22.0.3:6385
+    baremetal_introspection_endpoint_override: http://172.22.0.3:5050
+  metal3-inspector:
+    auth_type: http_basic
+    auth:
+      username: ${INSPECTOR_USER}
+      password: ${INSPECTOR_PASSWORD}
     baremetal_endpoint_override: http://172.22.0.3:6385
     baremetal_introspection_endpoint_override: http://172.22.0.3:5050

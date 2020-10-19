@@ -205,6 +205,8 @@ apps:
    origin: helpers/vbmc.py
  - path: /root/bin/clean.sh
    origin: helpers/clean.sh
+ - path: /root/bin/set_ironic_creds.sh
+   origin: helpers/set_ironic_creds.sh
  - path: /root/manifests
    origin: manifests
 {%- if not lab %}
