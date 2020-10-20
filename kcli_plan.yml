@@ -207,6 +207,7 @@ apps:
    origin: helpers/clean.sh
  - path: /root/bin/set_ironic_creds.sh
    origin: helpers/set_ironic_creds.sh
+   render: false
  - path: /root/manifests
    origin: manifests
 {%- if not lab %}
