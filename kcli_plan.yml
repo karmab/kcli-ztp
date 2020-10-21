@@ -116,6 +116,7 @@ apps:
 {{ cluster }}-master-{{ num }}:
  pool: {{ pool }} 
  numcpus: {{ virtual_masters_numcpus }}
+ cloudinit: false
  start: false
  memory: {{ virtual_masters_memory }}
  nets:
@@ -143,6 +144,7 @@ apps:
  pool: {{ pool }} 
  numcpus: {{ virtual_workers_numcpus }}
  start: false
+ cloudinit: false
  memory: {{ virtual_workers_memory }}
  nets:
   - name: {{ provisioning_net }}
