@@ -1,4 +1,4 @@
-ssh-keyscan -H {{ config_host }} >> ~/.ssh/known_hosts
+ssh-keyscan -H {{ config_host|default(baremetal_net|local_ip) }} >> ~/.ssh/known_hosts
 echo -e "Host=*\nStrictHostKeyChecking=no\n" > .ssh/config
 PULLSECRET=$(cat /root/openshift_pull.json | tr -d [:space:])
 echo -e "pullSecret: |\n  $PULLSECRET" >> /root/install-config.yaml

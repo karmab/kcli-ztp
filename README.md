@@ -15,9 +15,6 @@ To deploy baremetal using `bare minimum` on the provisioning node
 
 - kcli installed (for rhel8/cento8/fedora, look [here](https://kcli.readthedocs.io/en/latest/#package-install-method))
 - an openshift pull secret (stored by default in openshift_pull.json)
-- if you're running against your local hypervisor, since the installer vm will try to interact with libvirt over ssh, you need to:
-  - copy your public key to root user authorized keys.
-  - add the *config_host* variable in your parameter file pointing to a routable ip of the hypervisor.
 
 ### on the provisioning node
 

@@ -1,5 +1,4 @@
 lab: true
-config_host: 192.168.129.1
 virtual_masters: true
 virtual_workers: true
 deploy: false

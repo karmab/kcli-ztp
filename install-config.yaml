@@ -53,7 +53,7 @@ platform:
     provisioningBridge: {{ provisioning_net }}
     provisioningNetworkInterface: {{ 'ens3' if virtual_masters else provisioning_interface }}
     externalBridge: {{ baremetal_net }}
-    libvirtURI: qemu+ssh://{{ config_user | default('root') }}@{{ config_host }}/system
+    libvirtURI: qemu+ssh://{{ config_user | default('root') }}@{{ config_host|default(baremetal_net|local_ip) }}/system
     hosts:
 {%- for master in masters %}
 {%- set num = loop.index0|string %}
