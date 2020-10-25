@@ -78,7 +78,7 @@ kcli create plan
 
 The deployed vm comes with a set of helpers for you:
 - scripts deploy.sh and clean.sh allow you to manually launch an install or clean a failed one
-- you can run *openstack baremetal node list* during deployment to check the status of the provisioning of the nodes (Give some time after launching an install before ironic is accessible).
+- you can run *baremetal node list* during deployment to check the status of the provisioning of the nodes (Give some time after launching an install before ironic is accessible).
 - script *ipmi.py* can be used to check the power status of the baremetal node or to stop them (using `ipmi.py off`)
 
 ## Parameters
