@@ -134,6 +134,7 @@ apps:
  - path: /root/manifests
    origin: manifests
  - 99-openshift-tang-encryption-clevis.sample.yaml
+ - 99-openshift-tang-encryption-ka.yaml
 {%- if not lab %}
  scripts:
 {%- if build %}
