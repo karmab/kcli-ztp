@@ -1,0 +1,16 @@
+kind: MachineConfig
+metadata:
+  name: ${ROLE}-tang-clevis
+  labels:
+    machineconfiguration.openshift.io/role: ${ROLE}
+spec:
+  config:
+    ignition:
+      version: 2.2.0
+    storage:
+      files:
+      - contents:
+          source: data:text/plain;base64,${CLEVIS_DATA}
+        filesystem: root
+        mode: 420
+        path: /etc/clevis.json
