@@ -113,9 +113,10 @@ apps:
  - 05_cache.sh
  - 06_disconnected.sh
  - 07_nbde.sh
- - 08_deploy_openshift.sh
- - 09_nfs.sh
- - 09_nfs.yml
+ - 08_ntp.sh
+ - 09_deploy_openshift.sh
+ - 10_nfs.sh
+ - 10_nfs.yml
  - install-config.yaml                                                                                                                           
  - clouds.yaml
  - .bashrc
@@ -135,6 +136,7 @@ apps:
    origin: manifests
  - 99-openshift-tang-encryption-clevis.sample.yaml
  - 99-openshift-tang-encryption-ka.sample.yaml
+ - 99-openshift-chrony.sample.yaml
 {%- if not lab %}
  scripts:
 {%- if build %}
