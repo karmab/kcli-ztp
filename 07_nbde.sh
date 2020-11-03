@@ -22,6 +22,6 @@ export CLEVIS_DATA=$((cat <<EOM
 EOM
 ) | base64 -w0)
 export ROLE=worker
-envsubst < 99-openshift-tang-encryption-clevis.sample.yaml > /root/manifests/99-openshift-worker-tang-encryption-clevis.yaml
+envsubst < /root/99-openshift-tang-encryption-clevis.sample.yaml > /root/manifests/99-openshift-worker-tang-encryption-clevis.yaml
 export ROLE=master
-envsubst < 99-openshift-tang-encryption-clevis.sample.yaml > /root/manifests/99-openshift-master-tang-encryption-clevis.yaml
+envsubst < /root/99-openshift-tang-encryption-clevis.sample.yaml > /root/manifests/99-openshift-master-tang-encryption-clevis.yaml
