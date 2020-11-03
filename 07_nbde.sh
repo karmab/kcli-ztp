@@ -23,6 +23,7 @@ EOM
 ) | base64 -w0)
 export ROLE=worker
 envsubst < /root/99-openshift-tang-encryption-clevis.sample.yaml > /root/manifests/99-openshift-worker-tang-encryption-clevis.yaml
-cp /root/99-openshift-tang-encryption-ka.yaml /root/manifests
-#export ROLE=master
-#envsubst < /root/99-openshift-tang-encryption-clevis.sample.yaml > /root/manifests/99-openshift-master-tang-encryption-clevis.yaml
+envsubst < /root/99-openshift-tang-encryption-ka.yaml.sample > /root/manifests/99-openshift-worker-tang-encryption-ka.yaml
+export ROLE=master
+envsubst < /root/99-openshift-tang-encryption-clevis.sample.yaml > /root/manifests/99-openshift-master-tang-encryption-clevis.yaml
+envsubst < /root/99-openshift-tang-encryption-ka.yaml.sample > /root/manifests/99-openshift-master-tang-encryption-ka.yaml
