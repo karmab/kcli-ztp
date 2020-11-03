@@ -48,7 +48,9 @@ controlPlane:
 platform:
   baremetal:
     apiVIP: {{ api_ip }}
+{%- if dns_ip != None %}
     dnsVIP: {{ dns_ip }}
+{%- endif %}
     ingressVIP: {{ ingress_ip }}
     provisioningBridge: {{ provisioning_net }}
     provisioningNetworkInterface: {{ 'ens3' if virtual_masters else provisioning_interface }}

@@ -1,0 +1,78 @@
+info: |
+    This deploys a vm where:
+    - openshift-baremetal-install is downloaded or compiled)
+    - caches the rhcos images
+    - stop the nodes to deploy through ipmi
+    - launch the install against a set of baremetal nodes (and optionally virtual masters)
+    It can be used with a centos8 or rhel8 vm (in which case you will need to set your rhn credentials in your kcli config)
+    default location for your pull secret is openshift_pull.json but you can choose another with the pullsecret variable
+    You will need to define api_ip, dns_ip and ingress_ip and use the masters and workers array to specify your nodes.
+    Nfs can be set to true to create 10 rwx pvs and 10 rwo pvs on the provisioning vm
+    default network type is OVNKubernetes but you can also specify OpenShiftSDN
+    You can also use ca and imagecontentsources to customize your environments or drop specific manifests in the manifests directory
+    If using virtual masters, the masters array can be omitted.
+    For virtual masters, You can
+    - force the baremetal macs of your masters using baremetal_macs variable
+    - set a pattern for their provisioning macs when you plan to host several cluster with virtual masters on the same hypervisor
+    If build is set to true, the openshift install binary will be compiled from sources, optionally with the prs from prs variable array
+image: centos8
+openshift_image: registry.svc.ci.openshift.org/ocp/release:4.5
+cluster: openshift
+domain: karmalabs.com
+network_type: OVNKubernetes
+keys: []
+api_ip:
+dns_ip:
+ingress_ip:
+image_url:
+network: default
+pool: default                                                                                                                                 
+numcpus: 16   
+masters: []
+workers: []
+memory: 32768
+disk_size: 30
+extra_disks: []
+rhnregister: true
+rhnwait: 30
+provisioning_interface: eno1
+provisioning_net: provisioning
+provisioning_ip: 172.22.0.3
+provisioning_cidr: 172.22.0.0/24
+provisioning_range: 172.22.0.10,172.22.0.100
+provisioning_installer_ip: 172.22.0.253
+provisioning_macs: []
+ipmi_user: root
+ipmi_password: calvin
+baremetal_net: baremetal
+baremetal_cidr:
+baremetal_macs: []
+baremetal_ips: []
+pullsecret: openshift_pull.json
+notifyscript: notify.sh
+virtual_masters: false
+virtual_masters_number: 3
+virtual_masters_numcpus: 8
+virtual_masters_memory: 32768
+virtual_masters_mac_prefix: aa:aa:aa:aa:aa
+virtual_workers: false
+virtual_workers_number: 1
+virtual_workers_numcpus: 8
+virtual_workers_memory: 16384
+virtual_workers_mac_prefix: aa:aa:aa:bb:bb
+virtual_workers_deploy: true
+cache: true
+notify: true
+deploy: true
+lab: false
+disconnected: false
+registry_user: dummy
+registry_password: dummy
+nfs: true
+imageregistry: false
+build: false
+go_version: 1.13.8
+prs: []
+imagecontentsources: []
+fips: false
+cas: []

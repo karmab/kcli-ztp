@@ -26,16 +26,29 @@ To deploy baremetal using `bare minimum` on the provisioning node
 Here's a script you can run on the provisioning node for that (adjust the nics variable as per your environment)
 
 ```
-export PROV_CONN=eno1
 export MAIN_CONN=eno2
-sudo nmcli connection add ifname provisioning type bridge con-name provisioning
-sudo nmcli con add type bridge-slave ifname "$PROV_CONN" master provisioning
 sudo nmcli connection add ifname baremetal type bridge con-name baremetal
 sudo nmcli con add type bridge-slave ifname "$MAIN_CONN" master baremetal
 sudo nmcli con down "System $MAIN_CONN"; sudo pkill dhclient; sudo dhclient baremetal
+export PROV_CONN=eno1
+sudo nmcli connection add ifname provisioning type bridge con-name provisioning
+sudo nmcli con add type bridge-slave ifname "$PROV_CONN" master provisioning
 sudo nmcli connection modify provisioning ipv4.addresses 172.22.0.1/24 ipv4.method manual
 sudo nmcli con down provisioning
 sudo nmcli con up provisioning
+```
+
+If using vlans on the provisioning interface, the following can be used:
+
+```
+VLANID=1200
+BRIDGE=prov$VLAN
+IP="172.22.0.100/24"
+nmcli connection add ifname $BRIDGE type bridge con-name $BRIDGE
+nmcli connection add type vlan con-name vlan$VLAN ifname eno1.$VLAN dev eno1 id $VLAN master $BRIDGE slave-type bridge
+nmcli connection modify $BRIDGE ipv4.addresses $IP ipv4.method manual
+nmcli con down $BRIDGE
+nmcli con up $BRIDGE
 ```
 
 ## Launch
@@ -44,7 +57,7 @@ Prepare a valid parameter file with the information needed. At least, you need t
 
 - api_ip
 - ingress_ip
-- dns_ip
+- dns_ip (optional)
 - ipmi_user
 - ipmi_password
 - an array of your masters (if thet are not virtual). Each entry in this array needs at least the provisioning_mac and ipmi_address. Optionally you can indicate for each entry a specific ipmi_user, ipmi_password and disk (to be used as rootdevice hint) either as /dev/XXX or simply XXX
