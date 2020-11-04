@@ -16,6 +16,7 @@ info: |
     - set a pattern for their provisioning macs when you plan to host several cluster with virtual masters on the same hypervisor
     If build is set to true, the openshift install binary will be compiled from sources, optionally with the prs from prs variable array
 image: centos8
+installer_mac:
 openshift_image: registry.svc.ci.openshift.org/ocp/release:4.5
 cluster: openshift
 domain: karmalabs.com
