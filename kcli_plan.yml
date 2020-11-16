@@ -116,6 +116,7 @@ apps:
  - 05_cache.sh
  - 06_disconnected.sh
  - 07_nbde.sh
+ - 07_disable_mdns.sh
  - 08_ntp.sh
  - 09_deploy_openshift.sh
  - 10_nfs.sh
@@ -140,6 +141,7 @@ apps:
  - 99-openshift-tang-encryption-clevis.sample.yaml
  - 99-openshift-tang-encryption-ka.sample.yaml
  - 99-openshift-chrony.sample.yaml
+ - 99-openshift-disable-mdns.sample.yaml
 {%- if not lab %}
  scripts:
 {%- if build %}

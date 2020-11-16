@@ -1,0 +1,24 @@
+---
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  labels:
+    machineconfiguration.openshift.io/role: ${ROLE}
+  name: 99-${ROLE}-disable-mdns
+spec:
+  config:
+    ignition:
+      config: {}
+      security:
+        tls: {}
+      timeouts: {}
+      version: 3.1.0
+    networkd: {}
+    passwd: {}
+    storage:
+      files:
+        - contents:
+            source: data:,
+          overwrite: true
+          mode: 420
+          path: /etc/kubernetes/manifests/mdns-publisher.yaml

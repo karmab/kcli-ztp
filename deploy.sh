@@ -19,6 +19,10 @@ bash /root/03_network.sh
 /root/07_nbde.sh
 {% endif %}
 
+{% if disable_mdns %}
+/root/07_disable_mdns.sh
+{% endif %}
+
 {% if ntp %}
 /root/08_ntp.sh
 {% endif %}
