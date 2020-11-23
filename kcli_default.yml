@@ -67,6 +67,7 @@ notify: true
 deploy: true
 lab: false
 disconnected: false
+registry_image: quay.io/saledort/registry:2
 registry_user: dummy
 registry_password: dummy
 nfs: true
