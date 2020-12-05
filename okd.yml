@@ -1,4 +1,4 @@
-openshift_image: registry.svc.ci.openshift.org/origin/release:4.5.0-0.okd-2020-06-29-110348-beta6
+openshift_image: quay.io/openshift/okd:4.6.0-0.okd-2020-11-27-200126
 network_type: OVNKubernetes
 pool: default
 virtual_masters: true

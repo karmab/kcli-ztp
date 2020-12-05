@@ -1,42 +1,42 @@
-{%- if api_ip != None and ':' in api_ip -%}
-{%- set ipv6 = True %}
-{%- else -%}
-{%- set ipv6 = False %}
-{%- endif -%}
-{%- if virtual_masters %}
-{%- set extra_masters = [] %}
-{%- for num in range(0, virtual_masters_number) %}
-{%- do extra_masters.append({}) %}
-{%- endfor %}
-{%- set masters = extra_masters + masters %}
-{%- endif -%}
-{%- if virtual_workers and virtual_workers_deploy %}
-{%- set extra_workers = [] %}
-{%- for num in range(0, virtual_workers_number) %}
-{%- do extra_workers.append({}) %}
-{%- endfor %}
-{%- set workers = extra_workers + workers %}
-{%- endif -%}
+{% if api_ip != None and ':' in api_ip %}
+{% set ipv6 = True %}
+{% else %}
+{% set ipv6 = False %}
+{% endif %}
+{% if virtual_masters %}
+{% set extra_masters = [] %}
+{% for num in range(0, virtual_masters_number) %}
+{% do extra_masters.append({}) %}
+{% endfor %}
+{% set masters = extra_masters + masters %}
+{% endif %}
+{% if virtual_workers and virtual_workers_deploy %}
+{% set extra_workers = [] %}
+{% for num in range(0, virtual_workers_number) %}
+{% do extra_workers.append({}) %}
+{% endfor %}
+{% set workers = extra_workers + workers %}
+{% endif %}
 apiVersion: v1
-{%- if fips %}
+{% if fips %}
 fips: True
-{%- endif %}
+{% endif %}
 baseDomain: {{ domain }}
 networking:
   networkType: {{ network_type }}
   machineCIDR: {{ baremetal_cidr }}
   clusterNetworks:
-{%- if ipv6 %}
+{% if ipv6 %}
   - cidr: fd01::/48
     hostPrefix: 64
   serviceNetwork:
   - fd02::/112
-{%- else %}
+{% else %}
   - cidr: 10.132.0.0/14
     hostPrefix: 23
   serviceNetwork:
   - 172.30.0.0/16
-{%- endif %}
+{% endif %}
 metadata:
   name: {{ cluster }}
 compute:
@@ -50,15 +50,15 @@ platform:
     apiVIP: {{ api_ip }}
 {% if dns_ip != None %}
     dnsVIP: {{ dns_ip }}
-{%- endif %}
+{% endif %}
     ingressVIP: {{ ingress_ip }}
     provisioningBridge: {{ provisioning_net }}
     provisioningNetworkInterface: {{ 'ens3' if virtual_masters else provisioning_interface }}
     externalBridge: {{ baremetal_net }}
     libvirtURI: qemu+ssh://{{ config_user | default('root') }}@{{ config_host|default(baremetal_net|local_ip) }}/system
     hosts:
-{%- for master in masters %}
-{%- set num = loop.index0|string %}
+{% for master in masters %}
+{% set num = loop.index0|string %}
     - name: {{ cluster }}-master-{{ num }}
       role: master
       bmc:
@@ -66,13 +66,13 @@ platform:
         username: {{ ipmi_user }}
         password: {{ ipmi_password }}
       bootMACAddress: {{ master['provisioning_mac'] | default(virtual_masters_mac_prefix + ":" + "%02.d" | format(num|int + 1)| string) }}
-      {%- if 'disk' in master %}
+      {% if 'disk' in master %}
       rootDeviceHints:
         deviceName: "/dev/{{ master['disk'] | basename }}"
-      {%- endif -%}
-{%- endfor %}
-{%- for worker in workers %}
-{%- set num = loop.index0|string %}
+      {% endif %}
+{% endfor %}
+{% for worker in workers %}
+{% set num = loop.index0|string %}
     - name: {{ cluster }}-worker-{{ num }}
       role: worker
       bmc:
@@ -81,18 +81,18 @@ platform:
         password: {{ ipmi_password }}
       bootMACAddress: {{ worker['provisioning_mac'] | default(virtual_workers_mac_prefix + ":" + "%02.d" | format(num|int + 1)| string) }}
       hardwareProfile: unknown
-      {%- if 'disk' in worker %}
+      {% if 'disk' in worker %}
       rootDeviceHints:
         deviceName: "/dev/{{ worker['disk'] | basename }}"
-      {%- endif -%}
-{%- endfor %}
-{%- if cas is defined %}
+      {% endif %}
+{% endfor %}
+{% if cas is defined %}
 additionalTrustBundle: |
-{%- for ca in cas %}
+{% for ca in cas %}
  {{ ca | certificate | replace('\n', '\n ') }}
-{%- endfor %}
-{%- endif %}
-{%- if disconnected_url is defined -%}
+{% endfor %}
+{% endif %}
+{% if disconnected_url is defined %}
 imageContentSources:
 - mirrors:
   - {{ disconnected_url }}/ocp/release
@@ -100,11 +100,11 @@ imageContentSources:
 - mirrors:
   - {{ disconnected_url }}/ocp/release
   source: registry.svc.ci.openshift.org/ocp/release
-{%- elif imagecontentsources %}
+{% elif imagecontentsources %}
 imageContentSources:
-{%- for source in imagecontentsources %}
+{% for source in imagecontentsources %}
 - mirrors:
   - {{ source }}
   source: image-registry.openshift-image-registry.svc:5000/openshift/{{ source | basename | replace("openshift-", "")}}
-{%- endfor %}
-{%- endif %}
+{% endfor %}
+{% endif %}

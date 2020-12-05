@@ -1,4 +1,4 @@
-{% if lab -%}
+{% if lab %}
 {{ baremetal_net }}:
  type: network
  cidr: {{ baremetal_cidr }}
@@ -6,7 +6,7 @@
  type: network
  cidr: {{ provisioning_cidr }}
  dhcp: false
-{%- endif %}
+{% endif %}
 
 {{ image }}:
  type: image
@@ -29,10 +29,10 @@ apps:
  - console-openshift-console.apps.{{ cluster }}.{{ domain }}
  - oauth-openshift.apps.{{ cluster }}.{{ domain }}
  - prometheus-k8s-openshift-monitoring.{{ cluster }}.{{ domain }}
-{%- endif %}
+{% endif %}
 
 {% if virtual_masters %}
-{%- for num in range(0, virtual_masters_number) %}
+{% for num in range(0, virtual_masters_number) %}
 {{ cluster }}-master-{{ num }}:
  pool: {{ pool }} 
  numcpus: {{ virtual_masters_numcpus }}
@@ -43,23 +43,23 @@ apps:
   - name: {{ provisioning_net }}
     mac: {{ virtual_masters_mac_prefix + ":" + "%02.d" | format(num + 1)| string }}
   - name: {{ baremetal_net }}
-{%- if baremetal_macs and baremetal_macs|length >= num %}
+{% if baremetal_macs and baremetal_macs|length >= num %}
     mac: {{ baremetal_macs[num] }}
-{%- endif %}
-{%- if baremetal_ips and baremetal_ips|length >= num %}
+{% endif %}
+{% if baremetal_ips and baremetal_ips|length >= num %}
     ip: {{ baremetal_ips[num] }}
     reserveip: true
-{%- endif %}
+{% endif %}
  disks:
-{%- for size in [disk_size] + extra_disks %}
+{% for size in [disk_size] + extra_disks %}
   - size: {{ size }}
     interface: scsi
-{%- endfor %}
-{%- endfor %}
-{%- endif %}
+{% endfor %}
+{% endfor %}
+{% endif %}
 
 {% if virtual_workers %}
-{%- for num in range(0, virtual_workers_number) %}
+{% for num in range(0, virtual_workers_number) %}
 {{ cluster }}-worker-{{ num }}:
  pool: {{ pool }} 
  numcpus: {{ virtual_workers_numcpus }}
@@ -71,12 +71,12 @@ apps:
     mac: {{ virtual_workers_mac_prefix + ":" + "%02.d" | format(num + 1)| string }}
   - name: {{ baremetal_net }}
  disks:
-{%- for size in [disk_size] + extra_disks %}
+{% for size in [disk_size] + extra_disks %}
   - size: {{ size }}
     interface: scsi
-{%- endfor %}
-{%- endfor %}
-{%- endif %}
+{% endfor %}
+{% endfor %}
+{% endif %}
 
 {{ cluster }}-installer: 
  image: {{ image }} 
@@ -84,25 +84,25 @@ apps:
  numcpus: {{ numcpus }}
  reservedns: {{ True if lab else False }}
  keys: {{ keys }}
-{%- if 'rhel' in image %}
+{% if 'rhel' in image %}
  rhnregister: {{ rhnregister }}
  networkwait: {{ rhnwait }}
-{%- endif %}
+{% endif %}
  memory: {{ memory }}
  privatekey: true
  notify: {{ notify }}
-{%- if lab %}
+{% if lab %}
  notifycmd: echo machine $(hostname) ready at $(hostname -I)
-{%- elif deploy %}
+{% elif deploy %}
  notifyscript: {{ notifyscript }}
-{%- else %}
+{% else %}
  notifycmd: ls /root/bin/openshift-baremetal-install
-{%- endif %}
+{% endif %}
  nets:                                                                                                                                         
  - name: {{ baremetal_net }}
-{%- if installer_mac != None %}
+{% if installer_mac != None %}
    mac: {{ installer_mac }}
-{%- endif %}
+{% endif %}
  - name: {{ provisioning_net }}
    noconf: yes
  disks:
@@ -140,10 +140,10 @@ apps:
  - 99-openshift-tang-encryption-clevis.sample.yaml
  - 99-openshift-tang-encryption-ka.sample.yaml
  - 99-openshift-chrony.sample.yaml
-{%- if not lab %}
+{% if not lab %}
  scripts:
-{%- if build %}
+{% if build %}
  - helpers/build.sh
-{%- endif %}
+{% endif %}
  - deploy.sh
-{%- endif %}
+{% endif %}
