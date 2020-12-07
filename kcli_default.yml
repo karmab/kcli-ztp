@@ -18,6 +18,7 @@ info: |
 image: centos8
 installer_mac:
 openshift_image: registry.svc.ci.openshift.org/ocp/release:4.5
+playbook: false
 cluster: openshift
 domain: karmalabs.com
 network_type: OVNKubernetes

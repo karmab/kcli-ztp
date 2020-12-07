@@ -80,6 +80,7 @@ apps:
 
 {{ cluster }}-installer: 
  image: {{ image }} 
+ playbook: {{ playbook }}
  pool: {{ pool }} 
  numcpus: {{ numcpus }}
  reservedns: {{ True if lab else False }}
