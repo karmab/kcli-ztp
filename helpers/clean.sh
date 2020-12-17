@@ -10,5 +10,6 @@ virsh destroy $vm
 virsh undefine $vm
 virsh vol-delete $vm default
 virsh vol-delete $vm.ign default
+virsh pool-info $vm >/dev/null 2>&1 && virsh pool-undefine $vm
 done
 fi
