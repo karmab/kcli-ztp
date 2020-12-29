@@ -82,6 +82,7 @@ apps:
  image: {{ image }} 
  playbook: {{ playbook }}
  pool: {{ pool }} 
+ wait: {{ installer_wait }}
  numcpus: {{ numcpus }}
  reservedns: {{ True if lab else False }}
  keys: {{ keys }}

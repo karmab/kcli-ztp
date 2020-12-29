@@ -17,6 +17,7 @@ info: |
     If build is set to true, the openshift install binary will be compiled from sources, optionally with the prs from prs variable array
 image: centos8
 installer_mac:
+installer_wait: False
 openshift_image: registry.svc.ci.openshift.org/ocp/release:4.5
 playbook: false
 cluster: openshift
