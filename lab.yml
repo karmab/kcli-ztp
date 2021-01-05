@@ -5,7 +5,7 @@ virtual_protocol: redfish
 deploy: false
 cluster: lab
 domain: karmalabs.com 
-openshift_image: registry.svc.ci.openshift.org/ocp/release:4.6
+openshift_image: registry.ci.openshift.org/ocp/release:4.6
 baremetal_cidr: 192.168.129.0/24
 baremetal_net: lab-baremetal
 provisioning_net: lab-prov

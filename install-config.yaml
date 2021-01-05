@@ -102,7 +102,7 @@ imageContentSources:
   source: quay.io/openshift-release-dev/ocp-v4.0-art-dev
 - mirrors:
   - {{ disconnected_url }}/ocp/release
-  source: registry.svc.ci.openshift.org/ocp/release
+  source: registry.ci.openshift.org/ocp/release
 {% elif imagecontentsources %}
 imageContentSources:
 {% for source in imagecontentsources %}

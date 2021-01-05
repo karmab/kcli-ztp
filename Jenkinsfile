@@ -25,7 +25,7 @@ For virtual masters, You can
 If build is set to true, the openshift install binary will be compiled from sources, optionally with the prs from prs variable array
 ", description: ''),
     string(name: 'image', defaultValue: "centos8", description: ''),
-    string(name: 'openshift_image', defaultValue: "registry.svc.ci.openshift.org/ocp/release:4.5", description: ''),
+    string(name: 'openshift_image', defaultValue: "registry.ci.openshift.org/ocp/release:4.5", description: ''),
     string(name: 'cluster', defaultValue: "openshift", description: ''),
     string(name: 'domain', defaultValue: "karmalabs.com", description: ''),
     string(name: 'network_type', defaultValue: "OVNKubernetes", description: ''),

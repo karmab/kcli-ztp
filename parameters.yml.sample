@@ -1,4 +1,4 @@
-openshift_image: registry.svc.ci.openshift.org/ocp/release:4.5
+openshift_image: registry.ci.openshift.org/ocp/release:4.7
 domain: brown.com
 cluster: emmet
 ipmi_user: jimi

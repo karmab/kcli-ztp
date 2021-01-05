@@ -31,10 +31,10 @@ imageContentSources:
   source: quay.io/openshift-release-dev/ocp-v4.0-art-dev
 - mirrors:
   - $REGISTRY_NAME:5000/ocp4/openshift4
-  source: registry.svc.ci.openshift.org/ocp/release
+  source: registry.ci.openshift.org/ocp/release
 EOF
 else
-  IMAGECONTENTSOURCES="- mirrors:\n  - $REGISTRY_NAME:5000/ocp4/openshift4\n  source: quay.io/openshift-release-dev/ocp-v4.0-art-dev\n- mirrors:\n  - $REGISTRY_NAME:5000/ocp4/openshift4\n  source: registry.svc.ci.openshift.org/ocp/release"
+  IMAGECONTENTSOURCES="- mirrors:\n  - $REGISTRY_NAME:5000/ocp4/openshift4\n  source: quay.io/openshift-release-dev/ocp-v4.0-art-dev\n- mirrors:\n  - $REGISTRY_NAME:5000/ocp4/openshift4\n  source: registry.ci.openshift.org/ocp/release"
   sed -i "/imageContentSources/a${IMAGECONTENTSOURCES}" /root/install-config.yaml
 fi
 grep -q additionalTrustBundle /root/install-config.yaml
