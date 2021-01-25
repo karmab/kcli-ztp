@@ -74,6 +74,11 @@ workers:
   disk: /dev/sde
 ```
 
+you could also use redfish_address instead of ipmi for baremetals that support it
+```
+- redfish_address: redfish://10.0.0.1/redfish/v1/Systems/System.Embedded.1
+```
+
 You can have a look at:
 
 - [parameters.yml.sample](parameters.yml.sample) for a parameter file targetting baremetal nodes only

@@ -62,7 +62,12 @@ platform:
     - name: {{ cluster }}-master-{{ num }}
       role: master
       bmc:
+{% if 'redfish_address' in master %}
+        address: {{ master['redfish_address'] }}
+        disableCertificateVerification: True
+{% else %}
         address: ipmi://{{ master['ipmi_address'] | default('DONTCHANGEME:623' + num)}}
+{% endif %}
         username: {{ ipmi_user }}
         password: {{ ipmi_password }}
       bootMACAddress: {{ master['provisioning_mac'] | default(virtual_masters_mac_prefix + ":" + "%02.d" | format(num|int + 1)| string) }}
@@ -76,7 +81,12 @@ platform:
     - name: {{ cluster }}-worker-{{ num }}
       role: worker
       bmc:
+{% if 'redfish_address' in worker %}
+        address: {{ worker['redfish_address'] }}
+        disableCertificateVerification: True
+{% else %}
         address: ipmi://{{ worker['ipmi_address'] | default('DONTCHANGEME:624' + num)}}
+{% endif %}
         {%- if virtual_protocol == 'redfish'%}
         disableCertificateVerification: True
         {%- endif -%}
