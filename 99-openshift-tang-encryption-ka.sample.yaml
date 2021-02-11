@@ -5,8 +5,5 @@ metadata:
     machineconfiguration.openshift.io/role: ${ROLE}
   name: ${ROLE}-tang-ka
 spec:
-  config:
-    ignition:
-      version: 3.2.0
   kernelArguments:
    - 'rd.neednet=1'
