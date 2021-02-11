@@ -12,7 +12,7 @@ jose jwk gen -i '{"alg":"ECMR"}' -o /var/db/tang/newexc.jwk
 systemctl start tangd.socket
 
 IP=$(hostname -I | cut -d' ' -f1)
-export TANG_URL="$IP:7500"
+export TANG_URL=http://"$IP:7500"
 export THP="$(tang-show-keys 7500)"
 export ROLE=worker
 envsubst < /root/99-openshift-tang-encryption-clevis.sample.yaml > /root/manifests/99-openshift-worker-tang-encryption-clevis.yaml
