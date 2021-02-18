@@ -14,6 +14,7 @@ curl -L https://storage.googleapis.com/kubernetes-release/release/$(curl -s http
 chmod u+x /usr/bin/kubectl
 
 {% if not build %}
+export PULL_SECRET="/root/openshift_pull.json"
 export OPENSHIFT_RELEASE_IMAGE={{ openshift_image }}
 
 oc adm release extract --registry-config $PULL_SECRET --command=oc --to /tmp $OPENSHIFT_RELEASE_IMAGE
