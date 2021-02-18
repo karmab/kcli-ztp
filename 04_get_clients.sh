@@ -14,9 +14,6 @@ curl -L https://storage.googleapis.com/kubernetes-release/release/$(curl -s http
 chmod u+x /usr/bin/kubectl
 
 {% if not build %}
-#export VERSION="latest-4.4"
-#export OPENSHIFT_RELEASE_IMAGE=$(curl -s https://mirror.openshift.com/pub/openshift-v4/clients/ocp/$VERSION/release.txt | grep 'Pull From: quay.io' | awk -F ' ' '{print $3}')
-export PULL_SECRET="/root/openshift_pull.json"
 export OPENSHIFT_RELEASE_IMAGE={{ openshift_image }}
 
 oc adm release extract --registry-config $PULL_SECRET --command=oc --to /tmp $OPENSHIFT_RELEASE_IMAGE
