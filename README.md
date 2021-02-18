@@ -99,7 +99,7 @@ The deployed vm comes with a set of helpers for you:
 |Parameter                 |Default Value                                |
 |--------------------------|---------------------------------------------|
 |image                     |centos8                                      |
-|openshift_image           |registry.svc.ci.openshift.org/ocp/release:4.5|
+|openshift_image           |registry.ci.openshift.org/ocp/release:4.7    |
 |cluster                   |openshift                                    |
 |domain                    |karmalabs.com                                |
 |network_type              |OVNKubernetes                                |
