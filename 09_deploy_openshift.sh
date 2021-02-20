@@ -11,6 +11,7 @@ export OPENSHIFT_INSTALL_RELEASE_IMAGE_OVERRIDE={{ openshift_image}}
 bash /root/bin/clean.sh
 mkdir -p ocp/openshift
 python3 /root/bin/ipmi.py off
+python3 /root/bin/redfish.py off
 cp install-config.yaml ocp
 openshift-baremetal-install --dir ocp --log-level debug create manifests
 ls manifests/*y*ml >/dev/null && cp manifests/*y*ml ocp/openshift

@@ -52,8 +52,18 @@ platform:
     dnsVIP: {{ dns_ip }}
 {% endif %}
     ingressVIP: {{ ingress_ip }}
+{% if not provisioning_enable and baremetal_noprovisioning_ip != None and baremetal_noprovisioning_bootstrap_ip != None %}
+    provisioningNetwork: "Disabled"
+    provisioningHostIP: {{ baremetal_noprovisioning_ip }}
+    bootstrapProvisioningIP: {{ baremetal_noprovisioning_bootstrap_ip }}
+{% else %}
     provisioningBridge: {{ provisioning_net }}
-    provisioningNetworkInterface: {{ 'ens3' if virtual_masters else provisioning_interface }}
+{% if virtual_masters %}
+    provisioningNetworkInterface: {{ 'enp1s0' if virtual_protocol == 'redfish' else 'ens3' }}
+{% else %}
+   provisioningNetworkInterface: {{ provisioning_interface }}
+{% endif %}
+{% endif %}
     externalBridge: {{ baremetal_net }}
     libvirtURI: qemu+ssh://{{ 'root' if config_user == 'apache' else config_user }}@{{ config_host|default(baremetal_net|local_ip) }}/system
     hosts:
@@ -62,7 +72,12 @@ platform:
     - name: {{ cluster }}-master-{{ num }}
       role: master
       bmc:
+        {% if 'redfish_address' in master %}
+        address: {{ master['redfish_address'] }}
+        disableCertificateVerification: True
+        {% else %}
         address: ipmi://{{ master['ipmi_address'] | default('DONTCHANGEME:623' + num)}}
+        {% endif %}
         username: {{ ipmi_user }}
         password: {{ ipmi_password }}
       bootMACAddress: {{ master['provisioning_mac'] | default(virtual_masters_mac_prefix + ":" + "%02.d" | format(num|int + 1)| string) }}
@@ -76,7 +91,12 @@ platform:
     - name: {{ cluster }}-worker-{{ num }}
       role: worker
       bmc:
+        {% if 'redfish_address' in worker %}
+        address: {{ worker['redfish_address'] }}
+        disableCertificateVerification: True
+        {% else %}
         address: ipmi://{{ worker['ipmi_address'] | default('DONTCHANGEME:624' + num)}}
+        {% endif %}
         username: {{ ipmi_user }}
         password: {{ ipmi_password }}
       bootMACAddress: {{ worker['provisioning_mac'] | default(virtual_workers_mac_prefix + ":" + "%02.d" | format(num|int + 1)| string) }}
