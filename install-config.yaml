@@ -52,10 +52,14 @@ platform:
     dnsVIP: {{ dns_ip }}
 {% endif %}
     ingressVIP: {{ ingress_ip }}
-{% if not provisioning_enable and baremetal_noprovisioning_ip != None and baremetal_noprovisioning_bootstrap_ip != None %}
+{% if not provisioning_enable %}
     provisioningNetwork: "Disabled"
+{% if baremetal_noprovisioning_ip != None %}
     provisioningHostIP: {{ baremetal_noprovisioning_ip }}
+{% endif %}
+{% if baremetal_noprovisioning_bootstrap_ip != None %}
     bootstrapProvisioningIP: {{ baremetal_noprovisioning_bootstrap_ip }}
+{% endif %}
 {% else %}
     provisioningBridge: {{ provisioning_net }}
 {% if virtual_masters %}
