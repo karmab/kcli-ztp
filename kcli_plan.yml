@@ -2,10 +2,12 @@
 {{ baremetal_net }}:
  type: network
  cidr: {{ baremetal_cidr }}
+{% if provisioning_enable %}
 {{ provisioning_net }}:
  type: network
  cidr: {{ provisioning_cidr }}
  dhcp: false
+{% endif %}
 {% endif %}
 
 {{ image }}:
@@ -41,7 +43,9 @@ apps:
  uefi: {{ 'true' if virtual_protocol == 'redfish' else 'false' }}
  memory: {{ virtual_masters_memory }}
  nets:
+{% if provisioning_enable %}
   - name: {{ provisioning_net }}
+{% endif %}
     mac: {{ virtual_masters_mac_prefix + ":" + "%02.d" | format(num + 1)| string }}
   - name: {{ baremetal_net }}
 {% if baremetal_macs and baremetal_macs|length >= num %}
@@ -69,7 +73,9 @@ apps:
  uefi: {{ 'true' if virtual_protocol == 'redfish' else 'false' }}
  memory: {{ virtual_workers_memory }}
  nets:
+{% if provisioning_enable %}
   - name: {{ provisioning_net }}
+{% endif %}
     mac: {{ virtual_workers_mac_prefix + ":" + "%02.d" | format(num + 1)| string }}
   - name: {{ baremetal_net }}
  disks:
@@ -107,8 +113,10 @@ apps:
 {% if installer_mac != None %}
    mac: {{ installer_mac }}
 {% endif %}
+{% if provisioning_enable %}
  - name: {{ provisioning_net }}
    noconf: yes
+{% endif %}
  disks:
  - {{ disk_size }}
  files:
