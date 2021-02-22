@@ -77,14 +77,14 @@ platform:
       role: master
       bmc:
         {% if 'redfish_address' in master %}
+        disableCertificateVerification: True
         {% if 'redfish' in master['redfish_address'] or 'idrac' in master['redfish_address'] %}
         address: {{ master['redfish_address'] }}
         {% elif master['model']|default(model) == 'hpe' %}
         address: redfish-virtualmedia://{{ master['redfish_address'] }}/redfish/v1/Systems/1
         {% else %}
-        address: redfish-virtualmedia://{{ master['redfish_address'] }}/redfish/v1/Systems/System.Embedded.1
+        address: idrac-virtualmedia://{{ master['redfish_address'] }}/redfish/v1/Systems/System.Embedded.1
         {% endif %}
-        disableCertificateVerification: True
         {% else %}
         address: ipmi://{{ master['ipmi_address'] | default('DONTCHANGEME:623' + num)}}
         {% endif %}
@@ -102,14 +102,14 @@ platform:
       role: worker
       bmc:
         {% if 'redfish_address' in worker %}
+        disableCertificateVerification: True
         {% if 'redfish' in worker['redfish_address'] or 'idrac' in worker['redfish_address'] %}
         address: {{ worker['redfish_address'] }}
         {% elif worker['model']|default(model) == 'hpe' %}
         address: redfish-virtualmedia://{{ worker['redfish_address'] }}/redfish/v1/Systems/1
         {% else %}
-        address: redfish-virtualmedia://{{ worker['redfish_address'] }}/redfish/v1/Systems/System.Embedded.1
+        address: idrac-virtualmedia://{{ worker['redfish_address'] }}/redfish/v1/Systems/System.Embedded.1
         {% endif %}
-        disableCertificateVerification: True
         {% else %}
         address: ipmi://{{ worker['ipmi_address'] | default('DONTCHANGEME:624' + num)}}
         {% endif %}

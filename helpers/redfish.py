@@ -4,6 +4,9 @@ import re
 import requests
 import sys
 import yaml
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
 
 action = sys.argv[1] if len(sys.argv) > 1 else 'status'
 installfile = "install-config.yaml"
@@ -21,10 +24,10 @@ with open(installfile) as f:
         if 'ipmi' in address:
             continue
         else:
-            match = re.match(".*(http.*)", address)
-            address = match.group(1)
-            info = requests.get(address).json()
-            name = info['Name']
+            match = re.match(".*(http.*|idrac-virtualmedia.*)", address)
+            address = match.group(1).replace('idrac-virtualmedia', 'https')
+            info = requests.get(address, verify=False, auth=(user, password)).json()
+            # name = info['Name']
             print("running %s for %s" % (action, name))
             if action == 'status':
                 status = info['PowerState']
