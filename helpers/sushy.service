@@ -4,6 +4,6 @@ After=syslog.target
 
 [Service]
 Type=simple
-ExecStart=/usr/local/bin/sushy-emulator -i 127.0.0.1 -p 8000 --libvirt-uri "qemu+ssh://root@{{ config_host }}/system"
+ExecStart=/usr/local/bin/sushy-emulator --config /etc/sushy.conf
 StandardOutput=syslog
 StandardError=syslog

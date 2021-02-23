@@ -9,9 +9,9 @@ sleep 30
 dnf -y install pkgconf-pkg-config libvirt-devel gcc python3-libvirt python3 git
 pip3 install sushy-tools
 IP=$(ip -o addr show eth0 | head -1 | awk '{print $4}' | cut -d "/" -f 1 | head -1)
-sed -i "s/127.0.0.1/$IP/" /root/bin/sushy.service
-cp /root/bin/sushy.service  /usr/lib/systemd/system
-restorecon -Frv /usr/lib/systemd/system/sushy.service
+sed -i "s/127.0.0.1/$IP/" /etc/sushy.conf
+# cp /root/bin/sushy.service  /usr/lib/systemd/system
+# restorecon -Frv /usr/lib/systemd/system/sushy.service
 systemctl enable --now sushy
 sleep 20
 ssh-keyscan -H {{ config_host }} >> /root/.ssh/known_hosts

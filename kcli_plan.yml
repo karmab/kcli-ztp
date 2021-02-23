@@ -120,6 +120,8 @@ apps:
  disks:
  - {{ disk_size }}
  files:
+ - path: /etc/sushy.conf
+   origin: helpers/sushy.conf
  - path: /root/00_virtual.sh
    origin: {{ '00_virtual.sh.' + virtual_protocol }}
  - 01_patch_installconfig.sh
@@ -147,7 +149,7 @@ apps:
    origin: helpers/redfish.py
  - path: /root/bin/sushy.py
    origin: helpers/sushy.py
- - path: /root/bin/sushy.service
+ - path: /usr/lib/systemd/system/sushy.service
    origin: helpers/sushy.service
  - path: /root/bin/clean.sh
    origin: helpers/clean.sh
