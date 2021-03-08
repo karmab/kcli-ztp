@@ -37,4 +37,5 @@ with open(installfile) as f:
                 currentaction = actions[action]
                 actionaddress = "%s//Actions/ComputerSystem.Reset/" % address
                 headers = {'Content-type': 'application/json'}
-                requests.post(actionaddress, json={"ResetType": currentaction}, headers=headers, auth=(user, password))
+                requests.post(actionaddress, json={"ResetType": currentaction}, headers=headers, auth=(user, password),
+                              verify=False)
