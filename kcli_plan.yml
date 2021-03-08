@@ -75,8 +75,8 @@ apps:
  nets:
 {% if provisioning_enable %}
   - name: {{ provisioning_net }}
-{% endif %}
     mac: {{ virtual_workers_mac_prefix + ":" + "%02.d" | format(num + 1)| string }}
+{% endif %}
   - name: {{ baremetal_net }}
  disks:
 {% for size in [disk_size] + extra_disks %}
