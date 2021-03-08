@@ -90,9 +90,7 @@ platform:
         {% endif %}
         username: {{ ipmi_user }}
         password: {{ ipmi_password }}
-{% if provisioning_enable %}
       bootMACAddress: {{ master['provisioning_mac'] | default(virtual_masters_mac_prefix + ":" + "%02.d" | format(num|int + 1)| string) }}
-{% endif %}
       {% if 'disk' in master %}
       rootDeviceHints:
         deviceName: "/dev/{{ master['disk'] | basename }}"
@@ -117,9 +115,7 @@ platform:
         {% endif %}
         username: {{ ipmi_user }}
         password: {{ ipmi_password }}
-{% if provisioning_enable %}
       bootMACAddress: {{ worker['provisioning_mac'] | default(virtual_workers_mac_prefix + ":" + "%02.d" | format(num|int + 1)| string) }}
-{% endif %}
       hardwareProfile: unknown
       {% if 'disk' in worker %}
       rootDeviceHints:
