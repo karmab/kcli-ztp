@@ -1,7 +1,7 @@
 apiVersion: v1
 data:
-  password: {{ ipmi_password | base64 }}
-  username: {{ ipmi_user | base64 }}
+  password: {{ ipmi_password|str|base64 }}
+  username: {{ ipmi_user|str|base64 }}
 kind: Secret
 metadata:
   manager: baremetal-operator
