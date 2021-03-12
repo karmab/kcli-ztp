@@ -4,4 +4,4 @@ dnf -y install libvirt-libs libvirt-client ipmitool mkisofs tmux make git bash-c
 dnf -y install python36
 export CRYPTOGRAPHY_DONT_BUILD_RUST=1
 pip3 install -U pip
-pip3 install python-ironicclient
+pip3 install python-ironicclient --ignore-installed PyYAML
