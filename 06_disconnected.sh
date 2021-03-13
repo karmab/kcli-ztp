@@ -44,5 +44,5 @@ if [ "$?" != "0" ] ; then
 else
   LOCALCERT="-----BEGIN CERTIFICATE-----\n $(grep -v CERTIFICATE /opt/registry/certs/domain.crt | tr -d '[:space:]')\n  -----END CERTIFICATE-----"
   sed -i "/additionalTrustBundle/a${LOCALCERT}" /root/install-config.yaml
-  sed -i 's/^-----BEGIN/ -----BEGIN/' /root/install-config.yaml
+  sed -i 's/^-----BEGIN/  -----BEGIN/' /root/install-config.yaml
 fi
