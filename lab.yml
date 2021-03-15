@@ -1,7 +1,7 @@
 lab: true
 virtual_masters: true
 virtual_workers: true
-virtual_protocol: redfish
+virtual_protocol: ipmi
 deploy: false
 cluster: lab
 domain: karmalabs.com 

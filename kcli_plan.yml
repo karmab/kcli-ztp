@@ -40,7 +40,7 @@ apps:
  numcpus: {{ virtual_masters_numcpus }}
  cloudinit: false
  start: false
- uefi: {{ 'true' if virtual_protocol == 'redfish' else 'false' }}
+ uefi: {{ 'true' if virtual_protocol == 'redfish' or not provisioning_enable else 'false' }}
  memory: {{ virtual_masters_memory }}
  nets:
 {% if provisioning_enable %}
@@ -48,10 +48,12 @@ apps:
     mac: {{ virtual_masters_mac_prefix + ":" + "%02.d" | format(num + 1)| string }}
 {% endif %}
   - name: {{ baremetal_net }}
-{% if baremetal_macs and baremetal_macs|length >= num %}
+{% if baremetal_macs and baremetal_macs|length > num %}
     mac: {{ baremetal_macs[num] }}
+{% elif not provisioning_enable %}
+    mac: {{ virtual_masters_baremetal_mac_prefix + ":" + "%02.d" | format(num + 1)| string }}
 {% endif %}
-{% if baremetal_ips and baremetal_ips|length >= num %}
+{% if baremetal_ips and baremetal_ips|length > num %}
     ip: {{ baremetal_ips[num] }}
     reserveip: true
 {% endif %}
@@ -70,7 +72,7 @@ apps:
  numcpus: {{ virtual_workers_numcpus }}
  start: false
  cloudinit: false
- uefi: {{ 'true' if virtual_protocol == 'redfish' else 'false' }}
+ uefi: {{ 'true' if virtual_protocol == 'redfish' or not provisioning_enable else 'false' }}
  memory: {{ virtual_workers_memory }}
  nets:
 {% if provisioning_enable %}
@@ -78,6 +80,11 @@ apps:
     mac: {{ virtual_workers_mac_prefix + ":" + "%02.d" | format(num + 1)| string }}
 {% endif %}
   - name: {{ baremetal_net }}
+{% if baremetal_macs and baremetal_macs|length > virtual_masters_number + num %}
+    mac: {{ baremetal_macs[virtual_masters_number + num] }}
+{% elif not provisioning_enable %}
+    mac: {{ virtual_workers_baremetal_mac_prefix + ":" + "%02.d" | format(num + 1)| string }}
+{% endif %}
  disks:
 {% for size in [disk_size] + extra_disks %}
   - size: {{ size }}
@@ -123,7 +130,7 @@ apps:
  - path: /etc/sushy.conf
    origin: helpers/sushy.conf
  - path: /root/00_virtual.sh
-   origin: {{ '00_virtual.sh.' + virtual_protocol }}
+   origin: {{ '00_virtual.sh.redfish' if not provisioning_enable else '00_virtual.sh.' + virtual_protocol }}
  - 01_patch_installconfig.sh
  - 02_packages.sh
  - 03_network.sh

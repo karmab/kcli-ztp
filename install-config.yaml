@@ -17,6 +17,13 @@
 {% endfor %}
 {% set workers = extra_workers + workers %}
 {% endif %}
+{% if provisioning_enable %}
+{% set virtual_masters_bootmac_prefix = virtual_masters_mac_prefix %}
+{% set virtual_workers_bootmac_prefix = virtual_workers_mac_prefix %}
+{% else %}
+{% set virtual_masters_bootmac_prefix = virtual_masters_baremetal_mac_prefix %}
+{% set virtual_workers_bootmac_prefix = virtual_workers_baremetal_mac_prefix %}
+{% endif %}
 apiVersion: v1
 {% if fips %}
 fips: True
@@ -90,7 +97,13 @@ platform:
         {% endif %}
         username: {{ ipmi_user }}
         password: {{ ipmi_password }}
-      bootMACAddress: {{ master['provisioning_mac'] | default(virtual_masters_mac_prefix + ":" + "%02.d" | format(num|int + 1)| string) }}
+{% if 'provisioning_mac' in master %}
+      bootMACAddress: {{ master['provisioning_mac'] }}
+{% elif not provisioning_enable and baremetal_macs and baremetal_macs|length > num|int %}
+      bootMACAddress: {{ baremetal_macs[num|int] }}
+{% else %}
+      bootMACAddress: {{ virtual_masters_bootmac_prefix + ":" + "%02.d" | format(num|int + 1)| string }}
+{% endif %}
       {% if 'disk' in master %}
       rootDeviceHints:
         deviceName: "/dev/{{ master['disk'] | basename }}"
@@ -115,7 +128,13 @@ platform:
         {% endif %}
         username: {{ ipmi_user }}
         password: {{ ipmi_password }}
-      bootMACAddress: {{ worker['provisioning_mac'] | default(virtual_workers_mac_prefix + ":" + "%02.d" | format(num|int + 1)| string) }}
+{% if 'provisioning_mac' in worker %}
+      bootMACAddress: {{ worker ['provisioning_mac'] }}
+{% elif not provisioning_enable and baremetal_macs and baremetal_macs|length > virtual_masters_number + num|int %}
+      bootMACAddress: {{ baremetal_macs[virtual_masters_number + num|int] }}
+{% else %}
+      bootMACAddress: {{ virtual_workers_bootmac_prefix + ":" + "%02.d" | format(num|int + 1)| string }}
+{% endif %}
       hardwareProfile: unknown
       {% if 'disk' in worker %}
       rootDeviceHints:
