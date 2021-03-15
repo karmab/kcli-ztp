@@ -88,3 +88,7 @@ nbde: false
 ntp: false
 ntp_server: 0.rhel.pool.ntp.org
 model: dell
+deploy_custom_rt_kernel: false
+custom_rt_kernel_src_url:
+custom_rt_kernel_version:
+custom_kernel_node_role: node-role.kubernetes.io/worker

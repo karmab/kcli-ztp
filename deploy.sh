@@ -35,3 +35,7 @@ bash /root/10_nfs.sh
 oc patch configs.imageregistry.operator.openshift.io cluster --type merge -p '{"spec":{"managementState":"Managed","storage":{"pvc":{}}}}'
 {% endif %}
 {% endif %}
+
+{% if deploy_custom_rt_kernel %}
+bash /root/11_custom_rt_kernel.sh
+{% endif %}
