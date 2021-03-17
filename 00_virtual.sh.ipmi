@@ -9,7 +9,7 @@ sleep 30
 dnf -y install pkgconf-pkg-config libvirt-devel gcc python3-libvirt python3 ipmitool python3-devel
 pip3 install virtualbmc
 /usr/local/bin/vbmcd
-ssh-keyscan -H {{ config_host|default(baremetal_net|local_ip) }} >> /root/.ssh/known_hosts
+ssh-keyscan -H {{ config_host if config_host != '127.0.0.1' else baremetal_net|local_ip }} >> /root/.ssh/known_hosts
 echo -e "Host=*\nStrictHostKeyChecking=no\n" > /root/.ssh/config
 python3 /root/bin/vbmc.py
 api_vip=$(grep apiVIP /root/install-config.yaml | awk -F: '{print $2}' | xargs)
