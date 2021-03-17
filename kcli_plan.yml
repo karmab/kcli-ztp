@@ -168,7 +168,7 @@ apps:
  - 99-openshift-tang-encryption-clevis.sample.yaml
  - 99-openshift-tang-encryption-ka.sample.yaml
  - 99-openshift-chrony.sample.yaml
-{% if not lab %}
+{% if launch_steps %}
  scripts:
 {% if build %}
  - helpers/build.sh

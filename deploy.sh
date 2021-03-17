@@ -23,7 +23,7 @@ bash /root/03_network.sh
 /root/08_ntp.sh
 {% endif %}
 
-{% if deploy %}
+{% if deploy_openshift %}
 export KUBECONFIG=/root/ocp/auth/kubeconfig
 bash /root/09_deploy_openshift.sh
 sed -i "s/metal3-bootstrap/metal3/" /root/.bashrc

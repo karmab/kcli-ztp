@@ -1,8 +1,10 @@
 lab: true
+provisioning_enable: true
+virtual_protocol: ipmi
 virtual_masters: true
 virtual_workers: true
-virtual_protocol: ipmi
-deploy: false
+launch_steps: false
+deploy_openshift: false
 cluster: lab
 domain: karmalabs.com 
 openshift_image: registry.ci.openshift.org/ocp/release:4.7
