@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 [ -d /root/ocp ] && rm -rf /root/ocp
-export LIBVIRT_DEFAULT_URI=qemu+ssh://{{ config_user | default('root') }}@{{ config_host }}/system
+export LIBVIRT_DEFAULT_URI=qemu+ssh://{{ config_user | default('root') }}@{{ config_host if config_host != '127.0.0.1' else baremetal_net|local_ip }}/system
 cluster={{ cluster }}
 bootstrap=$(virsh list --all --name | grep "$cluster.*bootstrap")
 if [ "$bootstrap" != "" ] ; then
