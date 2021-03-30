@@ -8,9 +8,16 @@ if [ "$bootstrap" != "" ] ; then
 for vm in $bootstrap ; do
 virsh destroy $vm
 virsh undefine $vm
-# virsh vol-delete $vm default
-# virsh vol-delete $vm.ign default
-for vol in $(virsh vol-list default | grep "$cluster.*bootstrap"  | awk '{print $2}') ; do virsh vol-delete $vol ; done
-virsh pool-info $vm >/dev/null 2>&1 && virsh pool-undefine $vm
+done
+
+pools=$(virsh pool-list --all --name | grep "$cluster.*bootstrap")
+if [ "$pool" != "" ] ; then
+for pool in $bootstrap ; do
+virsh vol-delete $pool $pool
+virsh vol-delete $pool-base $pool
+virsh vol-delete $pool.ign $pool
+virsh pool-destroy $pool
+virsh pool-undefine $pool
+ssh {{ config_user | default('root') }}@{{ config_host if config_host != '127.0.0.1' else baremetal_net|local_ip }} "sudo rmdir /var/lib/libvirt/openshift-images/$pool"
 done
 fi
