@@ -7,6 +7,8 @@ bash /root/02_packages.sh
 bash /root/03_network.sh
 /root/04_get_clients.sh
 
+/root/external_cas.sh
+
 {% if cache %}
 /root/05_cache.sh
 {% endif %}
