@@ -110,7 +110,7 @@ apps:
  notify: {{ notify }}
 {% if lab %}
  notifycmd: echo machine $(hostname) ready at $(hostname -I)
-{% elif deploy %}
+{% elif deploy_openshift %}
  notifyscript: {{ notifyscript }}
 {% else %}
  notifycmd: ls /root/bin/openshift-baremetal-install
@@ -168,6 +168,12 @@ apps:
  - 99-openshift-tang-encryption-clevis.sample.yaml
  - 99-openshift-tang-encryption-ka.sample.yaml
  - 99-openshift-chrony.sample.yaml
+{% for ca in cas %}
+{% set num = loop.index0 %}
+ - path: /etc/pki/ca-trust/source/anchors/RH-IT-Root-CA{{ num }}.crt
+   content: |
+    {{ ca |certificate | replace('\n', '\n    ') }}
+{% endfor %}
 {% if launch_steps %}
  scripts:
 {% if build %}

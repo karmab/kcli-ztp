@@ -141,7 +141,7 @@ platform:
         deviceName: "/dev/{{ worker['disk'] | basename }}"
       {% endif %}
 {% endfor %}
-{% if cas is defined %}
+{% if cas %}
 additionalTrustBundle: |
 {% for ca in cas %}
  {{ ca | certificate | replace('\n', '\n ') }}
