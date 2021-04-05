@@ -7,11 +7,18 @@ metadata:
 spec:
   config:
     ignition:
-      version: 2.2.0
+      version: 3.2.0
     storage:
-      files:
-      - contents:
-          source: data:text/plain;base64,${CLEVIS_DATA}
-        filesystem: root
-        mode: 420
-        path: /etc/clevis.json
+      luks:
+        - name: root
+          device: /dev/disk/by-partlabel/root
+          clevis:
+            tang:
+              - url: ${TANG_URL}
+                thumbprint: ${THP}
+          wipeVolume: true
+      filesystems:
+        - device: /dev/mapper/root
+          format: xfs
+          wipeFilesystem: true
+          label: root
