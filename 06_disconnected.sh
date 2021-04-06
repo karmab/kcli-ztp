@@ -19,7 +19,7 @@ export LOCAL_REG="$REGISTRY_NAME:5000"
 export LOCAL_REPO='ocp/release'
 export OPENSHIFT_INSTALL_RELEASE_IMAGE_OVERRIDE=${LOCAL_REG}/${LOCAL_REPO}:${OCP_RELEASE}
 mv /root/temp.json $PULL_SECRET
-oc adm release mirror -a $PULL_SECRET --from=$OPENSHIFT_RELEASE_IMAGE --to-release-image=$LOCAL_REG/$LOCAL_REPO:$OCP_RELEASE --to=$LOCAL_REG/$LOCAL_REPO
+oc adm release mirror -a $PULL_SECRET --from=$OPENSHIFT_RELEASE_IMAGE --to-release-image=${LOCAL_REG}/ocp4/release:${OCP_RELEASE} --to=${LOCAL_REG}/ocp4
 echo "{\"auths\": {\"$REGISTRY_NAME:5000\": {\"auth\": \"$KEY\", \"email\": \"jhendrix@karmalabs.com\"}}}" > /root/temp.json
 
 grep -q imageContentSources /root/install-config.yaml
@@ -27,14 +27,14 @@ if [ "$?" != "0" ] ; then
 cat << EOF >> /root/install-config.yaml
 imageContentSources:
 - mirrors:
-  - $REGISTRY_NAME:5000/ocp4/openshift4
+  - $REGISTRY_NAME:5000/ocp4
   source: quay.io/openshift-release-dev/ocp-v4.0-art-dev
 - mirrors:
-  - $REGISTRY_NAME:5000/ocp4/openshift4
+  - $REGISTRY_NAME:5000/ocp4
   source: registry.ci.openshift.org/ocp/release
 EOF
 else
-  IMAGECONTENTSOURCES="- mirrors:\n  - $REGISTRY_NAME:5000/ocp4/openshift4\n  source: quay.io/openshift-release-dev/ocp-v4.0-art-dev\n- mirrors:\n  - $REGISTRY_NAME:5000/ocp4/openshift4\n  source: registry.ci.openshift.org/ocp/release"
+  IMAGECONTENTSOURCES="- mirrors:\n  - $REGISTRY_NAME:5000/ocp4\n  source: quay.io/openshift-release-dev/ocp-v4.0-art-dev\n- mirrors:\n  - $REGISTRY_NAME:5000/ocp4\n  source: registry.ci.openshift.org/ocp/release"
   sed -i "/imageContentSources/a${IMAGECONTENTSOURCES}" /root/install-config.yaml
 fi
 grep -q additionalTrustBundle /root/install-config.yaml
@@ -46,3 +46,4 @@ else
   sed -i "/additionalTrustBundle/a${LOCALCERT}" /root/install-config.yaml
   sed -i 's/^-----BEGIN/ -----BEGIN/' /root/install-config.yaml
 fi
+echo $REGISTRY_NAME:5000/ocp4/release:$OCP_RELEASE > /root/version.txt

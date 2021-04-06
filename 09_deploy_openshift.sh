@@ -7,7 +7,7 @@ export PATH=/root/bin:$PATH
 export HOME=/root
 export KUBECONFIG=/root/ocp/auth/kubeconfig
 export OS_CLOUD=metal3-bootstrap
-export OPENSHIFT_INSTALL_RELEASE_IMAGE_OVERRIDE={{ openshift_image}}
+export OPENSHIFT_INSTALL_RELEASE_IMAGE_OVERRIDE={{ '$(cat /root/version.txt)' if disconnected else openshift_image }}
 bash /root/bin/clean.sh
 mkdir -p ocp/openshift
 python3 /root/bin/ipmi.py off
