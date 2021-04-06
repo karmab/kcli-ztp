@@ -47,3 +47,6 @@ else
   sed -i 's/^-----BEGIN/ -----BEGIN/' /root/install-config.yaml
 fi
 echo $REGISTRY_NAME:5000/ocp4/release:$OCP_RELEASE > /root/version.txt
+
+PULLSECRET=$(cat /root/openshift_pull.json | tr -d [:space:])
+echo -e "pullSecret: |\n  $PULLSECRET" >> /root/install-config.yaml
