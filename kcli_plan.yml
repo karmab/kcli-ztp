@@ -2,6 +2,9 @@
 {{ baremetal_net }}:
  type: network
  cidr: {{ baremetal_cidr }}
+{% if dualstack and dualstack_cidr != None %}
+ dual_cidr: {{ dualstack_cidr }}
+{% endif %}
 {% if provisioning_enable %}
 {{ provisioning_net }}:
  type: network
@@ -30,7 +33,8 @@ apps:
  alias:
  - console-openshift-console.apps.{{ cluster }}.{{ domain }}
  - oauth-openshift.apps.{{ cluster }}.{{ domain }}
- - prometheus-k8s-openshift-monitoring.{{ cluster }}.{{ domain }}
+ - prometheus-k8s-openshift-monitoring.apps.{{ cluster }}.{{ domain }}
+ - canary-openshift-ingress-canary.apps.{{ cluster }}.{{ domain }}
 {% endif %}
 
 {% if virtual_masters %}
@@ -124,7 +128,7 @@ apps:
  - name: {{ provisioning_net }}
    noconf: yes
 {% endif %}
-{% if ':' in baremetal_cidr %}
+{% if ':' in baremetal_cidr and not dualstack %}
  - default
 {% endif %}
  disks:

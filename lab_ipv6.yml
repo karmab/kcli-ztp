@@ -1,5 +1,8 @@
 lab: true
 provisioning_enable: false
+pool: images3
+dualstack: false
+dualstack_cidr: 192.168.130.0/24
 disconnected: true
 virtual_masters: true
 virtual_workers: true
@@ -7,7 +10,7 @@ launch_steps: true
 deploy_openshift: true
 cluster: lab
 domain: karmalabs.com 
-openshift_image: registry.ci.openshift.org/ocp/release:4.7
+openshift_image: registry.ci.openshift.org/ocp/release:4.8
 baremetal_cidr: 2620:52:0:1302::/64
 baremetal_net: lab-net
 provisioning_net: lab-prov
