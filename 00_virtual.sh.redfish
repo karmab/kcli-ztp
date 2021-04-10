@@ -8,10 +8,6 @@ sleep 30
 {% endif %}
 dnf -y install pkgconf-pkg-config libvirt-devel gcc python3-libvirt python3 git
 pip3 install sushy-tools
-IP=$(ip -o addr show eth0 | head -1 | awk '{print $4}' | cut -d "/" -f 1 | head -1)
-sed -i "s/127.0.0.1/$IP/" /etc/sushy.conf
-# cp /root/bin/sushy.service  /usr/lib/systemd/system
-# restorecon -Frv /usr/lib/systemd/system/sushy.service
 systemctl enable --now sushy
 sleep 20
 ssh-keyscan -H {{ config_host if config_host != '127.0.0.1' else baremetal_net|local_ip }} >> /root/.ssh/known_hosts
@@ -20,7 +16,8 @@ python3 /root/bin/sushy.py
 api_vip=$(grep apiVIP /root/install-config.yaml | awk -F: '{print $2}' | xargs)
 cluster=$(grep -m 1 name /root/install-config.yaml | awk -F: '{print $2}' | xargs)
 domain=$(grep baseDomain /root/install-config.yaml | awk -F: '{print $2}' | xargs)
-#sed -i '/DONTCHANGEME/{n;N;d;}' /root/install-config.yaml
+IP=$(ip -o addr show eth0 | head -1 | awk '{print $4}' | cut -d "/" -f 1 | head -1)
+echo $IP | grep -q ':' && IP=[$IP]
 sed -i "s/DONTCHANGEME/$IP/" /root/install-config.yaml
 sed -i "s/DONTCHANGEME/$IP/" /root/extra_worker.yml
 echo $api_vip api.$cluster.$domain >> /etc/hosts

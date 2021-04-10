@@ -115,7 +115,7 @@ apps:
 {% else %}
  notifycmd: ls /root/bin/openshift-baremetal-install
 {% endif %}
- nets:                                                                                                                                         
+ nets:
  - name: {{ baremetal_net }}
 {% if installer_mac != None %}
    mac: {{ installer_mac }}
@@ -123,6 +123,9 @@ apps:
 {% if provisioning_enable %}
  - name: {{ provisioning_net }}
    noconf: yes
+{% endif %}
+{% if ':' in baremetal_cidr %}
+ - default
 {% endif %}
  disks:
  - {{ disk_size }}

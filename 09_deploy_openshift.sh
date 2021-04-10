@@ -15,6 +15,7 @@ python3 /root/bin/redfish.py off
 cp install-config.yaml ocp
 openshift-baremetal-install --dir ocp --log-level debug create manifests
 ls manifests/*y*ml >/dev/null && cp manifests/*y*ml ocp/openshift
+echo {{ api_ip }} api.{{ cluster }}.{{ domain }} >> /etc/hosts
 openshift-baremetal-install --dir ocp --log-level debug create cluster || true
 openshift-baremetal-install --dir ocp --log-level debug wait-for install-complete || openshift-baremetal-install --dir ocp --log-level debug wait-for install-complete
 {% if virtual_masters %}
