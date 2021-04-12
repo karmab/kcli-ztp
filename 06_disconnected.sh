@@ -1,9 +1,11 @@
 export PATH=/root/bin:$PATH
 export PULL_SECRET="/root/openshift_pull.json"
 dnf -y install podman httpd httpd-tools jq bind-utils
-IP=$(hostname -I | cut -d' ' -f1)
+export IP=$(ip -o addr show eth0 | head -1 | awk '{print $4}' | cut -d'/' -f1)
 REVERSE_NAME=$(dig -x $IP +short | sed 's/\.[^\.]*$//')
+echo $IP | grep -q ':' && REVERSE_NAME=$(dig -6x $IP +short | sed 's/\.[^\.]*$//')
 REGISTRY_NAME=${REVERSE_NAME:-$(hostname -f)}
+echo $IP $REGISTRY_NAME >> /etc/hosts
 KEY=$( echo -n {{ registry_user }}:{{ registry_password }} | base64)
 jq ".auths += {\"$REGISTRY_NAME:5000\": {\"auth\": \"$KEY\",\"email\": \"jhendrix@karmalabs.com\"}}" < $PULL_SECRET > /root/temp.json
 mkdir -p /opt/registry/{auth,certs,data}
