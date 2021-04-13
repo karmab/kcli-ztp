@@ -1,4 +1,6 @@
 lab: true
+version: stable
+tag: "4.7"
 provisioning_enable: true
 virtual_protocol: ipmi
 virtual_masters: true
@@ -7,7 +9,6 @@ launch_steps: false
 deploy_openshift: false
 cluster: lab
 domain: karmalabs.com 
-openshift_image: registry.ci.openshift.org/ocp/release:4.7
 baremetal_cidr: 192.168.129.0/24
 baremetal_net: lab-baremetal
 provisioning_net: lab-prov

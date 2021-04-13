@@ -14,10 +14,15 @@ info: |
     For virtual masters, You can
     - force the baremetal macs of your masters using baremetal_macs variable. If you put more entries than your masters number, they will be used for virtual workers.
     - set a pattern for their provisioning macs when you plan to host several cluster with virtual masters on the same hypervisor
-    If build is set to true, the openshift install binary will be compiled from sources, optionally with the prs from prs variable array
+    The ci registry is targetted, with the openshift_image variable.
+    When build is set to true, the openshift install binary will be compiled from sources, optionally with the prs from prs variable array
+    version can instead be set to stable or latest, along with tag, to gather the binary from public sources.
+
 image: centos8
 installer_mac:
 installer_wait: False
+version: ci
+tag: 4.7
 openshift_image: registry.ci.openshift.org/ocp/release:4.7
 playbook: false
 cluster: openshift
