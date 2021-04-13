@@ -15,11 +15,15 @@ update-ca-trust extract
 htpasswd -bBc /opt/registry/auth/htpasswd {{ registry_user }} {{ registry_password }}
 podman create --name registry --net host --security-opt label=disable -v /opt/registry/data:/var/lib/registry:z -v /opt/registry/auth:/auth:z -e "REGISTRY_AUTH=htpasswd" -e "REGISTRY_AUTH_HTPASSWD_REALM=Registry" -e "REGISTRY_HTTP_SECRET=ALongRandomSecretForRegistry" -e REGISTRY_AUTH_HTPASSWD_PATH=/auth/htpasswd -v /opt/registry/certs:/certs:z -e REGISTRY_HTTP_TLS_CERTIFICATE=/certs/domain.crt -e REGISTRY_HTTP_TLS_KEY=/certs/domain.key {{ registry_image }}
 podman start registry
+{% if version == 'ci' %}
 export OPENSHIFT_RELEASE_IMAGE={{ openshift_image }}
 export OCP_RELEASE=$( echo $OPENSHIFT_RELEASE_IMAGE | cut -d: -f2)
+{% else %}
+export OPENSHIFT_RELEASE_IMAGE=$(curl -s https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ version }}-{{ tag }}/release.txt | grep 'Pull From: quay.io' | awk -F ' ' '{print $3}')
+export OCP_RELEASE={{ tag }}-x86_64
+{% endif %}
 export LOCAL_REG="$REGISTRY_NAME:5000"
 export LOCAL_REPO='ocp/release'
-export OPENSHIFT_INSTALL_RELEASE_IMAGE_OVERRIDE=${LOCAL_REG}/${LOCAL_REPO}:${OCP_RELEASE}
 mv /root/temp.json $PULL_SECRET
 oc adm release mirror -a $PULL_SECRET --from=$OPENSHIFT_RELEASE_IMAGE --to-release-image=${LOCAL_REG}/ocp4/release:${OCP_RELEASE} --to=${LOCAL_REG}/ocp4
 echo "{\"auths\": {\"$REGISTRY_NAME:5000\": {\"auth\": \"$KEY\", \"email\": \"jhendrix@karmalabs.com\"}}}" > /root/temp.json
@@ -33,7 +37,11 @@ imageContentSources:
   source: quay.io/openshift-release-dev/ocp-v4.0-art-dev
 - mirrors:
   - $REGISTRY_NAME:5000/ocp4
+{% if version == 'ci' %}
   source: registry.ci.openshift.org/ocp/release
+{% else %}
+  source: quay.io/openshift-release-dev/ocp-release
+{% endif %}
 EOF
 else
   IMAGECONTENTSOURCES="- mirrors:\n  - $REGISTRY_NAME:5000/ocp4\n  source: quay.io/openshift-release-dev/ocp-v4.0-art-dev\n- mirrors:\n  - $REGISTRY_NAME:5000/ocp4\n  source: registry.ci.openshift.org/ocp/release"

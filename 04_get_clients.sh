@@ -15,11 +15,15 @@ chmod u+x /usr/bin/kubectl
 
 {% if not build %}
 export PULL_SECRET="/root/openshift_pull.json"
+{% if version in ['latest', 'stable'] %}
+export OPENSHIFT_RELEASE_IMAGE=$(curl -s https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ version }}-{{ tag }}/release.txt | grep 'Pull From: quay.io' | awk -F ' ' '{print $3}')
+{% elif version == 'ci' %}
 export OPENSHIFT_RELEASE_IMAGE={{ openshift_image }}
-
+{% endif %}
 oc adm release extract --registry-config $PULL_SECRET --command=oc --to /tmp $OPENSHIFT_RELEASE_IMAGE
 mv /tmp/oc /root/bin
 oc adm release extract --registry-config $PULL_SECRET --command=openshift-baremetal-install --to /root/bin $OPENSHIFT_RELEASE_IMAGE
 {% endif %}
+echo $OPENSHIFT_RELEASE_IMAGE > /root/version.txt
 
 oc completion bash >>/etc/bash_completion.d/oc_completion

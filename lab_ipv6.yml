@@ -1,13 +1,15 @@
 lab: true
 provisioning_enable: false
-pool: images3
+pool: default
 dualstack: false
 dualstack_cidr: 192.168.130.0/24
 disconnected: true
 virtual_masters: true
 virtual_workers: true
 launch_steps: true
-deploy_openshift: true
+deploy_openshift: false
+version: stable
+tag: 4.7
 cluster: lab
 domain: karmalabs.com 
 openshift_image: registry.ci.openshift.org/ocp/release:4.8
