@@ -6,7 +6,7 @@
 dnf clean all
 sleep 30
 {% endif %}
-dnf -y install pkgconf-pkg-config libvirt-devel gcc python3-libvirt python3 git
+dnf -y install pkgconf-pkg-config libvirt-devel gcc python3-libvirt python3 git python3-netifaces
 pip3 install sushy-tools
 systemctl enable --now sushy
 sleep 20
