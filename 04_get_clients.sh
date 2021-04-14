@@ -15,7 +15,9 @@ chmod u+x /usr/bin/kubectl
 
 {% if not build %}
 export PULL_SECRET="/root/openshift_pull.json"
-{% if version in ['latest', 'stable'] %}
+{% if version in == 'nightly' %}
+export OPENSHIFT_RELEASE_IMAGE=$(curl -s https://mirror.openshift.com/pub/openshift-v4/clients/ocp-dev-preview/latest-{{ tag }}/release.txt | grep 'Pull From: quay.io' | awk -F ' ' '{print $3}')
+{% elif version in ['latest', 'stable'] %}
 export OPENSHIFT_RELEASE_IMAGE=$(curl -s https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ version }}-{{ tag }}/release.txt | grep 'Pull From: quay.io' | awk -F ' ' '{print $3}')
 {% elif version == 'ci' %}
 export OPENSHIFT_RELEASE_IMAGE={{ openshift_image }}
