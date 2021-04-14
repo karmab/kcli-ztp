@@ -3,23 +3,27 @@
 import os
 import netifaces
 import requests
-# import socket
 import yaml
 
-interface = [i for i in netifaces.interfaces() if str(i) == 'eth0'][0]
-addresses = netifaces.ifaddresses(interface)
-for address_family in (netifaces.AF_INET, netifaces.AF_INET6):
-    family_addresses = addresses.get(address_family)
-    if not family_addresses:
-        continue
-    for address in family_addresses:
-        ip = address['addr']
-        if ':' in ip:
-            ip = '[%s]' % ip
-        break
 
-# hostname = socket.gethostname()
-# ip = socket.gethostbyname(hostname)
+def get_ip(nic='eth0'):
+    interface = [i for i in netifaces.interfaces() if str(i) == nic][0]
+    addresses = netifaces.ifaddresses(interface)
+    for address_family in (netifaces.AF_INET, netifaces.AF_INET6):
+        family_addresses = addresses.get(address_family)
+        if not family_addresses:
+            continue
+        for address in family_addresses:
+            ip = address['addr']
+            if ip.startswith('fe'):
+                continue
+            else:
+                if ':' in ip:
+                    ip = '[%s]' % ip
+                return ip
+
+
+ip = get_ip()
 url = "http://%s:8000/redfish/v1/Systems" % ip
 systems = {}
 for member in requests.get(url).json()['Members']:
