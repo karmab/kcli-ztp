@@ -128,7 +128,7 @@ apps:
  - name: {{ provisioning_net }}
    noconf: yes
 {% endif %}
-{% if ':' in baremetal_cidr and not dualstack %}
+{% if baremetal_cidr != None and ':' in baremetal_cidr and not dualstack %}
  - default
 {% endif %}
  disks:
