@@ -18,6 +18,9 @@ podman start registry
 {% if version == 'ci' %}
 export OPENSHIFT_RELEASE_IMAGE={{ openshift_image }}
 export OCP_RELEASE=$( echo $OPENSHIFT_RELEASE_IMAGE | cut -d: -f2)
+{% elif version == 'nightly' %}
+export OPENSHIFT_RELEASE_IMAGE=$(curl -s https://mirror.openshift.com/pub/openshift-v4/clients/ocp-dev-preview/latest-{{ tag }}/release.txt | grep 'Pull From: quay.io' | awk -F ' ' '{print $3}')
+export OCP_RELEASE=$( echo $OPENSHIFT_RELEASE_IMAGE | cut -d: -f2)
 {% else %}
 export OPENSHIFT_RELEASE_IMAGE=$(curl -s https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ version }}-{{ tag }}/release.txt | grep 'Pull From: quay.io' | awk -F ' ' '{print $3}')
 export OCP_RELEASE={{ tag }}-x86_64
@@ -39,6 +42,8 @@ imageContentSources:
   - $REGISTRY_NAME:5000/ocp4
 {% if version == 'ci' %}
   source: registry.ci.openshift.org/ocp/release
+{% elif version == 'nightly' %}
+  source: quay.io/openshift-release-dev/ocp-release-nightly
 {% else %}
   source: quay.io/openshift-release-dev/ocp-release
 {% endif %}
