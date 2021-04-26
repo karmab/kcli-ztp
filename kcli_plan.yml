@@ -45,6 +45,7 @@ apps:
  cloudinit: false
  start: false
  uefi: {{ 'true' if virtual_protocol == 'redfish' or not provisioning_enable else 'false' }}
+ uefi_legacy: {{ uefi_legacy }}
  memory: {{ virtual_masters_memory }}
  nets:
 {% if provisioning_enable %}
@@ -77,6 +78,7 @@ apps:
  start: false
  cloudinit: false
  uefi: {{ 'true' if virtual_protocol == 'redfish' or not provisioning_enable else 'false' }}
+ uefi_legacy: {{ uefi_legacy }}
  memory: {{ virtual_workers_memory }}
  nets:
 {% if provisioning_enable %}

@@ -47,6 +47,7 @@ disk_size: 30
 extra_disks: []
 rhnregister: true
 rhnwait: 30
+uefi_legacy: false
 provisioning_enable: true
 baremetal_noprovisioning_ip:
 baremetal_noprovisioning_bootstrap_ip:
