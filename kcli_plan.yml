@@ -108,6 +108,7 @@ apps:
  pool: {{ pool }} 
  wait: {{ installer_wait }}
  numcpus: {{ numcpus }}
+ uefi_legacy: false
  reservedns: {{ True if lab else False }}
  keys: {{ keys }}
 {% if 'rhel' in image %}
