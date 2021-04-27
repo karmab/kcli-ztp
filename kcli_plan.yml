@@ -2,6 +2,9 @@
 {{ baremetal_net }}:
  type: network
  cidr: {{ baremetal_cidr }}
+{% if lab_domain is defined %}
+ domain: {{ lab_domain }}
+{% endif %}
 {% if dualstack and dualstack_cidr != None %}
  dual_cidr: {{ dualstack_cidr }}
 {% endif %}
