@@ -68,7 +68,7 @@ apps:
  disks:
 {% for size in [disk_size] + extra_disks %}
   - size: {{ size }}
-    interface: scsi
+    interface: sata
 {% endfor %}
 {% endfor %}
 {% endif %}
@@ -97,7 +97,7 @@ apps:
  disks:
 {% for size in [disk_size] + extra_disks %}
   - size: {{ size }}
-    interface: scsi
+    interface: sata
 {% endfor %}
 {% endfor %}
 {% endif %}
