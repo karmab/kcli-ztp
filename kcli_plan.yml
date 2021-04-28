@@ -5,7 +5,7 @@
 {% if lab_domain is defined %}
  domain: {{ lab_domain }}
 {% endif %}
-{% if dualstack and dualstack_cidr != None %}
+{% if (dualstack or dual_force|default(False)) and dualstack_cidr != None %}
  dual_cidr: {{ dualstack_cidr }}
 {% endif %}
 {% if provisioning_enable %}
