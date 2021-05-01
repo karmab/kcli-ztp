@@ -1,6 +1,7 @@
 {% if version in ['nightly', 'latest', 'stable'] %}
-$DOTS=$(echo {{ tag }} | grep -o '\.' | wc -l)
-[ "$DOTS" == "1" ] || (echo tag should be 4.X && exit 1)
+DOTS=$(echo {{ tag }} | grep -o '\.' | wc -l)
+echo $DOTS
+[ "$DOTS" -eq "1" ] || (echo tag should be 4.X && exit 1)
 {% elif version == 'ci' %}
 grep -q registry.ci.openshift.org {{ pullsecret }} || (echo Missing token for registry.ci.openshift.org && exit 1)
 {% endif %}

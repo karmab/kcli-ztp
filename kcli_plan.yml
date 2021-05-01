@@ -1,3 +1,4 @@
+{% set virtual_disks = [{'size': disk_size, 'interface': 'scsi'}] + extra_disks %}
 {% if lab %}
 {{ baremetal_net }}:
  type: network
@@ -65,11 +66,7 @@ apps:
     ip: {{ baremetal_ips[num] }}
     reserveip: true
 {% endif %}
- disks:
-{% for size in [disk_size] + extra_disks %}
-  - size: {{ size }}
-    interface: scsi
-{% endfor %}
+ disks: {{ virtual_disks }}
 {% endfor %}
 {% endif %}
 
@@ -94,11 +91,7 @@ apps:
 {% elif not provisioning_enable %}
     mac: {{ virtual_workers_baremetal_mac_prefix + ":" + "%02.d" | format(num + 1)| string }}
 {% endif %}
- disks:
-{% for size in [disk_size] + extra_disks %}
-  - size: {{ size }}
-    interface: scsi
-{% endfor %}
+ disks: {{ virtual_disks }}
 {% endfor %}
 {% endif %}
 
