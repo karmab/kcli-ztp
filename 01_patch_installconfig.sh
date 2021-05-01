@@ -1,3 +1,5 @@
+set -euo pipefail
+
 ssh-keyscan -H {{ config_host if config_host != '127.0.0.1' else baremetal_net|local_ip }} >> ~/.ssh/known_hosts
 echo -e "Host=*\nStrictHostKeyChecking=no\n" > ~/.ssh/config
 {% if not disconnected %}

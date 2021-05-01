@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
+
 {% if provisioning_enable %}
 nmcli connection add ifname {{ provisioning_net }} type bridge con-name {{ provisioning_net }}
 nmcli con add type bridge-slave ifname eth1 master {{ provisioning_net }}

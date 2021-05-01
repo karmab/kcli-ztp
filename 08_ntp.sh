@@ -1,3 +1,6 @@
+
+set -euo pipefail
+
 export NTP_DATA=$((cat << EOF
     pool {{ ntp_server }} iburst 
     driftfile /var/lib/chrony/drift

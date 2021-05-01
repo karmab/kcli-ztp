@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-#set -euo pipefail
+set -euo pipefail
 
 cd /root
 export PATH=/root/bin:$PATH
@@ -14,7 +14,7 @@ python3 /root/bin/ipmi.py off
 python3 /root/bin/redfish.py off
 cp install-config.yaml ocp
 openshift-baremetal-install --dir ocp --log-level debug create manifests
-ls manifests/*y*ml >/dev/null && cp manifests/*y*ml ocp/openshift
+cp manifests/*y*ml >/dev/null 2>&1 || true
 echo {{ api_ip }} api.{{ cluster }}.{{ domain }} >> /etc/hosts
 openshift-baremetal-install --dir ocp --log-level debug create cluster || true
 openshift-baremetal-install --dir ocp --log-level debug wait-for install-complete || openshift-baremetal-install --dir ocp --log-level debug wait-for install-complete

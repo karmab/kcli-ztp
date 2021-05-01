@@ -1,3 +1,6 @@
+
+set -euo pipefail
+
 export PATH=/root/bin:$PATH
 export PULL_SECRET="/root/openshift_pull.json"
 dnf -y install podman httpd httpd-tools jq bind-utils

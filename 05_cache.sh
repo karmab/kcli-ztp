@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
+
 export PATH=/root/bin:$PATH
 dnf -y install httpd
 systemctl enable --now httpd
@@ -14,7 +16,7 @@ if openshift-baremetal-install coreos print-stream-json >/dev/null 2>&1; then
     curl -L $RHCOS_QEMU_URI_FULL > $RHCOS_QEMU_URI
     curl -L $RHCOS_OPENSTACK_URI_FULL > $RHCOS_OPENSTACK_URI
 else
-    if [ -z "$COMMIT_ID" ] ; then
+    if [ -z "${COMMIT_ID-}" ] ; then
       export COMMIT_ID=$(openshift-baremetal-install version | grep '^built from commit' | awk '{print $4}')
     fi
     RHCOS_OPENSTACK_URI=$(curl -s -S https://raw.githubusercontent.com/openshift/installer/$COMMIT_ID/data/data/rhcos.json  | jq .images.openstack.path | sed 's/"//g')
