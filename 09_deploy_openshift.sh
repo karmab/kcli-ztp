@@ -15,7 +15,7 @@ python3 /root/bin/redfish.py off
 cp install-config.yaml ocp
 openshift-baremetal-install --dir ocp --log-level debug create manifests
 cp manifests/*y*ml >/dev/null 2>&1 ocp/openshift || true
-TOTAL_WORKERS=$(grep 'role: worker' /root/install-config.yaml | wc -l)
+TOTAL_WORKERS=$(grep 'role: worker' /root/install-config.yaml | wc -l) || true
 # [ "$TOTAL_WORKERS" -gt "0" ] || cp 99-openshift-ingress-controller-master.yaml ocp/openshift
 echo {{ api_ip }} api.{{ cluster }}.{{ domain }} >> /etc/hosts
 openshift-baremetal-install --dir ocp --log-level debug create cluster || true
