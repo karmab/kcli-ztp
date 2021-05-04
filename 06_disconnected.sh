@@ -34,8 +34,7 @@ mv /root/temp.json $PULL_SECRET
 oc adm release mirror -a $PULL_SECRET --from=$OPENSHIFT_RELEASE_IMAGE --to-release-image=${LOCAL_REG}/ocp4/release:${OCP_RELEASE} --to=${LOCAL_REG}/ocp4
 echo "{\"auths\": {\"$REGISTRY_NAME:5000\": {\"auth\": \"$KEY\", \"email\": \"jhendrix@karmalabs.com\"}}}" > /root/temp.json
 
-grep -q imageContentSources /root/install-config.yaml
-if [ "$?" != "0" ] ; then
+if [ "$(grep imageContentSources /root/install-config.yaml)" == "" ] ; then
 cat << EOF >> /root/install-config.yaml
 imageContentSources:
 - mirrors:
@@ -55,8 +54,7 @@ else
   IMAGECONTENTSOURCES="- mirrors:\n  - $REGISTRY_NAME:5000/ocp4\n  source: quay.io/openshift-release-dev/ocp-v4.0-art-dev\n- mirrors:\n  - $REGISTRY_NAME:5000/ocp4\n  source: registry.ci.openshift.org/ocp/release"
   sed -i "/imageContentSources/a${IMAGECONTENTSOURCES}" /root/install-config.yaml
 fi
-grep -q additionalTrustBundle /root/install-config.yaml
-if [ "$?" != "0" ] ; then
+if [ "$(grep additionalTrustBundle /root/install-config.yaml)" == "" ] ; then
   echo "additionalTrustBundle: |" >> /root/install-config.yaml
   sed -e 's/^/  /' /opt/registry/certs/domain.crt >>  /root/install-config.yaml
 else
