@@ -109,7 +109,7 @@ platform:
 {% endif %}
 {% endif %}
     externalBridge: {{ baremetal_net }}
-    libvirtURI: qemu+ssh://{{ 'root' if config_user == 'apache' else config_user }}@{{ config_host if config_host != '127.0.0.1' else baremetal_net|local_ip }}/system
+    libvirtURI: qemu+ssh://{{ 'root' if config_user == 'apache' else config_user }}@{{ config_host if config_host != '127.0.0.1' else baremetal_net|local_ip(true) }}/system
     hosts:
 {% for master in masters %}
 {% set num = loop.index0|string %}
