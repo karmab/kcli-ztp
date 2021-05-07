@@ -62,7 +62,7 @@ apps:
 {% elif not provisioning_enable %}
     mac: {{ virtual_masters_baremetal_mac_prefix + ":" + "%02.d" | format(num + 1)| string }}
 {% endif %}
-{% if baremetal_ips and baremetal_ips|length > num %}
+{% if lab and baremetal_ips and baremetal_ips|length > num %}
     ip: {{ baremetal_ips[num] }}
     reserveip: true
 {% endif %}
