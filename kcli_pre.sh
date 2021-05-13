@@ -1,3 +1,7 @@
+{% if baremetal_cidr == None %}
+echo baremetal_cidr not set. No network, no party!
+exit 1
+{% endif %}
 {% if version in ['nightly', 'latest', 'stable'] %}
 DOTS=$(echo {{ tag }} | grep -o '\.' | wc -l)
 [ "$DOTS" -eq "1" ] || (echo tag should be 4.X && exit 1)
