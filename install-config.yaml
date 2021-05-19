@@ -130,6 +130,9 @@ platform:
         {% endif %}
         username: {{ ipmi_user }}
         password: {{ ipmi_password }}
+{% if 'boot_mode' in master %}
+      bootMode: {{ master['boot_mode'] }}
+{% endif %}
 {% if 'provisioning_mac' in master %}
       bootMACAddress: {{ master['provisioning_mac'] }}
 {% elif not provisioning_enable and baremetal_macs and baremetal_macs|length > num|int %}
@@ -161,6 +164,9 @@ platform:
         {% endif %}
         username: {{ ipmi_user }}
         password: {{ ipmi_password }}
+{% if 'boot_mode' in worker %}
+      bootMode: {{ worker['boot_mode'] }}
+{% endif %}
 {% if 'provisioning_mac' in worker %}
       bootMACAddress: {{ worker ['provisioning_mac'] }}
 {% elif not provisioning_enable and baremetal_macs and baremetal_macs|length > virtual_masters_number + num|int %}
