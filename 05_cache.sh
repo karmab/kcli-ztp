@@ -6,6 +6,7 @@ export PATH=/root/bin:$PATH
 dnf -y install httpd
 dnf -y install libguestfs-tools
 dnf -y update libgcrypt
+systemctl enable --now libvirtd
 systemctl enable --now httpd
 cd /var/www/html
 if openshift-baremetal-install coreos print-stream-json >/dev/null 2>&1; then
