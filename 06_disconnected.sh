@@ -6,7 +6,7 @@ export PULL_SECRET="/root/openshift_pull.json"
 dnf -y install podman httpd httpd-tools jq bind-utils
 export IP=$(ip -o addr show eth0 | head -1 | awk '{print $4}' | cut -d'/' -f1)
 REVERSE_NAME=$(dig -x $IP +short | sed 's/\.[^\.]*$//')
-echo $IP | grep -q ':' && REVERSE_NAME=$(dig -6x $IP +short | sed 's/\.[^\.]*$//')
+[ -z "$REVERSE_NAME" ] && (echo $IP | grep -q ':' && REVERSE_NAME=$(dig -6x $IP +short | sed 's/\.[^\.]*$//'))
 REGISTRY_NAME=${REVERSE_NAME:-$(hostname -f)}
 echo $IP $REGISTRY_NAME >> /etc/hosts
 KEY=$( echo -n {{ registry_user }}:{{ registry_password }} | base64)

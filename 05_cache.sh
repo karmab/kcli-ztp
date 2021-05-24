@@ -32,10 +32,11 @@ fi
 
 EXTRACTED_FILE=openstack.qcow2
 gunzip -c $RHCOS_OPENSTACK_URI > $EXTRACTED_FILE
+BOOT_DISK=$(virt-filesystems -a $EXTRACTED_FILE -l | grep boot | cut -f1 -d" ")
 {% if ':' in api_ip and not dualstack %}
-virt-edit -a $EXTRACTED_FILE -m /dev/sda3 /boot/loader/entries/ostree-1-rhcos.conf -e "s/^options/options ip=dhcp6/"
+virt-edit -a $EXTRACTED_FILE -m $BOOT_DISK /boot/loader/entries/ostree-1-rhcos.conf -e "s/^options/options ip=dhcp6/"
 {% else %}
-virt-edit -a $EXTRACTED_FILE -m /dev/sda3 /boot/loader/entries/ostree-1-rhcos.conf -e "s/^options/options ip=dhcp/"
+virt-edit -a $EXTRACTED_FILE -m $BOOT_DISK /boot/loader/entries/ostree-1-rhcos.conf -e "s/^options/options ip=dhcp/"
 {% endif %}
 gzip -c $EXTRACTED_FILE > $RHCOS_OPENSTACK_URI
 RHCOS_OPENSTACK_SHA_COMPRESSED=$(sha256sum $RHCOS_OPENSTACK_URI | cut -d " " -f1)
