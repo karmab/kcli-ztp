@@ -4,6 +4,8 @@ set -euo pipefail
 
 export PATH=/root/bin:$PATH
 dnf -y install httpd
+dnf -y install libguestfs-tools
+dnf -y update libgcrypt
 systemctl enable --now httpd
 cd /var/www/html
 if openshift-baremetal-install coreos print-stream-json >/dev/null 2>&1; then
@@ -27,6 +29,17 @@ else
     curl -L $RHCOS_PATH$RHCOS_QEMU_URI > $RHCOS_QEMU_URI
     curl -L $RHCOS_PATH$RHCOS_OPENSTACK_URI > $RHCOS_OPENSTACK_URI
 fi
+
+EXTRACTED_FILE=openstack.qcow2
+gunzip -c $RHCOS_OPENSTACK_URI > $EXTRACTED_FILE
+{% if ':' in api_ip and not dualstack %}
+virt-edit -a $EXTRACTED_FILE -m /dev/sda3 /boot/loader/entries/ostree-1-rhcos.conf -e "s/^options/options ip=dhcp6/"
+{% else %}
+virt-edit -a $EXTRACTED_FILE -m /dev/sda3 /boot/loader/entries/ostree-1-rhcos.conf -e "s/^options/options ip=dhcp/"
+{% endif %}
+gzip -c $EXTRACTED_FILE > $RHCOS_OPENSTACK_URI
+RHCOS_OPENSTACK_SHA_COMPRESSED=$(sha256sum $RHCOS_OPENSTACK_URI | cut -d " " -f1)
+
 SPACES=$(grep apiVIP /root/install-config.yaml | sed 's/apiVIP.*//' | sed 's/ /\\ /'g)
 export BAREMETAL_IP=$(ip -o addr show eth0 | head -1 | awk '{print $4}' | cut -d'/' -f1)
 echo $BAREMETAL_IP | grep -q ':' && BAREMETAL_IP=[$BAREMETAL_IP]
