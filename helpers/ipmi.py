@@ -7,7 +7,7 @@ import yaml
 action = sys.argv[1] if len(sys.argv) > 1 else 'status'
 installfile = "/root/install-config.yaml"
 with open(installfile) as f:
-    data = yaml.load(f)
+    data = yaml.safe_load(f)
     hosts = data['platform']['baremetal']['hosts']
     for host in hosts:
         name = host['name']
@@ -16,7 +16,8 @@ with open(installfile) as f:
             continue
         address = address.replace('ipmi://', '').replace('[', '').replace(']', '')
         if ':' in address:
-            address, port = address.split(':')
+            port = address.split(':')[-1]
+            address = address.replace(':%s' % port, '')
             port = '-p %s' % port
         else:
             port = ''
