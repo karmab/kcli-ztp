@@ -106,8 +106,8 @@ apps:
  keys: {{ keys }}
 {% if 'rhel' in image %}
  rhnregister: {{ rhnregister }}
- networkwait: {{ rhnwait }}
 {% endif %}
+ networkwait: {{ rhnwait }}
  memory: {{ memory }}
  privatekey: true
  notify: {{ notify }}
