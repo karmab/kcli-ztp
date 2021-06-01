@@ -89,8 +89,9 @@ deploy_openshift: true
 lab: false
 disconnected: false
 registry_image: quay.io/saledort/registry:2
-registry_user: dummy
-registry_password: dummy
+disconnected_user: dummy
+disconnected_password: dummy
+disconnected_operators: []
 nfs: true
 imageregistry: false
 build: false

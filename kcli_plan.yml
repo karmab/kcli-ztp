@@ -145,6 +145,7 @@ apps:
  - 04_get_clients.sh
  - 05_cache.sh
  - 06_disconnected.sh
+ - 065_olm.sh
  - 07_nbde.sh
  - 08_ntp.sh
  - 09_deploy_openshift.sh
@@ -177,6 +178,7 @@ apps:
  - 99-openshift-tang-encryption-ka.sample.yaml
  - 99-openshift-chrony.sample.yaml
  - 99-openshift-ingress-controller-master.yaml
+ - 99-operatorhub.yaml
 {% for ca in cas %}
 {% set num = loop.index0 %}
  - path: /etc/pki/ca-trust/source/anchors/RH-IT-Root-CA{{ num }}.crt
