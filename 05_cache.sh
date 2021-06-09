@@ -6,7 +6,6 @@ export PATH=/root/bin:$PATH
 dnf -y install httpd
 dnf -y install libguestfs-tools
 dnf -y update libgcrypt
-systemctl enable --now libvirtd
 systemctl enable --now httpd
 cd /var/www/html
 if openshift-baremetal-install coreos print-stream-json >/dev/null 2>&1; then
@@ -33,12 +32,14 @@ fi
 
 EXTRACTED_FILE=openstack.qcow2
 gunzip -c $RHCOS_OPENSTACK_URI > $EXTRACTED_FILE
+export LIBGUESTFS_BACKEND=direct
 BOOT_DISK=$(virt-filesystems -a $EXTRACTED_FILE -l | grep boot | cut -f1 -d" ")
 {% if ':' in api_ip and not dualstack %}
 virt-edit -a $EXTRACTED_FILE -m $BOOT_DISK /boot/loader/entries/ostree-1-rhcos.conf -e "s/^options/options ip=dhcp6/"
 {% else %}
 virt-edit -a $EXTRACTED_FILE -m $BOOT_DISK /boot/loader/entries/ostree-1-rhcos.conf -e "s/^options/options ip=dhcp/"
 {% endif %}
+unset LIBGUESTFS_BACKEND
 gzip -c $EXTRACTED_FILE > $RHCOS_OPENSTACK_URI
 RHCOS_OPENSTACK_SHA_COMPRESSED=$(sha256sum $RHCOS_OPENSTACK_URI | cut -d " " -f1)
 
