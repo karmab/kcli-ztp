@@ -24,8 +24,8 @@ with open(installfile) as f:
         if 'ipmi' in address:
             continue
         else:
-            match = re.match(".*(http.*|idrac-virtualmedia.*)", address)
-            address = match.group(1).replace('idrac-virtualmedia', 'https')
+            match = re.match(".*(http.*|idrac-virtualmedia.*|redfish-virtualmedia.*)", address)
+            address = match.group(1).replace('idrac-virtualmedia', 'https').replace('redfish-virtualmedia', 'https')
             info = requests.get(address, verify=False, auth=(user, password)).json()
             # name = info['Name']
             print("running %s for %s" % (action, name))
