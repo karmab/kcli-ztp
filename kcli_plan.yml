@@ -40,6 +40,7 @@ apps:
  - prometheus-k8s-openshift-monitoring.apps.{{ cluster }}.{{ domain }}
  - canary-openshift-ingress-canary.apps.{{ cluster }}.{{ domain }}
  - assisted-service-open-cluster-management.apps.{{ cluster }}.{{ domain }}
+ - assisted-service-assisted-installer.apps.{{ cluster }}.{{ domain }}
 {% endif %}
 
 {% if virtual_masters %}
