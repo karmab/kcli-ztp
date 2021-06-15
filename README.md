@@ -99,6 +99,7 @@ The deployed vm comes with a set of helpers for you:
 |Parameter                            |Default Value                            |
 |-------------------------------------|-----------------------------------------|
 |api_ip                               |None                                     |
+|baremetal_bootstrap_mac              |None                                     |
 |baremetal_cidr                       |None                                     |
 |baremetal_ips                        |[]                                       |
 |baremetal_macs                       |[]                                       |
@@ -148,6 +149,7 @@ The deployed vm comes with a set of helpers for you:
 |openshift_image                      |registry.ci.openshift.org/ocp/release:4.8|
 |playbook                             |False                                    |
 |pool                                 |default                                  |
+|provisioning_bootstrap_mac           |None                                     |
 |provisioning_cidr                    |172.22.0.0/24                            |
 |provisioning_enable                  |True                                     |
 |provisioning_installer_ip            |172.22.0.253                             |

@@ -51,6 +51,8 @@ uefi_legacy: false
 provisioning_enable: true
 baremetal_noprovisioning_ip:
 baremetal_noprovisioning_bootstrap_ip:
+baremetal_bootstrap_mac:
+provisioning_bootstrap_mac:
 provisioning_interface: eno1
 provisioning_net: provisioning
 provisioning_ip: 172.22.0.3

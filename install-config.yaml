@@ -105,11 +105,17 @@ platform:
 {% if virtual_masters %}
     provisioningNetworkInterface: {{ 'enp1s0' if virtual_protocol == 'redfish' else 'ens3' }}
 {% else %}
-   provisioningNetworkInterface: {{ provisioning_interface }}
+    provisioningNetworkInterface: {{ provisioning_interface }}
 {% endif %}
 {% endif %}
     externalBridge: {{ baremetal_net }}
     libvirtURI: qemu+ssh://{{ 'root' if config_user == 'apache' else config_user }}@{{ config_host if config_host != '127.0.0.1' else baremetal_net|local_ip(true) }}/system
+{% if provisioning_bootstrap_mac != None %}
+    provisioningMACAddress: {{ provisioning_bootstrap_mac }}
+{% endif %}
+{% if baremetal_bootstrap_mac != None %}
+    externalMACAddress: {{ baremetal_bootstrap_mac }}
+{% endif %}
     hosts:
 {% for master in masters %}
 {% set num = loop.index0|string %}
