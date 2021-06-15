@@ -30,18 +30,21 @@ else
     curl -L $RHCOS_PATH$RHCOS_OPENSTACK_URI > $RHCOS_OPENSTACK_URI
 fi
 
+export LIBGUESTFS_BACKEND=direct
+STACK={{ 'dhcp6' if ':' in api_ip and not dualstack else 'dhcp' }}
 EXTRACTED_FILE=openstack.qcow2
 gunzip -c $RHCOS_OPENSTACK_URI > $EXTRACTED_FILE
-export LIBGUESTFS_BACKEND=direct
 BOOT_DISK=$(virt-filesystems -a $EXTRACTED_FILE -l | grep boot | cut -f1 -d" ")
-{% if ':' in api_ip and not dualstack %}
-virt-edit -a $EXTRACTED_FILE -m $BOOT_DISK /boot/loader/entries/ostree-1-rhcos.conf -e "s/^options/options ip=dhcp6/"
-{% else %}
-virt-edit -a $EXTRACTED_FILE -m $BOOT_DISK /boot/loader/entries/ostree-1-rhcos.conf -e "s/^options/options ip=dhcp/"
-{% endif %}
-unset LIBGUESTFS_BACKEND
+virt-edit -a $EXTRACTED_FILE -m $BOOT_DISK /boot/loader/entries/ostree-1-rhcos.conf -e "s/^options/options ip=$STACK/"
 gzip -c $EXTRACTED_FILE > $RHCOS_OPENSTACK_URI
 RHCOS_OPENSTACK_SHA_COMPRESSED=$(sha256sum $RHCOS_OPENSTACK_URI | cut -d " " -f1)
+EXTRACTED_FILE=qemu.qcow2
+gunzip -c $RHCOS_QEMU_URI > $EXTRACTED_FILE
+BOOT_DISK=$(virt-filesystems -a $EXTRACTED_FILE -l | grep boot | cut -f1 -d" ")
+virt-edit -a $EXTRACTED_FILE -m $BOOT_DISK /boot/loader/entries/ostree-1-rhcos.conf -e "s/^options/options ip=$STACK/"
+gzip -c $EXTRACTED_FILE > $RHCOS_QEMU_URI
+RHCOS_QEMU_SHA_UNCOMPRESSED=$(sha256sum $EXTRACTED_FILE | cut -d " " -f1)
+unset LIBGUESTFS_BACKEND
 
 SPACES=$(grep apiVIP /root/install-config.yaml | sed 's/apiVIP.*//' | sed 's/ /\\ /'g)
 export BAREMETAL_IP=$(ip -o addr show eth0 | head -1 | awk '{print $4}' | cut -d'/' -f1)
