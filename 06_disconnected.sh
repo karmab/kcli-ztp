@@ -45,7 +45,8 @@ podman start registry
 export OPENSHIFT_RELEASE_IMAGE={{ openshift_image }}
 export OCP_RELEASE=$( echo $OPENSHIFT_RELEASE_IMAGE | cut -d: -f2)
 {% elif version == 'nightly' %}
-export OPENSHIFT_RELEASE_IMAGE=$(curl -s https://mirror.openshift.com/pub/openshift-v4/clients/ocp-dev-preview/latest-{{ tag }}/release.txt | grep 'Pull From: quay.io' | awk -F ' ' '{print $3}')
+TAG={{ tag if tag.split('.')|length > 2 else "latest-" + tag }}
+export OPENSHIFT_RELEASE_IMAGE=$(curl -s https://mirror.openshift.com/pub/openshift-v4/clients/ocp-dev-preview/$TAG/release.txt | grep 'Pull From: quay.io' | awk -F ' ' '{print $3}')
 export OCP_RELEASE=$( echo $OPENSHIFT_RELEASE_IMAGE | cut -d: -f2)
 {% else %}
 export OPENSHIFT_RELEASE_IMAGE=$(curl -s https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ version }}-{{ tag }}/release.txt | grep 'Pull From: quay.io' | awk -F ' ' '{print $3}')
