@@ -12,7 +12,7 @@ echo $IP $REGISTRY_NAME >> /etc/hosts
 KEY=$( echo -n {{ registry_user }}:{{ registry_password }} | base64)
 jq ".auths += {\"$REGISTRY_NAME:5000\": {\"auth\": \"$KEY\",\"email\": \"jhendrix@karmalabs.com\"}}" < $PULL_SECRET > /root/temp.json
 mkdir -p /opt/registry/{auth,certs,data,conf}
-cat <<EOF | sudo tee /opt/registry/conf/config.yml
+cat <<EOF > /opt/registry/conf/config.yml
 version: 0.1
 log:
   fields:
