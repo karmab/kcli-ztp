@@ -103,3 +103,4 @@ nbde: false
 ntp: false
 ntp_server: 0.rhel.pool.ntp.org
 model: dell
+patch_rhcos_image: false

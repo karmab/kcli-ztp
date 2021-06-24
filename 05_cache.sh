@@ -4,7 +4,6 @@ set -euo pipefail
 
 export PATH=/root/bin:$PATH
 dnf -y install httpd
-dnf -y install libguestfs-tools
 dnf -y update libgcrypt
 systemctl enable --now httpd
 cd /var/www/html
@@ -30,6 +29,8 @@ else
     curl -L $RHCOS_PATH$RHCOS_OPENSTACK_URI > $RHCOS_OPENSTACK_URI
 fi
 
+{% if patch_rhcos_image %}
+dnf -y install libguestfs-tools
 export LIBGUESTFS_BACKEND=direct
 STACK={{ 'dhcp6' if ':' in api_ip and not dualstack else 'dhcp' }}
 EXTRACTED_FILE=openstack.qcow2
@@ -45,6 +46,7 @@ virt-edit -a $EXTRACTED_FILE -m $BOOT_DISK /boot/loader/entries/ostree-1-rhcos.c
 gzip -c $EXTRACTED_FILE > $RHCOS_QEMU_URI
 RHCOS_QEMU_SHA_UNCOMPRESSED=$(sha256sum $EXTRACTED_FILE | cut -d " " -f1)
 unset LIBGUESTFS_BACKEND
+{% endif %}
 
 SPACES=$(grep apiVIP /root/install-config.yaml | sed 's/apiVIP.*//' | sed 's/ /\\ /'g)
 export BAREMETAL_IP=$(ip -o addr show eth0 | head -1 | awk '{print $4}' | cut -d'/' -f1)
