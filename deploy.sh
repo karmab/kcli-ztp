@@ -13,6 +13,9 @@ bash /root/03_network.sh
 
 {% if disconnected %}
 /root/06_disconnected.sh
+{% if disconnected_operators %}
+/root/065_olm.sh
+{% endif %}
 {% endif %}
 
 {% if nbde %}
