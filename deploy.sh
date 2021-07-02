@@ -37,8 +37,11 @@ bash /root/10_nfs.sh
 {% if imageregistry %}
 oc patch configs.imageregistry.operator.openshift.io cluster --type merge -p '{"spec":{"managementState":"Managed","storage":{"pvc":{}}}}'
 {% endif %}
-{% endif %}
-
 {% if disconnected and disconnected_operators and disconnected_operators_deploy_after_openshift %}
 /root/065_olm.sh
 {% endif %}
+{% if acm %}
+bash /root/23_acm.sh
+{% endif %}
+{% endif %}
+

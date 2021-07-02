@@ -63,7 +63,7 @@ export OCP_RELEASE={{ tag }}-x86_64
 export LOCAL_REG="$REGISTRY_NAME:5000"
 export LOCAL_REPO='ocp/release'
 mv /root/temp.json $PULL_SECRET
-time oc adm release mirror -a $PULL_SECRET --from=$OPENSHIFT_RELEASE_IMAGE --to-release-image=${LOCAL_REG}/ocp4/release:${OCP_RELEASE} --to=${LOCAL_REG}/ocp4
+time oc adm release mirror -a $PULL_SECRET --from=$OPENSHIFT_RELEASE_IMAGE --to-release-image=${LOCAL_REG}/ocp4:${OCP_RELEASE} --to=${LOCAL_REG}/ocp4
 echo "{\"auths\": {\"$REGISTRY_NAME:5000\": {\"auth\": \"$KEY\", \"email\": \"jhendrix@karmalabs.com\"}}}" > /root/temp.json
 
 if [ "$(grep imageContentSources /root/install-config.yaml)" == "" ] ; then
@@ -94,7 +94,7 @@ else
   sed -i "/additionalTrustBundle/a${LOCALCERT}" /root/install-config.yaml
   sed -i 's/^-----BEGIN/ -----BEGIN/' /root/install-config.yaml
 fi
-echo $REGISTRY_NAME:5000/ocp4/release:$OCP_RELEASE > /root/version.txt
+echo $REGISTRY_NAME:5000/ocp4:$OCP_RELEASE > /root/version.txt
 
 PULLSECRET=$(cat /root/openshift_pull.json | tr -d [:space:])
 echo -e "pullSecret: |\n  $PULLSECRET" >> /root/install-config.yaml

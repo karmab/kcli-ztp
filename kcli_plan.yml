@@ -41,6 +41,28 @@ apps:
  - canary-openshift-ingress-canary.apps.{{ cluster }}.{{ domain }}
  - assisted-service-open-cluster-management.apps.{{ cluster }}.{{ domain }}
  - assisted-service-assisted-installer.apps.{{ cluster }}.{{ domain }}
+
+{% if acm and acm_spoke_api_ip != None and acm_spoke_ingress_ip != None %}
+api-{{ acm_spoke_name }}:
+ type: dns
+ net: {{ baremetal_net }}
+ ip: {{ acm_spoke_api_ip }}
+ alias:
+ - api.{{ acm_spoke_name }}.{{ domain }}
+ - api-int.{{ acm_spoke_name }}.{{ domain }}
+
+apps-{{ acm_spoke_name }}:
+ type: dns
+ net: {{ baremetal_net }}
+ ip: {{ acm_spoke_ingress_ip }}
+ alias:
+ - console-openshift-console.apps.{{ acm_spoke_name }}.{{ domain }}
+ - oauth-openshift.apps.{{ acm_spoke_name }}.{{ domain }}
+ - prometheus-k8s-openshift-monitoring.apps.{{ acm_spoke_name }}.{{ domain }}
+ - canary-openshift-ingress-canary.apps.{{ acm_spoke_name }}.{{ domain }}
+ - assisted-service-open-cluster-management.apps.{{ acm_spoke_name }}.{{ domain }}
+ - assisted-service-assisted-installer.apps.{{ acm_spoke_name }}.{{ domain }}
+{% endif %}
 {% endif %}
 
 {% if virtual_masters %}
@@ -98,6 +120,25 @@ apps:
     reserveip: true
 {% endif %}
  disks: {{ virtual_disks }}
+{% endfor %}
+{% endif %}
+
+{% if acm and acm_virtual_nodes %}
+{% for num in range(0, acm_virtual_nodes_number) %}
+{{ cluster }}-acm-node-{{ num }}:
+ pool: {{ pool }}
+ numcpus: {{ acm_virtual_nodes_numcpus }}
+ start: false
+ cloudinit: false
+# uefi: {{ 'true' }}
+ uefi_legacy: True
+ memory: {{ acm_virtual_nodes_memory }}
+ nets:
+  - name: {{ baremetal_net }}
+    mac: {{ acm_virtual_nodes_baremetal_mac_prefix + ":" + "%02.d" | format(num + 1)| string }}
+ disks:
+ - size: {{ acm_virtual_nodes_disk_size }}
+   interface: scsi
 {% endfor %}
 {% endif %}
 
@@ -189,6 +230,16 @@ apps:
    content: |
     {{ ca |certificate | replace('\n', '\n    ') }}
 {% endfor %}
+{% if acm %}
+ - acm_assisted-service.sample.yml
+ - acm_spoke.sample.yml
+ - 23_acm.sh
+ - acm_bmc.yml
+ - acm_install.yml
+ - acm_cr.yml
+ - path: /root/bin/gen_registries.py
+   origin: helpers/gen_registries.py
+{% endif %}
 {% if launch_steps %}
  scripts:
 {% if build %}
