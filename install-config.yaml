@@ -68,7 +68,7 @@ networking:
 {% if dualstack and dualstack_cidr != None %}
   - cidr: {{ dualstack_cidr }}
 {% endif %}
-  clusterNetworks:
+  clusterNetwork:
 {% for network in cluster_networks %}
   - cidr: {{ network['cidr'] }}
     hostPrefix: {{ network['hostPrefix'] }}
