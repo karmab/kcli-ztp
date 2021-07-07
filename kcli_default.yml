@@ -28,6 +28,7 @@ playbook: false
 cluster: openshift
 domain: karmalabs.com
 network_type: OVNKubernetes
+network_mtu: 
 dualstack: false
 dualstack_cidr:
 http_proxy:
