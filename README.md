@@ -199,3 +199,8 @@ The following parameters can be used in this case:
 - redfish_address. Redfish url
 - provisioning_mac. It needs to be set to the mac to use along with provisioning network or any of the macs of the node when provisioning is disabled
 - boot_mode (optional). Should either be set to Legacy, UEFI or UEFISecureBoot
+-
+## Lab runthrough
+
+A lab available [here](https://ocp-baremetal-ipi-lab.readthedocs.io/en/latest) is provided to get people familiarized with Baremetal Ipi workflow.
+
