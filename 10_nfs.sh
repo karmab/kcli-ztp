@@ -4,7 +4,9 @@ set -euo pipefail
 export KUBECONFIG=/root/ocp/auth/kubeconfig
 export PRIMARY_IP=$(ip -o addr show eth0 | head -1 | awk '{print $4}' | cut -d'/' -f1)
 dnf -y install nfs-utils
+set -e
 systemctl disable --now firewalld
+set +e
 systemctl enable --now nfs-server
 export MODE="ReadWriteOnce"
 for i in `seq 1 20` ; do
