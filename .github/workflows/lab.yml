@@ -1,0 +1,43 @@
+name: lab 
+on:
+  workflow_dispatch:
+    inputs:
+      RUNNER:
+        description: 'Runner Name'
+        required: true
+        default: 'u08'
+      PLAN:
+        description: 'Plan Name'
+        required: true
+        default: lab
+      PARAMFILE:
+        description: 'paramfile'
+        required: false
+        default: lab.yml
+      LAUNCH_STEPS:
+        description: 'launch_steps'
+        required: false
+        default: True
+      DEPLOY_OPENSHIFT:
+        description: 'deploy_openshift'
+        required: false
+        default: True
+
+jobs:
+    requirements:
+      runs-on:  ${{github.event.inputs.RUNNER}} 
+      steps:
+       - uses: actions/checkout@v2
+       - run: git pull origin ${GITHUB_REF##*/}
+       - name: Install kcli
+         run: |
+           curl https://raw.githubusercontent.com/karmab/kcli/master/install.sh | bash
+           # kcli create pool -p /var/lib/libvirt/images default
+           # sudo setfacl -m u:$(id -un):rwx /var/lib/libvirt/images
+
+    deploy-plan:
+      needs: requirements
+      runs-on:  ${{github.event.inputs.RUNNER}}   
+      steps:
+        - name: Deploy kcli plan
+          run: kcli create plan --force -f kcli_plan.yml --paramfile ${{github.event.inputs.PARAMFILE}} -P launch_steps=${{github.event.inputs.LAUNCH_STEPS}} -P deploy_openshift=${{github.event.inputs.DEPLOY_OPENSHIFT}}  ${{github.event.inputs.PLAN}} 

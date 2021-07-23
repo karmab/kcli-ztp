@@ -12,6 +12,7 @@ cd ${GOPATH}/src/github.com/openshift
 curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
 git clone https://github.com/openshift/installer.git
 cd installer
+git checkout release-{{ tag }}
 dep ensure
 export HOME=/root
 git config --global user.email "you@example.com"
