@@ -1,4 +1,4 @@
-name: lab 
+name: lab-ipv6 
 on:
   workflow_dispatch:
     inputs:
@@ -9,11 +9,11 @@ on:
       PLAN:
         description: 'Plan Name'
         required: true
-        default: lab
+        default: lab-ipv6
       PARAMFILE:
         description: 'paramfile'
         required: false
-        default: lab.yml
+        default: lab_ipv6.yml
       PULLSECRET:
         description: 'pullsecret'
         required: false
