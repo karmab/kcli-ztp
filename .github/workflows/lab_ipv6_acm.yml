@@ -26,6 +26,14 @@ on:
         description: 'acm_op_bundle'
         required: false
         default: v2.3.0-143
+      ACM_PULLSECRET:
+        description: 'acm_pullsecret'
+        required: false
+        default: /root/openshift_pull_acm.json
+      PULLSECRET:
+        description: 'pullsecret'
+        required: false
+        default: /root/openshift_pull.json
 
 env:
  HOME: /root
@@ -47,4 +55,4 @@ jobs:
       runs-on: ${{github.event.inputs.RUNNER}}  
       steps:
         - name: Deploy kcli plan
-          run: kcli -C ${{github.event.inputs.CLIENT}} create plan --force -f kcli_plan.yml --paramfile ${{github.event.inputs.PARAMFILE}} -P acm_snapshot='${{github.event.inputs.ACM_SNAPSHOT}}' -P acm_op_bundle='${{github.event.inputs.ACM_OP_BUNDLE}}' ${{github.event.inputs.PLAN}}
+          run: kcli -C ${{github.event.inputs.CLIENT}} create plan --force -f kcli_plan.yml --paramfile ${{github.event.inputs.PARAMFILE}} -P acm_snapshot='${{github.event.inputs.ACM_SNAPSHOT}}' -P acm_op_bundle='${{github.event.inputs.ACM_OP_BUNDLE}}' -P acm_pullsecret='${{github.event.inputs.ACM_PULLSECRET}}' -P pullsecret='${{github.event.inputs.PULLSECRET}}' ${{github.event.inputs.PLAN}}
