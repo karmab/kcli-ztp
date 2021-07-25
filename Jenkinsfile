@@ -27,7 +27,7 @@ If build is set to true, the openshift install binary will be compiled from sour
     string(name: 'image', defaultValue: "centos8", description: ''),
     string(name: 'installer_mac', defaultValue: "", description: ''),
     string(name: 'installer_wait', defaultValue: "False", description: ''),
-    string(name: 'openshift_image', defaultValue: "registry.ci.openshift.org/ocp/release:4.7", description: ''),
+    string(name: 'openshift_image', defaultValue: "registry.ci.openshift.org/ocp/release:4.9", description: ''),
     string(name: 'playbook', defaultValue: "False", description: ''),
     string(name: 'cluster', defaultValue: "openshift", description: ''),
     string(name: 'domain', defaultValue: "karmalabs.com", description: ''),

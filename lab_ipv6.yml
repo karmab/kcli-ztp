@@ -9,7 +9,7 @@ virtual_workers: true
 launch_steps: true
 deploy_openshift: false
 version: stable
-tag: 4.7
+tag: 4.8
 cluster: lab
 domain: karmalabs.com 
 openshift_image: registry.ci.openshift.org/ocp/release:4.8

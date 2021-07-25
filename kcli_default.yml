@@ -22,8 +22,8 @@ image: centos8
 installer_mac:
 installer_wait: False
 version: ci
-tag: 4.8
-openshift_image: registry.ci.openshift.org/ocp/release:4.8
+tag: 4.9
+openshift_image: registry.ci.openshift.org/ocp/release:4.9
 playbook: false
 cluster: openshift
 domain: karmalabs.com

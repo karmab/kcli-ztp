@@ -1,6 +1,6 @@
 lab: true
 version: stable
-tag: "4.7"
+tag: "4.8"
 provisioning_enable: true
 virtual_protocol: ipmi
 virtual_masters: true
