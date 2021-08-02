@@ -26,6 +26,7 @@ with open(installfile) as f:
         else:
             match = re.match(".*(http.*|idrac-virtualmedia.*|redfish-virtualmedia.*)", address)
             address = match.group(1).replace('idrac-virtualmedia', 'https').replace('redfish-virtualmedia', 'https')
+            print(address)
             info = requests.get(address, verify=False, auth=(user, password)).json()
             # name = info['Name']
             print("running %s for %s" % (action, name))

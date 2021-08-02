@@ -1,8 +1,8 @@
 lab: true
 version: stable
 tag: "4.8"
-provisioning_enable: true
-virtual_protocol: ipmi
+provisioning_enable: false
+virtual_protocol: redfish
 virtual_masters: true
 virtual_workers: true
 launch_steps: false
