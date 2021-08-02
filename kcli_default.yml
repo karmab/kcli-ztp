@@ -19,6 +19,7 @@ info: |
     version can instead be set to stable or latest, along with tag, to gather the binary from public sources.
 
 image: centos8
+installer_nic: eth0
 installer_mac:
 installer_wait: False
 version: ci

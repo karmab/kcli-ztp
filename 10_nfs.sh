@@ -2,7 +2,7 @@
 set -euo pipefail
 
 export KUBECONFIG=/root/ocp/auth/kubeconfig
-export PRIMARY_IP=$(ip -o addr show eth0 | head -1 | awk '{print $4}' | cut -d'/' -f1)
+export PRIMARY_IP=$(ip -o addr show {{ installer_nic }} | head -1 | awk '{print $4}' | cut -d'/' -f1)
 dnf -y install nfs-utils
 systemctl disable --now firewalld || true
 systemctl enable --now nfs-server

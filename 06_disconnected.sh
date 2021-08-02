@@ -4,7 +4,7 @@ set -euo pipefail
 export PATH=/root/bin:$PATH
 export PULL_SECRET="/root/openshift_pull.json"
 dnf -y install podman httpd httpd-tools jq bind-utils
-export IP=$(ip -o addr show eth0 | head -1 | awk '{print $4}' | cut -d'/' -f1)
+export IP=$(ip -o addr show {{ installer_nic }} | head -1 | awk '{print $4}' | cut -d'/' -f1)
 REVERSE_NAME=$(dig -x $IP +short | sed 's/\.[^\.]*$//')
 echo $IP | grep -q ':' && SERVER6=$(grep : /etc/resolv.conf | grep -v fe80 | cut -d" " -f2) && REVERSE_NAME=$(dig -6x $IP +short @$SERVER6 | sed 's/\.[^\.]*$//')
 REGISTRY_NAME=${REVERSE_NAME:-$(hostname -f)}
