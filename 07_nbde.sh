@@ -14,7 +14,7 @@ jose jwk gen -i '{"alg":"ES512"}' -o /var/db/tang/newsig.jwk
 jose jwk gen -i '{"alg":"ECMR"}' -o /var/db/tang/newexc.jwk
 systemctl start tangd.socket
 
-export IP=$(ip -o addr show {{ installer_nic }} | head -1 | awk '{print $4}' | cut -d'/' -f1)
+export IP=$(ip -o addr show {{ installer_nic }}|head -1 | awk '{print $4}' | cut -d'/' -f1)
 export TANG_URL=http://"$IP:7500"
 export THP="$(tang-show-keys 7500)"
 export ROLE=worker

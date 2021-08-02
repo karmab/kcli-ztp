@@ -15,7 +15,7 @@ python3 /root/bin/vbmc.py
 api_vip=$(grep apiVIP /root/install-config.yaml | awk -F: '{print $2}' | xargs)
 cluster=$(grep -m 1 name /root/install-config.yaml | awk -F: '{print $2}' | xargs)
 domain=$(grep baseDomain /root/install-config.yaml | awk -F: '{print $2}' | xargs)
-IP=$(ip -o addr show {{ installer_nic }} | head -1 | awk '{print $4}' | cut -d "/" -f 1 | head -1)
+IP=$(ip -o addr show {{ installer_nic }}|head -1 | awk '{print $4}' | cut -d "/" -f 1 | head -1)
 echo $IP | grep -q ':' && IP=[$IP]
 sed -i "s/DONTCHANGEME/$IP/" /root/install-config.yaml
 sed -i "s/DONTCHANGEME/$IP/" /root/extra_worker.yml
