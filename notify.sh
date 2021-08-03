@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
+
 export KUBECONFIG=/root/ocp/auth/kubeconfig
 echo "Report from vm: $(hostname) ip: $(hostname -I | cut -d' ' -f1)"
 echo "Cluster info:"
