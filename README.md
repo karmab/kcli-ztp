@@ -22,6 +22,7 @@ To deploy baremetal using `bare minimum` on the provisioning node
 - two physical bridges:
     - baremetal with a nic from the external network
     - provisioning with a nic from the provisioning network. Ideally assign it an ip of 172.22.0.1/24
+- If you're not running as root, configure extra permissions with `sudo setfacl -m u:$(id -un):rwx /var/lib/libvirt/openshift-images/*`
 
 Here's a script you can run on the provisioning node for that (adjust the nics variable as per your environment)
 
