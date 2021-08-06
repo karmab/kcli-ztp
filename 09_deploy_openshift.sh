@@ -8,7 +8,7 @@ export HOME=/root
 export KUBECONFIG=/root/ocp/auth/kubeconfig
 export OS_CLOUD=metal3-bootstrap
 export OPENSHIFT_INSTALL_RELEASE_IMAGE_OVERRIDE=$(cat /root/version.txt)
-bash /root/bin/clean.sh
+bash /root/bin/clean.sh || true
 mkdir -p ocp/openshift
 python3 /root/bin/ipmi.py off
 python3 /root/bin/redfish.py off
