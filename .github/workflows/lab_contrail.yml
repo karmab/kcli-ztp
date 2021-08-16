@@ -35,6 +35,9 @@ on:
         required: false
         default: 4.6
 
+env:
+ HOME: /root
+
 jobs:
     requirements:
       runs-on:  ${{github.event.inputs.RUNNER}} 
