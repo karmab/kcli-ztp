@@ -13,7 +13,7 @@ on:
       PARAMFILE:
         description: 'paramfile'
         required: false
-        default: lab.yml
+        default: lab-contrail.yml
       PULLSECRET:
         description: 'pullsecret'
         required: false
