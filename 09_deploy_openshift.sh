@@ -33,3 +33,4 @@ if [ "$TOTAL_WORKERS" -gt "0" ] ; then
   sleep 5
 done
 fi
+touch /root/cluster_ready.txt
