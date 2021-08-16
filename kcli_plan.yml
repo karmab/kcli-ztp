@@ -90,6 +90,18 @@
    content: |
     {{ ca |certificate | replace('\n', '\n    ') }}
 {% endfor %}
+{% if network_type == 'Contrail' %}
+ - 99-blacklist-contrail-master.yaml
+ - 99-blacklist-contrail-worker.yaml
+ - haproxy.cfg
+ - contrail-manifests.sh
+ - path: /usr/local/bin/contrail-hack.sh
+   origin: contrail-hack.sh
+   mode: 700
+ - path: /usr/lib/systemd/system/contrail-hack.service
+   origin: contrail-hack.service
+   mode: 644
+{% endif %}
 {% if launch_steps %}
  scripts:
 {% if build %}

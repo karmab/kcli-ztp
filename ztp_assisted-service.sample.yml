@@ -43,8 +43,8 @@ spec:
   osImages:
     - openshiftVersion: "${MINOR}"
       version: ""
-      url: "http://${BAREMETAL_IP}/rhcos-live.x86_64.iso"
-      rootFSUrl: "http://${BAREMETAL_IP}/rhcos-live-rootfs.x86_64.img"
+      url: "http://${BAREMETAL_IP}:8080/rhcos-live.x86_64.iso"
+      rootFSUrl: "http://${BAREMETAL_IP}:8080/rhcos-live-rootfs.x86_64.img"
 ---
 apiVersion: v1
 kind: Secret

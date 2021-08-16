@@ -5,6 +5,7 @@ set -euo pipefail
 export PATH=/root/bin:$PATH
 dnf -y install httpd
 dnf -y update libgcrypt
+sed -i "s/Listen 80/Listen 8080/" /etc/httpd/conf/httpd.conf
 systemctl enable --now httpd
 cd /var/www/html
 if openshift-baremetal-install coreos print-stream-json >/dev/null 2>&1; then
@@ -51,5 +52,5 @@ unset LIBGUESTFS_BACKEND
 SPACES=$(grep apiVIP /root/install-config.yaml | sed 's/apiVIP.*//' | sed 's/ /\\ /'g)
 export BAREMETAL_IP=$(ip -o addr show {{ installer_nic }}|head -1 | awk '{print $4}' | cut -d'/' -f1)
 echo $BAREMETAL_IP | grep -q ':' && BAREMETAL_IP=[$BAREMETAL_IP]
-sed -i "/apiVIP/i${SPACES}bootstrapOSImage: http://${BAREMETAL_IP}/${RHCOS_QEMU_URI}?sha256=${RHCOS_QEMU_SHA_UNCOMPRESSED}" /root/install-config.yaml
-sed -i "/apiVIP/i${SPACES}clusterOSImage: http://${BAREMETAL_IP}/${RHCOS_OPENSTACK_URI}?sha256=${RHCOS_OPENSTACK_SHA_COMPRESSED}" /root/install-config.yaml
+sed -i "/apiVIP/i${SPACES}bootstrapOSImage: http://${BAREMETAL_IP}:8080/${RHCOS_QEMU_URI}?sha256=${RHCOS_QEMU_SHA_UNCOMPRESSED}" /root/install-config.yaml
+sed -i "/apiVIP/i${SPACES}clusterOSImage: http://${BAREMETAL_IP}:8080/${RHCOS_OPENSTACK_URI}?sha256=${RHCOS_OPENSTACK_SHA_COMPRESSED}" /root/install-config.yaml

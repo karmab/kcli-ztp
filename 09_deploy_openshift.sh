@@ -16,6 +16,13 @@ cp install-config.yaml ocp
 openshift-baremetal-install --dir ocp --log-level debug create manifests
 cp manifests/*y*ml >/dev/null 2>&1 ocp/openshift || true
 TOTAL_WORKERS=$(grep 'role: worker' /root/install-config.yaml | wc -l) || true
+{% if network_type == 'Contrail' %}
+[ "$TOTAL_WORKERS" -gt "0" ] || cp 99-openshift-ingress-controller-master.yaml ocp/openshift
+bash contrail-manifests.sh
+cp 99-blacklist-contrail-worker.yaml ocp/openshift
+cp 99-blacklist-contrail-master.yaml ocp/openshift
+systemctl start contrail-hack
+{% endif %}
 # [ "$TOTAL_WORKERS" -gt "0" ] || cp 99-openshift-ingress-controller-master.yaml ocp/openshift
 echo {{ api_ip }} api.{{ cluster }}.{{ domain }} >> /etc/hosts
 openshift-baremetal-install --dir ocp --log-level debug create cluster || true

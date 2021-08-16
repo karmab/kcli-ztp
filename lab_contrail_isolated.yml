@@ -1,0 +1,34 @@
+lab: true
+provisioning_enable: false
+version: stable
+tag: 4.6
+network_type: Contrail
+uefi_legacy: true
+virtual_masters: true
+launch_steps: true
+deploy_openshift: true
+cluster: lab
+domain: karmalabs.com 
+baremetal_cidr: 192.168.129.0/24
+baremetal_net: lab-net
+virtual_masters_memory: 61440
+virtual_masters_numcpus: 32
+api_ip: 192.168.129.253
+ingress_ip: 192.168.129.252
+disk_size: 250
+baremetal_noprovisioning_bootstrap_ip: 192.168.129.251
+baremetal_noprovisioning_ip: 192.168.129.250
+baremetal_ips:
+- 192.168.129.20
+- 192.168.129.21
+- 192.168.129.22
+- 192.168.129.23
+- 192.168.129.24
+- 192.168.129.25
+baremetal_macs:
+- aa:aa:aa:aa:bb:01
+- aa:aa:aa:aa:bb:02
+- aa:aa:aa:aa:bb:03
+- aa:aa:aa:aa:bb:04
+- aa:aa:aa:aa:bb:05
+- aa:aa:aa:aa:bb:06

@@ -1,0 +1,11 @@
+[Unit]
+Description=Wait for masters to be ready and bootstrap to be gone before launching haproxy
+Requires=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/contrail-hack.sh
+
+[Install]
+WantedBy=multi-user.target
