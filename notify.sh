@@ -10,3 +10,4 @@ echo "Nodes info:"
 oc get nodes
 echo "Update time:"
 uptime | awk '{ print $3 }' | sed 's/,//'
+touch /root/cluster_ready.txt
