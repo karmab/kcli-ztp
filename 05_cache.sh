@@ -14,8 +14,8 @@ if openshift-baremetal-install coreos print-stream-json >/dev/null 2>&1; then
     RHCOS_OPENSTACK_SHA_COMPRESSED=$(openshift-baremetal-install coreos print-stream-json | jq -r '.architectures.x86_64.artifacts.openstack.formats["qcow2.gz"].disk["sha256"]')
     RHCOS_QEMU_URI=$(basename $RHCOS_QEMU_URI_FULL)
     RHCOS_OPENSTACK_URI=$(basename $RHCOS_OPENSTACK_URI_FULL)
-    curl -L $RHCOS_QEMU_URI_FULL > $RHCOS_QEMU_URI
-    curl -L $RHCOS_OPENSTACK_URI_FULL > $RHCOS_OPENSTACK_URI
+    time curl -L $RHCOS_QEMU_URI_FULL > $RHCOS_QEMU_URI
+    time curl -L $RHCOS_OPENSTACK_URI_FULL > $RHCOS_OPENSTACK_URI
 else
     if [ -z "${COMMIT_ID-}" ] ; then
       export COMMIT_ID=$(openshift-baremetal-install version | grep '^built from commit' | awk '{print $4}')
@@ -25,8 +25,8 @@ else
     RHCOS_PATH=$(curl -s -S https://raw.githubusercontent.com/openshift/installer/$COMMIT_ID/data/data/rhcos.json | jq .baseURI | sed 's/"//g')
     RHCOS_QEMU_SHA_UNCOMPRESSED=$(curl -s -S https://raw.githubusercontent.com/openshift/installer/$COMMIT_ID/data/data/rhcos.json  | jq -r '.images.qemu["uncompressed-sha256"]')
     RHCOS_OPENSTACK_SHA_COMPRESSED=$(curl -s -S https://raw.githubusercontent.com/openshift/installer/$COMMIT_ID/data/data/rhcos.json  | jq -r '.images.openstack.sha256')
-    curl -L $RHCOS_PATH$RHCOS_QEMU_URI > $RHCOS_QEMU_URI
-    curl -L $RHCOS_PATH$RHCOS_OPENSTACK_URI > $RHCOS_OPENSTACK_URI
+    time curl -L $RHCOS_PATH$RHCOS_QEMU_URI > $RHCOS_QEMU_URI
+    time curl -L $RHCOS_PATH$RHCOS_OPENSTACK_URI > $RHCOS_OPENSTACK_URI
 fi
 
 {% if patch_rhcos_image %}
