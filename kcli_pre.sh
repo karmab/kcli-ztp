@@ -6,6 +6,7 @@ exit 1
 DOTS=$(echo {{ tag }} | grep -o '\.' | wc -l)
 [ "$DOTS" -eq "1" ] || (echo tag should be 4.X && exit 1)
 {% if version == 'nightly' %}
+{% set tag = tag|string %}
 TAG={{ tag if tag.split('.')|length > 2 else "latest-" + tag }}
 VERSIONCHECK=$(curl -s https://mirror.openshift.com/pub/openshift-v4/clients/ocp-dev-preview/$TAG/release.txt | grep -q 'Pull from')
 [ "$VERSIONCHECK" == "" ] || (echo incorrect mix {{ version }} and {{ tag }} && exit 1)

@@ -117,12 +117,12 @@ apps:
  memory: {{ memory }}
  privatekey: true
  notify: {{ notify }}
-{% if lab %}
- notifycmd: echo machine $(hostname) ready at $(hostname -I)
-{% elif deploy_openshift %}
+{% if deploy_openshift %}
  notifyscript: {{ notifyscript }}
-{% else %}
+{% elif launch_steps %}
  notifycmd: ls /root/bin/openshift-baremetal-install
+{% else %}
+ notifycmd: echo machine $(hostname) ready at $(hostname -I)
 {% endif %}
  nets:
  - name: {{ baremetal_net }}
