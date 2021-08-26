@@ -8,8 +8,10 @@ virtual_masters: true
 virtual_workers: true
 launch_steps: true
 deploy_openshift: true
-version: stable
-tag: 4.8.6
+#version: stable
+#tag: 4.8.6
+version: nightly
+tag: 4.9
 cluster: lab
 domain: karmalabs.com 
 baremetal_cidr: 2620:52:0:1302::/64

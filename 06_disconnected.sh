@@ -43,7 +43,6 @@ podman create --name registry --net host --security-opt label=disable -v /opt/re
 podman start registry
 {% if version == 'ci' %}
 export OPENSHIFT_RELEASE_IMAGE={{ openshift_image }}
-export OCP_RELEASE=$( echo $OPENSHIFT_RELEASE_IMAGE | rev | cut -d: -f1 | rev)
 {% elif version in ['nightly', 'stable'] %}
 {% set tag = tag|string %}
 {% if tag.split('.')|length > 2 %}
@@ -55,14 +54,13 @@ TAG={{"stable-" + tag }}
 {% endif %}
 OCP_REPO={{ 'ocp-dev-preview' if version == 'nightly' else 'ocp' }}
 export OPENSHIFT_RELEASE_IMAGE=$(curl -s https://mirror.openshift.com/pub/openshift-v4/clients/$OCP_REPO/$TAG/release.txt | grep 'Pull From: quay.io' | awk -F ' ' '{print $3}')
-export OCP_RELEASE=$( echo $OPENSHIFT_RELEASE_IMAGE | cut -d: -f2)
 {% else %}
 export OPENSHIFT_RELEASE_IMAGE=$(curl -s https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ version }}-{{ tag }}/release.txt | grep 'Pull From: quay.io' | awk -F ' ' '{print $3}')
-export OCP_RELEASE={{ tag }}-x86_64
 {% endif %}
 export LOCAL_REG="$REGISTRY_NAME:5000"
 export LOCAL_REPO='ocp/release'
 mv /root/temp.json $PULL_SECRET
+export OCP_RELEASE=$(/root/bin/openshift-baremetal-install version | head -1 | cut -d' ' -f2)-x86_64
 time oc adm release mirror -a $PULL_SECRET --from=$OPENSHIFT_RELEASE_IMAGE --to-release-image=${LOCAL_REG}/ocp4:${OCP_RELEASE} --to=${LOCAL_REG}/ocp4
 echo "{\"auths\": {\"$REGISTRY_NAME:5000\": {\"auth\": \"$KEY\", \"email\": \"jhendrix@karmalabs.com\"}}}" > /root/temp.json
 
