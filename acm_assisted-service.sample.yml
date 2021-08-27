@@ -1,7 +1,7 @@
 apiVersion: hive.openshift.io/v1
 kind: ClusterImageSet
 metadata:
-  name: openshift-v4.8.0
+  name: openshift-v${MINOR}
   namespace: open-cluster-management
 spec:
   releaseImage: ${RELEASE}
@@ -41,7 +41,7 @@ spec:
     name: "lab-index-mirror"
 {% endif %}
   osImages:
-    - openshiftVersion: "4.8"
+    - openshiftVersion: "${MINOR}"
       version: ""
       url: "http://${BAREMETAL_IP}/rhcos-live.x86_64.iso"
       rootFSUrl: "http://${BAREMETAL_IP}/rhcos-live-rootfs.x86_64.img"

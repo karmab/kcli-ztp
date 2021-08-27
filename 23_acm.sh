@@ -20,6 +20,7 @@ oc patch hiveconfig hive --type merge -p '{"spec":{"targetNamespace":"hive","log
 sleep 120
 
 OCP_RELEASE=$(/root/bin/openshift-baremetal-install version | head -1 | cut -d' ' -f2)-x86_64
+export MINOR=$(echo $OCP_RELEASE | cut -d. -f1,2)
 BAREMETAL_IP=$(ip -o addr show eth0 | head -1 | awk '{print $4}' | cut -d'/' -f1)
 
 {% if disconnected %}
