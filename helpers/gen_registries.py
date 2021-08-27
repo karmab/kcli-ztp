@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 
+import glob
 import yaml
 
+manifestfile = glob.glob('/root/manifests-redhat-operator-index-*/imageContentSourcePolicy.yaml')[0]
 results = ''
-with open('/root/manifests/imageContentSourcePolicy.yaml') as f:
+with open(manifestfile) as f:
     data = yaml.safe_load(f)
 
 mirrors = data['spec']['repositoryDigestMirrors']
