@@ -10,4 +10,9 @@ echo "Nodes info:"
 oc get nodes
 echo "Update time:"
 uptime | awk '{ print $3 }' | sed 's/,//'
+{% if acm %}
+export SPOKE={{ acm_spoke_name }}
+oc describe -n $SPOKE AgentClusterInstall
+oc get agent -A
+{% endif %}
 touch /root/cluster_ready.txt
