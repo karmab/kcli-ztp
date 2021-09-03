@@ -1,3 +1,4 @@
+baseplan: kcli_plan.yml
 acm_nodes: []
 acm_virtual_nodes: False
 acm_virtual_nodes_number: 1

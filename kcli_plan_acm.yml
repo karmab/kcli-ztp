@@ -23,7 +23,6 @@ apps-{{ acm_spoke_name }}:
 {% if acm_virtual_nodes %}
 {% for num in range(0, acm_virtual_nodes_number) %}
 {{ cluster }}-acm-node-{{ num }}:
- baseplan: kcli_plan.yml
  pool: {{ pool }}
  numcpus: {{ acm_virtual_nodes_numcpus }}
  start: false
