@@ -1,0 +1,5 @@
+- name: baremetal_ipi
+  file: kcli_plan.yml
+
+- name: baremetal_ipi_acm
+  file: kcli_plan_acm.yml
