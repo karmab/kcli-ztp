@@ -1,0 +1,57 @@
+{% if lab and acm_spoke_api_ip != None and acm_spoke_ingress_ip != None %}
+api-{{ acm_spoke_name }}:
+ type: dns
+ net: {{ baremetal_net }}
+ ip: {{ acm_spoke_api_ip }}
+ alias:
+ - api.{{ acm_spoke_name }}.{{ domain }}
+ - api-int.{{ acm_spoke_name }}.{{ domain }}
+
+apps-{{ acm_spoke_name }}:
+ type: dns
+ net: {{ baremetal_net }}
+ ip: {{ acm_spoke_ingress_ip }}
+ alias:
+ - console-openshift-console.apps.{{ acm_spoke_name }}.{{ domain }}
+ - oauth-openshift.apps.{{ acm_spoke_name }}.{{ domain }}
+ - prometheus-k8s-openshift-monitoring.apps.{{ acm_spoke_name }}.{{ domain }}
+ - canary-openshift-ingress-canary.apps.{{ acm_spoke_name }}.{{ domain }}
+ - assisted-service-open-cluster-management.apps.{{ acm_spoke_name }}.{{ domain }}
+ - assisted-service-assisted-installer.apps.{{ acm_spoke_name }}.{{ domain }}
+{% endif %}
+
+{% if acm_virtual_nodes %}
+{% for num in range(0, acm_virtual_nodes_number) %}
+{{ cluster }}-acm-node-{{ num }}:
+ baseplan: kcli_plan.yml
+ pool: {{ pool }}
+ numcpus: {{ acm_virtual_nodes_numcpus }}
+ start: false
+ cloudinit: false
+# uefi: {{ 'true' }}
+ uefi_legacy: True
+ memory: {{ acm_virtual_nodes_memory }}
+ nets:
+  - name: {{ baremetal_net }}
+    mac: {{ acm_virtual_nodes_baremetal_mac_prefix + ":" + "%02.d" | format(num + 1)| string }}
+ disks:
+ - size: {{ acm_virtual_nodes_disk_size }}
+   interface: scsi
+{% endfor %}
+{% endif %}
+
+{{ cluster }}-installer:
+ baseplan: kcli_plan.yml
+ files:
+ - acm_assisted-service.sample.yml
+ - acm_spoke.sample.yml
+ - 23_acm.sh
+ - acm_bmc.yml
+ - acm_install.yml
+ - acm_cr.yml
+ - path: /root/bin/gen_registries.py
+   origin: helpers/gen_registries.py
+ scripts:
+{% if deploy_openshift %}
+ - 23_acm.sh
+{% endif %}

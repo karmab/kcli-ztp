@@ -22,7 +22,7 @@ grep -q registry.ci.openshift.org {{ pullsecret }} || (echo Missing token for re
 ip a l {{ baremetal_net }} >/dev/null 2>&1 || (echo Issue with network {{ baremetal_net }} && exit 1)
 {% endif %}
 
-{% if acm %}
+{% if acm_nodes is defined %}
 {% if acm_spoke_masters_number > 1 %}
 {% if acm_spoke_api_ip == None %}
 echo acm_spoke_api_ip needs to be set if deploying an HA spoke && exit 1

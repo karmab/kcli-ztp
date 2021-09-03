@@ -30,7 +30,6 @@ baremetal_macs:
 - aa:aa:aa:aa:bb:01
 - aa:aa:aa:aa:bb:02
 - aa:aa:aa:aa:bb:03
-acm: true
 acm_spoke_wait: true
 disconnected_operators:
 - advanced-cluster-management
@@ -42,4 +41,3 @@ acm_spoke_workers_number: 0
 vmrules:
  - lab-installer:
      disks: [200]
-
