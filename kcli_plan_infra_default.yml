@@ -1,0 +1,45 @@
+cluster: openshift
+domain: karmalabs.com
+dualstack: false
+dualstack_cidr:
+http_proxy:
+no_proxy:
+keys: []
+api_ip:
+dns_ip:
+ingress_ip:
+network: default
+pool: default                                                                                                                                 
+numcpus: 16   
+masters: []
+workers: []
+memory: 32768
+disk_size: 30
+extra_disks: []
+uefi_legacy: false
+provisioning_enable: true
+baremetal_bootstrap_mac:
+provisioning_bootstrap_mac:
+provisioning_interface: eno1
+provisioning_net: provisioning
+provisioning_macs: []
+baremetal_net: baremetal
+baremetal_cidr:
+baremetal_macs: []
+baremetal_ips: []
+virtual_protocol: ipmi
+virtual_masters: false
+virtual_masters_number: 3
+virtual_masters_numcpus: 8
+virtual_masters_memory: 32768
+virtual_masters_mac_prefix: aa:aa:aa:aa:aa
+virtual_masters_baremetal_mac_prefix: aa:aa:aa:cc:cc
+virtual_workers: false
+virtual_workers_number: 1
+virtual_workers_numcpus: 8
+virtual_workers_memory: 16384
+virtual_workers_mac_prefix: aa:aa:aa:bb:bb
+virtual_workers_baremetal_mac_prefix: aa:aa:aa:dd:dd
+virtual_workers_deploy: true
+lab: false
+model: dell
