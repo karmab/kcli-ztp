@@ -8,7 +8,6 @@ keys: []
 api_ip:
 dns_ip:
 ingress_ip:
-network: default
 pool: default                                                                                                                                 
 numcpus: 16   
 masters: []
