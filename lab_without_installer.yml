@@ -1,0 +1,12 @@
+version: stable
+ipi: true
+ipi_platform: baremetal
+tag: 4.8
+network_type: OVNKubernetes
+domain: karmalabs.com
+cluster: lab
+network: lab-baremetal
+baremetal_net: lab-baremetal
+baremetal_cidr: 192.168.129.0/24
+api_ip: 192.168.129.253
+ingress_ip: 192.168.129.252
