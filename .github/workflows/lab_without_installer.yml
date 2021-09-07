@@ -63,7 +63,11 @@ jobs:
          run: |
            pip3 install sushy-tools
            cp -f helpers/sushy.service /usr/lib/systemd/system
-           systemctl enable --now sushy
+           ### temp hack ###
+           sed -i 's@8000@80@' /etc/sushy.conf
+           systemctl restart sushy
+           #################
+           # systemctl enable --now sushy
 
     render-redfish-in-parameter-file:
       needs: install-redfish
@@ -78,4 +82,7 @@ jobs:
       steps:
        - name: Deploy cluster
          run: |
+           ### temp hack ###
+           sed -i 's@:8000@:80@' ${{github.event.inputs.PARAMFILE}}
+           #################
            kcli --debug create cluster openshift --paramfile ${{github.event.inputs.PARAMFILE}} -P pull_secret='${{github.event.inputs.PULLSECRET}}' ${{github.event.inputs.PLAN}}-cluster --force
