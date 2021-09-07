@@ -4,7 +4,7 @@ tag: "4.8"
 provisioning_enable: false
 virtual_protocol: redfish
 virtual_masters: true
-virtual_workers: true
+virtual_workers: false
 launch_steps: false
 deploy_openshift: false
 cluster: lab
