@@ -1,4 +1,4 @@
-name: lab 
+name: lab-without-installer
 on:
   workflow_dispatch:
     inputs:
@@ -48,7 +48,9 @@ jobs:
 
     deploy-infra-plan:
       needs: requirements
-       - name: Install sushy
+      runs-on:  ${{github.event.inputs.RUNNER}}   
+      steps:
+       - name: Deploy infra
          run: kcli create plan --force -f kcli_plan_infra.yml --paramfile ${{github.event.inputs.INFRAPARAMFILE}} ${{github.event.inputs.PLAN}}
 
     install-redfish:
@@ -60,6 +62,7 @@ jobs:
        - name: Install redfish
          run: |
            pip3 install sushy-tools
+           cp -f helpers/sushy.service /usr/lib/systemd/system
            systemctl enable --now sushy
 
     render-redfish-in-parameter-file:
@@ -74,4 +77,6 @@ jobs:
       runs-on:  ${{github.event.inputs.RUNNER}}   
       steps:
        - name: Deploy cluster
-         run: kcli create cluster openshift --paramfile ${{github.event.inputs.PARAMFILE}} ${{github.event.inputs.PLAN}} 
+         run: |
+           cd /root
+           kcli --debug create cluster openshift --paramfile ${{github.event.inputs.PARAMFILE}} -P pull_secret='${{github.event.inputs.PULLSECRET}}' ${{github.event.inputs.PLAN}}-cluster --force
