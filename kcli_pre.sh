@@ -41,8 +41,8 @@ echo ztp_spoke_api_ip needs to be set if deploying an HA spoke && exit 1
 echo ztp_spoke_ingress_ip needs to be set if deploying an HA spoke && exit 1
 {% endif %}
 {% endif %}
+{% endif %}
 
 {% if network_type == 'Contrail' %}
 grep -q hub.juniper.net {{ pullsecret }} || (echo Missing token for hub.juniper.net && exit 1)
->>>>>>> minimal contrail support
 {% endif %}
