@@ -1,0 +1,33 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: contrail-hack
+  labels:
+    machineconfiguration.openshift.io/role: master
+spec:
+  config:
+    ignition:
+      version: 2.2.0
+    storage:
+      files:
+        - contents:
+            source: data:text/plain;charset=utf-8;base64,IyEvYmluL2Jhc2gKCmZ1bmN0aW9uIHBhdGNoZnVuYyB7Ck1BU1RFUlM9JChvYyBnZXQgbm9kZSAtLW5vLWhlYWRlcnMgfCB3YyAtbCkKWyAiJE1BU1RFUlMiID09ICIzIiBdIHx8IHJldHVybiAxCldFQlVJUz0kKG9jIGdldCBwb2QgLW4gdGYgLWwgd2VidWk9d2VidWkxIC0tbm8taGVhZGVycyB8IHdjIC1sKQpbICIkV0VCVUlTIiA9PSAiMyIgXSB8fCByZXR1cm4gMQpIT1NUX0lQPSQob2MgZ2V0IG5vZGUgLW8gd2lkZSAtLW5vLWhlYWRlcnMgfCBhd2sgJ3twcmludCAkNn0nIHwgaGVhZCAtMSkKQVBJX0lQPSQob2MgZ2V0IGNtIC1uIGt1YmUtc3lzdGVtIGNsdXN0ZXItY29uZmlnLXYxIC1vIHlhbWwgfCBncmVwIGFwaVZJUCB8IGN1dCAtZDogLWYyKQpBUElfSUQ9JChncmVwIHZpcnR1YWxfcm91dGVyX2lkIC9ldGMva2VlcGFsaXZlZC9rZWVwYWxpdmVkLmNvbmYgfCBoZWFkIC0xIHwgYXdrICd7cHJpbnQgJDJ9JykKcG9kbWFuIHJ1biAtZSBIT1NUX0lQPSRIT1NUX0lQIC1lIElQPSRBUElfSVAgLWUgSUQ9JEFQSV9JRCBxdWF5LmlvL2thcm1hYi9jb250cmFpbC1hbGxvdy12aXBzOmxhdGVzdApJTkdSRVNTX0lQPSQob2MgZ2V0IGNtIC1uIGt1YmUtc3lzdGVtIGNsdXN0ZXItY29uZmlnLXYxIC1vIHlhbWwgfCBncmVwIGluZ3Jlc3NWSVAgfCBjdXQgLWQ6IC1mMikKSU5HUkVTU19JRD0kKGdyZXAgdmlydHVhbF9yb3V0ZXJfaWQgL2V0Yy9rZWVwYWxpdmVkL2tlZXBhbGl2ZWQuY29uZiB8IHRhaWwgLTEgfCBhd2sgJ3twcmludCAkMn0nKQpwb2RtYW4gcnVuIC1lIEhPU1RfSVA9JEhPU1RfSVAgLWUgSVA9JElOR1JFU1NfSVAgLWUgSUQ9JElOR1JFU1NfSUQgcXVheS5pby9rYXJtYWIvY29udHJhaWwtYWxsb3ctdmlwczpsYXRlc3QKcmV0dXJuIDAKfQoKWyAtZiAvZXRjL2NvbnRyYWlsLXBhdGNoLmRvbmUgXSAmJiBleGl0IDAKCmV4cG9ydCBLVUJFQ09ORklHPS9ldGMva3ViZXJuZXRlcy9zdGF0aWMtcG9kLXJlc291cmNlcy9rdWJlLWFwaXNlcnZlci1jZXJ0cy9zZWNyZXRzL25vZGUta3ViZWNvbmZpZ3MvbG9jYWxob3N0Lmt1YmVjb25maWcKd2hpbGUgISBwYXRjaGZ1bmM7IGRvCiAgICBlY2hvICJXYWl0aW5nIDEwcyB0byByZXRyeS4uLiIKICAgIHNsZWVwIDEwCmRvbmUKdG91Y2ggL2V0Yy9jb250cmFpbC1wYXRjaC5kb25lCg==
+            verification: {}
+          filesystem: root
+          mode: 448
+          path: /usr/local/bin/contrail-hack-master.sh
+
+    systemd:
+      units:
+      - name: contrail-hack.service
+        enabled: true
+        contents: |
+          [Unit]
+          Description=Wait for masters to be ready and allow vips
+          Requires=network-online.target
+          After=network-online.target
+          [Service]
+          Type=simple
+          ExecStart=/usr/local/bin/contrail-hack.sh
+          [Install]
+          WantedBy=multi-user.target

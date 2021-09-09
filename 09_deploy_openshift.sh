@@ -19,9 +19,9 @@ TOTAL_WORKERS=$(grep 'role: worker' /root/install-config.yaml | wc -l) || true
 {% if network_type == 'Contrail' %}
 [ "$TOTAL_WORKERS" -gt "0" ] || cp 99-openshift-ingress-controller-master.yaml ocp/openshift
 bash contrail-manifests.sh
-# cp 99-blacklist-contrail-worker.yaml ocp/openshift
-# cp 99-blacklist-contrail-master.yaml ocp/openshift
-dnf -y install podman
+# TODO: remove when vips issue shows as stable
+cp 99-blacklist-contrail-worker.yaml ocp/openshift
+cp 99-blacklist-contrail-master.yaml ocp/openshift
 systemctl start contrail-hack
 {% endif %}
 # [ "$TOTAL_WORKERS" -gt "0" ] || cp 99-openshift-ingress-controller-master.yaml ocp/openshift

@@ -1,0 +1,31 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: contrail-hack
+  labels:
+    machineconfiguration.openshift.io/role: master
+spec:
+  config:
+    ignition:
+      version: 2.2.0
+    storage:
+      files:
+        - contents:
+            source: data:text/plain;charset=utf-8;base64,IyEvYmluL2Jhc2gKCmZ1bmN0aW9uIHdhaXQtZm9yLWJvb3RzdHJhcC1jbSB7ClsgLWYgJEtVQkVDT05GSUcgXSB8fCByZXR1cm4gMQpvYyBnZXQgY20gLW4ga3ViZS1zeXN0ZW0gYm9vdHN0cmFwIHx8IHJldHVybiAxCn0KCmZ1bmN0aW9uIGNvbnRyYWlsLWhhY2sgewpleHBvcnQgSE9TVF9JUD0kKGlwIC1vIGFkZHIgc2hvdyB2aG9zdDAgfCBhd2sgJ3twcmludCAkNH0nIHwgY3V0IC1kICIvIiAtZiAxIHwgaGVhZCAtMSkKRE9NQUlOPSQob2MgZ2V0IGluZ3Jlc3Njb250cm9sbGVyIC1uIG9wZW5zaGlmdC1pbmdyZXNzLW9wZXJhdG9yIGRlZmF1bHQgLW8ganNvbnBhdGg9J3suc3BlYy5kb21haW59JyB8IHNlZCAncy9hcHBzLi8vJykKZXhwb3J0IEFQSV9JUD0kKGRpZyArc2hvcnQgYXBpLiRET01BSU4pCmV4cG9ydCBJTkdSRVNTX0lQPSQoZGlnICtzaG9ydCB4eHguYXBwcy4kRE9NQUlOKQpwb2RtYW4gcnVuIC1lIEhPU1RfSVA9JEhPU1RfSVAgLWUgSVA9JEFQSV9JUCBxdWF5LmlvL2thcm1hYi9jb250cmFpbC1hbGxvdy12aXBzOmxhdGVzdApwb2RtYW4gcnVuIC1lIEhPU1RfSVA9JEhPU1RfSVAgLWUgSVA9JElOR1JFU1NfSVAgcXVheS5pby9rYXJtYWIvY29udHJhaWwtYWxsb3ctdmlwczpsYXRlc3QKfQoKZXhwb3J0IEtVQkVDT05GSUc9L2V0Yy9rdWJlcm5ldGVzL3N0YXRpYy1wb2QtcmVzb3VyY2VzL2t1YmUtYXBpc2VydmVyLWNlcnRzL3NlY3JldHMvbm9kZS1rdWJlY29uZmlncy9sb2NhbGhvc3Qua3ViZWNvbmZpZwp3aGlsZSAhIHdhaXQtZm9yLWJvb3RzdHJhcC1jbTsgZG8KICAgIGVjaG8gIldhaXRpbmcgMTBzIHRvIHJldHJ5IGNoZWNraW5nIGJvb3RzdHJhcCBjbS4uLiIKICAgIHNsZWVwIDEwCmRvbmUKd2hpbGUgISBjb250cmFpbC1oYWNrOyBkbwogICAgZWNobyAiV2FpdGluZyAxMHMgdG8gcmV0cnkgcGF0Y2hpbmcgY29kZS4uLiIKICAgIHNsZWVwIDEwCmRvbmUKdG91Y2ggL2V0Yy9jb250cmFpbC1wYXRjaC5kb25lCg==
+            verification: {}
+          filesystem: root
+          mode: 448
+          path: /usr/local/bin/contrail-hack.sh
+    systemd:
+      units:
+      - name: contrail-hack.service
+        enabled: true
+        contents: |
+          [Unit]
+          Description=Wait for bootstrap to be finished and allow vips
+          ConditionPathExists=!/etc/contrail-patch.done
+          [Service]
+          Type=simple
+          ExecStart=/usr/local/bin/contrail-hack.sh
+          [Install]
+          WantedBy=multi-user.target
