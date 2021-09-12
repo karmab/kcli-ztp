@@ -1,5 +1,5 @@
 - name: baremetal_ipi_infra
-  file: kcli_plan_infra .yml
+  file: kcli_plan_infra.yml
 
 - name: baremetal_ipi
   file: kcli_plan.yml
