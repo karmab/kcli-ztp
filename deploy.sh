@@ -40,4 +40,5 @@ oc patch configs.imageregistry.operator.openshift.io cluster --type merge -p '{"
 {% if disconnected and disconnected_operators and disconnected_operators_deploy_after_openshift %}
 /root/065_olm.sh
 {% endif %}
+touch /root/cluster_ready.txt
 {% endif %}

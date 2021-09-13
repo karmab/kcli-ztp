@@ -15,4 +15,3 @@ export SPOKE={{ ztp_spoke_name }}
 oc describe -n $SPOKE AgentClusterInstall
 oc get agent -A
 {% endif %}
-touch /root/cluster_ready.txt
