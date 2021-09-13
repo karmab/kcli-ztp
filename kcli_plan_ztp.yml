@@ -46,8 +46,12 @@ apps-{{ ztp_spoke_name }}:
  - ztp_spoke.sample.yml
  - ztp.sh
  - ztp_bmc.yml
+{% if acm %}
  - acm_install.yml
  - acm_cr.yml
+{% else %}
+ - ai_install.yml
+{% endif %}
  - path: /root/bin/gen_registries.py
    origin: helpers/gen_registries.py
  scripts:

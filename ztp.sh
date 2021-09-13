@@ -8,6 +8,7 @@ curl -Lk $RHCOS_ROOTFS > /var/www/html/$(basename $RHCOS_ROOTFS)
 
 echo export SPOKE={{ ztp_spoke_name }} >> /root/.bashrc
 
+{% if acm %}
 oc create -f /root/acm_install.yml
 timeout=0
 ready=false
@@ -25,6 +26,9 @@ oc create -f /root/acm_cr.yml
 sleep 240
 oc patch hiveconfig hive --type merge -p '{"spec":{"targetNamespace":"hive","logLevel":"debug","featureGates":{"custom":{"enabled":["AlphaAgentInstallStrategy"]},"featureSet":"Custom"}}}'
 sleep 120
+{% else %}
+oc create -f /root/ai_install.yml
+{% endif %}
 
 OCP_RELEASE=$(/root/bin/openshift-baremetal-install version | head -1 | cut -d' ' -f2)-x86_64
 export MINOR=$(echo $OCP_RELEASE | cut -d. -f1,2)

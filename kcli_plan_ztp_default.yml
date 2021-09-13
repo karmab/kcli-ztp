@@ -1,4 +1,5 @@
 baseplan: kcli_plan.yml
+acm: true
 ztp_nodes: []
 ztp_virtual_nodes: False
 ztp_virtual_nodes_number: 1
