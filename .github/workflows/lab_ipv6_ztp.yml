@@ -1,4 +1,4 @@
-name: lab-ipv6-acm-sno 
+name: lab-ipv6-ztp-sno 
 on:
   workflow_dispatch:
     inputs:
@@ -13,11 +13,11 @@ on:
       PLAN:
         description: 'Plan Name'
         required: true
-        default: lab-ipv6-acm-sno
+        default: lab-ipv6-ztp-sno
       PARAMFILE:
         description: 'paramfile'
         required: false
-        default: lab_ipv6_acm.yml
+        default: lab_ipv6_ztp.yml
       PULLSECRET:
         description: 'pullsecret'
         required: false
@@ -43,4 +43,4 @@ jobs:
       runs-on: ${{github.event.inputs.RUNNER}}  
       steps:
         - name: Deploy kcli plan
-          run: kcli -C ${{github.event.inputs.CLIENT}} create plan --force -f kcli_plan_acm.yml --paramfile ${{github.event.inputs.PARAMFILE}} -P pullsecret='${{github.event.inputs.PULLSECRET}}' ${{github.event.inputs.PLAN}}
+          run: kcli -C ${{github.event.inputs.CLIENT}} create plan --force -f kcli_plan_ztp.yml --paramfile ${{github.event.inputs.PARAMFILE}} -P pullsecret='${{github.event.inputs.PULLSECRET}}' ${{github.event.inputs.PLAN}}

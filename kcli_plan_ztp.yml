@@ -1,0 +1,56 @@
+{% if lab and ztp_spoke_api_ip != None and ztp_spoke_ingress_ip != None %}
+api-{{ ztp_spoke_name }}:
+ type: dns
+ net: {{ baremetal_net }}
+ ip: {{ ztp_spoke_api_ip }}
+ alias:
+ - api.{{ ztp_spoke_name }}.{{ domain }}
+ - api-int.{{ ztp_spoke_name }}.{{ domain }}
+
+apps-{{ ztp_spoke_name }}:
+ type: dns
+ net: {{ baremetal_net }}
+ ip: {{ ztp_spoke_ingress_ip }}
+ alias:
+ - console-openshift-console.apps.{{ ztp_spoke_name }}.{{ domain }}
+ - oauth-openshift.apps.{{ ztp_spoke_name }}.{{ domain }}
+ - prometheus-k8s-openshift-monitoring.apps.{{ ztp_spoke_name }}.{{ domain }}
+ - canary-openshift-ingress-canary.apps.{{ ztp_spoke_name }}.{{ domain }}
+ - assisted-service-open-cluster-management.apps.{{ ztp_spoke_name }}.{{ domain }}
+ - assisted-service-assisted-installer.apps.{{ ztp_spoke_name }}.{{ domain }}
+{% endif %}
+
+{% if ztp_virtual_nodes %}
+{% for num in range(0, ztp_virtual_nodes_number) %}
+{{ cluster }}-ztp-node-{{ num }}:
+ pool: {{ pool }}
+ numcpus: {{ ztp_virtual_nodes_numcpus }}
+ start: false
+ cloudinit: false
+# uefi: {{ 'true' }}
+ uefi_legacy: True
+ memory: {{ ztp_virtual_nodes_memory }}
+ nets:
+  - name: {{ baremetal_net }}
+    mac: {{ ztp_virtual_nodes_baremetal_mac_prefix + ":" + "%02.d" | format(num + 1)| string }}
+ disks:
+ - size: {{ ztp_virtual_nodes_disk_size }}
+   interface: scsi
+{% endfor %}
+{% endif %}
+
+{{ cluster }}-installer:
+ baseplan: kcli_plan.yml
+ files:
+ - ztp_assisted-service.sample.yml
+ - ztp_spoke.sample.yml
+ - ztp.sh
+ - ztp_bmc.yml
+ - acm_install.yml
+ - acm_cr.yml
+ - path: /root/bin/gen_registries.py
+   origin: helpers/gen_registries.py
+ scripts:
+{% if deploy_openshift %}
+ - ztp.sh
+{% endif %}

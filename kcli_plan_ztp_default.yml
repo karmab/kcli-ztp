@@ -1,0 +1,15 @@
+baseplan: kcli_plan.yml
+ztp_nodes: []
+ztp_virtual_nodes: False
+ztp_virtual_nodes_number: 1
+ztp_virtual_nodes_numcpus: 8
+ztp_virtual_nodes_memory: 38912
+ztp_virtual_nodes_disk_size: 120
+ztp_virtual_nodes_baremetal_mac_prefix: aa:aa:aa:cc:cc
+ztp_spoke_deploy: true
+ztp_spoke_name: mgmt-spoke1
+ztp_spoke_api_ip:
+ztp_spoke_ingress_ip:
+ztp_spoke_masters_number: 1
+ztp_spoke_workers_number: 0
+ztp_spoke_wait: false

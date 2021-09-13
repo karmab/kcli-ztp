@@ -6,7 +6,7 @@ RHCOS_ROOTFS="https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/p
 curl -Lk $RHCOS_AI > /var/www/html/$(basename $RHCOS_AI)
 curl -Lk $RHCOS_ROOTFS > /var/www/html/$(basename $RHCOS_ROOTFS)
 
-echo export SPOKE={{ acm_spoke_name }} >> /root/.bashrc
+echo export SPOKE={{ ztp_spoke_name }} >> /root/.bashrc
 
 oc create -f /root/acm_install.yml
 timeout=0
@@ -51,27 +51,27 @@ export PULLSECRET=$(cat /root/openshift_pull.json | tr -d [:space:])
 export SSH_PRIV_KEY=$(cat /root/.ssh/id_rsa |sed "s/^/    /")
 export CA_CERT=$(cat /opt/registry/certs/domain.crt | sed "s/^/    /")
 
-envsubst < /root/acm_assisted-service.sample.yml > /root/acm_assisted-service.yml
-oc create -f /root/acm_assisted-service.yml
+envsubst < /root/ztp_assisted-service.sample.yml > /root/ztp_assisted-service.yml
+oc create -f /root/ztp_assisted-service.yml
 
-{% if acm_spoke_deploy %}
-export SPOKE_NAME={{ acm_spoke_name }}
+{% if ztp_spoke_deploy %}
+export SPOKE_NAME={{ ztp_spoke_name }}
 export DOMAIN={{ domain }}
-export MASTERS_NUMBER={{ acm_spoke_masters_number }}
-export WORKERS_NUMBER={{ acm_spoke_workers_number }}
+export MASTERS_NUMBER={{ ztp_spoke_masters_number }}
+export WORKERS_NUMBER={{ ztp_spoke_workers_number }}
 export SSH_PUB_KEY=$(cat /root/.ssh/id_rsa.pub)
-envsubst < /root/acm_spoke.sample.yml > /root/acm_spoke.yml
-oc create -f /root/acm_spoke.yml
+envsubst < /root/ztp_spoke.sample.yml > /root/ztp_spoke.yml
+oc create -f /root/ztp_spoke.yml
 
 oc patch provisioning provisioning-configuration --type merge -p '{"spec":{"watchAllNamespaces": true}}'
-sed -i "s@IP@$BAREMETAL_IP@" /root/acm_bmc.yml
+sed -i "s@IP@$BAREMETAL_IP@" /root/ztp_bmc.yml
 export LIBVIRT_DEFAULT_URI=qemu+ssh://{{ 'root' if config_user == 'apache' else config_user }}@{{ config_host if config_host != '127.0.0.1' else baremetal_net|local_ip(true) }}/system
-{% for num in range(0, acm_virtual_nodes_number) %}
-UUID=$(virsh domuuid {{ cluster }}-acm-node-{{ num }})
-sed -i "s@UUID-{{ num }}@$UUID@" /root/acm_bmc.yml
+{% for num in range(0, ztp_virtual_nodes_number) %}
+UUID=$(virsh domuuid {{ cluster }}-ztp-node-{{ num }})
+sed -i "s@UUID-{{ num }}@$UUID@" /root/ztp_bmc.yml
 {% endfor %}
-oc create -f /root/acm_bmc.yml
-{% if acm_spoke_wait %}
+oc create -f /root/ztp_bmc.yml
+{% if ztp_spoke_wait %}
 sleep 240
 {% endif %}
 {% endif %}

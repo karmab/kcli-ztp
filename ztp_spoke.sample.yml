@@ -1,4 +1,4 @@
-{% if acm_spoke_api_ip != None and ':' in acm_spoke_api_ip %}
+{% if ztp_spoke_api_ip != None and ':' in ztp_spoke_api_ip %}
 {% set ipv6 = True %}
 {% elif ':' in baremetal_cidr %}
 {% set ipv6 = True %}
@@ -49,9 +49,9 @@ metadata:
   name: ${SPOKE_NAME}
   namespace: ${SPOKE_NAME}
 spec:
-{% if acm_spoke_masters_number > 1 and acm_spoke_api_ip != None and acm_spoke_ingress_ip != None %}
-  apiVIP: {{ acm_spoke_api_ip }}
-  ingressVIP: {{ acm_spoke_ingress_ip }}
+{% if ztp_spoke_masters_number > 1 and ztp_spoke_api_ip != None and ztp_spoke_ingress_ip != None %}
+  apiVIP: {{ ztp_spoke_api_ip }}
+  ingressVIP: {{ ztp_spoke_ingress_ip }}
 {% endif %}
   clusterDeploymentRef:
     name: ${SPOKE_NAME}

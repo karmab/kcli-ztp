@@ -1,12 +1,12 @@
-{% if acm_virtual_nodes %}
+{% if ztp_virtual_nodes %}
 {% set extra_nodes = [] %}
-{% for num in range(0, acm_virtual_nodes_number) %}
+{% for num in range(0, ztp_virtual_nodes_number) %}
 {% do extra_nodes.append({}) %}
 {% endfor %}
-{% set acm_nodes = extra_nodes + acm_nodes %}
+{% set ztp_nodes = extra_nodes + ztp_nodes %}
 {% endif %}
 
-{% for node in acm_nodes %}
+{% for node in ztp_nodes %}
 {% set num = loop.index0 %}
 apiVersion: v1
 data:
@@ -14,20 +14,20 @@ data:
   username: {{ ipmi_user|string|base64 }}
 kind: Secret
 metadata:
-  name: {{ cluster }}-acm-bmc-secret-{{ num }}
-  namespace: {{ acm_spoke_name }}
+  name: {{ cluster }}-ztp-bmc-secret-{{ num }}
+  namespace: {{ ztp_spoke_name }}
 type: Opaque
 ---
 apiVersion: metal3.io/v1alpha1
 kind: BareMetalHost
 metadata:
-  name: {{ cluster }}-acm-node-{{ num }}
-  namespace: {{ acm_spoke_name }}
+  name: {{ cluster }}-ztp-node-{{ num }}
+  namespace: {{ ztp_spoke_name }}
   labels:
-    infraenvs.agent-install.openshift.io: {{ acm_spoke_name }}
+    infraenvs.agent-install.openshift.io: {{ ztp_spoke_name }}
   annotations:
     inspect.metal3.io: disabled
-    bmac.agent-install.openshift.io/hostname: {{ cluster }}-acm-node-{{ num }}
+    bmac.agent-install.openshift.io/hostname: {{ cluster }}-ztp-node-{{ num }}
 spec:
   bmc:
     {% if 'redfish_address' in node %}
@@ -42,11 +42,11 @@ spec:
     {% else %}
     address: redfish-virtualmedia+http://IP:8000/redfish/v1/Systems/UUID-{{ num }}
     {% endif %}
-    credentialsName: {{ cluster }}-acm-bmc-secret-{{ num }}
+    credentialsName: {{ cluster }}-ztp-bmc-secret-{{ num }}
 {% if 'provisioning_mac' in node %}
   bootMACAddress: {{ node['provisioning_mac'] }}
 {% else %}
-  bootMACAddress: {{ acm_virtual_nodes_baremetal_mac_prefix + ":" + "%02.d" | format(num + 1)| string }}
+  bootMACAddress: {{ ztp_virtual_nodes_baremetal_mac_prefix + ":" + "%02.d" | format(num + 1)| string }}
 {% endif %}
   hardwareProfile: unknown
   online: true

@@ -1,8 +1,8 @@
 - name: baremetal_ipi_infra
-  file: kcli_plan_infra .yml
+  file: kcli_plan_infra.yml
 
 - name: baremetal_ipi
   file: kcli_plan.yml
 
-- name: baremetal_ipi_acm
-  file: kcli_plan_acm.yml
+- name: baremetal_ipi_ztp
+  file: kcli_plan_ztp.yml
