@@ -5,14 +5,14 @@ bash /root/00_virtual.sh
 /root/01_patch_installconfig.sh
 bash /root/02_packages.sh
 bash /root/03_network.sh
-/root/04_get_clients.sh
+/root/04_get_clients.sh || exit 1
 
 {% if cache %}
 /root/05_cache.sh
 {% endif %}
 
 {% if disconnected %}
-/root/06_disconnected.sh
+/root/06_disconnected.sh || exit 1
 {% if disconnected_operators and not disconnected_operators_deploy_after_openshift %}
 /root/065_olm.sh
 {% endif %}
