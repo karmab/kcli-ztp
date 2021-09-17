@@ -10,8 +10,8 @@
 {% set num = loop.index0 %}
 apiVersion: v1
 data:
-  password: {{ ipmi_password|string|base64 }}
-  username: {{ ipmi_user|string|base64 }}
+  password: {{ bmc_password|string|base64 }}
+  username: {{ bmc_user|string|base64 }}
 kind: Secret
 metadata:
   name: {{ cluster }}-ztp-bmc-secret-{{ num }}

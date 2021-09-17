@@ -1,14 +1,14 @@
 openshift_image: registry.ci.openshift.org/ocp/release:4.9
 domain: brown.com
 cluster: emmet
-ipmi_user: jimi
-ipmi_password: hendrix
+bmc_user: jimi
+bmc_password: hendrix
 baremetal_cidr: 11.0.0.0/24
 api_ip: 11.0.0.2
 dns_ip: 11.0.0.3
 ingress_ip: 11.0.0.4
-ipmi_user: root
-ipmi_password: calvin
+bmc_user: root
+bmc_password: calvin
 masters:
 - ipmi_address: 10.0.0.1
   provisioning_mac: aa:aa:aa:bb:cc:01

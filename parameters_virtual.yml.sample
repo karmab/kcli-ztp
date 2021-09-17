@@ -2,8 +2,8 @@ openshift_image: registry.ci.openshift.org/ocp/release:4.7
 virtual: true
 domain: mcfly.com
 cluster: marty
-ipmi_user: jimi
-ipmi_password: hendrix
+bmc_user: jimi
+bmc_password: hendrix
 baremetal_cidr: 11.0.0.0/24
 api_ip: 11.0.0.2
 dns_ip: 11.0.0.3

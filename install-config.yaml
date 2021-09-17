@@ -134,8 +134,8 @@ platform:
         {% else %}
         address: ipmi://{{ master['ipmi_address'] | default('DONTCHANGEME:623' + num)}}
         {% endif %}
-        username: {{ ipmi_user }}
-        password: {{ ipmi_password }}
+        username: {{ bmc_user }}
+        password: {{ bmc_password }}
 {% if 'boot_mode' in master %}
       bootMode: {{ master['boot_mode'] }}
 {% endif %}
@@ -168,8 +168,8 @@ platform:
         {% else %}
         address: ipmi://{{ worker['ipmi_address'] | default('DONTCHANGEME:624' + num)}}
         {% endif %}
-        username: {{ ipmi_user }}
-        password: {{ ipmi_password }}
+        username: {{ bmc_user }}
+        password: {{ bmc_password }}
 {% if 'boot_mode' in worker %}
       bootMode: {{ worker['boot_mode'] }}
 {% endif %}

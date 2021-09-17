@@ -59,9 +59,9 @@ Prepare a valid parameter file with the information needed. At least, you need t
 - api_ip
 - ingress_ip
 - dns_ip (optional)
-- ipmi_user
-- ipmi_password
-- an array of your masters (if thet are not virtual). Each entry in this array needs at least the provisioning_mac and ipmi_address. Optionally you can indicate for each entry a specific ipmi_user, ipmi_password and disk (to be used as rootdevice hint) either as /dev/XXX or simply XXX
+- bmc_user (for real baremetal)
+- bmc_password (for real baremetal)
+- an array of your masters (if thet are not virtual). Each entry in this array needs at least the provisioning_mac and ipmi_address. Optionally you can indicate for each entry a specific bmc_user, bmc_password and disk (to be used as rootdevice hint) either as /dev/XXX or simply XXX
 - an array of your workers (can be left empty if you only want to deploy masters). The format of those entries follow the one indicated for masters.
 
 Here's a snippet what the workers variable might look like:
@@ -129,8 +129,8 @@ The deployed vm comes with a set of helpers for you:
 |ingress_ip                           |None                                     |
 |installer_mac                        |None                                     |
 |installer_wait                       |False                                    |
-|ipmi_password                        |calvin                                   |
-|ipmi_user                            |root                                     |
+|bmc_password                         |calvin                                   |
+|bmc_user                             |root                                     |
 |keys                                 |[]                                       |
 |lab                                  |False                                    |
 |launch_steps                         |True                                     |

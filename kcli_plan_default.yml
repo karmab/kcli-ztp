@@ -49,8 +49,8 @@ provisioning_ip: 172.22.0.3
 provisioning_range: 172.22.0.10,172.22.0.100
 provisioning_installer_ip: 172.22.0.253
 provisioning_macs: []
-ipmi_user: root
-ipmi_password: calvin
+bmc_user: root
+bmc_password: calvin
 baremetal_cidr:
 baremetal_macs: []
 baremetal_ips: []
