@@ -21,8 +21,6 @@ virtual_masters_numcpus: 8
 virtual_workers_deploy: false
 api_ip: 2620:52:0:1302::2
 ingress_ip: 2620:52:0:1302::3
-ipmi_user: jimi
-ipmi_password: hendrix
 baremetal_ips:
 - 2620:52:0:1302::20
 - 2620:52:0:1302::21
