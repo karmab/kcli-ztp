@@ -160,7 +160,7 @@ platform:
         disableCertificateVerification: True
         {% if 'redfish' in worker['redfish_address'] or 'idrac' in worker['redfish_address'] %}
         address: {{ worker['redfish_address'] }}
-        {% elif worker['model']|default(model) == 'hpe' %}
+        {% elif worker['model']|default(model) in ['hpe', 'supermicro'] %}
         address: redfish-virtualmedia://{{ worker['redfish_address'] }}/redfish/v1/Systems/1
         {% else %}
         address: idrac-virtualmedia://{{ worker['redfish_address'] }}/redfish/v1/Systems/System.Embedded.1
