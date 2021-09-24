@@ -58,7 +58,6 @@ export OPENSHIFT_RELEASE_IMAGE=$(curl -s https://mirror.openshift.com/pub/opensh
 export OPENSHIFT_RELEASE_IMAGE=$(curl -s https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ version }}-{{ tag }}/release.txt | grep 'Pull From: quay.io' | awk -F ' ' '{print $3}')
 {% endif %}
 export LOCAL_REG="$REGISTRY_NAME:5000"
-export LOCAL_REPO='ocp/release'
 mv /root/temp.json $PULL_SECRET
 export OCP_RELEASE=$(/root/bin/openshift-baremetal-install version | head -1 | cut -d' ' -f2)-x86_64
 time oc adm release mirror -a $PULL_SECRET --from=$OPENSHIFT_RELEASE_IMAGE --to-release-image=${LOCAL_REG}/ocp4:${OCP_RELEASE} --to=${LOCAL_REG}/ocp4
