@@ -27,7 +27,6 @@ def get_ip(nic='eth0'):
 nic = sys.argv[1] if len(sys.argv) > 1 else 'eth0'
 ip = get_ip(nic=nic)
 url = "http://%s:8000/redfish/v1/Systems" % ip
-os.environ['NO_PROXY'] = ip
 systems = {}
 for member in requests.get(url).json()['Members']:
     portid = member['@odata.id'].replace('/redfish/v1/Systems/', '')
