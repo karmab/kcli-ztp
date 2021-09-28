@@ -90,6 +90,11 @@
    content: |
     {{ ca |certificate | replace('\n', '\n    ') }}
 {% endfor %}
+{% if http_proxy != None %}
+ - path: /etc/profile.d/proxy.sh
+   origin: proxy.sh
+   mode: 644
+{% endif %}
 {% if launch_steps %}
  scripts:
 {% if build %}
