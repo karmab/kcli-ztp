@@ -59,6 +59,8 @@ proxy:
     httpsProxy: {{ 'http://' + http_proxy if 'http' not in http_proxy else http_proxy }}
 {% if no_proxy != None %}
     noProxy: {{ no_proxy }}
+{% else  %}
+    noProxy: {{ baremetal_cidr }}
 {% endif %}
 {% endif %}
 networking:
