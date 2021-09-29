@@ -1,4 +1,4 @@
-export HTTP_PROXY=http://{{ 'http://' + http_proxy if 'http' not in http_proxy else http_proxy }}
+export HTTP_PROXY={{ 'http://' + http_proxy if 'http' not in http_proxy else http_proxy }}
 export HTTPS_PROXY=$HTTP_PROXY
 export http_proxy=$HTTP_PROXY
 export https_proxy=$HTTP_PROXY
