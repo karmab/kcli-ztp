@@ -1,3 +1,8 @@
+{% if http_proxy != None %}
+bash /root/.proxy.sh
+source /etc/profile.d/proxy.sh
+{% endif %}
+
 {% if virtual_masters %}
 bash /root/00_virtual.sh
 {% endif %}

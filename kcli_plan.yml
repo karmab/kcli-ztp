@@ -94,6 +94,7 @@
  - path: /etc/profile.d/proxy.sh
    origin: proxy.sh
    mode: 644
+ - .proxy.sh
 {% endif %}
 {% if launch_steps %}
  scripts:
