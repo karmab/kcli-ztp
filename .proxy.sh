@@ -4,5 +4,5 @@ while true ; do
   echo $IP | grep -q '\.' && break
   sleep 5
 done
-sed -i "s@noProxy: {{ baremetal_cidr }}@noProxy: $IP,.{{ cluster }}.{{ domain }}@" /root/install-config.yaml
-sed -i "s@NO_PROXY={{ baremetal_cidr }}@NO_PROXY=$IP,.{{ cluster }}.{{ domain }}@" /etc/profile.d/proxy.sh
+sed -i "s@noProxy: {{ baremetal_cidr }}@noProxy: $IP,{{ api_ip }},.{{ cluster }}.{{ domain }}@" /root/install-config.yaml
+sed -i "s@NO_PROXY={{ baremetal_cidr }}@NO_PROXY=$IP,{{ api_ip }},.{{ cluster }}.{{ domain }}@" /etc/profile.d/proxy.sh
