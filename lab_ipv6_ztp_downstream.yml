@@ -29,8 +29,6 @@ baremetal_macs:
 - aa:aa:aa:aa:bb:02
 - aa:aa:aa:aa:bb:03
 ztp_spoke_wait: true
-disconnected_operators:
-- advanced-cluster-management
 ztp_virtual_nodes: true
 ztp_virtual_nodes_number: 1
 ztp_spoke_name: mgmt-spoke1
@@ -39,4 +37,7 @@ ztp_spoke_workers_number: 0
 vmrules:
  - lab-installer:
      disks: [200]
-acm_pull_secret: /root/openshift_pull_acm.json
+acm_downstream: true
+acm_op_bundle: v2.3.0-124
+acm_snapshot: 2.3.0-DOWNSTREAM-2021-06-13-16-46-23
+acm_pullsecret: /root/openshift_pull_acm.json

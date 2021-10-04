@@ -22,5 +22,5 @@ metadata:
 spec:
   channel: "{{ acm_channel }}"
   name: advanced-cluster-management
-  source: redhat-operator-index
+  source: {{ "acm-custom-registry" if acm_downstream else "redhat-operator-index" }}
   sourceNamespace: openshift-marketplace
