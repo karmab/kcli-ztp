@@ -54,6 +54,7 @@ export BAREMETAL_IP
 export PULLSECRET=$(cat /root/openshift_pull.json | tr -d [:space:])
 export SSH_PRIV_KEY=$(cat /root/.ssh/id_rsa |sed "s/^/    /")
 export CA_CERT=$(cat /opt/registry/certs/domain.crt | sed "s/^/    /")
+export VERSION=$(/root/bin/openshift-baremetal-install coreos print-stream-json | jq -r '.["architectures"]["x86_64"]["artifacts"]["metal"]["release"]')
 
 envsubst < /root/ztp_assisted-service.sample.yml > /root/ztp_assisted-service.yml
 oc create -f /root/ztp_assisted-service.yml
