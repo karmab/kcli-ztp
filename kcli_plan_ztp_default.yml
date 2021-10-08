@@ -1,5 +1,6 @@
 baseplan: kcli_plan.yml
 acm: true
+acm_channel: release-2.3
 ztp_nodes: []
 ztp_virtual_nodes: False
 ztp_virtual_nodes_number: 1
