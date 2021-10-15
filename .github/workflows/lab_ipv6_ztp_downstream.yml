@@ -25,11 +25,11 @@ on:
       ACM_SNAPSHOT:
         description: 'acm_snapshot'
         required: true
-        default: 2.3.0-DOWNSTREAM-2021-06-13-16-46-23
+        default: 2.3.3-DOWNSTREAM-2021-10-12-15-26-20
       ACM_OP_BUNDLE:
         description: 'acm_op_bundle'
         required: true
-        default: v2.3.0-124
+        default: v2.3.3-25
       
 env:
  HOME: /root
@@ -51,4 +51,4 @@ jobs:
       runs-on: ${{github.event.inputs.RUNNER}}  
       steps:
         - name: Deploy kcli plan
-          run: kcli -C ${{github.event.inputs.CLIENT}} create plan --force -f kcli_plan_ztp.yml --paramfile ${{github.event.inputs.PARAMFILE}} -P pullsecret='${{github.event.inputs.PULLSECRET}}' -P acm_snapshot=${{github.event.inputs.ACM_SNAPSHOT}} -p acm_op_bundle=${{github.event.inputs.ACM_OP_BUNDLE}}  ${{github.event.inputs.PLAN}}
+          run: kcli -C ${{github.event.inputs.CLIENT}} create plan --force -f kcli_plan_ztp.yml --paramfile ${{github.event.inputs.PARAMFILE}} -P pullsecret='${{github.event.inputs.PULLSECRET}}' -P acm_snapshot=${{github.event.inputs.ACM_SNAPSHOT}} -P acm_op_bundle=${{github.event.inputs.ACM_OP_BUNDLE}} ${{github.event.inputs.PLAN}}

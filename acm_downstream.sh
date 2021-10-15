@@ -10,6 +10,8 @@ echo $IP | grep -q ':' && SERVER6=$(grep : /etc/resolv.conf | grep -v fe80 | cut
 REGISTRY_NAME=${REVERSE_NAME:-$(hostname -f)}
 export SNAPSHOT={{ acm_snapshot }}
 export ACM_OP_BUNDLE={{ acm_op_bundle }}
+#export SNAPSHOT=$(podman image search --list-tags quay.io/acm-d/acm-custom-registry --limit 20000 | tail -1 | cut -d" " -f3)
+#export ACM_OP_BUNDLE=$(podman image search --list-tags quay.io/acm-d/acm-operator-bundle --limit 20000 | tail -1 | cut -d" " -f3)
 export PULL_SECRET_JSON=/root/openshift_pull_acm.json
 export LOCAL_REGISTRY=$REGISTRY_NAME:5000
 export IMAGE_INDEX=quay.io/acm-d/acm-custom-registry
@@ -62,6 +64,8 @@ spec:
 oc create -f /root/manifests/acm_catalogsource.yaml
 oc create -f /root/manifests/acm_icsp.yaml
 oc create -f /root/manifests/acm_icsp_2.yaml
+ln -s /root/manifests /root/manifests-redhat-operator-index-0
+cp /root/manifests/acm_icsp.yaml /root/manifests/imageContentSourcePolicy.yaml
 
 sleep 360
 for i in `oc get node -o wide | awk '{print $6}' | grep -v INTERN` ; do ssh core@$i "sudo sed -i 's/mirror-by-digest-only = true/mirror-by-digest-only = false/' /etc/containers/registries.conf && sudo systemctl restart kubelet crio" ; done
