@@ -1,0 +1,54 @@
+name: lab-ipv6-ztp-sno-downstream
+on:
+  workflow_dispatch:
+    inputs:
+      RUNNER:
+        description: 'Runner Name'
+        required: true
+        default: 'u08'
+      CLIENT:
+        description: 'Client name'
+        required: true
+        default: 'local'
+      PLAN:
+        description: 'Plan Name'
+        required: true
+        default: lab-ipv6-ztp-sno
+      PARAMFILE:
+        description: 'paramfile'
+        required: false
+        default: lab_ipv6_ztp_downstream.yml
+      PULLSECRET:
+        description: 'pullsecret'
+        required: false
+        default: /root/openshift_pull.json
+      ACM_SNAPSHOT:
+        description: 'acm_snapshot'
+        required: true
+        default: 2.3.0-DOWNSTREAM-2021-06-13-16-46-23
+      ACM_OP_BUNDLE:
+        description: 'acm_op_bundle'
+        required: true
+        default: v2.3.0-124
+      
+env:
+ HOME: /root
+
+jobs:
+    requirements:
+      runs-on: ${{github.event.inputs.RUNNER}}
+      steps:
+       - uses: actions/checkout@v2
+       - run: git pull origin ${GITHUB_REF##*/}
+       - name: Install kcli
+         run: |
+           curl https://raw.githubusercontent.com/karmab/kcli/master/install.sh | bash
+           # kcli create pool -p /var/lib/libvirt/images default
+           # sudo setfacl -m u:$(id -un):rwx /var/lib/libvirt/images
+
+    deploy-plan:
+      needs: requirements
+      runs-on: ${{github.event.inputs.RUNNER}}  
+      steps:
+        - name: Deploy kcli plan
+          run: kcli -C ${{github.event.inputs.CLIENT}} create plan --force -f kcli_plan_ztp.yml --paramfile ${{github.event.inputs.PARAMFILE}} -P pullsecret='${{github.event.inputs.PULLSECRET}}' -P acm_snapshot=${{github.event.inputs.ACM_SNAPSHOT}} -p acm_op_bundle=${{github.event.inputs.ACM_OP_BUNDLE}}  ${{github.event.inputs.PLAN}}

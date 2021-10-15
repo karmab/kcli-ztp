@@ -49,6 +49,11 @@ apps-{{ ztp_spoke_name }}:
 {% if acm %}
  - acm_install.yml
  - acm_cr.yml
+{% if acm_downstream %}
+ - origin: {{ acm_pullsecret }}
+   path: /root/openshift_pull_acm.json
+ - acm_downstream.sh
+{% endif %}
 {% else %}
  - ai_install.yml
 {% endif %}
