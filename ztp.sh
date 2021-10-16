@@ -83,6 +83,18 @@ sed -i "s@UUID-{{ num }}@$UUID@" /root/ztp_bmc.yml
 {% endfor %}
 oc create -f /root/ztp_bmc.yml
 {% if ztp_spoke_wait %}
-sleep 240
+timeout=0
+ready=false
+while [ "$timeout" -lt "3600" ] ; do
+  SPOKE_STATUS=$(oc get  -n $SPOKE AgentClusterInstall mgmt-spoke1 -o jsonpath='{.status.debugInfo.state}')
+  test "$SPOKE_STATUS" == "installed" && ready=true && break;
+  echo "Waiting for spoke cluster to be deployed"
+  sleep 60
+  timeout=$(($timeout + 5))
+done
+if [ "$ready" == "false" ] ; then
+ echo timeout waiting for spoke cluster to be deployed
+ exit 1
+fi
 {% endif %}
 {% endif %}

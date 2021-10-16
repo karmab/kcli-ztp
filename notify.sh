@@ -12,6 +12,6 @@ echo "Update time:"
 uptime | awk '{ print $3 }' | sed 's/,//'
 {% if ztp_spoke_name is defined %}
 export SPOKE={{ ztp_spoke_name }}
-oc describe -n $SPOKE AgentClusterInstall
+oc describe -n $SPOKE AgentClusterInstall $SPOKE
 oc get agent -A
 {% endif %}
