@@ -38,6 +38,7 @@ vmrules:
  - lab-installer:
      disks: [200]
 acm_downstream: true
+acm_downstream_latest: false
 acm_op_bundle: v2.3.3-25
 acm_snapshot: 2.3.3-DOWNSTREAM-2021-10-12-15-26-20
 acm_pullsecret: /root/openshift_pull_acm.json
