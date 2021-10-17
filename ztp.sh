@@ -66,7 +66,7 @@ envsubst < /root/ztp_assisted-service.sample.yml > /root/ztp_assisted-service.ym
 oc create -f /root/ztp_assisted-service.yml
 
 {% if ztp_spoke_deploy %}
-export SPOKE_NAME={{ ztp_spoke_name }}
+export SPOKE={{ ztp_spoke_name }}
 export DOMAIN={{ domain }}
 export MASTERS_NUMBER={{ ztp_spoke_masters_number }}
 export WORKERS_NUMBER={{ ztp_spoke_workers_number }}

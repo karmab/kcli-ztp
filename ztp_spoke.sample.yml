@@ -32,13 +32,13 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: ${SPOKE_NAME}
+  name: ${SPOKE}
 ---
 apiVersion: v1
 kind: Secret
 metadata:
   name: assisted-deployment-pull-secret
-  namespace: ${SPOKE_NAME}
+  namespace: ${SPOKE}
 stringData:
   .dockerconfigjson: '${PULLSECRET}'
   type: kubernetes.io/dockerconfigjson
@@ -46,15 +46,15 @@ stringData:
 apiVersion: extensions.hive.openshift.io/v1beta1
 kind: AgentClusterInstall
 metadata:
-  name: ${SPOKE_NAME}
-  namespace: ${SPOKE_NAME}
+  name: ${SPOKE}
+  namespace: ${SPOKE}
 spec:
 {% if ztp_spoke_masters_number > 1 and ztp_spoke_api_ip != None and ztp_spoke_ingress_ip != None %}
   apiVIP: {{ ztp_spoke_api_ip }}
   ingressVIP: {{ ztp_spoke_ingress_ip }}
 {% endif %}
   clusterDeploymentRef:
-    name: ${SPOKE_NAME}
+    name: ${SPOKE}
   imageSetRef:
     name: openshift-v${MINOR}
   networking:
@@ -80,35 +80,35 @@ spec:
 apiVersion: hive.openshift.io/v1
 kind: ClusterDeployment
 metadata:
-  name: ${SPOKE_NAME}
-  namespace: ${SPOKE_NAME}
+  name: ${SPOKE}
+  namespace: ${SPOKE}
 spec:
   baseDomain: ${DOMAIN}
-  clusterName: ${SPOKE_NAME}
+  clusterName: ${SPOKE}
   controlPlaneConfig:
     servingCertificates: {}
   installed: false
   clusterInstallRef:
     group: extensions.hive.openshift.io
     kind: AgentClusterInstall
-    name: ${SPOKE_NAME}
+    name: ${SPOKE}
     version: v1beta1
   platform:
     agentBareMetal:
       agentSelector:
         matchLabels:
-          cluster-name: "${SPOKE_NAME}"
+          cluster-name: "${SPOKE}"
   pullSecretRef:
     name: assisted-deployment-pull-secret
 ---
 apiVersion: agent.open-cluster-management.io/v1
 kind: KlusterletAddonConfig
 metadata:
-  name: ${SPOKE_NAME}
-  namespace: ${SPOKE_NAME}
+  name: ${SPOKE}
+  namespace: ${SPOKE}
 spec:
-  clusterName: ${SPOKE_NAME}
-  clusterNamespace: ${SPOKE_NAME}
+  clusterName: ${SPOKE}
+  clusterNamespace: ${SPOKE}
   clusterLabels:
     cloud: auto-detect
     vendor: auto-detect
@@ -128,23 +128,23 @@ spec:
 apiVersion: cluster.open-cluster-management.io/v1
 kind: ManagedCluster
 metadata:
-  name: ${SPOKE_NAME}
-  namespace: ${SPOKE_NAME}
+  name: ${SPOKE}
+  namespace: ${SPOKE}
 spec:
   hubAcceptsClient: true
 ---
 apiVersion: agent-install.openshift.io/v1beta1
 kind: InfraEnv
 metadata:
-  name: ${SPOKE_NAME}
-  namespace: ${SPOKE_NAME}
+  name: ${SPOKE}
+  namespace: ${SPOKE}
 spec:
   clusterRef:
-    name: ${SPOKE_NAME}
-    namespace: ${SPOKE_NAME}
+    name: ${SPOKE}
+    namespace: ${SPOKE}
   sshAuthorizedKey: "${SSH_PUB_KEY}"
   agentLabelSelector:
     matchLabels:
-      cluster-name: "${SPOKE_NAME}"
+      cluster-name: "${SPOKE}"
   pullSecretRef:
     name: assisted-deployment-pull-secret
