@@ -15,6 +15,9 @@ curl -Lk $RHCOS_ROOTFS > /var/www/html/$(basename $RHCOS_ROOTFS)
 echo export SPOKE={{ ztp_spoke_name }} >> /root/.bashrc
 
 {% if acm %}
+export ACM_CATALOG=$(oc get packagemanifest -n openshift-marketplace advanced-cluster-management -o jsonpath='{.status.catalogSource}')
+export ACM_CHANNEL=$(oc get packagemanifest -n openshift-marketplace advanced-cluster-management -o jsonpath='{.status.defaultChannel}')
+envsubst < /root/acm_install.yml.sample > /root/acm_install.yml
 oc create -f /root/acm_install.yml
 timeout=0
 ready=false
