@@ -86,7 +86,7 @@ oc create -f /root/ztp_bmc.yml
 timeout=0
 ready=false
 while [ "$timeout" -lt "{{ ztp_spoke_wait_time }}" ] ; do
-  SPOKE_STATUS=$(oc get  -n $SPOKE AgentClusterInstall mgmt-spoke1 -o jsonpath='{.status.debugInfo.state}')
+  SPOKE_STATUS=$(oc get -n $SPOKE AgentClusterInstall $SPOKE -o jsonpath='{.status.debugInfo.state}')
   test "$SPOKE_STATUS" == "installed" && ready=true && break;
   echo "Waiting for spoke cluster to be deployed"
   sleep 60
@@ -95,6 +95,8 @@ done
 if [ "$ready" == "false" ] ; then
  echo timeout waiting for spoke cluster to be deployed
  exit 1
+else
+ oc get secret -n $SPOKE $SPOKE-admin-kubeconfig -o jsonpath='{.data.kubeconfig}' | base64 -d > /root/kubeconfig.$SPOKE
 fi
 {% endif %}
 {% endif %}

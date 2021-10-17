@@ -25,7 +25,7 @@ on:
       ACM_DOWNSTREAM_LATEST:
         description: 'acm_downstream_latest'
         required: true
-        default: false
+        default: 'false'
       ACM_SNAPSHOT:
         description: 'acm_snapshot'
         required: true
