@@ -22,6 +22,14 @@ on:
         description: 'pullsecret'
         required: false
         default: /root/openshift_pull.json
+      VERSION:
+        description: 'version'
+        required: false
+        default: stable
+      TAG:
+        description: 'tag'
+        required: false
+        default: 4.8
       ACM_DOWNSTREAM_LATEST:
         description: 'acm_downstream_latest'
         required: true
@@ -55,4 +63,4 @@ jobs:
       runs-on: ${{github.event.inputs.RUNNER}}  
       steps:
         - name: Deploy kcli plan
-          run: kcli -C ${{github.event.inputs.CLIENT}} create plan --force -f kcli_plan_ztp.yml --paramfile ${{github.event.inputs.PARAMFILE}} -P pullsecret='${{github.event.inputs.PULLSECRET}}' -P acm_downstream_latest=${{github.event.inputs.ACM_DOWNSTREAM_LATEST}}  -P acm_snapshot=${{github.event.inputs.ACM_SNAPSHOT}} -P acm_op_bundle=${{github.event.inputs.ACM_OP_BUNDLE}} ${{github.event.inputs.PLAN}}
+          run: kcli -C ${{github.event.inputs.CLIENT}} create plan --force -f kcli_plan_ztp.yml --paramfile ${{github.event.inputs.PARAMFILE}} -P pullsecret='${{github.event.inputs.PULLSECRET}}' -P acm_downstream_latest=${{github.event.inputs.ACM_DOWNSTREAM_LATEST}}  -P acm_snapshot=${{github.event.inputs.ACM_SNAPSHOT}} -P acm_op_bundle=${{github.event.inputs.ACM_OP_BUNDLE}} -P version='${{github.event.inputs.VERSION}}' -P tag='${{github.event.inputs.TAG}}' ${{github.event.inputs.PLAN}}
