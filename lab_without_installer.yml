@@ -1,7 +1,7 @@
 version: stable
 ipi: true
 ipi_platform: baremetal
-tag: 4.8
+tag: 4.9
 network_type: OVNKubernetes
 domain: karmalabs.com
 cluster: lab

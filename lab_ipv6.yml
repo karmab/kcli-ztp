@@ -9,10 +9,10 @@ virtual_workers: false
 launch_steps: true
 deploy_openshift: false
 version: stable
-tag: 4.8
+tag: 4.9
 cluster: lab
 domain: karmalabs.com 
-openshift_image: registry.ci.openshift.org/ocp/release:4.8
+openshift_image: registry.ci.openshift.org/ocp/release:4.9
 baremetal_cidr: 2620:52:0:1302::/64
 baremetal_net: lab-net
 provisioning_net: lab-prov
