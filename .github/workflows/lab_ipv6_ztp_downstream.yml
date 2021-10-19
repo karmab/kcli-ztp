@@ -29,7 +29,7 @@ on:
       TAG:
         description: 'tag'
         required: false
-        default: 4.8
+        default: 4.9
       ACM_DOWNSTREAM_LATEST:
         description: 'acm_downstream_latest'
         required: true
