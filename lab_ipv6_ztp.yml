@@ -6,6 +6,7 @@ dualstack_cidr: 192.168.130.0/24
 disconnected: true
 virtual_masters: true
 virtual_workers: false
+virtual_workers_number: 0
 launch_steps: true
 deploy_openshift: true
 version: stable
@@ -24,6 +25,7 @@ baremetal_ips:
 - 2620:52:0:1302::20
 - 2620:52:0:1302::21
 - 2620:52:0:1302::22
+- 2620:52:0:1302::23
 baremetal_macs:
 - aa:aa:aa:aa:bb:01
 - aa:aa:aa:aa:bb:02
