@@ -2,6 +2,7 @@
 #sleep 120
 
 {% if acm_downstream %}
+echo "Running acm_downstream.sh"
 bash /root/acm_downstream.sh
 {% endif %}
 
