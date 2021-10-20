@@ -40,6 +40,11 @@ apps-{{ ztp_spoke_name }}:
 {% if lab and baremetal_ips and baremetal_ips|length > virtual_masters_number + virtual_workers_number + num %}
     ip: {{ baremetal_ips[virtual_masters_number + virtual_workers_number + num] }}
     reserveip: true
+{% if ztp_virtual_nodes_number == 1 %}
+    alias:
+    - api.{{ ztp_spoke_name }}.{{ domain }}
+    - api-int.{{ ztp_spoke_name }}.{{ domain }}
+{% endif %}
 {% endif %}
  disks:
  - size: {{ ztp_virtual_nodes_disk_size }}

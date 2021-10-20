@@ -15,7 +15,7 @@ DOTS=$(echo {{ tag }} | grep -o '\.' | wc -l)
 [ "$DOTS" -eq "1" ] || { echo tag should be 4.X ; exit 1; }
 curl -Ns https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ version }}-{{ tag }}/release.txt | grep -q 'Pull From'
 if  [ "$?" != "0" ] ; then 
-  echo incorrect mix {{ version }} and {{ tag }}
+  echo couldnt gather release associated to {{ version }} and {{ tag }}
   exit 1
 fi
 {% elif version == 'nightly' %}
