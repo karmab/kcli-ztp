@@ -16,15 +16,15 @@ The automation can be used for additional scenarios:
 - To deploy baremetal using `bare minimum` on the provisioning node
 - To ease deployments by providing an automated mechanism
 
-## Requirements
+### Requirements
 
-### for kcli
+#### for kcli
 
 - kcli installed (for rhel8/cento8/fedora, look [here](https://kcli.readthedocs.io/en/latest/#package-install-method))
 - an openshift pull secret (stored by default in openshift_pull.json)
 - a valid openshift pull secret for ACM downstream if using ZTP this way.
 
-### on the provisioning node
+#### on the provisioning node
 
 - libvirt daemon (with fw_cfg support)
 - two physical bridges:
