@@ -10,20 +10,25 @@ ip a l {{ baremetal_net }} >/dev/null 2>&1 || { echo Issue with network {{ barem
 
 # VERSION CHECK
 {% if version is defined %}
-{% if version in ['latest', 'stable'] %}
-DOTS=$(echo {{ tag }} | grep -o '\.' | wc -l)
-[ "$DOTS" -eq "1" ] || { echo tag should be 4.X ; exit 1; }
-curl -Ns https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ version }}-{{ tag }}/release.txt | grep -q 'Pull From'
-if  [ "$?" != "0" ] ; then 
+{% if version in ['nightly', 'stable'] %}
+{% set tag = tag|string %}
+{% if tag.split('.')|length > 2 %}
+TAG={{ tag }}
+{% elif version == 'nightly' %}
+TAG={{"latest-" + tag }}
+{% else %}
+TAG={{"stable-" + tag }}
+{% endif %}
+OCP_REPO={{ 'ocp-dev-preview' if version == 'nightly' else 'ocp' }}
+curl -s https://mirror.openshift.com/pub/openshift-v4/clients/$OCP_REPO/$TAG/release.txt | grep -q 'Pull From: quay.io'
+if  [ "$?" != "0" ] ; then
   echo couldnt gather release associated to {{ version }} and {{ tag }}
   exit 1
 fi
-{% elif version == 'nightly' %}
-{% set tag = tag|string %}
-TAG={{ tag if tag.split('.')|length > 2 else "latest-" + tag }}
-curl -Ns https://mirror.openshift.com/pub/openshift-v4/clients/ocp-dev-preview/$TAG/release.txt | grep -q 'Pull From'
-if [ "$?" != "0" ] ; then 
-  echo incorrect mix {{ version }} and {{ tag }}
+{% elif version == 'latest' %}
+curl -s https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ version }}-{{ tag }}/release.txt | grep -q 'Pull From: quay.io'
+if  [ "$?" != "0" ] ; then
+  echo couldnt gather release associated to {{ version }} and {{ tag }}
   exit 1
 fi
 {% elif version == 'ci' %}
