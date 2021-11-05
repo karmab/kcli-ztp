@@ -96,6 +96,11 @@
    mode: 644
  - .proxy.sh
 {% endif %}
+{% if disconnected %}
+ - path: /etc/systemd/system/registry.service
+   origin: helpers/registry.service
+{% endif %}
+
 {% if launch_steps %}
  scripts:
 {% if build %}

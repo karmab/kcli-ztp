@@ -40,7 +40,7 @@ cp /opt/registry/certs/domain.crt /etc/pki/ca-trust/source/anchors/
 update-ca-trust extract
 htpasswd -bBc /opt/registry/auth/htpasswd {{ disconnected_user }} {{ disconnected_password }}
 podman create --name registry --net host --security-opt label=disable -v /opt/registry/data:/var/lib/registry:z -v /opt/registry/auth:/auth:z -v /opt/registry/conf/config.yml:/etc/docker/registry/config.yml -e "REGISTRY_AUTH=htpasswd" -e "REGISTRY_AUTH_HTPASSWD_REALM=Registry" -e "REGISTRY_HTTP_SECRET=ALongRandomSecretForRegistry" -e REGISTRY_AUTH_HTPASSWD_PATH=/auth/htpasswd -v /opt/registry/certs:/certs:z -e REGISTRY_HTTP_TLS_CERTIFICATE=/certs/domain.crt -e REGISTRY_HTTP_TLS_KEY=/certs/domain.key {{ registry_image }}
-podman start registry
+systemctl enable --now registry
 {% if version == 'ci' %}
 export OPENSHIFT_RELEASE_IMAGE={{ openshift_image }}
 {% elif version in ['nightly', 'stable'] %}
