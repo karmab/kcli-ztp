@@ -6,7 +6,6 @@ http_proxy:
 no_proxy:
 keys: []
 api_ip:
-dns_ip:
 ingress_ip:
 pool: default                                                                                                                                 
 numcpus: 16   

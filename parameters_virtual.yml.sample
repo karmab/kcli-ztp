@@ -6,7 +6,6 @@ bmc_user: jimi
 bmc_password: hendrix
 baremetal_cidr: 11.0.0.0/24
 api_ip: 11.0.0.2
-dns_ip: 11.0.0.3
 ingress_ip: 11.0.0.4
 workers:
 - ipmi_address: 10.0.0.4

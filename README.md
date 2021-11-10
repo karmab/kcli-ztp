@@ -67,7 +67,6 @@ Prepare a valid parameter file with the information needed. At least, you need t
 
 - api_ip
 - ingress_ip
-- dns_ip (optional)
 - bmc_user (for real baremetal)
 - bmc_password (for real baremetal)
 - an array of your masters (if thet are not virtual). Each entry in this array needs at least the provisioning_mac and ipmi_address. Optionally you can indicate for each entry a specific bmc_user, bmc_password and disk (to be used as rootdevice hint) either as /dev/XXX or simply XXX
@@ -121,7 +120,6 @@ Note that you can use the baseplan `kcli_plan_infra.yml` to deploy the infrastru
 |baremetal_net                       |baremetal     |
 |cluster                             |openshift     |
 |disk_size                           |30            |
-|dns_ip                              |None          |
 |domain                              |karmalabs.com |
 |dualstack                           |False         |
 |dualstack_cidr                      |None          |
@@ -176,7 +174,6 @@ The following parameters are available when deploying the default plan
 |disconnected\_operators\_deploy\_after\_openshift|False                                     |
 |disconnected_password                        |dummy                                     |
 |disconnected_user                            |dummy                                     |
-|dns_ip                                       |None                                      |
 |dualstack                                    |False                                     |
 |dualstack_cidr                               |None                                      |
 |fips                                         |False                                     |
