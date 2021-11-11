@@ -60,7 +60,6 @@ apps-{{ ztp_spoke_name }}:
  - ztp.sh
  - ztp_bmc.yml
 {% if acm %}
- - acm_install.yml.sample
  - acm_cr.yml
 {% if acm_downstream %}
  - origin: {{ acm_pullsecret }}
