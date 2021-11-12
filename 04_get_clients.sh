@@ -44,4 +44,8 @@ echo $OPENSHIFT_RELEASE_IMAGE > /root/version.txt
 # install neat plugin
 curl -s -L https://github.com/itaysk/kubectl-neat/releases/download/v2.0.3/kubectl-neat_linux_amd64.tar.gz | tar xvz -C /usr/bin/
 
+curl -s -L https://github.com/karmab/tasty/releases/download/v0.3.0/tasty-linux-amd64 > /usr/bin/tasty
+chmod u+x /usr/bin/tasty
+
+
 oc completion bash >>/etc/bash_completion.d/oc_completion

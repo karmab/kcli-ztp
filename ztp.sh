@@ -16,22 +16,7 @@ curl -Lk $RHCOS_ROOTFS > /var/www/html/$(basename $RHCOS_ROOTFS)
 echo export SPOKE={{ ztp_spoke_name }} >> /root/.bashrc
 
 {% if acm %}
-export ACM_CATALOG=$(oc get packagemanifest -n openshift-marketplace advanced-cluster-management -o jsonpath='{.status.catalogSource}')
-export ACM_CHANNEL=$(oc get packagemanifest -n openshift-marketplace advanced-cluster-management -o jsonpath='{.status.defaultChannel}')
-envsubst < /root/acm_install.yml.sample > /root/acm_install.yml
-oc create -f /root/acm_install.yml
-timeout=0
-ready=false
-while [ "$timeout" -lt "60" ] ; do
-  oc get crd | grep -q multiclusterhubs.operator.open-cluster-management.io && ready=true && break;
-  echo "Waiting for CRD multiclusterhubs.operator.open-cluster-management.io to be created"
-  sleep 5
-  timeout=$(($timeout + 5))
-done
-if [ "$ready" == "false" ] ; then
- echo timeout waiting for CRD multiclusterhubs.operator.open-cluster-management.io
- exit 1
-fi
+tasty install advanced-cluster-management --wait
 oc create -f /root/acm_cr.yml
 sleep 240
 oc patch hiveconfig hive --type merge -p '{"spec":{"targetNamespace":"hive","logLevel":"debug","featureGates":{"custom":{"enabled":["AlphaAgentInstallStrategy"]},"featureSet":"Custom"}}}'
