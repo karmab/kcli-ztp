@@ -18,6 +18,7 @@ apps-{{ ztp_spoke_name }}:
  - canary-openshift-ingress-canary.apps.{{ ztp_spoke_name }}.{{ domain }}
  - assisted-service-open-cluster-management.apps.{{ ztp_spoke_name }}.{{ domain }}
  - assisted-service-assisted-installer.apps.{{ ztp_spoke_name }}.{{ domain }}
+ - assisted-image-service-open-cluster-management.apps.{{ ztp_spoke_name }}.{{ domain }}
 {% endif %}
 
 {% if ztp_virtual_nodes %}
