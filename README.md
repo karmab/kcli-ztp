@@ -184,7 +184,6 @@ The following parameters are available when deploying the default plan
 |imagecontentsources                          |[]                                        |
 |imageregistry                                |False                                     |
 |installer_mac                                |None                                      |
-|installer_nic                                |eth0                                      |
 |installer_wait                               |False                                     |
 |keys                                         |[]                                        |
 |lab                                          |False                                     |
