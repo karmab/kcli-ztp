@@ -20,7 +20,6 @@ info: |
 baseplan: kcli_plan_infra.yml
 image: centos8
 image_url:
-installer_nic: eth0
 installer_mac:
 installer_wait: False
 version: ci
