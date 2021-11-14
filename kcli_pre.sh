@@ -20,13 +20,13 @@ TAG={{"latest-" + tag }}
 TAG={{"stable-" + tag }}
 {% endif %}
 OCP_REPO={{ 'ocp-dev-preview' if version == 'nightly' else 'ocp' }}
-curl -s https://mirror.openshift.com/pub/openshift-v4/clients/$OCP_REPO/$TAG/release.txt | grep -q 'Pull From: quay.io'
+curl -Ns https://mirror.openshift.com/pub/openshift-v4/clients/$OCP_REPO/$TAG/release.txt | grep -q 'Pull From: quay.io'
 if  [ "$?" != "0" ] ; then
   echo couldnt gather release associated to {{ version }} and {{ tag }}
   exit 1
 fi
 {% elif version == 'latest' %}
-curl -s https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ version }}-{{ tag }}/release.txt | grep -q 'Pull From: quay.io'
+curl -Ns https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ version }}-{{ tag }}/release.txt | grep -q 'Pull From: quay.io'
 if  [ "$?" != "0" ] ; then
   echo couldnt gather release associated to {{ version }} and {{ tag }}
   exit 1
