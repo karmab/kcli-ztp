@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-DEFAULT_NIC=$(ip r | grep default | head -1 | cut -d" " -f 5)
+PRIMARY_NIC=$(ls -1 /sys/class/net | head -1)
 {% if not 'rhel' in image %}
 dnf clean all
 sleep 30
@@ -14,11 +14,11 @@ systemctl enable --now sushy
 sleep 20
 ssh-keyscan -H {{ config_host if config_host != '127.0.0.1' else baremetal_net|local_ip }} >> /root/.ssh/known_hosts
 echo -e "Host=*\nStrictHostKeyChecking=no\n" > /root/.ssh/config
-python3 /root/bin/sushy.py $DEFAULT_NIC
+python3 /root/bin/sushy.py $PRIMARY_NIC
 api_vip=$(grep apiVIP /root/install-config.yaml | awk -F: '{print $2}' | xargs)
 cluster=$(grep -m 1 name /root/install-config.yaml | awk -F: '{print $2}' | xargs)
 domain=$(grep baseDomain /root/install-config.yaml | awk -F: '{print $2}' | xargs)
-IP=$(ip -o addr show $DEFAULT_NIC | head -1 | awk '{print $4}' | cut -d "/" -f 1 | head -1)
+IP=$(ip -o addr show $PRIMARY_NIC | head -1 | awk '{print $4}' | cut -d "/" -f 1 | head -1)
 echo $IP | grep -q ':' && IP=[$IP]
 sed -i "s/DONTCHANGEME/$IP/" /root/install-config.yaml
 sed -i "s/DONTCHANGEME/$IP/" /root/extra_worker.yml

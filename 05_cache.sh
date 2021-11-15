@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-DEFAULT_NIC=$(ip r | grep default | head -1 | cut -d" " -f 5)
+PRIMARY_NIC=$(ls -1 /sys/class/net | head -1)
 export PATH=/root/bin:$PATH
 dnf -y install httpd
 dnf -y update libgcrypt
@@ -50,7 +50,7 @@ unset LIBGUESTFS_BACKEND
 {% endif %}
 
 SPACES=$(grep apiVIP /root/install-config.yaml | sed 's/apiVIP.*//' | sed 's/ /\\ /'g)
-export BAREMETAL_IP=$(ip -o addr show $DEFAULT_NIC | head -1 | awk '{print $4}' | cut -d'/' -f1)
+export BAREMETAL_IP=$(ip -o addr show $PRIMARY_NIC | head -1 | awk '{print $4}' | cut -d'/' -f1)
 echo $BAREMETAL_IP | grep -q ':' && BAREMETAL_IP=[$BAREMETAL_IP]
 sed -i "/apiVIP/i${SPACES}bootstrapOSImage: http://${BAREMETAL_IP}/${RHCOS_QEMU_URI}?sha256=${RHCOS_QEMU_SHA_UNCOMPRESSED}" /root/install-config.yaml
 sed -i "/apiVIP/i${SPACES}clusterOSImage: http://${BAREMETAL_IP}/${RHCOS_OPENSTACK_URI}?sha256=${RHCOS_OPENSTACK_SHA_COMPRESSED}" /root/install-config.yaml
