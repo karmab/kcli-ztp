@@ -15,7 +15,7 @@ sleep 20
 ssh-keyscan -H {{ config_host if config_host != '127.0.0.1' else baremetal_net|local_ip }} >> /root/.ssh/known_hosts
 echo -e "Host=*\nStrictHostKeyChecking=no\n" > /root/.ssh/config
 python3 /root/bin/sushy.py $PRIMARY_NIC
-api_vip=$(grep apiVIP /root/install-config.yaml | awk -F: '{print $2}' | xargs)
+api_vip=$(grep apiVIP /root/install-config.yaml | sed s/apiVIP:// | xargs)
 cluster=$(grep -m 1 name /root/install-config.yaml | awk -F: '{print $2}' | xargs)
 domain=$(grep baseDomain /root/install-config.yaml | awk -F: '{print $2}' | xargs)
 IP=$(ip -o addr show $PRIMARY_NIC | head -1 | awk '{print $4}' | cut -d "/" -f 1 | head -1)
