@@ -1,6 +1,5 @@
 baseplan: kcli_plan.yml
 acm: true
-acm_channel: release-2.3
 acm_downstream: false
 acm_downstream_latest: false
 acm_snapshot:

@@ -44,12 +44,8 @@ spec:
     - openshiftVersion: "${MINOR}"
       url: "http://${BAREMETAL_IP}/rhcos-live.x86_64.iso"
       rootFSUrl: "http://${BAREMETAL_IP}/rhcos-live-rootfs.x86_64.img"
-      {% if acm and acm_channel == 'release-2.3' %}
-      version: ""
-      {% else %}
       cpuArchitecture: "x86_64"
       version: "${VERSION}"
-      {% endif %}
 ---
 apiVersion: v1
 kind: Secret
