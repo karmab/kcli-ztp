@@ -42,3 +42,7 @@ vmrules:
  - lab-installer:
      disks: [200]
 acm_pull_secret: /root/openshift_pull_acm.json
+lab_extra_dns:
+- assisted-service-open-cluster-management
+- assisted-service-assisted-installer
+- assisted-image-service-open-cluster-management
