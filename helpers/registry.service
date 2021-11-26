@@ -5,7 +5,7 @@ After=network.target
 [Service]
 Restart=always
 ExecStart=/usr/bin/podman start -a registry
-ExecStop=/usr/bin/docker stop -t 2 registry
+ExecStop=/usr/bin/podman stop -t 2 registry
 
 [Install]
 WantedBy=multi-user.target

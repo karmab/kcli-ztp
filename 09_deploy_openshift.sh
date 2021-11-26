@@ -6,7 +6,6 @@ cd /root
 export PATH=/root/bin:$PATH
 export HOME=/root
 export KUBECONFIG=/root/ocp/auth/kubeconfig
-export OS_CLOUD=metal3-bootstrap
 export OPENSHIFT_INSTALL_RELEASE_IMAGE_OVERRIDE=$(cat /root/version.txt)
 bash /root/bin/clean.sh || true
 mkdir -p ocp/openshift
@@ -25,7 +24,6 @@ for node in $(oc get nodes --selector='node-role.kubernetes.io/master' -o name) 
   oc label $node node-role.kubernetes.io/virtual=""
 done
 {% endif %}
-export OS_CLOUD=metal3
 if [ "$TOTAL_WORKERS" -gt "0" ] ; then
  until [ "$CURRENT_WORKERS" == "$TOTAL_WORKERS" ] ; do
   CURRENT_WORKERS=$(oc get nodes --selector='node-role.kubernetes.io/worker' -o name | wc -l)

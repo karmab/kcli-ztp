@@ -4,7 +4,8 @@ cd /root
 export PATH=/root/bin:$PATH
 export OCP_RELEASE="$(/root/bin/openshift-baremetal-install version | head -1 | cut -d' ' -f2 | cut -d'.' -f 1,2)"
 export OCP_PULLSECRET_AUTHFILE='/root/openshift_pull.json'
-IP=$(hostname -I | awk -F' ' '{print $2}')
+PRIMARY_NIC=$(ls -1 /sys/class/net | head -1)
+IP=$(ip -o addr show $PRIMARY_NIC | head -1 | awk '{print $4}' | cut -d'/' -f1)
 REVERSE_NAME=$(dig -x $IP +short | sed 's/\.[^\.]*$//')
 echo $IP | grep -q ':' && SERVER6=$(grep : /etc/resolv.conf | grep -v fe80 | cut -d" " -f2) && REVERSE_NAME=$(dig -6x $IP +short @$SERVER6 | sed 's/\.[^\.]*$//')
 REGISTRY_NAME=${REVERSE_NAME:-$(hostname -f)}
@@ -42,5 +43,5 @@ time opm index prune --from-index $RH_OP_INDEX --packages $RH_OP_PACKAGES --tag 
 podman push $LOCAL_REGISTRY/$LOCAL_REGISTRY_INDEX_TAG --authfile $OCP_PULLSECRET_AUTHFILE
 time oc adm catalog mirror $LOCAL_REGISTRY/$LOCAL_REGISTRY_INDEX_TAG $LOCAL_REGISTRY/$LOCAL_REGISTRY_IMAGE_TAG --registry-config=$OCP_PULLSECRET_AUTHFILE
 
-oc apply -f /root/manifests-redhat-operator-index-*/imageContentSourcePolicy.yaml || cp /root/manifests-redhat-operator-index-*/imageContentSourcePolicy.yaml /root/manifests
-oc apply -f /root/manifests-redhat-operator-index-*/catalogSource.yaml || cp /root/manifests-redhat-operator-index-*/catalogSource.yaml /root/manifests
+oc apply -f /root/manifests-redhat-operator-index-*/imageContentSourcePolicy.yaml 2>/dev/null || cp /root/manifests-redhat-operator-index-*/imageContentSourcePolicy.yaml /root/manifests
+oc apply -f /root/manifests-redhat-operator-index-*/catalogSource.yaml 2>/dev/null || cp /root/manifests-redhat-operator-index-*/catalogSource.yaml /root/manifests

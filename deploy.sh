@@ -27,8 +27,8 @@ echo "************ RUNNING 05_cache.sh ************"
 echo "************ RUNNING 06_disconnected.sh ************"
 /root/06_disconnected.sh || exit 1
 {% if disconnected_operators and not disconnected_operators_deploy_after_openshift %}
-echo "************ RUNNING 065_olm.sh ************"
-/root/065_olm.sh
+echo "************ RUNNING 06_disconnected_olm.sh ************"
+/root/06_disconnected_olm.sh
 {% endif %}
 {% endif %}
 
@@ -57,8 +57,8 @@ echo "************ RUNNING imageregistry patch ************"
 oc patch configs.imageregistry.operator.openshift.io cluster --type merge -p '{"spec":{"managementState":"Managed","storage":{"pvc":{}}}}'
 {% endif %}
 {% if disconnected and disconnected_operators and disconnected_operators_deploy_after_openshift %}
-echo "************ RUNNING 065_olm.sh ************"
-/root/065_olm.sh
+echo "************ RUNNING 06_disconnected_olm.sh ************"
+/root/06_disconnected_olm.sh
 {% endif %}
 touch /root/cluster_ready.txt
 {% endif %}
