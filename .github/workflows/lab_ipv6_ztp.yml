@@ -6,10 +6,6 @@ on:
         description: 'Runner Name'
         required: true
         default: 'u08'
-      CLIENT:
-        description: 'Client name'
-        required: true
-        default: 'local'
       PLAN:
         description: 'Plan Name'
         required: true
@@ -51,4 +47,4 @@ jobs:
       runs-on: ${{github.event.inputs.RUNNER}}  
       steps:
         - name: Deploy kcli plan
-          run: kcli -C ${{github.event.inputs.CLIENT}} create plan --force -f kcli_plan_ztp.yml --paramfile ${{github.event.inputs.PARAMFILE}} -P pullsecret='${{github.event.inputs.PULLSECRET}}' -P version='${{github.event.inputs.VERSION}}' -P tag='${{github.event.inputs.TAG}}' ${{github.event.inputs.PLAN}}
+          run: kcli create plan --force -f kcli_plan_ztp.yml --paramfile ${{github.event.inputs.PARAMFILE}} -P pullsecret='${{github.event.inputs.PULLSECRET}}' -P version='${{github.event.inputs.VERSION}}' -P tag='${{github.event.inputs.TAG}}' ${{github.event.inputs.PLAN}}
