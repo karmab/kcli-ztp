@@ -73,25 +73,25 @@ sed -i "s@UUID-{{ num }}@$UUID@" /root/ztp_bmc.yml
 oc create -f /root/ztp_bmc.yml
 {% if ztp_spoke_wait %}
 timeout=0
-stopped=false
+completed=false
+failed=false
 while [ "$timeout" -lt "{{ ztp_spoke_wait_time }}" ] ; do
-  SPOKE_STATUS=$(oc get agentclusterinstall -n $SPOKE $SPOKE -o jsonpath={'.status.conditions[-1].type'})
-  test "$SPOKE_STATUS" == "Stopped" && stopped=true && break;
+  MSG=$(oc get agentclusterinstall -n $SPOKE $SPOKE -o jsonpath={'.status.conditions[-1].message'})
+  echo $MSG | grep completed && completed=true && break;
+  echo $MSG | grep failed && failed=true && break;
   echo "Waiting for spoke cluster to be deployed"
   sleep 60
   timeout=$(($timeout + 5))
 done
-REASON=$(oc get agentclusterinstall -n $SPOKE $SPOKE -o jsonpath={'.status.conditions[-1].reason'})
-MESSAGE=$(oc get agentclusterinstall -n $SPOKE $SPOKE -o jsonpath={'.status.conditions[-1].message'})
-if [ "$stopped" == "false" ] ; then
- echo Timeout waiting for spoke cluster to be deployed
- exit 1
-elif [ "$REASON" == "InstallationCompleted" ] ; then
+if [ "$completed" == "true" ] ; then
  echo "Cluster deployed"
  oc get secret -n $SPOKE $SPOKE-admin-kubeconfig -o jsonpath='{.data.kubeconfig}' | base64 -d > /root/kubeconfig.$SPOKE
-else
+elif [ "$failed" == "true" ] ; then
  echo Hit issue during deployment
- echo message: $MESSAGE
+ echo message: $MSG
+ exit 1
+else
+ echo Timeout waiting for spoke cluster to be deployed
  exit 1
 fi
 {% endif %}
