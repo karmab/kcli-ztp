@@ -40,10 +40,12 @@
  disks:
  - {{ disk_size }}
  files:
+{% if virtual_masters or virtual_workers %}
  - path: /etc/sushy.conf
    origin: helpers/sushy.conf
  - path: /root/00_virtual.sh
    origin: {{ '00_virtual.sh.redfish' if not provisioning_enable else '00_virtual.sh.' + virtual_protocol }}
+{% endif %}
  - 01_patch_installconfig.sh
  - 02_packages.sh
  - 03_network.sh
@@ -64,12 +66,14 @@
    path: /root/openshift_pull.json                                                                                                                    
  - path: /root/bin/ipmi.py
    origin: helpers/ipmi.py
- - path: /root/bin/vbmc.py
-   origin: helpers/vbmc.py
  - path: /root/bin/redfish.py
    origin: helpers/redfish.py
+{% if virtual_masters or virtual_workers %}
+ - path: /root/bin/vbmc.py
+   origin: helpers/vbmc.py
  - path: /root/bin/sushy.py
    origin: helpers/sushy.py
+{% endif %}
  - path: /usr/lib/systemd/system/sushy.service
    origin: helpers/sushy.service
  - path: /root/bin/clean.sh
