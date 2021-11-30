@@ -108,7 +108,9 @@ platform:
 {% endif %}
 {% endif %}
     externalBridge: {{ baremetal_net }}
+{% if not installer_nested %}
     libvirtURI: qemu+ssh://{{ 'root' if config_user == 'apache' else config_user }}@{{ config_host if config_host != '127.0.0.1' else baremetal_net|local_ip(true) }}/system
+{% endif %}
 {% if provisioning_bootstrap_mac != None %}
     provisioningMACAddress: {{ provisioning_bootstrap_mac }}
 {% endif %}

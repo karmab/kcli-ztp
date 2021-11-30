@@ -15,6 +15,8 @@ export OPENSHIFT_INSTALL_RELEASE_IMAGE_OVERRIDE={{ openshift_image }}
 export OS_CLOUD=metal3
 export OS_ENDPOINT=http://172.22.0.2:6385
 export PATH=/usr/local/bin:/root/bin:$PATH
+{% if not installer_nested %}
 export LIBVIRT_DEFAULT_URI=qemu+ssh://{{ 'root' if config_user == 'apache' else config_user }}@{{ config_host if config_host != '127.0.0.1' else baremetal_net|local_ip(true) }}/system
+{% endif %}
 export REGISTRY_PASSWORD={{ disconnected_password }}
 export REGISTRY_USER={{ disconnected_user }}

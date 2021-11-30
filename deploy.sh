@@ -7,6 +7,9 @@ source /etc/profile.d/proxy.sh
 {% if virtual_masters or virtual_workers %}
 echo "************ RUNNING 00_virtual.sh ************"
 bash /root/00_virtual.sh
+{% elif installer_nested %}
+echo "************ RUNNING 00_virtual_nested.sh ************"
+bash /root/00_virtual_nested.sh
 {% endif %}
 
 echo "************ RUNNING 01_patch_installconfig.sh ************"

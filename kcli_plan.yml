@@ -46,6 +46,9 @@
  - path: /root/00_virtual.sh
    origin: {{ '00_virtual.sh.redfish' if not provisioning_enable else '00_virtual.sh.' + virtual_protocol }}
 {% endif %}
+{% if installer_nested %}
+ - 00_virtual_nested.sh
+{% endif %}
  - 01_patch_installconfig.sh
  - 02_packages.sh
  - 03_network.sh

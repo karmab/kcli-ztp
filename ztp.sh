@@ -65,7 +65,9 @@ oc create -f /root/ztp_spoke.yml
 
 oc patch provisioning provisioning-configuration --type merge -p '{"spec":{"watchAllNamespaces": true}}'
 sed -i "s@IP@$BAREMETAL_IP@" /root/ztp_bmc.yml
+{% if not installer_nested %}
 export LIBVIRT_DEFAULT_URI=qemu+ssh://{{ 'root' if config_user == 'apache' else config_user }}@{{ config_host if config_host != '127.0.0.1' else baremetal_net|local_ip(true) }}/system
+{% endif %}
 {% for num in range(0, ztp_virtual_nodes_number) %}
 UUID=$(virsh domuuid {{ cluster }}-ztp-node-{{ num }})
 sed -i "s@UUID-{{ num }}@$UUID@" /root/ztp_bmc.yml
