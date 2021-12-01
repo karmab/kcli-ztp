@@ -46,5 +46,6 @@ curl -s -L https://github.com/itaysk/kubectl-neat/releases/download/v2.0.3/kubec
 
 curl -s -L https://github.com/karmab/tasty/releases/download/v0.5.0/tasty-linux-amd64 > /usr/bin/tasty
 chmod u+x /usr/bin/tasty
+tasty config --enable-as-plugin
 
 oc completion bash >>/etc/bash_completion.d/oc_completion
