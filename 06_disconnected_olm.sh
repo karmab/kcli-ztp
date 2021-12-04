@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
 # Variables to set, suit to your installation
 cd /root
 export PATH=/root/bin:$PATH

@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 image=$1
 podman login -u dummy -p dummy $(hostname -f):5000
 podman pull $image

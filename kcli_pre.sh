@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # NETWORK CHECK
 {% if baremetal_cidr == None %}
 echo baremetal_cidr not set. No network, no party!
