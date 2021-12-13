@@ -266,3 +266,24 @@ You can use the plan `kcli_plan_ztp.yml` for this purpose, along with the follow
 |ztp\_virtual_nodes\_memory              |38912                  |
 |ztp\_virtual\_nodes\_number              |1                      |
 |ztp\_virtual\_nodes\_numcpus             |8                      |
+
+## Sample parameter files
+
+The following sample parameter files are available for you to deploy (on libvirt):
+
+- [lab.yml](lab.yml) This deploys 3 masters in a dedicated ipv4 network
+- [lab_ipv6.yml](lab_ipv6.yml) This deploys 3 masters in a dedicated ipv6 network (hence in a disconnected manner)
+- [lab_ipv6_ztp.yml](lab_ipv6_ztp.yml) This deploys the ipv6 lab, and released acm on top, and then a SNO spoke
+- [lab_ipv6_ztp_downstream.yml](lab_ipv6_ztp_downstream.yml) This is is the same as the ipv6 ztp lab, but the ACM bits are downstream one (this requires a dedicated pull secret)
+
+## Running through github actions
+
+Workflow files are available to deploy pipelines directly as a github action by using a self hosted runner. Just clone the repo and make use of them. They leverage the mentioned parameter files
+
+- [lab.yml](lab.yml)
+- [lab_ipv6.yml](lab_ipv6.yml)
+- [lab_ipv6_ztp.yml](lab_ipv6_ztp.yml)
+- [lab_ipv6_ztp_downstream.yml](lab_ipv6_ztp_downstream.yml)
+- [lab_without_installer.yml](lab_without_installer.yml) This deploys the infrastructure used in the lab plan (through the baseplan kcli_plan_infra.yml), it then deploys openshift without using an installer vm, but `kcli create cluster openshift` insteadusing `-P ipi=true -P ipi_platform=baremetal`
+
+Note that you will use to store you pull secret somewhere in your runner, (`/root/openshift_pull.json` is the default location used in the workflow, which can be changed when launching the pipeline)
