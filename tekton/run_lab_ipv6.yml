@@ -20,8 +20,8 @@ spec:
       value: "lab-ipv6"
     - name: paramfile
       value: "lab_ipv6.yml"
-    - name: plan
-      value: "lab"
+    - name: commit
+      value: "master"
     - name: launch_steps
       value: "true"
     - name: deploy_openshift

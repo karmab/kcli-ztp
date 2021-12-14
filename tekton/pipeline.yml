@@ -81,6 +81,9 @@ spec:
   - name: paramfile
     type: string
     default: "lab_ipv6_ztp.yml"
+  - name: commit
+    type: string
+    default: "master"
   - name: pullsecret
     type: string
     default: "/root/.kcli/openshift_pull.json"
@@ -108,6 +111,8 @@ spec:
     params:
     - name: url
       value: https://github.com/karmab/kcli-openshift4-baremetal
+    - name: revision
+      value: $(params.commit)
   - name: kcli-openshift4-baremetal
     taskRef:
       name: kcli-openshift4-baremetal

@@ -23,8 +23,8 @@ spec:
       value: "lab"
     - name: paramfile
       value: "lab.yml"
-    - name: plan
-      value: "lab"
+    - name: commit
+      value: "master"
     - name: launch_steps
       value: "true"
     - name: deploy_openshift
