@@ -18,5 +18,6 @@ ztp_spoke_api_ip:
 ztp_spoke_ingress_ip:
 ztp_spoke_masters_number: 1
 ztp_spoke_workers_number: 0
+ztp_spoke_network_type: OVNKubernetes
 ztp_spoke_wait: false
 ztp_spoke_wait_time: 3600

@@ -48,6 +48,10 @@ kind: AgentClusterInstall
 metadata:
   name: ${SPOKE}
   namespace: ${SPOKE}
+{% if ztp_spoke_network_type == "OVNKubernetes" %}
+  annotations:
+    agent-install.openshift.io/install-config-overrides: '{"networking":{"networkType":"OVNKubernetes"}}'
+{% endif %}
 spec:
 {% if ztp_spoke_masters_number > 1 and ztp_spoke_api_ip != None and ztp_spoke_ingress_ip != None %}
   apiVIP: {{ ztp_spoke_api_ip }}
