@@ -6,10 +6,7 @@ spec:
   pipelineRef:
     name: deploy-baremetal-plan
   workspaces:
-  - name: output
-    # emptyDir: {}
-    # persistentVolumeClaim:
-    #   claimName: kcli-openshift4-baremetal-pvc
+  - name: git-source
     volumeClaimTemplate:
       metadata:
         name: kcli-openshift4-baremetal-pvc
@@ -18,10 +15,18 @@ spec:
         resources:
            requests:
               storage: 1Gi
-#  params:
-#    - name: version
-#      value: "nightly"
-#    - name: tag
-#      value: "4.10"
-#    - name: launch_steps
-#      value: "false"
+  params:
+    - name: plan
+      value: "lab-ipv6-ztp-sno"
+    - name: paramfile
+      value: "lab_ipv6_ztp.yml"
+    - name: plan
+      value: "lab"
+    - name: launch_steps
+      value: "true"
+    - name: deploy_openshift
+      value: "true"
+    - name: version
+      value: "nightly"
+    - name: tag
+      value: "4.10"

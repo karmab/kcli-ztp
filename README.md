@@ -286,17 +286,15 @@ Note that you will use to store you pull secret somewhere in your runner, (`/roo
 A pipeline and its corresponding run yaml files are available to deploy pipeline through tekton
 
 - [pipeline.yml](tekton/pipeline.yml)
-- [run.yml](tekton/run.yml)
+- [run_lab.yml](tekton/run_lab.yml)
+- [run_lab_ipv6.yml](tekton/run_lab_ipv6.yml)
+- [run_lab_ipv6_ztp.yml](tekton/run_lab_ipv6_ztp.yml)
 
 You will need to create a configmap in target namespace to hold kcli configuration and make sure it points to a remote hypervisor
 
-Also copy your pull secret and a valid priv/pub key in the corresponding directory
+First copy your pull secret and a valid priv/pub key in the corresponding directory
 
-```
-oc create configmap kcli-config --from-file=$HOME/.kcli
-```
-
-your config.yml in the directory would contain something similar to the following
+Then make sure your config.yml contain something similar to the following
 
 ```
 default:
@@ -305,3 +303,13 @@ mykvm:
   type: kvm
   host: 192.168.1.10
 ```
+
+Create the relevant configmap
+
+```
+oc create configmap kcli-config --from-file=$HOME/.kcli
+```
+
+Then you can create the pipeline definition with `oc create -f pipeline.yml` and run a pipeline instance with `oc create -f run_lab.yml` for instance
+
+Note that the pipeline makes use of a PVC to store the github repo
