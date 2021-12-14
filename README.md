@@ -238,13 +238,6 @@ The following parameters can be used in this case:
 
 A lab available [here](https://ocp-baremetal-ipi-lab.readthedocs.io/en/latest) is provided to get people familiarized with Baremetal Ipi workflow.
 
-There are also some lab parameter files ready to use on virtualized environments:
-
-- lab.yml
-- lab_ipv6.yml
-- lab\_ipv6\_ztp.yml
-- lab\_ipv6\_ztp\_downstream.yml
-
 ## Deploying a cluster through ZTP on top of your cluster
 
 You can use the plan `kcli_plan_ztp.yml` for this purpose, along with the following parameters:
@@ -278,12 +271,37 @@ The following sample parameter files are available for you to deploy (on libvirt
 
 ## Running through github actions
 
-Workflow files are available to deploy pipelines directly as a github action by using a self hosted runner. Just clone the repo and make use of them. They leverage the mentioned parameter files
+Workflow files are available to deploy pipelines as a github action by using a self hosted runner. Just clone the repo and make use of them
 
-- [lab.yml](lab.yml)
-- [lab_ipv6.yml](lab_ipv6.yml)
-- [lab_ipv6_ztp.yml](lab_ipv6_ztp.yml)
-- [lab_ipv6_ztp_downstream.yml](lab_ipv6_ztp_downstream.yml)
-- [lab_without_installer.yml](lab_without_installer.yml) This deploys the infrastructure used in the lab plan (through the baseplan kcli_plan_infra.yml), it then deploys openshift without using an installer vm, but `kcli create cluster openshift` insteadusing `-P ipi=true -P ipi_platform=baremetal`
+- [lab.yml](.github/workflows/lab.yml)
+- [lab_ipv6.yml](.github/workflows/lab_ipv6.yml)
+- [lab_ipv6_ztp.yml](.github/workflows/lab_ipv6_ztp.yml)
+- [lab_ipv6_ztp_downstream.yml](.github/workflows/lab_ipv6_ztp_downstream.yml)
+- [lab_without_installer.yml](.github/workflows/lab_without_installer.yml) This deploys the infrastructure used in the lab plan (through the baseplan kcli_plan_infra.yml), it then deploys openshift without using an installer vm, but `kcli create cluster openshift` insteadusing `-P ipi=true -P ipi_platform=baremetal`
 
 Note that you will use to store you pull secret somewhere in your runner, (`/root/openshift_pull.json` is the default location used in the workflow, which can be changed when launching the pipeline)
+
+## Running on tekton
+
+A pipeline and its corresponding run yaml files are available to deploy pipeline through tekton
+
+- [pipeline.yml](tekton/pipeline.yml)
+- [run.yml](tekton/run.yml)
+
+You will need to create a configmap in target namespace to hold kcli configuration and make sure it points to a remote hypervisor
+
+Also copy your pull secret and a valid priv/pub key in the corresponding directory
+
+```
+oc create configmap kcli-config --from-file=$HOME/.kcli
+```
+
+your config.yml in the directory would contain something similar to the following
+
+```
+default:
+  client: mykvm
+mykvm:
+  type: kvm
+  host: 192.168.1.10
+```
