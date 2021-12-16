@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
- name: kcli-openshift4-baremetal
+ name: deploy-baremetal-plan
 spec:
  workspaces:
   - name: source
@@ -35,7 +35,7 @@ spec:
      type: string
      default: "4.9"
  steps:
-   - name: deploy-plan
+   - name: deploy-baremetal-plan
      image: "quay.io/karmab/kcli:latest"
      env:
        - name: PLAN
@@ -111,9 +111,9 @@ spec:
       value: https://github.com/karmab/kcli-openshift4-baremetal
     - name: revision
       value: $(params.commit)
-  - name: kcli-openshift4-baremetal
+  - name: deploy-baremetal-plan
     taskRef:
-      name: kcli-openshift4-baremetal
+      name: deploy-baremetal-plan
     runAfter:
     - clone-repo
     workspaces:
