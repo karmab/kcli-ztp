@@ -310,6 +310,13 @@ Create the relevant configmap
 oc create configmap kcli-config --from-file=$HOME/.kcli
 ```
 
+If you are accessing a remote libvirt hypervisor through ssh, also add the anyuid scc to pipeline service account
+
+```
+oc adm policy add-scc-to-user anyuid -z pipeline
+```
+
+
 Then you can create the pipeline definition with `oc create -f pipeline.yml` and run a pipeline instance with `oc create -f run_lab.yml` for instance
 
 Note that the pipeline makes use of a PVC to store the github repo
