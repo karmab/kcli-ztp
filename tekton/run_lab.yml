@@ -1,23 +1,10 @@
 apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
-  generateName: deploy-baremetal-plan
+  generateName: kcli-plan-baremetal-lab
 spec:
   pipelineRef:
-    name: deploy-baremetal-plan
-  workspaces:
-  - name: git-source
-    # emptyDir: {}
-    # persistentVolumeClaim:
-    #   claimName: kcli-openshift4-baremetal-pvc
-    volumeClaimTemplate:
-      metadata:
-        name: kcli-openshift4-baremetal-pvc
-      spec:
-        accessModes: ["ReadWriteOnce"]
-        resources:
-           requests:
-              storage: 1Gi
+    name: kcli-plan-baremetal-lab
   params:
     - name: plan
       value: "lab"

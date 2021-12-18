@@ -1,4 +1,4 @@
-name: lab-ipv6-ztp-sno-nightly
+name: lab-ipv6-ztp-nightly
 on:
   schedule:
     - cron: '15 1 * * *'
@@ -6,6 +6,7 @@ on:
 env:
  HOME: /root
  PLAN: lab-ipv6-ztp-sno
+ INPUTFILE: kcli_plan_ztp.yml
  PARAMFILE: lab_ipv6_ztp.yml
  PULLSECRET: /root/openshift_pull.json
  VERSION: stable
@@ -28,4 +29,4 @@ jobs:
       runs-on: libvirt
       steps:
         - name: Deploy kcli plan
-          run: kcli create plan --force -f kcli_plan_ztp.yml --paramfile ${{env.PARAMFILE}} -P pullsecret='${{env.PULLSECRET}}' -P version='${{env.VERSION}}' -P tag='${{env.TAG}}' ${{env.PLAN}}
+          run: kcli create plan --force -f $INPUTFILE --paramfile $PARAMFILE -P pullsecret=$PULLSECRET -P version=$VERSION -P tag=$TAG $PLAN

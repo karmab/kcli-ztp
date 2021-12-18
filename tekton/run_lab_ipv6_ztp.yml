@@ -1,23 +1,13 @@
 apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
-  generateName: deploy-baremetal-plan
+  generateName: kcli-plan-baremetal-lab-ipv6-ztp
 spec:
   pipelineRef:
-    name: deploy-baremetal-plan
-  workspaces:
-  - name: git-source
-    volumeClaimTemplate:
-      metadata:
-        name: kcli-openshift4-baremetal-pvc
-      spec:
-        accessModes: ["ReadWriteOnce"]
-        resources:
-           requests:
-              storage: 1Gi
+    name: kcli-plan-baremetal-lab
   params:
     - name: plan
-      value: "lab-ipv6-ztp-sno"
+      value: "lab-ipv6-ztp"
     - name: paramfile
       value: "lab_ipv6_ztp.yml"
     - name: commit

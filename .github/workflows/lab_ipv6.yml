@@ -1,4 +1,4 @@
-name: lab-ipv6 
+name: lab-ipv6
 on:
   workflow_dispatch:
     inputs:
@@ -6,10 +6,18 @@ on:
         description: 'Runner Name'
         required: true
         default: 'u08'
+      CLIENT:
+        description: 'Client name'
+        required: true
+        default: 'local'
       PLAN:
         description: 'Plan Name'
         required: true
         default: lab-ipv6
+      INPUTFILE:
+        description: 'Input file'
+        required: true
+        default: kcli_plan.yml
       PARAMFILE:
         description: 'paramfile'
         required: false
@@ -37,10 +45,20 @@ on:
 
 env:
  HOME: /root
+ CLIENT: ${{github.event.inputs.CLIENT}}
+ PLAN: ${{github.event.inputs.PLAN}}
+ INPUTFILE: ${{github.event.inputs.INPUTFILE}}
+ PARAMFILE: ${{github.event.inputs.PARAMFILE}}
+ PULLSECRET: ${{github.event.inputs.PULLSECRET}}
+ LAUNCH_STEPS: ${{github.event.inputs.LAUNCH_STEPS}}
+ DEPLOY_OPENSHIFT: ${{github.event.inputs.DEPLOY_OPENSHIFT}}
+ VERSION: ${{github.event.inputs.VERSION}}
+ TAG: ${{github.event.inputs.TAG}}
 
 jobs:
     requirements:
-      runs-on:  ${{github.event.inputs.RUNNER}} 
+      runs-on: ${{github.event.inputs.RUNNER}}
+
       steps:
        - uses: actions/checkout@v2
        - run: git pull origin ${GITHUB_REF##*/}
@@ -52,7 +70,8 @@ jobs:
 
     deploy-plan:
       needs: requirements
-      runs-on:  ${{github.event.inputs.RUNNER}}   
+      runs-on: ${{github.event.inputs.RUNNER}}
       steps:
-        - name: Deploy kcli plan
-          run: kcli create plan --force -f kcli_plan.yml --paramfile ${{github.event.inputs.PARAMFILE}} -P pullsecret='${{github.event.inputs.PULLSECRET}}' -P launch_steps=${{github.event.inputs.LAUNCH_STEPS}} -P deploy_openshift=${{github.event.inputs.DEPLOY_OPENSHIFT}} -P version='${{github.event.inputs.VERSION}}' -P tag='${{github.event.inputs.TAG}}'  ${{github.event.inputs.PLAN}} 
+       - name: Deploy kcli plan
+         run: kcli -C $CLIENT create plan --force -f $INPUTFILE --paramfile $PARAMFILE -P pullsecret=$PULLSECRET -P launch_steps=$LAUNCH_STEPS -P deploy_openshift=$DEPLOY_OPENSHIFT -P version=$VERSION -P tag=$TAG $PLAN
+

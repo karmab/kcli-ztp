@@ -1,4 +1,4 @@
-name: lab-ipv6-ztp-sno-downstream
+name: lab-ipv6-ztp-downstream
 on:
   workflow_dispatch:
     inputs:
@@ -6,10 +6,18 @@ on:
         description: 'Runner Name'
         required: true
         default: 'u08'
+      CLIENT:
+        description: 'Client name'
+        required: true
+        default: 'local'
       PLAN:
         description: 'Plan Name'
         required: true
-        default: lab-ipv6-ztp-sno
+        default: lab-ipv6-ztp
+      INPUTFILE:
+        description: 'Input file'
+        required: true
+        default: kcli_plan_ztp.yml
       PARAMFILE:
         description: 'paramfile'
         required: false
@@ -18,6 +26,14 @@ on:
         description: 'pullsecret'
         required: false
         default: /root/openshift_pull.json
+      LAUNCH_STEPS:
+        description: 'launch_steps'
+        required: false
+        default: True
+      DEPLOY_OPENSHIFT:
+        description: 'deploy_openshift'
+        required: false
+        default: True
       VERSION:
         description: 'version'
         required: false
@@ -26,25 +42,23 @@ on:
         description: 'tag'
         required: false
         default: 4.9
-      ACM_DOWNSTREAM_LATEST:
-        description: 'acm_downstream_latest'
-        required: true
-        default: 'false'
-      ACM_SNAPSHOT:
-        description: 'acm_snapshot'
-        required: true
-        default: 2.3.3-DOWNSTREAM-2021-10-12-15-26-20
-      ACM_OP_BUNDLE:
-        description: 'acm_op_bundle'
-        required: true
-        default: v2.3.3-25
-      
+
 env:
  HOME: /root
+ CLIENT: ${{github.event.inputs.CLIENT}}
+ PLAN: ${{github.event.inputs.PLAN}}
+ INPUTFILE: ${{github.event.inputs.INPUTFILE}}
+ PARAMFILE: ${{github.event.inputs.PARAMFILE}}
+ PULLSECRET: ${{github.event.inputs.PULLSECRET}}
+ LAUNCH_STEPS: ${{github.event.inputs.LAUNCH_STEPS}}
+ DEPLOY_OPENSHIFT: ${{github.event.inputs.DEPLOY_OPENSHIFT}}
+ VERSION: ${{github.event.inputs.VERSION}}
+ TAG: ${{github.event.inputs.TAG}}
 
 jobs:
     requirements:
       runs-on: ${{github.event.inputs.RUNNER}}
+
       steps:
        - uses: actions/checkout@v2
        - run: git pull origin ${GITHUB_REF##*/}
@@ -56,7 +70,8 @@ jobs:
 
     deploy-plan:
       needs: requirements
-      runs-on: ${{github.event.inputs.RUNNER}}  
+      runs-on: ${{github.event.inputs.RUNNER}}
       steps:
-        - name: Deploy kcli plan
-          run: kcli create plan --force -f kcli_plan_ztp.yml --paramfile ${{github.event.inputs.PARAMFILE}} -P pullsecret='${{github.event.inputs.PULLSECRET}}' -P acm_downstream_latest=${{github.event.inputs.ACM_DOWNSTREAM_LATEST}} -P acm_snapshot=${{github.event.inputs.ACM_SNAPSHOT}} -P acm_op_bundle=${{github.event.inputs.ACM_OP_BUNDLE}} -P version='${{github.event.inputs.VERSION}}' -P tag='${{github.event.inputs.TAG}}' ${{github.event.inputs.PLAN}}
+       - name: Deploy kcli plan
+         run: kcli -C $CLIENT create plan --force -f $INPUTFILE --paramfile $PARAMFILE -P pullsecret=$PULLSECRET -P launch_steps=$LAUNCH_STEPS -P deploy_openshift=$DEPLOY_OPENSHIFT -P version=$VERSION -P tag=$TAG$PLAN
+
