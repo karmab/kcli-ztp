@@ -24,10 +24,7 @@ podman login -u "$RHN_USER" -p "$RHN_PASSWORD" registry.redhat.io
 
 which opm >/dev/null 2>&1
 if [ "$?" != "0" ] ; then
-export REPO="operator-framework/operator-registry"
-export VERSION=$(curl -s https://api.github.com/repos/$REPO/releases | grep tag_name | grep -v -- '-rc' | head -1 | awk -F': ' '{print $2}' | sed 's/,//' | xargs)
-echo "Using Opm Version $VERSION"
-curl -Lk https://github.com/operator-framework/operator-registry/releases/download/$VERSION/linux-amd64-opm > /usr/bin/opm
+curl -k -s https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest/opm-linux.tar.gz | tar xvz -C /usr/bin/
 chmod u+x /usr/bin/opm
 fi
 
