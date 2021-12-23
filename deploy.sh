@@ -60,5 +60,8 @@ oc patch configs.imageregistry.operator.openshift.io cluster --type merge -p '{"
 echo "************ RUNNING 06_disconnected_olm.sh ************"
 /root/06_disconnected_olm.sh
 {% endif %}
+{% if apps %}
+bash /root/11_apps.sh
+{% endif %}
 touch /root/cluster_ready.txt
 {% endif %}
