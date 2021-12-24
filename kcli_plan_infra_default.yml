@@ -41,5 +41,6 @@ virtual_workers_mac_prefix: aa:aa:aa:bb:bb
 virtual_workers_baremetal_mac_prefix: aa:aa:aa:dd:dd
 virtual_workers_deploy: true
 lab: false
+lab_dhcp: true
 lab_extra_dns: []
 model: dell

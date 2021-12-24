@@ -3,6 +3,7 @@
 {{ baremetal_net }}:
  type: network
  cidr: {{ baremetal_cidr }}
+ dhcp: {{ lab_dhcp }}
 {% if lab_domain is defined %}
  domain: {{ lab_domain }}
 {% endif %}
