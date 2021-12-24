@@ -220,7 +220,7 @@ The following parameters are available when deploying the default plan
 
 ### Node parameters
 
-when specifying *masters* or *workers* as an array, the specification can be created with something like this
+when specifying *masters* or *workers* as an array (for baremetal nodes), the specification can be created with something like this
 
 ```
 - ipmi_address: 192.168.123.45
@@ -233,6 +233,36 @@ The following parameters can be used in this case:
 - redfish_address. Redfish url
 - provisioning_mac. It needs to be set to the mac to use along with provisioning network or any of the macs of the node when provisioning is disabled
 - boot_mode (optional). Should either be set to Legacy, UEFI or UEFISecureBoot
+- bmc_user. If not specified, global bmc_password variable is used
+- bmc_password.  If not specified, global bmc_password variable is used
+- disk. Optioanl rootDeviceHint disk device
+- network_config. Specific network config for the corresponding node, in nmstate format. (Requires 4.10+)
+
+A valid network_config snippet would be
+
+```
+  network_config: |-
+    routes:
+      config:
+      - destination: 0.0.0.0/0
+        next-hop-address: 192.168.129.1
+        next-hop-interface: enp2s0
+    dns-resolver:
+      config:
+        search:
+        - lab.karmalabs.com
+        server:
+        - 192.168.129.1
+    interfaces:
+    - name: enp2s0
+      type: ethernet
+      state: up
+      ipv4:
+        address:
+        - ip: "192.168.129.20"
+          prefix-length: 24
+        enabled: true
+```
 
 ## Lab runthrough
 
@@ -315,6 +345,5 @@ If you are accessing a remote libvirt hypervisor through ssh, also add the anyui
 ```
 oc adm policy add-scc-to-user anyuid -z pipeline
 ```
-
 
 Then you can create the pipeline definition with `oc create -f pipeline.yml` and run a pipeline instance with `oc create -f run_lab.yml` for instance

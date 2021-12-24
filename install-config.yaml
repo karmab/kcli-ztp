@@ -149,6 +149,10 @@ platform:
       rootDeviceHints:
         deviceName: "/dev/{{ master['disk'] | basename }}"
       {% endif %}
+      {% if 'network_config' in master %}
+      networkConfig: |
+        {{ master['network_config']|replace('\n', '\n        ') }}
+      {% endif %}
 {% endfor %}
 {% for worker in workers %}
 {% set num = loop.index0|string %}
@@ -183,6 +187,10 @@ platform:
       {% if 'disk' in worker %}
       rootDeviceHints:
         deviceName: "/dev/{{ worker['disk'] | basename }}"
+      {% endif %}
+      {% if 'network_config' in worker %}
+      networkConfig: |
+        {{ worker['network_config']|replace('\n', '\n        ') }}
       {% endif %}
 {% endfor %}
 {% if cas %}
