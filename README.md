@@ -246,7 +246,7 @@ A valid network_config snippet would be
       config:
       - destination: 0.0.0.0/0
         next-hop-address: 192.168.129.1
-        next-hop-interface: enp2s0
+        next-hop-interface: ens3
     dns-resolver:
       config:
         search:
@@ -254,7 +254,7 @@ A valid network_config snippet would be
         server:
         - 192.168.129.1
     interfaces:
-    - name: enp2s0
+    - name: ens3
       type: ethernet
       state: up
       ipv4:
@@ -262,6 +262,9 @@ A valid network_config snippet would be
         - ip: "192.168.129.20"
           prefix-length: 24
         enabled: true
+    interfaces:
+    - name: ens3
+      macAddress: aa:aa:aa:aa:bb:03
 ```
 
 ## Lab runthrough

@@ -1,0 +1,89 @@
+lab: true
+#lab_dhcp: false
+provisioning_enable: false
+pool: default
+dualstack: false
+dualstack_cidr: 192.168.130.0/24
+disconnected: true
+virtual_masters: true
+virtual_workers: false
+launch_steps: true
+deploy_openshift: false
+version: stable
+tag: 4.9
+cluster: lab
+domain: karmalabs.com 
+baremetal_cidr: 2620:52:0:1302::/64
+baremetal_net: lab-net
+provisioning_net: lab-prov
+virtual_masters_memory: 16384
+virtual_masters_numcpus: 8
+virtual_workers_deploy: false
+api_ip: 2620:52:0:1302::2
+ingress_ip: 2620:52:0:1302::3
+baremetal_ips:
+- 2620:52:0:1302::20
+- 2620:52:0:1302::21
+- 2620:52:0:1302::22
+baremetal_macs:
+- aa:aa:aa:aa:bb:01
+- aa:aa:aa:aa:bb:02
+- aa:aa:aa:aa:bb:03
+virtual_masters_network_config:
+- |-
+    dns-resolver:
+      config:
+        search:
+        - lab.karmalabs.com
+        server:
+        - 2620:52:0:1302::1
+    interfaces:
+    - name: enp2s0
+      type: ethernet
+      state: up
+      ipv4:
+        address:
+        - ip: "2620:52:0:1302::20"
+          prefix-length: 64
+        enabled: true
+    interfaces:
+    - name: enp2s0
+      macAddress: aa:aa:aa:aa:bb:01
+- |-
+    dns-resolver:
+      config:
+        search:
+        - lab.karmalabs.com
+        server:
+        - 2620:52:0:1302::1
+    interfaces:
+    - name: enp2s0
+      type: ethernet
+      state: up
+      ipv4:
+        address:
+        - ip: "2620:52:0:1302::21"
+          prefix-length: 64
+        enabled: true
+    interfaces:
+    - name: enp2s0
+      macAddress: aa:aa:aa:aa:bb:02
+- |-
+    dns-resolver:
+      config:
+        search:
+        - lab.karmalabs.com
+        server:
+        - 2620:52:0:1302::1
+    interfaces:
+    - name: enp2s0
+      type: ethernet
+      state: up
+      ipv4:
+        address:
+        - ip: "2620:52:0:1302::22"
+          prefix-length: 64
+        enabled: true
+    interfaces:
+    - name: enp2s0
+      macAddress: aa:aa:aa:aa:bb:03

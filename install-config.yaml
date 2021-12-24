@@ -6,14 +6,24 @@
 {% if virtual_masters %}
 {% set extra_masters = [] %}
 {% for num in range(0, virtual_masters_number) %}
-{% do extra_masters.append({}) %}
+{% if virtual_masters_network_config and virtual_masters_network_config|length > num %}
+{% set new_master = {'network_config': virtual_masters_network_config[num] } %}
+{% else %}
+{% set new_master = {} %}
+{% endif %}
+{% do extra_masters.append(new_master) %}
 {% endfor %}
 {% set masters = extra_masters + masters %}
 {% endif %}
 {% if virtual_workers and virtual_workers_deploy %}
 {% set extra_workers = [] %}
 {% for num in range(0, virtual_workers_number) %}
-{% do extra_workers.append({}) %}
+{% if virtual_workers_network_config and virtual_workers_network_config|length > num %}
+{% set new_worker = {'network_config': virtual_workers_network_config[num] } %}
+{% else %}
+{% set new_worker = {} %}
+{% endif %}
+{% do extra_workers.append(new_worker) %}
 {% endfor %}
 {% set workers = extra_workers + workers %}
 {% endif %}
