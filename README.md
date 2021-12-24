@@ -318,5 +318,3 @@ oc adm policy add-scc-to-user anyuid -z pipeline
 
 
 Then you can create the pipeline definition with `oc create -f pipeline.yml` and run a pipeline instance with `oc create -f run_lab.yml` for instance
-
-Note that the pipeline makes use of a PVC to store the github repo
