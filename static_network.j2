@@ -1,0 +1,22 @@
+{% macro config(ip, prefix, gateway, cluster, domain, nic) -%}
+        routes:
+          config:
+          - destination: {{ '::/0' if ':' in ip else '0.0.0.0/0' }}
+            next-hop-address: {{ gateway }}
+            next-hop-interface: {{ nic }}
+        dns-resolver:
+          config:
+            search:
+            - {{ cluster }}.{{ domain }}
+            server:
+            - {{ gateway }}
+        interfaces:
+        - name: {{ nic }}
+          type: ethernet
+          state: up
+          {{ 'ipv6' if ':' in ip else 'ipv4' }}:
+            address:
+            - ip: "{{ ip }}"
+              prefix-length: {{ prefix }}
+            enabled: true
+{%- endmacro -%}
