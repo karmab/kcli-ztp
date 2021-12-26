@@ -1,7 +1,7 @@
 apiVersion: machineconfiguration.openshift.io/v1
 kind: MachineConfig
 metadata:
-  name: localhost-worker
+  name: localhost-fix
   labels:
     beta.kubernetes.io/os: linux
 spec:
