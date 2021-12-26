@@ -1,28 +1,28 @@
 apiVersion: machineconfiguration.openshift.io/v1
 kind: MachineConfig
 metadata:
-  name: localhost-fix
+  name: localhost-master-fix
   labels:
-    beta.kubernetes.io/os: linux
+    machineconfiguration.openshift.io/role: master
 spec:
   config:
     ignition:
-      version: 2.2.0
+      version: 3.2.0
     systemd:
       units:
-      - name: magic-hostname.service
+      - name: localhost-master-fix.service
         enabled: true
         contents: |
           [Unit]
-          Description=Writes IP address configuration so that kubelet and crio services select a valid node IP
+          Description=Changes hostname based on mac address
           Wants=network-online.target
           After=network-online.target ignition-firstboot-complete.service
           Before=kubelet.service crio.service
           [Service]
           Type=oneshot
           ExecStart=/bin/bash -c "if [[ $(hostname) == *localhost* ]]; then \
-             PRIMARY_NIC=$(ls -1 /sys/class/net | head -1)
-             HOSTNAME=$(ip a $PRIMARY_NIC | grep link | awk '{print $2}' | sed 's/:/-/g') ;\
+             PRIMARY_NIC=$(ls -1 /sys/class/net | head -1) ;\
+             HOSTNAME=$(ip a l $PRIMARY_NIC | grep link | awk '{print $2}' | sed 's/:/-/g') ;\
              echo $HOSTNAME > /etc/hostname ;\
              nmcli general hostname $HOSTNAME ;\
              systemctl restart systemd-hostnamed ;\
