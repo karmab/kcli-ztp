@@ -80,5 +80,6 @@ ntp_server: 0.rhel.pool.ntp.org
 model: dell
 patch_rhcos_image: false
 apps: []
+localhost_fix: false
 virtual_masters_network_config: []
 virtual_workers_network_config: []

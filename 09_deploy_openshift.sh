@@ -13,6 +13,9 @@ python3 /root/bin/ipmi.py off
 python3 /root/bin/redfish.py off
 cp install-config.yaml ocp
 openshift-baremetal-install --dir ocp --log-level debug create manifests
+{% if localhost_fix %}
+cp /root/99-localhost-fix.yaml /root/manifests
+{% if endif %}
 cp manifests/*y*ml >/dev/null 2>&1 ocp/openshift || true
 TOTAL_WORKERS=$(grep 'role: worker' /root/install-config.yaml | wc -l) || true
 # [ "$TOTAL_WORKERS" -gt "0" ] || cp 99-openshift-ingress-controller-master.yaml ocp/openshift

@@ -90,6 +90,7 @@
  - 99-openshift-chrony.sample.yaml
  - 99-openshift-ingress-controller-master.yaml
  - 99-operatorhub.yaml
+ - 99-localhost-fix.yaml
 {% for ca in cas %}
 {% set num = loop.index0 %}
  - path: /etc/pki/ca-trust/source/anchors/RH-IT-Root-CA{{ num }}.crt

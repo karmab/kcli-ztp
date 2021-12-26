@@ -31,6 +31,7 @@ baremetal_macs:
 - aa:aa:aa:aa:bb:04
 - aa:aa:aa:aa:bb:05
 - aa:aa:aa:aa:bb:06
+localhost_fix: true
 virtual_masters_network_config:
 - |-
     routes:

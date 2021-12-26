@@ -1,0 +1,31 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: localhost-worker
+  labels:
+    beta.kubernetes.io/os: linux
+spec:
+  config:
+    ignition:
+      version: 2.2.0
+    systemd:
+      units:
+      - name: magic-hostname.service
+        enabled: true
+        contents: |
+          [Unit]
+          Description=Writes IP address configuration so that kubelet and crio services select a valid node IP
+          Wants=network-online.target
+          After=network-online.target ignition-firstboot-complete.service
+          Before=kubelet.service crio.service
+          [Service]
+          Type=oneshot
+          ExecStart=/bin/bash -c "if [[ $(hostname) == *localhost* ]]; then \
+             PRIMARY_NIC=$(ls -1 /sys/class/net | head -1)
+             HOSTNAME=$(ip a $PRIMARY_NIC | grep link | awk '{print $2}' | sed 's/:/-/g') ;\
+             echo $HOSTNAME > /etc/hostname ;\
+             nmcli general hostname $HOSTNAME ;\
+             systemctl restart systemd-hostnamed ;\
+             else echo Hostname properly set; exit 0 ; fi"
+          [Install]
+          WantedBy=multi-user.target
