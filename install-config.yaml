@@ -1,3 +1,7 @@
+{% import 'static_network.j2' as static_network %}
+{% set baremetal_prefix = baremetal_cidr.split('/')[1] %}
+{% set baremetal_gateway = static_baremetal_gateway or baremetal_cidr|network_ip(1 if lab else -2) %}
+{% set nic = 'enp1s0' if virtual_protocol == 'redfish' or not provisioning_enable else 'ens3' %}
 {% if api_ip != None and ':' in api_ip %}
 {% set ipv6 = True %}
 {% else %}
@@ -6,8 +10,8 @@
 {% if virtual_masters %}
 {% set extra_masters = [] %}
 {% for num in range(0, virtual_masters_number) %}
-{% if virtual_masters_network_config and virtual_masters_network_config|length > num %}
-{% set new_master = {'network_config': virtual_masters_network_config[num] } %}
+{% if virtual_masters_static_network and baremetal_ips|length > num %}
+{% set new_master = {'ip': baremetal_ips[num]} %}
 {% else %}
 {% set new_master = {} %}
 {% endif %}
@@ -18,8 +22,8 @@
 {% if virtual_workers and virtual_workers_deploy %}
 {% set extra_workers = [] %}
 {% for num in range(0, virtual_workers_number) %}
-{% if virtual_workers_network_config and virtual_workers_network_config|length > num %}
-{% set new_worker = {'network_config': virtual_workers_network_config[num] } %}
+{% if virtual_workers_static_network and baremetal_ips|length > virtual_masters_number + num %}
+{% set new_worker = {'ip': baremetal_ips[virtual_masters_number + num]} %}
 {% else %}
 {% set new_worker = {} %}
 {% endif %}
@@ -159,9 +163,11 @@ platform:
       rootDeviceHints:
         deviceName: "/dev/{{ master['disk'] | basename }}"
       {% endif %}
-      {% if 'network_config' in master %}
+      {% if 'ip' in master %}
       networkConfig: |
-        {{ master['network_config']|replace('\n', '\n        ') }}
+        {{ static_network.config(master['ip'], baremetal_prefix, master['gateway']|default(baremetal_gateway), cluster, domain, master['nic']|default(nic)) }}
+      {% elif 'network_config' in master %}
+      networkConfig: {{ master['network_config']|replace('\n', '\n        ') }}
       {% endif %}
 {% endfor %}
 {% for worker in workers %}
@@ -198,9 +204,11 @@ platform:
       rootDeviceHints:
         deviceName: "/dev/{{ worker['disk'] | basename }}"
       {% endif %}
-      {% if 'network_config' in worker %}
+      {% if 'ip' in worker %}
       networkConfig: |
-        {{ worker['network_config']|replace('\n', '\n        ') }}
+        {{ static_network.config(worker['ip'], baremetal_prefix, worker['gateway']|default(baremetal_gateway), cluster, domain, worker['nic']|default(nic)) }}
+      {% elif 'network_config' in worker %}
+      networkConfig: {{ worker['network_config']|replace('\n', '\n        ') }}
       {% endif %}
 {% endfor %}
 {% if cas %}

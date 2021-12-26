@@ -235,7 +235,8 @@ The following parameters can be used in this case:
 - boot_mode (optional). Should either be set to Legacy, UEFI or UEFISecureBoot
 - bmc_user. If not specified, global bmc_password variable is used
 - bmc_password.  If not specified, global bmc_password variable is used
-- disk. Optioanl rootDeviceHint disk device
+- disk. Optional rootDeviceHint disk device
+- ip, nic, gateway. Those attributes can be provided to set static networking using nmstate. Nic can be omitted. If gateway isn't provided, the static_gateway is used or gateway is guessed from baremetal_cidr
 - network_config. Specific network config for the corresponding node, in nmstate format. (Requires 4.10+)
 
 A valid network_config snippet would be
