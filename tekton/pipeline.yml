@@ -84,7 +84,7 @@ spec:
      echo kcli create plan --force $INPUTFILE --paramfile $PARAMFILE -P pullsecret="$PULLSECRET" -P launch_steps="$LAUNCH_STEPS" -P deploy_openshift="$DEPLOY_OPENSHIFT" -P version="$VERSION" -P tag="$TAG" $PLAN
      kcli create plan --force -f $INPUTFILE --paramfile $PARAMFILE -P pullsecret="$PULLSECRET" -P launch_steps="$LAUNCH_STEPS" -P deploy_openshift="$DEPLOY_OPENSHIFT" -P version="$VERSION" -P tag="$TAG" $PLAN
     volumeMounts:
-    - mountPath: /root/.kcli
+    - mountPath: /home/tekton/.kcli
       name: kcli-config
     - mountPath: /source
       name: git-source
