@@ -30,6 +30,12 @@
 {% if installer_mac != None %}
    mac: {{ installer_mac }}
 {% endif %}
+{% if installer_ip != None %}
+   ip: {{ installer_ip }}
+   mask: {{ baremetal_cidr.split('/')[1] }}
+   gateway: {{ static_baremetal_gateway or baremetal_cidr|network_ip(1 if lab else -2) }}
+   dns: {{ static_baremetal_gateway or baremetal_cidr|network_ip(1 if lab else -2) }}
+{% endif %}
 {% if provisioning_enable %}
  - name: {{ provisioning_net }}
    noconf: yes
@@ -103,6 +109,9 @@
    origin: proxy.sh
    mode: 644
  - .proxy.sh
+{% endif %}
+{% if baremetal_bootstrap_ip != None %}
+ - ifcfg-bootstrap
 {% endif %}
 {% if launch_steps %}
  scripts:

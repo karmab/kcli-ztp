@@ -20,6 +20,7 @@ info: |
 baseplan: kcli_plan_infra.yml
 image: centos8
 image_url:
+installer_ip:
 installer_mac:
 installer_wait: False
 version: ci
@@ -40,6 +41,7 @@ provisioning_enable: true
 baremetal_noprovisioning_ip:
 baremetal_noprovisioning_bootstrap_ip:
 baremetal_bootstrap_mac:
+baremetal_bootstrap_ip:
 provisioning_bootstrap_mac:
 provisioning_interface: eno1
 provisioning_net: provisioning
