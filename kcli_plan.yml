@@ -67,7 +67,6 @@
  - install-config.yaml                                                                                                                           
  - clouds.yaml
  - .bashrc
- - extra_worker.yml
  - origin: {{ pullsecret }}
    path: /root/openshift_pull.json                                                                                                                    
  - path: /root/bin/ipmi.py

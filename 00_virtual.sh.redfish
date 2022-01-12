@@ -21,5 +21,4 @@ domain=$(grep baseDomain /root/install-config.yaml | awk -F: '{print $2}' | xarg
 IP=$(ip -o addr show $PRIMARY_NIC | head -1 | awk '{print $4}' | cut -d "/" -f 1 | head -1)
 echo $IP | grep -q ':' && IP=[$IP]
 sed -i "s/DONTCHANGEME/$IP/" /root/install-config.yaml
-sed -i "s/DONTCHANGEME/$IP/" /root/extra_worker.yml
 echo $api_vip api.$cluster.$domain >> /etc/hosts

@@ -9,7 +9,7 @@ baremetal_masters:
 {% if baremetal_macs and baremetal_macs|length > num %}
   provisioning_mac: {{ baremetal_macs[num] }}
 {% elif not provisioning_enable %}
-  provisioning_mac: {{ virtual_masters_baremetal_mac_prefix + ":" + "%02.d" | format(num + 1)| string }}
+  provisioning_mac: {{ virtual_masters_baremetal_mac_prefix }}:{{ '%02d' | format(num + 1) }}
 {% endif %}
 {% endfor %}
 {% endif %}
@@ -22,7 +22,7 @@ baremetal_workers:
 {% if baremetal_macs and baremetal_macs|length > virtual_masters_number + num %}
   provisioning_mac: {{ baremetal_macs[virtual_masters_number + num] }}
 {% elif not provisioning_enable %}
-  provisioning_mac: {{ virtual_workers_baremetal_mac_prefix + ":" + "%02.d" | format(num + 1)| string }}
+  provisioning_mac: {{ virtual_workers_baremetal_mac_prefix }}:{{ '%02d' | format(num + 1) }}
 {% endif %}
 {% endfor %}
 {% endif %}
