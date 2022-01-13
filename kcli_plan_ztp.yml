@@ -57,9 +57,11 @@ apps-{{ ztp_spoke_name }}:
  baseplan: kcli_plan.yml
  files:
  - ztp_assisted-service.sample.yml
+ - ztp_assisted-service.sh
  - ztp_spoke.sample.yml
- - ztp.sh
+ - ztp_spoke.sh
  - ztp_bmc.yml
+ - ztp_bmc.sh
 {% if acm %}
  - acm_cr.yml
 {% if acm_downstream %}
@@ -74,5 +76,8 @@ apps-{{ ztp_spoke_name }}:
    origin: helpers/gen_registries.py
  scripts:
 {% if deploy_openshift %}
- - ztp.sh
+ - ztp_assisted-service.sh
+{% if ztp_spoke_deploy %}
+ - ztp_spoke.sh
+{% endif %}
 {% endif %}

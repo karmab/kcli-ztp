@@ -1347,7 +1347,8 @@ In this section, we enable a registry and sync content so we can deploy Openshif
 **NOTE:** In order to make use of this during a Baremetal install, proper DNS entries are needed to provide resolution for the fqdn of this local registry. 
 
 ```
-/root/06_disconnected.sh
+/root/06_disconnected_registry.sh
+/root/06_disconnected_mirror.sh
 ```
 
 Expected Output
@@ -2326,16 +2327,16 @@ user	1m26.168s
 sys	0m37.834s
 ```
 
-This scripts does the following:
+Those two scripts do the following:
 
 - Install podman and openssl.
 - Creates SSL certificates.
 - Creates a htpasswd file.
 - Creates and launches a registry using tls and said htpasswd for authentication.
 - Sets this registry as a systemd service.
+
 - Leverages `oc adm release mirror` to fetch Openshift content and push it to our local registry.
 - Patches the *install-config.yaml* so that it makes use of our internal registry during deployment. In particular, imagecontentsources and ca as additionalTrustBundle are added to the file.
-
 
 # Disconnected olm operators (Optional)
 
