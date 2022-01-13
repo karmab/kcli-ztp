@@ -24,7 +24,7 @@ podman login -u "$RHN_USER" -p "$RHN_PASSWORD" registry.redhat.io
 
 which opm >/dev/null 2>&1
 if [ "$?" != "0" ] ; then
-curl -k -s https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest/opm-linux.tar.gz | tar xvz -C /usr/bin/
+curl -k -s https://mirror.openshift.com/pub/openshift-v4/$(arch)/clients/ocp/latest/opm-linux.tar.gz | tar xvz -C /usr/bin/
 chmod u+x /usr/bin/opm
 fi
 
