@@ -24,8 +24,10 @@ echo "************ RUNNING 05_cache.sh ************"
 {% endif %}
 
 {% if disconnected %}
-echo "************ RUNNING 06_disconnected.sh ************"
-/root/06_disconnected.sh || exit 1
+echo "************ RUNNING 06_disconnected_registry.sh ************"
+/root/06_disconnected_registry.sh || exit 1
+echo "************ RUNNING 06_disconnected_mirror.sh ************"
+/root/06_disconnected_mirror.sh || exit 1
 {% if disconnected_operators and not disconnected_operators_deploy_after_openshift %}
 echo "************ RUNNING 06_disconnected_olm.sh ************"
 /root/06_disconnected_olm.sh

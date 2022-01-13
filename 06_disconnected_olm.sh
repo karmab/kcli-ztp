@@ -37,9 +37,9 @@ export MARKETPLACE_OP_INDEX="registry.redhat.io/redhat-marketplace-index:v${OCP_
 #export RH_OP_PACKAGES='local-storage-operator,performance-addon-operator,ptp-operator,sriov-network-operator'
 export RH_OP_PACKAGES='{{ disconnected_operators|join(",") }}'
 
-time opm index prune --from-index $RH_OP_INDEX --packages $RH_OP_PACKAGES --tag $LOCAL_REGISTRY/$LOCAL_REGISTRY_INDEX_TAG
+opm index prune --from-index $RH_OP_INDEX --packages $RH_OP_PACKAGES --tag $LOCAL_REGISTRY/$LOCAL_REGISTRY_INDEX_TAG
 podman push $LOCAL_REGISTRY/$LOCAL_REGISTRY_INDEX_TAG --authfile $OCP_PULLSECRET_AUTHFILE
-time oc adm catalog mirror $LOCAL_REGISTRY/$LOCAL_REGISTRY_INDEX_TAG $LOCAL_REGISTRY/$LOCAL_REGISTRY_IMAGE_TAG --registry-config=$OCP_PULLSECRET_AUTHFILE
+oc adm catalog mirror $LOCAL_REGISTRY/$LOCAL_REGISTRY_INDEX_TAG $LOCAL_REGISTRY/$LOCAL_REGISTRY_IMAGE_TAG --registry-config=$OCP_PULLSECRET_AUTHFILE
 
 oc apply -f /root/manifests-redhat-operator-index-*/imageContentSourcePolicy.yaml 2>/dev/null || cp /root/manifests-redhat-operator-index-*/imageContentSourcePolicy.yaml /root/manifests
 oc apply -f /root/manifests-redhat-operator-index-*/catalogSource.yaml 2>/dev/null || cp /root/manifests-redhat-operator-index-*/catalogSource.yaml /root/manifests
