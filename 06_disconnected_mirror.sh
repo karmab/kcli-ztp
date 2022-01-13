@@ -28,7 +28,7 @@ export OPENSHIFT_RELEASE_IMAGE=$(curl -s https://mirror.openshift.com/pub/opensh
 {% endif %}
 export LOCAL_REG="$REGISTRY_NAME:5000"
 export OCP_RELEASE=$(/root/bin/openshift-baremetal-install version | head -1 | cut -d' ' -f2)-x86_64
-oc adm release mirror -a $PULL_SECRET --from=$OPENSHIFT_RELEASE_IMAGE --to-release-image=${LOCAL_REG}/ocp4:${OCP_RELEASE} --to=${LOCAL_REG}/ocp4
+time oc adm release mirror -a $PULL_SECRET --from=$OPENSHIFT_RELEASE_IMAGE --to-release-image=${LOCAL_REG}/ocp4:${OCP_RELEASE} --to=${LOCAL_REG}/ocp4
 
 if [ "$(grep imageContentSources /root/install-config.yaml)" == "" ] ; then
 cat << EOF >> /root/install-config.yaml
