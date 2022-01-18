@@ -1,0 +1,46 @@
+lab: true
+provisioning_enable: false
+pool: default
+disconnected: false
+virtual_masters: true
+virtual_workers: false
+virtual_workers_number: 0
+launch_steps: true
+deploy_openshift: true
+version: stable
+tag: 4.9
+cluster: lab
+domain: karmalabs.com 
+baremetal_cidr: 192.168.129.0/24
+baremetal_net: lab-baremetal
+virtual_masters_memory: 16384
+virtual_masters_numcpus: 8
+virtual_workers_deploy: false
+api_ip: 192.168.129.253
+ingress_ip: 192.168.129.252
+baremetal_ips:
+- 192.168.129.20
+- 192.168.129.21
+- 192.168.129.22
+- 192.168.129.23
+- 192.168.129.24
+- 192.168.129.25
+baremetal_macs:
+- aa:aa:aa:aa:bb:01
+- aa:aa:aa:aa:bb:02
+- aa:aa:aa:aa:bb:03
+- aa:aa:aa:aa:bb:04
+ztp_spoke_wait: true
+ztp_virtual_nodes: true
+ztp_virtual_nodes_number: 1
+ztp_spoke_name: mgmt-spoke1
+ztp_spoke_masters_number: 1
+ztp_spoke_workers_number: 0
+vmrules:
+ - lab-installer:
+     disks: [200]
+acm_pull_secret: /root/openshift_pull_acm.json
+lab_extra_dns:
+- assisted-service-open-cluster-management
+- assisted-service-assisted-installer
+- assisted-image-service-open-cluster-management
