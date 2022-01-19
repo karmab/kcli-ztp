@@ -9,8 +9,9 @@ REVERSE_NAME=$(dig -x $IP +short | sed 's/\.[^\.]*$//')
 echo $IP | grep -q ':' && SERVER6=$(grep : /etc/resolv.conf | grep -v fe80 | cut -d" " -f2) && REVERSE_NAME=$(dig -6x $IP +short @$SERVER6 | sed 's/\.[^\.]*$//')
 REGISTRY_NAME=${REVERSE_NAME:-$(hostname -f)}
 {% if acm_downstream_latest %}
-export SNAPSHOT=$(podman image search --list-tags quay.io/acm-d/acm-custom-registry --limit 20000 | sort | tail -1 | cut -d" " -f3)
-export ACM_OP_BUNDLE=$(podman image search --list-tags quay.io/acm-d/acm-operator-bundle --limit 20000 | sort | tail -1 | cut -d" " -f3)
+export SNAPSHOT=$(podman image search --list-tags quay.io/acm-d/acm-custom-registry --limit 10000 | grep DOWN | sort | tail -1 | cut -d" " -f3)
+SNAPSHOT_MINOR=v$(echo $SNAPSHOT | cut -d. -f1,2)
+export ACM_OP_BUNDLE=$(podman image search --list-tags quay.io/acm-d/acm-operator-bundle --limit 10000 | grep $SNAPSHOT_MINOR | sort -V | tail -1 | cut -d" " -f3)
 {% else %}
 export SNAPSHOT={{ acm_snapshot }}
 export ACM_OP_BUNDLE={{ acm_op_bundle }}
