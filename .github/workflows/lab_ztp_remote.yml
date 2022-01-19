@@ -1,0 +1,77 @@
+name: lab-ztp-remote
+on:
+  workflow_dispatch:
+    inputs:
+      RUNNER:
+        description: 'Runner Name'
+        required: true
+        default: 'u08'
+      CLIENT:
+        description: 'Client name'
+        required: true
+        default: 'local'
+      PLAN:
+        description: 'Plan Name'
+        required: true
+        default: lab-ztp
+      INPUTFILE:
+        description: 'Input file'
+        required: true
+        default: kcli_plan_ztp_remote.yml
+      PARAMFILE:
+        description: 'paramfile'
+        required: false
+        default: lab_ztp_remote.yml
+      PULLSECRET:
+        description: 'pullsecret'
+        required: false
+        default: /root/openshift_pull.json
+      LAUNCH_STEPS:
+        description: 'launch_steps'
+        required: false
+        default: True
+      DEPLOY_OPENSHIFT:
+        description: 'deploy_openshift'
+        required: false
+        default: True
+      VERSION:
+        description: 'version'
+        required: false
+        default: stable
+      TAG:
+        description: 'tag'
+        required: false
+        default: 4.9
+
+env:
+ HOME: /root
+ CLIENT: ${{github.event.inputs.CLIENT}}
+ PLAN: ${{github.event.inputs.PLAN}}
+ INPUTFILE: ${{github.event.inputs.INPUTFILE}}
+ PARAMFILE: ${{github.event.inputs.PARAMFILE}}
+ PULLSECRET: ${{github.event.inputs.PULLSECRET}}
+ LAUNCH_STEPS: ${{github.event.inputs.LAUNCH_STEPS}}
+ DEPLOY_OPENSHIFT: ${{github.event.inputs.DEPLOY_OPENSHIFT}}
+ VERSION: ${{github.event.inputs.VERSION}}
+ TAG: ${{github.event.inputs.TAG}}
+
+jobs:
+    requirements:
+      runs-on: ${{github.event.inputs.RUNNER}}
+
+      steps:
+       - uses: actions/checkout@v2
+       - run: git pull origin ${GITHUB_REF##*/}
+       - name: Install kcli
+         run: |
+           curl https://raw.githubusercontent.com/karmab/kcli/master/install.sh | bash
+           # kcli create pool -p /var/lib/libvirt/images default
+           # sudo setfacl -m u:$(id -un):rwx /var/lib/libvirt/images
+
+    deploy-plan:
+      needs: requirements
+      runs-on: ${{github.event.inputs.RUNNER}}
+      steps:
+       - name: Deploy kcli plan
+         run: kcli -C $CLIENT create plan --force -f $INPUTFILE --paramfile $PARAMFILE -P pullsecret=$PULLSECRET -P launch_steps=$LAUNCH_STEPS -P deploy_openshift=$DEPLOY_OPENSHIFT -P version=$VERSION -P tag=$TAG $PLAN
+
