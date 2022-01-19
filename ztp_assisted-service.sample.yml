@@ -15,6 +15,9 @@ metadata:
     app: assisted-service
 data:
   LOG_LEVEL: "debug"
+{% if ztp_disable_validations %}
+  DISABLED_HOST_VALIDATIONS: belongs-to-majority-group,belongs-to-machine-cidr
+{% endif %}
 ---
 apiVersion: agent-install.openshift.io/v1beta1
 kind: AgentServiceConfig
