@@ -45,6 +45,7 @@ on:
 
 env:
  HOME: /root
+ PYTHONUNBUFFERED: true
  CLIENT: ${{github.event.inputs.CLIENT}}
  PLAN: ${{github.event.inputs.PLAN}}
  INPUTFILE: ${{github.event.inputs.INPUTFILE}}

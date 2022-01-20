@@ -5,6 +5,7 @@ on:
 
 env:
  HOME: /root
+ PYTHONUNBUFFERED: true
  PLAN: lab-ipv6-ztp-sno
  INPUTFILE: kcli_plan_ztp.yml
  PARAMFILE: lab_ipv6_ztp.yml

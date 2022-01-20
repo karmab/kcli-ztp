@@ -78,6 +78,8 @@ spec:
       value: $(params.version)
     - name: TAG
       value: $(params.tag)
+    - name: PYTHONUNBUFFERED
+      value: "true"
     script: |
      #!/usr/bin/env bash
      cd /source
