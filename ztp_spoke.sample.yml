@@ -53,6 +53,10 @@ metadata:
     agent-install.openshift.io/install-config-overrides: '{"networking":{"networkType":"OVNKubernetes"}}'
 {% endif %}
 spec:
+{% if 'ztp_spoke_manifests'|find_manifests %}
+  manifestsConfigMapRef:
+    name: extra-manifests-ztp
+{% endif %}
 {% if ztp_spoke_masters_number > 1 and ztp_spoke_api_ip != None and ztp_spoke_ingress_ip != None %}
   apiVIP: {{ ztp_spoke_api_ip }}
   ingressVIP: {{ ztp_spoke_ingress_ip }}

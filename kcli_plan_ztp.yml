@@ -74,6 +74,11 @@ apps-{{ ztp_spoke_name }}:
 {% endif %}
  - path: /root/bin/gen_registries.py
    origin: helpers/gen_registries.py
+{% if 'ztp_spoke_manifests'|find_manifests %}
+ - ztp_spoke_manifests.sh
+ - ztp_spoke_manifests
+ - ztp_spoke_manifests.yml
+{% endif %}
  scripts:
 {% if deploy_openshift %}
  - ztp_assisted-service.sh
