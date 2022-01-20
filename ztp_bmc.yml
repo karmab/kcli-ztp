@@ -28,6 +28,7 @@ metadata:
   annotations:
     inspect.metal3.io: disabled
     bmac.agent-install.openshift.io/hostname: {{ cluster }}-ztp-node-{{ num }}
+    bmac.agent-install.openshift.io/role: {{ "master" if num < 3 else "worker" }}
 spec:
   bmc:
     {% if 'redfish_address' in node %}
