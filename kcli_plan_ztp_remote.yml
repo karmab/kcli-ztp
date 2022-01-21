@@ -18,7 +18,7 @@ assisted-{{ ztp_spoke_name }}-remote:
  net: {{ remote_net }}
  ip: {{ ingress_ip }}
  alias:
- - assisted-service-open-cluster-management.apps.{{ ztp_spoke_name }}.{{ domain }}
+ - assisted-service-open-cluster-management.apps.{{ cluster }}.{{ domain }}
 
 {% endif %}
 

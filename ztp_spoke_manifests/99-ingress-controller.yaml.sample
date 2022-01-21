@@ -13,4 +13,5 @@ spec:
       - key: kubernetes.io/hostname
         operator: In
         values:
-        - "lab-ztp-node-3"
+        - "lab-ztp-node-4"
+
