@@ -6,7 +6,7 @@ PRIMARY_NIC=$(ls -1 /sys/class/net | head -1)
 export KUBECONFIG=/root/ocp/auth/kubeconfig
 export PRIMARY_IP=$(ip -o addr show $PRIMARY_NIC | head -1 | awk '{print $4}' | cut -d'/' -f1)
 dnf -y install nfs-utils
-systemctl disable --now firewalld || true
+test ! -f /usr/lib/systemd/system/firewalld.service || systemctl disable --now firewalld
 systemctl enable --now nfs-server
 export MODE="ReadWriteOnce"
 for i in `seq 1 20` ; do
