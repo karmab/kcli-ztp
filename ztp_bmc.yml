@@ -52,5 +52,6 @@ spec:
   hardwareProfile: unknown
   online: true
   automatedCleaningMode: disabled
+  bootMode: {{ 'UEFI' if ztp_uefi else 'legacy' }}
 ---
 {% endfor %}

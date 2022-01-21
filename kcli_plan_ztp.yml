@@ -28,8 +28,7 @@ apps-{{ ztp_spoke_name }}:
  numcpus: {{ ztp_virtual_nodes_numcpus }}
  start: false
  cloudinit: false
-# uefi: {{ 'true' }}
- uefi_legacy: True
+ uefi_legacy: {{ ztp_uefi }}
  memory: {{ ztp_virtual_nodes_memory }}
  nets:
   - name: {{ baremetal_net }}
