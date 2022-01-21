@@ -10,6 +10,10 @@ export MASTERS_NUMBER={{ ztp_spoke_masters_number }}
 export WORKERS_NUMBER={{ ztp_spoke_workers_number }}
 export SSH_PUB_KEY=$(cat /root/.ssh/id_rsa.pub)
 envsubst < /root/ztp_spoke.sample.yml > /root/ztp_spoke.yml
+{% if 'ztp_spoke_manifests'|find_manifests %}
+bash /root/ztp_spoke_manifests.sh
+envsubst < /root/ztp_spoke_manifests.yml >> /root/ztp_spoke.yml
+{% endif %}
 oc create -f /root/ztp_spoke.yml
 
 bash /root/ztp_bmc.sh

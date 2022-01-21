@@ -3,7 +3,7 @@
 {{ remote_net }}:
   type: network
   cidr: {{ remote_cidr }}
-  allowed_nets: [{{ baremetal_net }}]
+  allowed_nets: [{{ baremetal_cidr }}]
 
 api-{{ ztp_spoke_name }}-remote:
  type: dns
@@ -12,6 +12,13 @@ api-{{ ztp_spoke_name }}-remote:
  alias:
  - api.{{ ztp_spoke_name }}.{{ domain }}
  - api-int.{{ ztp_spoke_name }}.{{ domain }}
+
+assisted-{{ ztp_spoke_name }}-remote:
+ type: dns
+ net: {{ remote_net }}
+ ip: {{ ingress_ip }}
+ alias:
+ - assisted-service-open-cluster-management.apps.{{ ztp_spoke_name }}.{{ domain }}
 
 {% endif %}
 

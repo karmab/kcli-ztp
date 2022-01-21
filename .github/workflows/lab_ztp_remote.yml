@@ -74,5 +74,7 @@ jobs:
       runs-on: ${{github.event.inputs.RUNNER}}
       steps:
        - name: Deploy kcli plan
-         run: kcli -C $CLIENT create plan --force -f $INPUTFILE --paramfile $PARAMFILE -P pullsecret=$PULLSECRET -P launch_steps=$LAUNCH_STEPS -P deploy_openshift=$DEPLOY_OPENSHIFT -P version=$VERSION -P tag=$TAG $PLAN
+         run: |
+           mv ztp_spoke_manifests/99-ingress-controller.yaml.sample ztp_spoke_manifests/99-ingress-controller.yaml
+           kcli -C $CLIENT create plan --force -f $INPUTFILE --paramfile $PARAMFILE -P pullsecret=$PULLSECRET -P launch_steps=$LAUNCH_STEPS -P deploy_openshift=$DEPLOY_OPENSHIFT -P version=$VERSION -P tag=$TAG $PLAN
 
