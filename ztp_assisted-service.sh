@@ -7,8 +7,8 @@ bash /root/acm_downstream.sh
 
 RHCOS_ISO=$(/root/bin/openshift-baremetal-install coreos print-stream-json | jq -r '.["architectures"]["x86_64"]["artifacts"]["metal"]["formats"]["iso"]["disk"]["location"]')
 RHCOS_ROOTFS=$(/root/bin/openshift-baremetal-install coreos print-stream-json | jq -r '.["architectures"]["x86_64"]["artifacts"]["metal"]["formats"]["pxe"]["rootfs"]["location"]')
-curl -Lk $RHCOS_ISO > /var/www/html/$(basename $RHCOS_ISO)
-curl -Lk $RHCOS_ROOTFS > /var/www/html/$(basename $RHCOS_ROOTFS)
+curl -Lk $RHCOS_ISO > /var/www/html/rhcos-live.x86_64.iso
+curl -Lk $RHCOS_ROOTFS > /var/www/html/rhcos-live-rootfs.x86_64.img
 
 {% if acm %}
 tasty install advanced-cluster-management --wait
@@ -25,6 +25,7 @@ export MINOR=$(echo $OCP_RELEASE | cut -d. -f1,2)
 BAREMETAL_IP=$(ip -o addr show eth0 | head -1 | awk '{print $4}' | cut -d'/' -f1)
 
 {% if disconnected %}
+export CA_CERT=$(cat /opt/registry/certs/domain.crt | sed "s/^/    /")
 REVERSE_NAME=$(dig -x $BAREMETAL_IP +short | sed 's/\.[^\.]*$//')
 echo $BAREMETAL_IP | grep -q ':' && SERVER6=$(grep : /etc/resolv.conf | grep -v fe80 | cut -d" " -f2) && REVERSE_NAME=$(dig -6x $BAREMETAL_IP +short @$SERVER6 | sed 's/\.[^\.]*$//')
 export LOCAL_REGISTRY=${REVERSE_NAME:-$(hostname -f)}:5000
@@ -43,7 +44,6 @@ echo $BAREMETAL_IP | grep -q ':' && BAREMETAL_IP=[$BAREMETAL_IP]
 export BAREMETAL_IP
 export PULLSECRET=$(cat /root/openshift_pull.json | tr -d [:space:])
 export SSH_PRIV_KEY=$(cat /root/.ssh/id_rsa |sed "s/^/    /")
-export CA_CERT=$(cat /opt/registry/certs/domain.crt | sed "s/^/    /")
 export VERSION=$(/root/bin/openshift-baremetal-install coreos print-stream-json | jq -r '.["architectures"]["x86_64"]["artifacts"]["metal"]["release"]')
 
 envsubst < /root/ztp_assisted-service.sample.yml > /root/ztp_assisted-service.yml
