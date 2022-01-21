@@ -40,7 +40,7 @@ ztp_virtual_nodes_number: 5
 ztp_disable_validations: true
 ztp_spoke_name: mgmt-spoke1
 ztp_spoke_masters_number: 3
-ztp_spoke_workers_number: 3
+ztp_spoke_workers_number: 2
 vmrules:
  - lab-installer:
      disks: [200]

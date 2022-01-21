@@ -1,0 +1,16 @@
+apiVersion: operator.openshift.io/v1
+kind: IngressController
+metadata:
+  name: default
+  namespace: openshift-ingress-operator
+spec:
+  nodePlacement:
+    replicas: 1
+    endpointPublishingStrategy:
+      type: HostNetwork
+    nodeSelector:
+      matchExpressions:
+      - key: kubernetes.io/hostname
+        operator: In
+        values:
+        - "lab-ztp-node-3"
