@@ -29,7 +29,6 @@
 {% set cluster_networks = [cluster_network_ipv4] %}
 {% set service_networks = service_network_ipv4 %}
 {% endif %}
----
 apiVersion: v1
 kind: Namespace
 metadata:

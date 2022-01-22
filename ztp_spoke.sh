@@ -23,17 +23,18 @@ oc apply -f /root/$SPOKE/ztp_spoke.yml
 bash /root/ztp_bmc.sh
 {% if ztp_spoke_wait %}
 timeout=0
-completed=false
+installed=false
 failed=false
 while [ "$timeout" -lt "{{ ztp_spoke_wait_time }}" ] ; do
   MSG=$(oc get agentclusterinstall -n $SPOKE $SPOKE -o jsonpath={'.status.conditions[-1].message'})
-  echo $MSG | grep completed && completed=true && break;
+  INFO=$(oc get  agentclusterinstall  -n mgmt-spoke1 mgmt-spoke1  -o jsonpath={'.status.debugInfo.stateInfo'})
+  echo $INFO | grep installed && installed=true && break;
   echo $MSG | grep failed && failed=true && break;
   echo "Waiting for spoke cluster to be deployed"
   sleep 60
   timeout=$(($timeout + 5))
 done
-if [ "$completed" == "true" ] ; then
+if [ "$installed" == "true" ] ; then
  echo "Cluster deployed"
  oc get secret -n $SPOKE $SPOKE-admin-kubeconfig -o jsonpath='{.data.kubeconfig}' | base64 -d > /root/kubeconfig.$SPOKE
 elif [ "$failed" == "true" ] ; then

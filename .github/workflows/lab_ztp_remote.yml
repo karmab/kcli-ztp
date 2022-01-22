@@ -13,7 +13,7 @@ on:
       PLAN:
         description: 'Plan Name'
         required: true
-        default: lab-ztp
+        default: lab-ztp-remote
       INPUTFILE:
         description: 'Input file'
         required: true
