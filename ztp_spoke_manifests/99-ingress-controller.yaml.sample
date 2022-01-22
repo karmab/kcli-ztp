@@ -4,14 +4,10 @@ metadata:
   name: default
   namespace: openshift-ingress-operator
 spec:
+  replicas: 3
+  endpointPublishingStrategy:
+    type: HostNetwork
   nodePlacement:
-    replicas: 1
-    endpointPublishingStrategy:
-      type: HostNetwork
     nodeSelector:
-      matchExpressions:
-      - key: kubernetes.io/hostname
-        operator: In
-        values:
-        - "lab-ztp-node-4"
-
+      matchLabels:
+        node-role.kubernetes.io/master: ""

@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
 echo export SPOKE={{ ztp_spoke_name }} >> /root/.bashrc
+{% if ztp_spoke_masters_number > 1 and ztp_spoke_api_ip != None and ztp_spoke_ingress_ip != None %}
+echo {{ ztp_spoke_api_ip}} api.{{ ztp_spoke_name }}.{{ domain }} >> /etc/hosts
+{% endif %}
 OCP_RELEASE=$(/root/bin/openshift-baremetal-install version | head -1 | cut -d' ' -f2)-x86_64
 export MINOR=$(echo $OCP_RELEASE | cut -d. -f1,2)
 export PULLSECRET=$(cat /root/openshift_pull.json | tr -d [:space:])
@@ -16,7 +19,6 @@ envsubst < /root/ztp_spoke_manifests.yml > /root/ztp_spoke.yml
 envsubst < /root/ztp_spoke.sample.yml >> /root/ztp_spoke.yml
 oc apply -f /root/ztp_spoke.yml
 
-sleep 120
 bash /root/ztp_bmc.sh
 {% if ztp_spoke_wait %}
 timeout=0
