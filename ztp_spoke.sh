@@ -27,7 +27,7 @@ installed=false
 failed=false
 while [ "$timeout" -lt "{{ ztp_spoke_wait_time }}" ] ; do
   MSG=$(oc get agentclusterinstall -n $SPOKE $SPOKE -o jsonpath={'.status.conditions[-1].message'})
-  INFO=$(oc get  agentclusterinstall  -n mgmt-spoke1 mgmt-spoke1  -o jsonpath={'.status.debugInfo.stateInfo'})
+  INFO=$(oc get agentclusterinstall -n $SPOKE $SPOKE -o jsonpath={'.status.debugInfo.stateInfo'})
   echo $INFO | grep installed && installed=true && break;
   echo $MSG | grep failed && failed=true && break;
   echo "Waiting for spoke cluster to be deployed"
