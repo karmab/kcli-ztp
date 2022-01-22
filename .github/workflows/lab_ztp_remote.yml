@@ -75,6 +75,5 @@ jobs:
       steps:
        - name: Deploy kcli plan
          run: |
-           mv ztp_spoke_manifests/99-ingress-controller.yaml.sample ztp_spoke_manifests/99-ingress-controller.yaml
+           for i in ztp_spoke_manifests/*.sample ; do mv $i ${i%.*} ; done
            kcli -C $CLIENT create plan --force -f $INPUTFILE --paramfile $PARAMFILE -P pullsecret=$PULLSECRET -P launch_steps=$LAUNCH_STEPS -P deploy_openshift=$DEPLOY_OPENSHIFT -P version=$VERSION -P tag=$TAG $PLAN
-

@@ -19,7 +19,6 @@ cp /root/99-localhost-fix*.yaml /root/manifests
 cp manifests/*y*ml >/dev/null 2>&1 ocp/openshift || true
 TOTAL_WORKERS=$(grep 'role: worker' /root/install-config.yaml | wc -l) || true
 # [ "$TOTAL_WORKERS" -gt "0" ] || cp 99-openshift-ingress-controller-master.yaml ocp/openshift
-echo {{ api_ip }} api.{{ cluster }}.{{ domain }} >> /etc/hosts
 {% if baremetal_bootstrap_ip != None %}
 openshift-baremetal-install --dir ocp --log-level debug create ignition-configs
 NIC=ens3

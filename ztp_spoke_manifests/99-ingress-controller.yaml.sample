@@ -11,4 +11,3 @@ spec:
     nodeSelector:
       matchLabels:
         node-role.kubernetes.io/master: ""
----
