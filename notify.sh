@@ -14,4 +14,6 @@ uptime | awk '{ print $3 }' | sed 's/,//'
 export SPOKE={{ ztp_spoke_name }}
 oc get agent -A
 oc get agentclusterinstall -n $SPOKE $SPOKE -o jsonpath={'.status.conditions[-1].message'}
+oc get agentclusterinstall -n $SPOKE $SPOKE -o jsonpath={'.status.debugInfo.state'}
+oc get agentclusterinstall -n $SPOKE $SPOKE -o jsonpath={'.status.debugInfo.stateInfo'}
 {% endif %}
