@@ -6,6 +6,7 @@
 {% set ztp_nodes = extra_nodes + ztp_nodes %}
 {% endif %}
 
+---
 {% for node in ztp_nodes %}
 {% set num = loop.index0 %}
 apiVersion: v1

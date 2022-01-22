@@ -16,6 +16,7 @@ envsubst < /root/ztp_spoke_manifests.yml > /root/ztp_spoke.yml
 envsubst < /root/ztp_spoke.sample.yml >> /root/ztp_spoke.yml
 oc apply -f /root/ztp_spoke.yml
 
+sleep 120
 bash /root/ztp_bmc.sh
 {% if ztp_spoke_wait %}
 timeout=0
