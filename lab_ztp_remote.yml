@@ -2,6 +2,7 @@ lab: true
 provisioning_enable: false
 pool: default
 disconnected: false
+disk_size: 100
 virtual_masters: true
 virtual_workers: false
 virtual_workers_number: 0
@@ -24,14 +25,10 @@ baremetal_ips:
 - 192.168.129.20
 - 192.168.129.21
 - 192.168.129.22
-- 192.168.129.23
-- 192.168.129.24
-- 192.168.129.25
 baremetal_macs:
 - aa:aa:aa:aa:bb:01
 - aa:aa:aa:aa:bb:02
 - aa:aa:aa:aa:bb:03
-- aa:aa:aa:aa:bb:04
 ztp_spoke_api_ip: 192.168.129.251
 ztp_spoke_ingress_ip: 192.168.129.250
 ztp_spoke_wait: true
@@ -43,7 +40,7 @@ ztp_spoke_masters_number: 3
 ztp_spoke_workers_number: 2
 vmrules:
  - lab-installer:
-     disks: [200]
+     disks: [80]
  - lab-ztp-node-4:
      nets:
      - name: lab-remote
