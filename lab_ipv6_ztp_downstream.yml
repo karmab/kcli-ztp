@@ -13,7 +13,7 @@ tag: 4.9
 cluster: lab
 domain: karmalabs.com 
 baremetal_cidr: 2620:52:0:1302::/64
-baremetal_net: lab-net
+baremetal_net: lab-baremetal
 provisioning_net: lab-prov
 virtual_masters_memory: 16384
 virtual_masters_numcpus: 8
