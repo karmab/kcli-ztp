@@ -1,6 +1,7 @@
 {% import 'static_network.j2' as static_network %}
 {% set baremetal_prefix = baremetal_cidr.split('/')[1] %}
 {% set baremetal_gateway = static_baremetal_gateway or baremetal_cidr|network_ip(1 if lab else -2) %}
+{% set baremetal_dns = static_baremetal_dns or baremetal_gateway %}
 {% set nic = 'enp1s0' if virtual_protocol == 'redfish' or not provisioning_enable else 'ens3' %}
 {% if api_ip != None and ':' in api_ip %}
 {% set ipv6 = True %}
@@ -165,7 +166,7 @@ platform:
       {% endif %}
       {% if 'ip' in master %}
       networkConfig: |
-        {{ static_network.config(master['ip'], baremetal_prefix, master['gateway']|default(baremetal_gateway), cluster, domain, master['nic']|default(nic)) }}
+        {{ static_network.config(master['ip'], baremetal_prefix, master['gateway']|default(baremetal_gateway), master['dns']|default(baremetal_dns), cluster, domain, master['nic']|default(nic)) }}
       {% elif 'network_config' in master %}
       networkConfig: {{ master['network_config']|replace('\n', '\n        ') }}
       {% endif %}
@@ -206,7 +207,7 @@ platform:
       {% endif %}
       {% if 'ip' in worker %}
       networkConfig: |
-        {{ static_network.config(worker['ip'], baremetal_prefix, worker['gateway']|default(baremetal_gateway), cluster, domain, worker['nic']|default(nic)) }}
+        {{ static_network.config(worker['ip'], baremetal_prefix, worker['gateway']|default(baremetal_gateway), worker['dns']|default(baremetal_dns), cluster, domain, worker['nic']|default(nic)) }}
       {% elif 'network_config' in worker %}
       networkConfig: {{ worker['network_config']|replace('\n', '\n        ') }}
       {% endif %}

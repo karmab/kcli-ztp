@@ -1,4 +1,4 @@
-{% macro config(ip, prefix, gateway, cluster, domain, nic) -%}
+{% macro config(ip, prefix, gateway, dns, cluster, domain, nic) -%}
         routes:
           config:
           - destination: {{ '::/0' if ':' in ip else '0.0.0.0/0' }}
@@ -9,7 +9,7 @@
             search:
             - {{ cluster }}.{{ domain }}
             server:
-            - {{ gateway }}
+            - {{ dns }}
         interfaces:
         - name: {{ nic }}
           type: ethernet

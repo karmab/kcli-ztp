@@ -34,7 +34,7 @@
    ip: {{ installer_ip }}
    mask: {{ baremetal_cidr.split('/')[1] }}
    gateway: {{ static_baremetal_gateway or baremetal_cidr|network_ip(1 if lab else -2) }}
-   dns: {{ static_baremetal_gateway or baremetal_cidr|network_ip(1 if lab else -2) }}
+   dns: {{ static_baremetal_dns or static_baremetal_gateway or baremetal_cidr|network_ip(1 if lab else -2) }}
 {% endif %}
 {% if provisioning_enable %}
  - name: {{ provisioning_net }}
