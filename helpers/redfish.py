@@ -36,7 +36,7 @@ with open(installfile) as f:
             elif action in ['off', 'on']:
                 actions = {'off': 'ForceOff', 'on': 'On'}
                 currentaction = actions[action]
-                actionaddress = "%s//Actions/ComputerSystem.Reset/" % address
+                actionaddress = "%s/Actions/ComputerSystem.Reset" % address
                 headers = {'Content-type': 'application/json'}
                 requests.post(actionaddress, json={"ResetType": currentaction}, headers=headers, auth=(user, password),
                               verify=False)
