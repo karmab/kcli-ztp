@@ -12,13 +12,13 @@ export DOMAIN={{ domain }}
 export MASTERS_NUMBER={{ ztp_spoke_masters_number }}
 export WORKERS_NUMBER={{ ztp_spoke_workers_number }}
 export SSH_PUB_KEY=$(cat /root/.ssh/id_rsa.pub)
-mkdir /root/$SPOKE
+mkdir /root/spoke_$SPOKE
 {% if 'ztp_spoke_manifests'|find_manifests %}
 bash /root/ztp_spoke_manifests.sh
-envsubst < /root/ztp_spoke_manifests.yml > /root/$SPOKE/ztp_spoke.yml
+envsubst < /root/ztp_spoke_manifests.yml > /root/spoke_$SPOKE/ztp_spoke.yml
 {% endif %}
-envsubst < /root/ztp_spoke.sample.yml >> /root/$SPOKE/ztp_spoke.yml
-oc apply -f /root/$SPOKE/ztp_spoke.yml
+envsubst < /root/ztp_spoke.sample.yml >> /root/spoke_$SPOKE/ztp_spoke.yml
+oc apply -f /root/spoke_$SPOKE/ztp_spoke.yml
 
 bash /root/ztp_bmc.sh
 {% if ztp_spoke_wait %}
