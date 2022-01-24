@@ -84,9 +84,8 @@
    origin: helpers/sushy.service
  - path: /root/bin/clean.sh
    origin: helpers/clean.sh
- - path: /root/bin/set_ironic_creds.sh
-   origin: helpers/set_ironic_creds.sh
-   render: false
+ - path: /root/bin/set_baremetal_client.sh
+   origin: helpers/set_baremetal_client.sh
  - path: /etc/systemd/system/registry.service
    origin: helpers/registry.service
  - path: /root/manifests
