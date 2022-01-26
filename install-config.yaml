@@ -43,18 +43,15 @@
 {% set cluster_network_ipv4 = {"cidr": "10.132.0.0/14", "hostPrefix": 23} %}
 {% set service_network_ipv6 = ["fd02::/112"] %}
 {% set service_network_ipv4 = ["172.30.0.0/16"] %}
-{% set machine_cidr_ipv4 = ["10.0.0.0/16"] %}
-{% set machine_cidr_ipv6 = ["fc00::/48"] %}
+{% set machine_networks = [baremetal_cidr] %}
 {% if dualstack|default(False) %}
-{% set machine_cidrs = machine_cidr_ipv4 + machine_cidr_ipv6 %}
+{% set machine_networks = [baremetal_cidr] + [dualstack_cidr] %}
 {% set cluster_networks = [cluster_network_ipv4] + [cluster_network_ipv6] %}
 {% set service_networks = service_network_ipv4 + service_network_ipv6 %}
 {% elif ipv6 %}
-{% set machine_cidrs = machine_cidr_ipv6 %}
 {% set cluster_networks = [cluster_network_ipv6] %}
 {% set service_networks = service_network_ipv6 %}
 {% else %}
-{% set machine_cidrs = machine_cidr_ipv4 %}
 {% set cluster_networks = [cluster_network_ipv4] %}
 {% set service_networks = service_network_ipv4 %}
 {% endif %}
@@ -76,10 +73,9 @@ proxy:
 networking:
   networkType: {{ network_type }}
   machineNetwork:
-  - cidr: {{ baremetal_cidr }}
-{% if dualstack and dualstack_cidr != None %}
-  - cidr: {{ dualstack_cidr }}
-{% endif %}
+{% for network in machine_networks %}
+  - cidr: {{ network }}
+{% endfor %}
   clusterNetwork:
 {% for network in cluster_networks %}
   - cidr: {{ network['cidr'] }}

@@ -6,6 +6,19 @@ echo baremetal_cidr not set. No network, no party!
 exit 1
 {% endif %}
 
+{% if dualstack %}
+{% if ':' in baremetal_cidr %}
+echo baremetal_cidr needs to be ipv4 for dual stack
+exit 1
+{% endif %}
+{% if dualstack_cidr == None %}
+echo dualstack_cidr needs to be set for dual stack
+exit 1
+{% elif ':' not in dualstack_cidr %}
+echo dualstack_cidr needs to be ipv6 for dual stack
+{% endif %}
+{% endif %}
+
 {% if config_host == '127.0.0.1' and not lab %}
 ip a l {{ baremetal_net }} >/dev/null 2>&1 || { echo Issue with network {{ baremetal_net }} ; exit 1; }
 {% endif %}
