@@ -88,6 +88,7 @@
    origin: helpers/set_baremetal_client_bootstrap.sh
  - path: /root/bin/set_baremetal_client_cluster.sh
    origin: helpers/set_baremetal_client_cluster.sh
+   render: false
  - path: /etc/systemd/system/registry.service
    origin: helpers/registry.service
  - path: /root/manifests
