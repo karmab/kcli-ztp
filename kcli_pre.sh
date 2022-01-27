@@ -51,6 +51,15 @@ grep -q registry.ci.openshift.org {{ pullsecret }} || { echo Missing token for r
 {% endif %}
 {% endif %}
 
+# QUAY CHECK
+
+{% if disconnected_quay %}
+echo disconnected_user will be forced to 'init'
+{% if disconnected_password|length < 8  %}
+echo disconnected_password will be forced to super{{ disconnected_password }}
+{% endif %}
+{% endif %}
+
 # ZTP CHECKS
 {% if ztp_nodes is defined %}
 {% if ztp_spoke_masters_number > 1 %}
