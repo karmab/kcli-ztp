@@ -9,6 +9,7 @@ export IP=$(ip -o addr show $PRIMARY_NIC | head -1 | awk '{print $4}' | cut -d'/
 REVERSE_NAME=$(dig -x $IP +short | sed 's/\.[^\.]*$//')
 echo $IP | grep -q ':' && SERVER6=$(grep : /etc/resolv.conf | grep -v fe80 | cut -d" " -f2) && REVERSE_NAME=$(dig -6x $IP +short @$SERVER6 | sed 's/\.[^\.]*$//')
 REGISTRY_NAME=${REVERSE_NAME:-$(hostname -f)}
+REGISTRY_PORT={{ 8443 if disconnected_quay else 5000 }}
 
 {% if version == 'ci' %}
 export OPENSHIFT_RELEASE_IMAGE={{ openshift_image }}
@@ -26,7 +27,7 @@ export OPENSHIFT_RELEASE_IMAGE=$(curl -s https://mirror.openshift.com/pub/opensh
 {% else %}
 export OPENSHIFT_RELEASE_IMAGE=$(curl -s https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ version }}-{{ tag }}/release.txt | grep 'Pull From: quay.io' | awk -F ' ' '{print $3}')
 {% endif %}
-export LOCAL_REG="$REGISTRY_NAME:5000"
+export LOCAL_REG="$REGISTRY_NAME:$REGISTRY_PORT"
 export OCP_RELEASE=$(/root/bin/openshift-baremetal-install version | head -1 | cut -d' ' -f2)-x86_64
 time oc adm release mirror -a $PULL_SECRET --from=$OPENSHIFT_RELEASE_IMAGE --to-release-image=${LOCAL_REG}/ocp4:${OCP_RELEASE} --to=${LOCAL_REG}/ocp4
 
@@ -34,10 +35,10 @@ if [ "$(grep imageContentSources /root/install-config.yaml)" == "" ] ; then
 cat << EOF >> /root/install-config.yaml
 imageContentSources:
 - mirrors:
-  - $REGISTRY_NAME:5000/ocp4
+  - $REGISTRY_NAME:$REGISTRY_PORT/ocp4
   source: quay.io/openshift-release-dev/ocp-v4.0-art-dev
 - mirrors:
-  - $REGISTRY_NAME:5000/ocp4
+  - $REGISTRY_NAME:$REGISTRY_PORT/ocp4
 {% if version == 'ci' %}
   source: registry.ci.openshift.org/ocp/release
 {% elif version == 'nightly' %}
@@ -47,7 +48,7 @@ imageContentSources:
 {% endif %}
 EOF
 else
-  IMAGECONTENTSOURCES="- mirrors:\n  - $REGISTRY_NAME:5000/ocp4\n  source: quay.io/openshift-release-dev/ocp-v4.0-art-dev\n- mirrors:\n  - $REGISTRY_NAME:5000/ocp4\n  source: registry.ci.openshift.org/ocp/release"
+  IMAGECONTENTSOURCES="- mirrors:\n  - $REGISTRY_NAME:$REGISTRY_PORT/ocp4\n  source: quay.io/openshift-release-dev/ocp-v4.0-art-dev\n- mirrors:\n  - $REGISTRY_NAME:$REGISTRY_PORT/ocp4\n  source: registry.ci.openshift.org/ocp/release"
   sed -i "/imageContentSources/a${IMAGECONTENTSOURCES}" /root/install-config.yaml
 fi
 
@@ -59,7 +60,7 @@ else
   sed -i "/additionalTrustBundle/a${LOCALCERT}" /root/install-config.yaml
   sed -i 's/^-----BEGIN/ -----BEGIN/' /root/install-config.yaml
 fi
-echo $REGISTRY_NAME:5000/ocp4:$OCP_RELEASE > /root/version.txt
+echo $REGISTRY_NAME:$REGISTRY_PORT/ocp4:$OCP_RELEASE > /root/version.txt
 
 if [ "$(grep pullSecret /root/install-config.yaml)" == "" ] ; then
 PULLSECRET=$(cat /root/openshift_pull.json | tr -d [:space:])

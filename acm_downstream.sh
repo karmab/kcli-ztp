@@ -8,6 +8,7 @@ export IP=$(ip -o addr show eth0 | head -1 | awk '{print $4}' | cut -d'/' -f1)
 REVERSE_NAME=$(dig -x $IP +short | sed 's/\.[^\.]*$//')
 echo $IP | grep -q ':' && SERVER6=$(grep : /etc/resolv.conf | grep -v fe80 | cut -d" " -f2) && REVERSE_NAME=$(dig -6x $IP +short @$SERVER6 | sed 's/\.[^\.]*$//')
 REGISTRY_NAME=${REVERSE_NAME:-$(hostname -f)}
+REGISTRY_PORT={{ 8443 if disconnected_quay else 5000 }}
 {% if acm_downstream_latest %}
 export SNAPSHOT=$(podman image search --list-tags quay.io/acm-d/acm-custom-registry --limit 10000 | grep DOWN | sort | tail -1 | cut -d" " -f3)
 SNAPSHOT_MINOR=v$(echo $SNAPSHOT | cut -d. -f1,2)
@@ -17,12 +18,14 @@ export SNAPSHOT={{ acm_snapshot }}
 export ACM_OP_BUNDLE={{ acm_op_bundle }}
 {% endif %}
 export PULL_SECRET_JSON=/root/openshift_pull_acm.json
-export LOCAL_REGISTRY=$REGISTRY_NAME:5000
+export LOCAL_REGISTRY=$REGISTRY_NAME:$REGISTRY_PORT
 export IMAGE_INDEX=quay.io/acm-d/acm-custom-registry
 export BUILD_FOLDER=./build
 
-KEY=$( echo -n {{ disconnected_user }}:{{ disconnected_password }} | base64)
-jq ".auths += {\"$REGISTRY_NAME:5000\": {\"auth\": \"$KEY\",\"email\": \"jhendrix@karmalabs.com\"}}" < $PULL_SECRET_JSON > /root/temp_acm.json
+REGISTRY_USER={{ "init" if disconnected_quay else disconnected_user }}
+REGISTRY_PASSWORD={{ "super" + disconnected_password if disconnected_quay and disconnected_password|length < 8 else disconnected_password }}
+KEY=$(echo -n $REGISTRY_USER:$REGISTRY_PASSWORD | base64)
+jq ".auths += {\"$REGISTRY_NAME:$REGISTRY_PORT\": {\"auth\": \"$KEY\",\"email\": \"jhendrix@karmalabs.com\"}}" < $PULL_SECRET_JSON > /root/temp_acm.json
 export PULL_SECRET_JSON=/root/temp_acm.json
 
 # Clean previous tries
