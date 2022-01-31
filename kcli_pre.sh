@@ -56,7 +56,7 @@ grep -q registry.ci.openshift.org {{ pullsecret }} || { echo Missing token for r
 {% if disconnected_quay %}
 {% if ':' in baremetal_cidr %}
 echo disconnected_quay only works with IPV4
-echo 1
+exit 1
 {% endif %}
 echo disconnected_user will be forced to 'init'
 {% if disconnected_password|length < 8  %}
