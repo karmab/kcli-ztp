@@ -18,7 +18,7 @@ info: |
     When build is set to true, the openshift install binary will be compiled from sources, optionally with the prs from prs variable array
     version can instead be set to stable or latest, along with tag, to gather the binary from public sources.
 baseplan: kcli_plan_infra.yml
-image: centos8
+image: centos8stream
 image_url:
 installer_ip:
 installer_mac:
