@@ -31,12 +31,11 @@ baremetal_macs:
 - aa:aa:aa:aa:bb:02
 - aa:aa:aa:aa:bb:03
 - aa:aa:aa:aa:bb:04
-ztp_spoke_wait: true
-ztp_virtual_nodes: true
-ztp_virtual_nodes_number: 1
-ztp_spoke_name: mgmt-spoke1
-ztp_spoke_masters_number: 1
-ztp_spoke_workers_number: 0
+ztp_spokes:
+- name: mgmt-spoke1
+  virtual_nodes_number: 1
+  masters_number: 1
+  workers_number: 0
 vmrules:
  - lab-installer:
      disks: [200]

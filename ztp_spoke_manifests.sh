@@ -1,6 +1,8 @@
-cd /root
-{% for manifest in 'ztp_spoke_manifests'|find_manifests %}
-echo " {{ manifest }} : |" >> ztp_spoke_manifests.yml
-sed -e "s/^/  /g" ztp_spoke_manifests/{{ manifest }} >> ztp_spoke_manifests.yml
+{% set spoke = ztp_spokes[index] %}
+{% set spoke_name = spoke.name %}
+
+{% for manifest in 'manifests'|find_manifests %}
+echo " {{ manifest }} : |" >> manifests.yml
+sed -e "s/^/  /g" manifests/{{ manifest }} >> manifests.yml
 {% endfor %}
-echo -e "\n---" >> ztp_spoke_manifests.yml
+echo -e "\n---" >> manifests.yml

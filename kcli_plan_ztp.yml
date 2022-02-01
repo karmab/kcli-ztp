@@ -1,29 +1,47 @@
-{% if lab and ztp_spoke_api_ip != None and ztp_spoke_ingress_ip != None %}
-api-{{ ztp_spoke_name }}:
+{% for spoke in ztp_spokes %}
+{% set spoke_name = spoke.name %}
+{% set spoke_api_ip = spoke.get('api_ip') %}
+{% set spoke_ingress_ip= spoke.get('ingress_ip') %}
+{% if lab and spoke_api_ip != None and spoke_ingress_ip != None %}
+api-{{ spoke_name }}:
  type: dns
  net: {{ baremetal_net }}
- ip: {{ ztp_spoke_api_ip }}
+ ip: {{ spoke_api_ip }}
  alias:
- - api.{{ ztp_spoke_name }}.{{ domain }}
- - api-int.{{ ztp_spoke_name }}.{{ domain }}
+ - api.{{ spoke_name }}.{{ domain }}
+ - api-int.{{ spoke_name }}.{{ domain }}
 
-apps-{{ ztp_spoke_name }}:
+apps-{{ spoke_name }}:
  type: dns
  net: {{ baremetal_net }}
- ip: {{ ztp_spoke_ingress_ip }}
+ ip: {{ spoke_ingress_ip }}
  alias:
- - console-openshift-console.apps.{{ ztp_spoke_name }}.{{ domain }}
- - oauth-openshift.apps.{{ ztp_spoke_name }}.{{ domain }}
- - prometheus-k8s-openshift-monitoring.apps.{{ ztp_spoke_name }}.{{ domain }}
- - canary-openshift-ingress-canary.apps.{{ ztp_spoke_name }}.{{ domain }}
- - assisted-service-open-cluster-management.apps.{{ ztp_spoke_name }}.{{ domain }}
- - assisted-service-assisted-installer.apps.{{ ztp_spoke_name }}.{{ domain }}
- - assisted-image-service-open-cluster-management.apps.{{ ztp_spoke_name }}.{{ domain }}
+ - console-openshift-console.apps.{{ spoke_name }}.{{ domain }}
+ - oauth-openshift.apps.{{ spoke_name }}.{{ domain }}
+ - prometheus-k8s-openshift-monitoring.apps.{{ spoke_name }}.{{ domain }}
+ - canary-openshift-ingress-canary.apps.{{ spoke_name }}.{{ domain }}
+ - assisted-service-open-cluster-management.apps.{{ spoke_name }}.{{ domain }}
+ - assisted-service-assisted-installer.apps.{{ spoke_name }}.{{ domain }}
+ - assisted-image-service-open-cluster-management.apps.{{ spoke_name }}.{{ domain }}
 {% endif %}
+{% endfor %}
 
-{% if ztp_virtual_nodes %}
-{% for num in range(0, ztp_virtual_nodes_number) %}
-{{ cluster }}-ztp-node-{{ num }}:
+{% set total_number = namespace(value=0) %}
+{% for spoke in ztp_spokes %}
+{% set spoke_name = spoke.name %}
+{% set spoke_api_ip = spoke.get('api_ip') %}
+{% set spoke_ingress_ip= spoke.get('ingress_ip') %}
+{% set spoke_masters_number = spoke.get('masters_number', 1) %}
+{% set virtual_nodes_number = spoke.get('virtual_nodes_number', 0) %}
+{% set ztp_uefi = spoke.get('uefi', ztp_uefi) %}
+{% set ztp_virtual_nodes_numcpus = spoke.get('virtual_nodes_numcpus', ztp_virtual_nodes_numcpus) %}
+{% set ztp_virtual_nodes_memory = spoke.get('virtual_nodes_memory', ztp_virtual_nodes_memory) %}
+{% set ztp_virtual_nodes_disk_size = spoke.get('virtual_nodes_disk_size', ztp_virtual_nodes_disk_size) %}
+
+{% if virtual_nodes_number > 0 %}
+{% for num in range(0, virtual_nodes_number) %}
+
+{{ cluster }}-ztp-{{ spoke_name }}-node-{{ num }}:
  pool: {{ pool }}
  numcpus: {{ ztp_virtual_nodes_numcpus }}
  start: false
@@ -32,35 +50,58 @@ apps-{{ ztp_spoke_name }}:
  memory: {{ ztp_virtual_nodes_memory }}
  nets:
   - name: {{ baremetal_net }}
-{% if baremetal_macs and baremetal_macs|length > virtual_masters_number + virtual_workers_number + num %}
-    mac: {{ baremetal_macs[virtual_masters_number + virtual_workers_number + num] }}
+{% if baremetal_macs and baremetal_macs|length > virtual_masters_number + virtual_workers_number + total_number.value + num %}
+    mac: {{ baremetal_macs[virtual_masters_number + virtual_workers_number + total_number.value + num] }}
 {% else %}
-    mac: {{ ztp_virtual_nodes_baremetal_mac_prefix + ":" + "%02.d" | format(num + 1)| string }}
+    mac: {{ ztp_virtual_nodes_baremetal_mac_prefix + ":" + "%02.d" | format(total_number.value + num + 1)| string }}
 {% endif %}
-{% if lab and baremetal_ips and baremetal_ips|length > virtual_masters_number + virtual_workers_number + num %}
-    ip: {{ baremetal_ips[virtual_masters_number + virtual_workers_number + num] }}
+{% if lab and baremetal_ips and baremetal_ips|length > virtual_masters_number + virtual_workers_number + total_number.value + num %}
+    ip: {{ baremetal_ips[virtual_masters_number + virtual_workers_number + total_number.value + num] }}
     reserveip: true
-{% if ztp_virtual_nodes_number == 1 %}
+{% if virtual_nodes_number == 1 %}
     alias:
-    - api.{{ ztp_spoke_name }}.{{ domain }}
-    - api-int.{{ ztp_spoke_name }}.{{ domain }}
+    - api.{{ spoke_name }}.{{ domain }}
+    - api-int.{{ spoke_name }}.{{ domain }}
 {% endif %}
 {% endif %}
  disks:
  - size: {{ ztp_virtual_nodes_disk_size }}
    interface: scsi
+
 {% endfor %}
+{% set total_number.value = total_number.value + ztp_virtual_nodes_number %}
 {% endif %}
+{% endfor %}
 
 {{ cluster }}-installer:
  baseplan: kcli_plan.yml
  files:
  - ztp_assisted-service.sample.yml
  - ztp_assisted-service.sh
- - ztp_spoke.sample.yml
- - ztp_spoke.sh
- - ztp_bmc.yml
- - ztp_bmc.sh
+ - ztp_spokes_deploy.sh
+{% for spoke in ztp_spokes %}
+ - path: /root/spoke_{{ spoke.name }}/spoke.sample.yml
+   origin: ztp_spoke.sample.yml
+   index: {{ loop.index0 }}
+ - path: /root/spoke_{{ spoke.name }}/spoke.sh
+   origin: ztp_spoke.sh
+   index: {{ loop.index0 }}
+ - path: /root/spoke_{{ spoke.name }}/bmc.yml
+   origin: ztp_bmc.yml
+   index: {{ loop.index0 }}
+ - path: /root/spoke_{{ spoke.name }}/bmc.sh
+   origin: ztp_bmc.sh
+   index: {{ loop.index0 }}
+{% if 'spoke_{{ spoke.name }}_manifests'|find_manifests %}
+ - path: /root/spoke_{{ spoke.name }}/spoke_manifests.sh
+   origin: ztp_spoke_manifests.sh
+   index: {{ loop.index0 }}
+ - path: /root/spoke_{{ spoke.name }}/manifests
+   origin: spoke_{{ spoke.name }}_manifests
+ - path: /root/spoke_{{ spoke.name }}/manifests.yml
+   origin: ztp_spoke_manifests.yml
+{% endif %}
+{% endfor %}
 {% if acm %}
  - acm_cr.yml
 {% if acm_downstream %}
@@ -73,15 +114,8 @@ apps-{{ ztp_spoke_name }}:
 {% endif %}
  - path: /root/bin/gen_registries.py
    origin: helpers/gen_registries.py
-{% if 'ztp_spoke_manifests'|find_manifests %}
- - ztp_spoke_manifests.sh
- - ztp_spoke_manifests
- - ztp_spoke_manifests.yml
-{% endif %}
  scripts:
 {% if deploy_openshift %}
  - ztp_assisted-service.sh
-{% if ztp_spoke_deploy %}
- - ztp_spoke.sh
-{% endif %}
+ - ztp_spokes_deploy.sh
 {% endif %}
