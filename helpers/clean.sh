@@ -24,3 +24,5 @@ if [ "$pools" != "" ] ; then
     ssh {{ config_user | default('root') }}@{{ config_host if config_host != '127.0.0.1' else baremetal_net|local_ip }} "rmdir /var/lib/libvirt/openshift-images/$pool"
   done
 fi
+
+ssh {{ config_user | default('root') }}@{{ config_host if config_host != '127.0.0.1' else baremetal_net|local_ip }} "find /var/lib/libvirt/images/boot-* -type f -mtime +5 -exec virsh vol-delete {} +"
