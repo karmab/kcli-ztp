@@ -26,3 +26,8 @@ update-ca-trust extract
 
 curl -s -L https://developers.redhat.com/content-gateway/file/pub/openshift-v4/clients/mirror-registry/1.0/mirror-registry.tar.gz | tar xvz -C /usr/bin
 /usr/bin/mirror-registry install --quayHostname $REGISTRY_NAME --sslCert /opt/registry/certs/domain.crt --sslKey /opt/registry/certs/domain.key --initPassword $REGISTRY_PASSWORD --ssh-key /root/.ssh/id_rsa
+
+{% if ':' in baremetal_cidr %}
+mv /root/quay_haproxy.cfg /etc/quay-install
+systemctl enable --now quay-haproxy
+{% endif %}

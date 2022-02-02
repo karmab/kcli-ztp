@@ -59,6 +59,11 @@
  - 05_cache.sh
  - path: /root/06_disconnected_registry.sh
    origin: {{ "06_disconnected_quay.sh" if disconnected_quay else "06_disconnected_registry.sh" }}
+{% if disconnected_quay and ':' in baremetal_cidr %}
+ - quay_haproxy.cfg
+ - path: /usr/lib/systemd/system/quay-haproxy.service
+   origin: quay_haproxy.service
+{% endif
  - 06_disconnected_mirror.sh
  - 06_disconnected_olm.sh
  - 07_nbde.sh
