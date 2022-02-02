@@ -10,7 +10,7 @@ export LIBVIRT_DEFAULT_URI=qemu+ssh://{{ 'root' if config_user == 'apache' else 
 
 {% if virtual_nodes_number > 0 %}
 {% for num in range(0, virtual_nodes_number) %}
-UUID=$(virsh domuuid {{ cluster }}-ztp-$SPOKE-node-{{ num }})
+UUID=$(virsh domuuid {{ cluster }}-$SPOKE-node-{{ num }})
 sed -i "s@UUID-$SPOKE-{{ num }}@$UUID@" /root/spoke_$SPOKE/bmc.yml
 {% endfor %}
 {% endif %}

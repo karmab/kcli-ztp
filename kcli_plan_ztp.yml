@@ -41,7 +41,7 @@ apps-{{ spoke_name }}:
 {% if virtual_nodes_number > 0 %}
 {% for num in range(0, virtual_nodes_number) %}
 
-{{ cluster }}-ztp-{{ spoke_name }}-node-{{ num }}:
+{{ cluster }}-{{ spoke_name }}-node-{{ num }}:
  pool: {{ pool }}
  numcpus: {{ ztp_virtual_nodes_numcpus }}
  start: false
