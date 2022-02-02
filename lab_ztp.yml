@@ -26,12 +26,6 @@ baremetal_macs:
 - aa:aa:aa:aa:bb:01
 - aa:aa:aa:aa:bb:02
 - aa:aa:aa:aa:bb:03
-ztp_spoke_wait: true
-ztp_virtual_nodes: true
-ztp_virtual_nodes_number: 1
-ztp_spoke_name: mgmt-spoke1
-ztp_spoke_masters_number: 1
-ztp_spoke_workers_number: 0
 vmrules:
  - lab-installer:
      disks: [200]
@@ -40,3 +34,18 @@ lab_extra_dns:
 - assisted-service-open-cluster-management
 - assisted-service-assisted-installer
 - assisted-image-service-open-cluster-management
+
+ztp_spokes:
+- name: mgmt-spoke1
+  masters_number: 1
+  workers_number: 0
+  network_type: OVNKubernetes
+  uefi: true
+  virtual_nodes_number: 1
+#- name: mgmt-spoke2
+#  api_ip: 192.168.129.251
+#  ingress_ip: 192.168.129.250
+#  masters_number: 3
+#  workers_number: 0
+#  uefi: true
+#  virtual_nodes_number: 3

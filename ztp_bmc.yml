@@ -1,13 +1,23 @@
-{% if ztp_virtual_nodes %}
+{% set total_number = namespace(value=0) %}
+{% for spoke in ztp_spokes %}
+{% set new_value = spoke["virtual_nodes_number"]|default(0) if loop.index0 < index else 0 %}
+{% set total_number.value = total_number.value + new_value %}
+{% endfor %}
+{% set spoke = ztp_spokes[index] %}
+{% set spoke_name = spoke.name %}
+{% set virtual_nodes_number = spoke["virtual_nodes_number"]|default(0) %}
+{% set nodes = spoke["nodes"]|default([]) %}
+
+{% if virtual_nodes_number > 0 %}
 {% set extra_nodes = [] %}
-{% for num in range(0, ztp_virtual_nodes_number) %}
+{% for num in range(0, virtual_nodes_number) %}
 {% do extra_nodes.append({}) %}
 {% endfor %}
-{% set ztp_nodes = extra_nodes + ztp_nodes %}
+{% set nodes = extra_nodes + nodes %}
 {% endif %}
 
 ---
-{% for node in ztp_nodes %}
+{% for node in nodes %}
 {% set num = loop.index0 %}
 apiVersion: v1
 data:
@@ -15,20 +25,20 @@ data:
   username: {{ bmc_user|string|base64 }}
 kind: Secret
 metadata:
-  name: {{ cluster }}-ztp-bmc-secret-{{ num }}
-  namespace: {{ ztp_spoke_name }}
+  name: {{ cluster }}-ztp-{{ spoke_name }}-bmc-secret-{{ num }}
+  namespace: {{ spoke_name }}
 type: Opaque
 ---
 apiVersion: metal3.io/v1alpha1
 kind: BareMetalHost
 metadata:
-  name: {{ cluster }}-ztp-node-{{ num }}
-  namespace: {{ ztp_spoke_name }}
+  name: {{ cluster }}-ztp-{{ spoke_name }}-node-{{ num }}
+  namespace: {{ spoke_name }}
   labels:
-    infraenvs.agent-install.openshift.io: {{ ztp_spoke_name }}
+    infraenvs.agent-install.openshift.io: {{ spoke_name }}
   annotations:
     inspect.metal3.io: disabled
-    bmac.agent-install.openshift.io/hostname: {{ cluster }}-ztp-node-{{ num }}
+    bmac.agent-install.openshift.io/hostname: {{ cluster }}-ztp-{{ spoke_name }}-node-{{ num }}
     bmac.agent-install.openshift.io/role: {{ "master" if num < 3 else "worker" }}
 spec:
   bmc:
@@ -42,13 +52,13 @@ spec:
     address: idrac-virtualmedia://{{ node['redfish_address'] }}/redfish/v1/Systems/System.Embedded.1
     {% endif %}
     {% else %}
-    address: redfish-virtualmedia+http://IP:8000/redfish/v1/Systems/UUID-{{ num }}
+    address: redfish-virtualmedia+http://IP:8000/redfish/v1/Systems/UUID-{{ spoke_name }}-{{ num }}
     {% endif %}
-    credentialsName: {{ cluster }}-ztp-bmc-secret-{{ num }}
+    credentialsName: {{ cluster }}-ztp-{{ spoke_name }}-bmc-secret-{{ num }}
 {% if 'provisioning_mac' in node %}
   bootMACAddress: {{ node['provisioning_mac'] }}
 {% else %}
-  bootMACAddress: {{ ztp_virtual_nodes_baremetal_mac_prefix + ":" + "%02.d" | format(num + 1)| string }}
+  bootMACAddress: {{ ztp_virtual_nodes_baremetal_mac_prefix + ":" + "%02.d" | format(num + total_number.value + 1)| string }}
 {% endif %}
   hardwareProfile: unknown
   online: true

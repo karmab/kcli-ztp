@@ -65,13 +65,23 @@ echo disconnected_password will be forced to super{{ disconnected_password }}
 {% endif %}
 
 # ZTP CHECKS
-{% if ztp_nodes is defined %}
-{% if ztp_spoke_masters_number > 1 %}
-{% if ztp_spoke_api_ip == None %}
-echo ztp_spoke_api_ip needs to be set if deploying an HA spoke && exit 1
+{% if ztp_spokes is defined %}
+{% for spoke in ztp_spokes %}
+{% set spoke_name = spoke.get('name') %}
+{% set spoke_api_ip = spoke.get('api_ip') %}
+{% set spoke_ingress_ip= spoke.get('ingress_ip') %}
+{% set spoke_masters_number = spoke.get('masters_number', 1) %}
+{% set virtual_nodes_number = spoke["virtual_nodes_number"]|default(0) %}
+{% if spoke_name == None %}
+echo spoke_name needs to be on each entry of ztp_spokes && exit 1
 {% endif %}
-{% if ztp_spoke_ingress_ip == None %}
-echo ztp_spoke_ingress_ip needs to be set if deploying an HA spoke && exit 1
+{% if spoke_masters_number > 1 %}
+{% if spoke_api_ip == None %}
+echo spoke_api_ip needs to be set if deploying an HA spoke && exit 1
+{% endif %}
+{% if spoke_ingress_ip == None %}
+echo spoke_ingress_ip needs to be set if deploying an HA spoke && exit 1
 {% endif %}
 {% endif %}
+{% endfor %}
 {% endif %}
