@@ -40,12 +40,10 @@ ztp_spokes:
   masters_number: 1
   workers_number: 0
   network_type: OVNKubernetes
-  uefi: true
   virtual_nodes_number: 1
 #- name: mgmt-spoke2
 #  api_ip: 192.168.129.251
 #  ingress_ip: 192.168.129.250
 #  masters_number: 3
 #  workers_number: 0
-#  uefi: true
 #  virtual_nodes_number: 3

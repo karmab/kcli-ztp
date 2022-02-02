@@ -63,7 +63,7 @@
  - quay_haproxy.cfg
  - path: /usr/lib/systemd/system/quay-haproxy.service
    origin: quay_haproxy.service
-{% endif
+{% endif %}
  - 06_disconnected_mirror.sh
  - 06_disconnected_olm.sh
  - 07_nbde.sh

@@ -12,7 +12,7 @@ ztp_virtual_nodes_disk_size: 120
 ztp_virtual_nodes_baremetal_mac_prefix: aa:aa:aa:cc:cc
 ztp_spoke_deploy: true
 ztp_spoke_network_type: OVNKubernetes
-ztp_spoke_wait: false
+ztp_spoke_wait: true
 ztp_spoke_wait_time: 3600
 ztp_disable_validations: false
 ztp_uefi: true
