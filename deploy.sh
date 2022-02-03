@@ -31,6 +31,9 @@ echo "************ RUNNING 06_disconnected_mirror.sh ************"
 {% if disconnected_operators and not disconnected_operators_deploy_after_openshift %}
 echo "************ RUNNING 06_disconnected_olm.sh ************"
 /root/06_disconnected_olm.sh
+{% if disconnected_quay %}
+/root/06_disconnected_olm.sh
+{% endif %}
 {% endif %}
 {% endif %}
 
