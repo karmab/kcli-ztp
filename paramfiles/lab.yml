@@ -5,8 +5,8 @@ provisioning_enable: false
 virtual_protocol: redfish
 virtual_masters: true
 virtual_workers: false
-launch_steps: false
-deploy_openshift: false
+launch_steps: true
+deploy_openshift: true
 cluster: lab
 domain: karmalabs.com 
 baremetal_cidr: 192.168.129.0/24

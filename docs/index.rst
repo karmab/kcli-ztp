@@ -54,7 +54,7 @@ Deploy The lab plan
 
    git clone https://github.com/karmab/kcli-openshift4-baremetal
    cd kcli-openshift4-baremetal
-   kcli create plan --paramfile lab.yml lab
+   kcli create plan -f kcli_plan.yml --paramfile paramfiles/lab.yml lab
 
 Expected Output
 
@@ -139,7 +139,7 @@ Explore the environment
 
 In the installer vm, Let’s look at the following elements:
 
--  There are several numbered scripts in ``/root`` that we will execute in the next sections.
+-  There are several numbered scripts in ``/root/scripts`` that we will execute in the next sections.
 -  The pull secret was copied in /root/openshift_pull.json\* .
 -  Check */root/install-config.yaml* which is the main asset to be used when deploying Openshift:
 
@@ -156,7 +156,7 @@ Launch the following command:
 
 ::
 
-   /root/00_virtual.sh
+   /root/scripts/00_virtual.sh
 
 Expected Output
 
@@ -759,7 +759,7 @@ In this section, we do a basic patching of install-config.yaml to add mandatory 
 
 ::
 
-   /root/01_patch_installconfig.sh
+   /root/scripts/01_patch_installconfig.sh
 
 Expected Output
 
@@ -778,7 +778,7 @@ In this section, we add some required packages:
 
 ::
 
-   /root/02_packages.sh
+   /root/scripts/02_packages.sh
 
 Expected Output
 
@@ -1180,7 +1180,7 @@ In this section, we fetch binaries required for the install:
 
 ::
 
-   /root/04_get_clients.sh
+   /root/scripts/04_get_clients.sh
 
 Expected Output
 
@@ -1210,7 +1210,7 @@ In this section, we gather rhcos images needed for the install to speed up deplo
 
 ::
 
-   /root/05_cache.sh
+   /root/scripts/05_cache.sh
 
 Expected Output
 
@@ -1362,8 +1362,8 @@ In this section, we enable a registry and sync content so we can deploy Openshif
 
 ::
 
-   /root/06_disconnected_registry.sh
-   /root/06_disconnected_mirror.sh
+   /root/scripts/06_disconnected_registry.sh
+   /root/scripts/06_disconnected_mirror.sh
 
 Expected Output
 
@@ -2793,7 +2793,7 @@ Now, we can finally launch the deployment!!!
 
 ::
 
-   /root/09_deploy_openshift.sh
+   /root/scripts/09_deploy_openshift.sh
 
 Expected Output
 

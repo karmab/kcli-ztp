@@ -16,6 +16,6 @@ for i in `seq 1 20` ; do
     chcon -t svirt_sandbox_file_t /$PV
     chmod 777 /$PV
     [ "$i" -gt "10" ] && export MODE="ReadWriteMany"
-    envsubst < /root/10_nfs.yml | oc create -f -
+    envsubst < /root/scripts/10_nfs.yml | oc create -f -
 done
 exportfs -r

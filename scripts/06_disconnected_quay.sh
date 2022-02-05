@@ -28,6 +28,6 @@ curl -s -L https://developers.redhat.com/content-gateway/file/pub/openshift-v4/c
 /usr/bin/mirror-registry install --quayHostname $REGISTRY_NAME --sslCert /opt/registry/certs/domain.crt --sslKey /opt/registry/certs/domain.key --initPassword $REGISTRY_PASSWORD --ssh-key /root/.ssh/id_rsa
 
 {% if ':' in baremetal_cidr %}
-mv /root/quay_haproxy.cfg /etc/quay-install/haproxy.cfg
+mv /root/mirror-registry/quay_haproxy.cfg /etc/quay-install/haproxy.cfg
 systemctl enable --now quay-haproxy
 {% endif %}

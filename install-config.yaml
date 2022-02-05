@@ -1,4 +1,4 @@
-{% import 'static_network.j2' as static_network %}
+{% import 'static_network/config.j2' as static_network %}
 {% set baremetal_prefix = baremetal_cidr.split('/')[1] %}
 {% set baremetal_gateway = static_baremetal_gateway or baremetal_cidr|network_ip(1 if lab else -2) %}
 {% set baremetal_dns = static_baremetal_dns or baremetal_gateway %}

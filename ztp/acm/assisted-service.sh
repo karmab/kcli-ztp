@@ -2,7 +2,7 @@
 
 {% if acm_downstream %}
 echo "************ RUNNING acm_downstream.sh ************"
-bash /root/acm_downstream.sh
+bash /root/ztp/acm/downstream.sh
 {% endif %}
 
 RHCOS_ISO=$(/root/bin/openshift-baremetal-install coreos print-stream-json | jq -r '.["architectures"]["x86_64"]["artifacts"]["metal"]["formats"]["iso"]["disk"]["location"]')
@@ -12,12 +12,12 @@ curl -Lk $RHCOS_ROOTFS > /var/www/html/rhcos-live-rootfs.x86_64.img
 
 {% if acm %}
 tasty install advanced-cluster-management --wait
-oc create -f /root/acm_cr.yml
+oc create -f /root/ztp/acm/cr.yml
 sleep 240
 oc patch hiveconfig hive --type merge -p '{"spec":{"targetNamespace":"hive","logLevel":"debug","featureGates":{"custom":{"enabled":["AlphaAgentInstallStrategy"]},"featureSet":"Custom"}}}'
 sleep 120
 {% else %}
-oc create -f /root/ai_install.yml
+oc create -f /root/ztp/acm/ai_install.yml
 {% endif %}
 
 OCP_RELEASE=$(/root/bin/openshift-baremetal-install version | head -1 | cut -d' ' -f2)-x86_64
@@ -31,7 +31,7 @@ echo $BAREMETAL_IP | grep -q ':' && SERVER6=$(grep : /etc/resolv.conf | grep -v 
 LOCAL_PORT={{ 8443 if disconnected_quay else 5000 }}
 export LOCAL_REGISTRY=${REVERSE_NAME:-$(hostname -f)}:$LOCAL_PORT
 export RELEASE=$LOCAL_REGISTRY/ocp4:$OCP_RELEASE
-python3 /root/bin/gen_registries.py > /root/registries.txt
+python3 /root/ztp/acm/gen_registries.py > /root/registries.txt
 export REGISTRIES=$(cat /root/registries.txt)
 {% elif version == 'ci' %}
 export RELEASE={{ openshift_image }}
@@ -47,5 +47,5 @@ export PULLSECRET=$(cat /root/openshift_pull.json | tr -d [:space:])
 export SSH_PRIV_KEY=$(cat /root/.ssh/id_rsa |sed "s/^/    /")
 export VERSION=$(/root/bin/openshift-baremetal-install coreos print-stream-json | jq -r '.["architectures"]["x86_64"]["artifacts"]["metal"]["release"]')
 
-envsubst < /root/ztp_assisted-service.sample.yml > /root/ztp_assisted-service.yml
-oc create -f /root/ztp_assisted-service.yml
+envsubst < /root/ztp/acm/assisted-service.sample.yml > /root/ztp/acm/assisted-service.yml
+oc create -f /root/ztp/acm/assisted-service.yml
