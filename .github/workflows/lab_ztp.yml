@@ -17,11 +17,11 @@ on:
       INPUTFILE:
         description: 'Input file'
         required: true
-        default: kcli_plan_ztp.yml
+        default: plans/kcli_plan_ztp.yml
       PARAMFILE:
         description: 'paramfile'
         required: false
-        default: lab_ztp.yml
+        default: paramfiles/lab_ztp.yml
       PULLSECRET:
         description: 'pullsecret'
         required: false

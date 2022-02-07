@@ -13,11 +13,11 @@ on:
       INFRAPARAMFILE:
         description: 'infraparamfile'
         required: false
-        default: lab.yml
+        default: paramfiles/lab.yml
       PARAMFILE:
         description: 'paramfile'
         required: false
-        default: lab_without_installer.yml
+        default: paramfiles/lab_without_installer.yml
       PULLSECRET:
         description: 'pullsecret'
         required: false

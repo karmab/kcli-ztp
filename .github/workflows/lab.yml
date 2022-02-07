@@ -21,7 +21,7 @@ on:
       PARAMFILE:
         description: 'paramfile'
         required: false
-        default: lab.yml
+        default: paramfiles/lab.yml
       PULLSECRET:
         description: 'pullsecret'
         required: false

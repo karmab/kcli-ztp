@@ -21,7 +21,7 @@ on:
       PARAMFILE:
         description: 'paramfile'
         required: false
-        default: lab_ipv6.yml
+        default: paramfiles/lab_ipv6.yml
       PULLSECRET:
         description: 'pullsecret'
         required: false
