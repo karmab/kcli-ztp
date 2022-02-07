@@ -105,8 +105,3 @@ apps-{{ spoke_name }}:
 {% endif %}
  - ztp/acm
  - ztp/scripts/spokes_deploy.sh
- scripts:
-{% if deploy_openshift %}
- - ztp/acm/assisted-service.sh
- - ztp/scripts/spokes_deploy.sh
-{% endif %}

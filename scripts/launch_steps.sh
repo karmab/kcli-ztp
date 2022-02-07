@@ -70,4 +70,8 @@ echo "************ RUNNING 06_disconnected_olm.sh ************"
 bash /root/scripts/11_apps.sh
 {% endif %}
 touch /root/cluster_ready.txt
+{% if ztp_spokes is defined %}
+bash /root/ztp/acm/assisted-service.sh
+bash /root/ztp/scripts/spokes_deploy.sh
+{% endif %}
 {% endif %}
