@@ -47,7 +47,7 @@ sudo dnf -y install kcli
 ```
 git clone https://github.com/karmab/kcli-openshift4-baremetal
 cd kcli-openshift4-baremetal
-kcli create plan --paramfile lab.yml lab
+kcli create plan -f kcli_plan.yml --paramfile paramfiles/lab.yml lab
 ```
 
 Expected Output
@@ -132,7 +132,7 @@ kcli ssh root@lab-installer
 
 In the installer vm, Let's look at the following elements:
 
-- There are several numbered scripts in `/root` that we will execute in the next sections.
+- There are several numbered scripts in `/root/scripts` that we will execute in the next sections.
 - The pull secret was copied in /root/openshift_pull.json* .
 - Check */root/install-config.yaml* which is the main asset to be used when deploying Openshift:
   - It contains initial information but we will make it evolve with each section until deploying.
@@ -146,7 +146,7 @@ In this section, we install and configure sushy-tools, which is an utility aimed
 Launch the following command:
 
 ```
-/root/00_virtual.sh
+/root/scripts/00_virtual.sh
 ```
 
 Expected Output
@@ -748,7 +748,7 @@ In a full baremetal setup, sushy-tools wouldn't be used but only access through 
 In this section, we do a basic patching of install-config.yaml to add mandatory elements to it:
 
 ```
-/root/01_patch_installconfig.sh
+/root/scripts/01_patch_installconfig.sh
 ```
 
 Expected Output
@@ -766,7 +766,7 @@ This script adds pull secret and public key to *install-config.yaml*.
 In this section, we add some required packages:
 
 ```
-/root/02_packages.sh
+/root/scripts/02_packages.sh
 ```
 
 Expected Output
@@ -1167,7 +1167,7 @@ openstack client is not strictly needed, since ironic is to be seen as an implem
 In this section, we fetch binaries required for the install:
 
 ```
-/root/04_get_clients.sh
+/root/scripts/04_get_clients.sh
 ```
 
 Expected Output
@@ -1196,7 +1196,7 @@ The script downloads the following objects:
 In this section, we gather rhcos images needed for the install to speed up deployment time:
 
 ```
-/root/05_cache.sh
+/root/scripts/05_cache.sh
 ```
 
 Expected Output
@@ -1347,8 +1347,8 @@ In this section, we enable a registry and sync content so we can deploy Openshif
 **NOTE:** In order to make use of this during a Baremetal install, proper DNS entries are needed to provide resolution for the fqdn of this local registry. 
 
 ```
-/root/06_disconnected_registry.sh
-/root/06_disconnected_mirror.sh
+/root/scripts/06_disconnected_registry.sh
+/root/scripts/06_disconnected_mirror.sh
 ```
 
 Expected Output
@@ -2773,7 +2773,7 @@ The script does the following:
 Now, we can finally launch the deployment!!!
 
 ```
-/root/09_deploy_openshift.sh
+/root/scripts/09_deploy_openshift.sh
 ```
 
 Expected Output

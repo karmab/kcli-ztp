@@ -9,7 +9,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
 action = sys.argv[1] if len(sys.argv) > 1 else 'status'
-installfile = "install-config.yaml"
+installfile = "/root/install-config.yaml"
 with open(installfile) as f:
     data = yaml.safe_load(f)
     uri = data['platform']['baremetal']['libvirtURI']

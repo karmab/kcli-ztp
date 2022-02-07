@@ -20,8 +20,8 @@ export IP=$(ip -o addr show $PRIMARY_NIC | head -1 | awk '{print $4}' | cut -d'/
 export TANG_URL=http://"$IP:7500"
 export THP="$(tang-show-keys 7500)"
 export ROLE=worker
-envsubst < /root/99-openshift-tang-encryption-clevis.sample.yaml > /root/manifests/99-openshift-worker-tang-encryption-clevis.yaml
-envsubst < /root/99-openshift-tang-encryption-ka.sample.yaml > /root/manifests/99-openshift-worker-tang-encryption-ka.yaml
+envsubst < /root/machineconfigs/99-openshift-tang-encryption-clevis.sample.yaml > /root/manifests/99-openshift-worker-tang-encryption-clevis.yaml
+envsubst < /root/machineconfigs/99-openshift-tang-encryption-ka.sample.yaml > /root/manifests/99-openshift-worker-tang-encryption-ka.yaml
 export ROLE=master
-envsubst < /root/99-openshift-tang-encryption-clevis.sample.yaml > /root/manifests/99-openshift-master-tang-encryption-clevis.yaml
-envsubst < /root/99-openshift-tang-encryption-ka.sample.yaml > /root/manifests/99-openshift-master-tang-encryption-ka.yaml
+envsubst < /root/machineconfigs/99-openshift-tang-encryption-clevis.sample.yaml > /root/manifests/99-openshift-master-tang-encryption-clevis.yaml
+envsubst < /root/machineonfigs/99-openshift-tang-encryption-ka.sample.yaml > /root/manifests/99-openshift-master-tang-encryption-ka.yaml

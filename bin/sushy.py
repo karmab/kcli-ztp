@@ -6,6 +6,8 @@ import requests
 import sys
 import yaml
 
+installfile = "/root/install-config.yaml"
+
 
 def get_ip(nic='eth0'):
     interface = [i for i in netifaces.interfaces() if str(i) == nic][0]
@@ -34,7 +36,6 @@ for member in requests.get(url).json()['Members']:
     systems[name] = portid
 
 ports = []
-installfile = "/root/install-config.yaml"
 with open(installfile) as f:
     data = yaml.safe_load(f)
     uri = data['platform']['baremetal']['libvirtURI']

@@ -67,4 +67,4 @@ PULLSECRET=$(cat /root/openshift_pull.json | tr -d [:space:])
 echo -e "pullSecret: |\n  $PULLSECRET" >> /root/install-config.yaml
 fi
 
-cp /root/99-operatorhub.yaml /root/manifests
+cp /root/machineconfigs/99-operatorhub.yaml /root/manifests

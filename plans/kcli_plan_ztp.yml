@@ -76,46 +76,37 @@ apps-{{ spoke_name }}:
 {{ cluster }}-installer:
  baseplan: kcli_plan.yml
  files:
- - ztp_assisted-service.sample.yml
- - ztp_assisted-service.sh
- - ztp_spokes_deploy.sh
 {% for spoke in ztp_spokes %}
  - path: /root/spoke_{{ spoke.name }}/spoke.sample.yml
-   origin: ztp_spoke.sample.yml
+   origin: ztp/scripts/spoke.sample.yml
    index: {{ loop.index0 }}
  - path: /root/spoke_{{ spoke.name }}/spoke.sh
-   origin: ztp_spoke.sh
+   origin: ztp/scripts/spoke.sh
    index: {{ loop.index0 }}
  - path: /root/spoke_{{ spoke.name }}/bmc.yml
-   origin: ztp_bmc.yml
+   origin: ztp/scripts/bmc.yml
    index: {{ loop.index0 }}
  - path: /root/spoke_{{ spoke.name }}/bmc.sh
-   origin: ztp_bmc.sh
+   origin: ztp/scripts/bmc.sh
    index: {{ loop.index0 }}
 {% if 'spoke_{{ spoke.name }}_manifests'|find_manifests %}
- - path: /root/spoke_{{ spoke.name }}/spoke_manifests.sh
-   origin: ztp_spoke_manifests.sh
+ - path: /root/spoke_{{ spoke.name }}/manifests.sh
+   origin: ztp/scripts/manifests.sh
    index: {{ loop.index0 }}
  - path: /root/spoke_{{ spoke.name }}/manifests
    origin: spoke_{{ spoke.name }}_manifests
  - path: /root/spoke_{{ spoke.name }}/manifests.yml
-   origin: ztp_spoke_manifests.yml
+   origin: ztp/manifests.yml
 {% endif %}
 {% endfor %}
-{% if acm %}
- - acm_cr.yml
 {% if acm_downstream %}
  - origin: {{ acm_pullsecret }}
    path: /root/openshift_pull_acm.json
- - acm_downstream.sh
 {% endif %}
-{% else %}
- - ai_install.yml
-{% endif %}
- - path: /root/bin/gen_registries.py
-   origin: helpers/gen_registries.py
+ - ztp/acm
+ - ztp/scripts/spokes_deploy.sh
  scripts:
 {% if deploy_openshift %}
- - ztp_assisted-service.sh
- - ztp_spokes_deploy.sh
+ - ztp/acm/assisted-service.sh
+ - ztp/scripts/spokes_deploy.sh
 {% endif %}
