@@ -1,5 +1,7 @@
 {% for spoke in ztp_spokes %}
 {% set spoke_deploy = spoke.get('deploy', ztp_spoke_deploy) %}
+{% set spoke_masters_number = spoke.get('masters_number', 1) %}
+{% set spoke_workers_number = spoke.get('workers_number', 0) %}
 {% if spoke_deploy %}
 SPOKE={{ spoke.name }}
 bash /root/spoke_$SPOKE/spoke.sh
@@ -25,6 +27,14 @@ done
 if [ "$installed" == "true" ] ; then
  echo "Cluster $SPOKE deployed"
  oc get secret -n $SPOKE $SPOKE-admin-kubeconfig -o jsonpath='{.data.kubeconfig}' | base64 -d > /root/kubeconfig.$SPOKE
+ {% if spoke_masters_number == 1 and spoke_workers_number == 0 %}
+ {% if ':' in baremetal_cidr %}
+ SNO_IP=$(oc get -n $SPOKE $(oc get agent -n $SPOKE -o name) -o jsonpath={'.status.inventory.interfaces[0].ipV6Addresses[0]'} | cut -d/ -f1)
+ {% else %}
+ SNO_IP=$(oc get -n $SPOKE $(oc get agent -n $SPOKE -o name) -o jsonpath={'.status.inventory.interfaces[0].ipV4Addresses[0]'} | cut -d/ -f1)
+ {% endif %}
+ echo ${SNO_IP} api.$SPOKE.{{ domain }} >> /etc/hosts
+ {% endif %}
 elif [ "$failed" == "true" ] ; then
  echo Hit issue during deployment of $SPOKE
  echo message: $MSG
