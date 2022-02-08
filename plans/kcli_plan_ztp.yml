@@ -59,6 +59,7 @@ apps-{{ spoke_name }}:
     ip: {{ baremetal_ips[virtual_masters_number + virtual_workers_number + total_number.value + num] }}
     reserveip: true
 {% if virtual_nodes_number == 1 %}
+    reservedns: true
     alias:
     - api.{{ spoke_name }}.{{ domain }}
     - api-int.{{ spoke_name }}.{{ domain }}
