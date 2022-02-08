@@ -44,7 +44,7 @@
  - default
 {% endif %}
  disks:
- - {{ disk_size }}
+ - {{ installer_disk_size or disk_size }}
  files:
  - install-config.yaml                                                                                                                           
  - static_network/config.j2
