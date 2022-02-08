@@ -1,7 +1,5 @@
 {% for spoke in ztp_spokes %}
 {% set spoke_deploy = spoke.get('deploy', ztp_spoke_deploy) %}
-{% set spoke_masters_number = spoke.get('masters_number', 1) %}
-{% set spoke_workers_number = spoke.get('workers_number', 0) %}
 {% if spoke_deploy %}
 SPOKE={{ spoke.name }}
 bash /root/spoke_$SPOKE/spoke.sh
@@ -9,6 +7,8 @@ bash /root/spoke_$SPOKE/spoke.sh
 {% endfor %}
 {% for spoke in ztp_spokes %}
 {% set spoke_deploy = spoke.get('deploy', ztp_spoke_deploy) %}
+{% set spoke_masters_number = spoke.get('masters_number', 1) %}
+{% set spoke_workers_number = spoke.get('workers_number', 0) %}
 {% if spoke_deploy and spoke.get('wait', ztp_spoke_wait) %}
 {% set spoke_wait_time = spoke.get('wait_time', ztp_spoke_wait_time) %}
 SPOKE={{ spoke.name }}
