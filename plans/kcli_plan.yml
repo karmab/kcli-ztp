@@ -7,14 +7,14 @@
  playbook: {{ playbook }}
  pool: {{ pool }} 
  wait: {{ installer_wait }}
- numcpus: {{ numcpus }}
+ numcpus: {{ installer_numcpus or numcpus }}
  uefi_legacy: false
  keys: {{ keys }}
 {% if 'rhel' in image %}
  rhnregister: {{ rhnregister }}
 {% endif %}
  networkwait: {{ rhnwait }}
- memory: {{ memory }}
+ memory: {{ installer_memory or memory }}
  privatekey: true
  notify: {{ notify }}
 {% if deploy_openshift %}

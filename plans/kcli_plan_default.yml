@@ -21,6 +21,8 @@ baseplan: kcli_plan_infra.yml
 image: centos8stream
 image_url:
 installer_disk_size:
+installer_numcpus:
+installer_memory:
 installer_ip:
 installer_mac:
 installer_wait: False
