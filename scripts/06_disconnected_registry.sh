@@ -5,12 +5,9 @@ set -euo pipefail
 PRIMARY_NIC=$(ls -1 /sys/class/net | head -1)
 export PATH=/root/bin:$PATH
 export PULL_SECRET="/root/openshift_pull.json"
-dnf -y install podman httpd httpd-tools jq bind-utils
+dnf -y install podman httpd httpd-tools jq
 export IP=$(ip -o addr show $PRIMARY_NIC | head -1 | awk '{print $4}' | cut -d'/' -f1)
-REVERSE_NAME=$(dig -x $IP +short | sed 's/\.[^\.]*$//')
-echo $IP | grep -q ':' && SERVER6=$(grep : /etc/resolv.conf | grep -v fe80 | cut -d" " -f2) && REVERSE_NAME=$(dig -6x $IP +short @$SERVER6 | sed 's/\.[^\.]*$//')
-REGISTRY_NAME=${REVERSE_NAME:-$(hostname -f)}
-echo $IP $REGISTRY_NAME >> /etc/hosts
+REGISTRY_NAME=$(echo $IP | sed 's/\./-/g' | sed 's/:/-/g').sslip.io
 REGISTRY_USER={{ disconnected_user }}
 REGISTRY_PASSWORD={{ disconnected_password }}
 KEY=$(echo -n $REGISTRY_USER:$REGISTRY_PASSWORD | base64)

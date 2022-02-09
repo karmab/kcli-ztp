@@ -7,12 +7,9 @@ export USER=root
 PRIMARY_NIC=$(ls -1 /sys/class/net | head -1)
 export PATH=/root/bin:$PATH
 export PULL_SECRET="/root/openshift_pull.json"
-dnf -y install podman httpd jq bind-utils
+dnf -y install podman httpd jq
 export IP=$(ip -o addr show $PRIMARY_NIC | head -1 | awk '{print $4}' | cut -d'/' -f1)
-REVERSE_NAME=$(dig -x $IP +short | sed 's/\.[^\.]*$//')
-echo $IP | grep -q ':' && SERVER6=$(grep : /etc/resolv.conf | grep -v fe80 | cut -d" " -f2) && REVERSE_NAME=$(dig -6x $IP +short @$SERVER6 | sed 's/\.[^\.]*$//')
-REGISTRY_NAME=${REVERSE_NAME:-$(hostname -f)}
-echo $IP $REGISTRY_NAME >> /etc/hosts
+REGISTRY_NAME=$(echo $IP | sed 's/\./-/g' | sed 's/:/-/g').sslip.io
 REGISTRY_USER=init
 REGISTRY_PASSWORD={{ "super" + disconnected_password if disconnected_password|length < 8 else disconnected_password }}
 KEY=$(echo -n $REGISTRY_USER:$REGISTRY_PASSWORD | base64)

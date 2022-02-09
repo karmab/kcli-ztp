@@ -6,9 +6,7 @@ PRIMARY_NIC=$(ls -1 /sys/class/net | head -1)
 export PATH=/root/bin:$PATH
 export PULL_SECRET="/root/openshift_pull.json"
 export IP=$(ip -o addr show $PRIMARY_NIC | head -1 | awk '{print $4}' | cut -d'/' -f1)
-REVERSE_NAME=$(dig -x $IP +short | sed 's/\.[^\.]*$//')
-echo $IP | grep -q ':' && SERVER6=$(grep : /etc/resolv.conf | grep -v fe80 | cut -d" " -f2) && REVERSE_NAME=$(dig -6x $IP +short @$SERVER6 | sed 's/\.[^\.]*$//')
-REGISTRY_NAME=${REVERSE_NAME:-$(hostname -f)}
+REGISTRY_NAME=$(echo $IP | sed 's/\./-/g' | sed 's/:/-/g').sslip.io
 REGISTRY_PORT={{ 8443 if disconnected_quay else 5000 }}
 
 {% if version == 'ci' %}
