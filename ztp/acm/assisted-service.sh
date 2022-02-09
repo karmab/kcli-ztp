@@ -26,10 +26,9 @@ BAREMETAL_IP=$(ip -o addr show eth0 | head -1 | awk '{print $4}' | cut -d'/' -f1
 
 {% if disconnected %}
 export CA_CERT=$(cat /opt/registry/certs/domain.crt | sed "s/^/    /")
-REVERSE_NAME=$(dig -x $BAREMETAL_IP +short | sed 's/\.[^\.]*$//')
-echo $BAREMETAL_IP | grep -q ':' && SERVER6=$(grep : /etc/resolv.conf | grep -v fe80 | cut -d" " -f2) && REVERSE_NAME=$(dig -6x $BAREMETAL_IP +short @$SERVER6 | sed 's/\.[^\.]*$//')
+REGISTRY_NAME=$(echo $BAREMETAL_IP | sed 's/\./-/g' | sed 's/:/-/g').sslip.io
 LOCAL_PORT={{ 8443 if disconnected_quay else 5000 }}
-export LOCAL_REGISTRY=${REVERSE_NAME:-$(hostname -f)}:$LOCAL_PORT
+export LOCAL_REGISTRY=${REGISTRY_NAME}:$LOCAL_PORT
 export RELEASE=$LOCAL_REGISTRY/ocp4:$OCP_RELEASE
 python3 /root/ztp/acm/gen_registries.py > /root/registries.txt
 export REGISTRIES=$(cat /root/registries.txt)
