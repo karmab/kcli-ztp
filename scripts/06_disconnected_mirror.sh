@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-PRIMARY_NIC=$(ls -1 /sys/class/net | head -1)
+PRIMARY_NIC=$(ls -1 /sys/class/net | grep 'eth\|en' | head -1)
 export PATH=/root/bin:$PATH
 export PULL_SECRET="/root/openshift_pull.json"
 export IP=$(ip -o addr show $PRIMARY_NIC | head -1 | awk '{print $4}' | cut -d'/' -f1)

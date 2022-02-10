@@ -5,7 +5,7 @@ cd /root
 export PATH=/root/bin:$PATH
 export OCP_RELEASE="$(/root/bin/openshift-baremetal-install version | head -1 | cut -d' ' -f2 | cut -d'.' -f 1,2)"
 export OCP_PULLSECRET_AUTHFILE='/root/openshift_pull.json'
-PRIMARY_NIC=$(ls -1 /sys/class/net | head -1)
+PRIMARY_NIC=$(ls -1 /sys/class/net | grep 'eth\|en' | head -1)
 IP=$(ip -o addr show $PRIMARY_NIC | head -1 | awk '{print $4}' | cut -d'/' -f1)
 REGISTRY_NAME=$(echo $IP | sed 's/\./-/g' | sed 's/:/-/g').sslip.io
 REGISTRY_PORT={{ 8443 if disconnected_quay else 5000 }}
