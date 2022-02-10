@@ -2,8 +2,10 @@
 
 [ -d /root/ocp ] && rm -rf /root/ocp
 CLUSTER={{ cluster }}
-HYPERVISOR={{ config_user | default('root') }}@{{ config_host if config_host != '127.0.0.1' else baremetal_net|local_ip(true) }}
-export LIBVIRT_DEFAULT_URI=qemu+ssh://$HYPERVISOR/system
+HYPERVISOR_URI={{ config_user | default('root') }}@{{ config_host if config_host != '127.0.0.1' else baremetal_net|local_ip(true) }}
+HYPERVISOR=$(echo $HYPERVISOR_URI | sed -e 's/\[//' -e 's/\]//')
+
+export LIBVIRT_DEFAULT_URI=qemu+ssh://$HYPERVISOR_URI/system
 BOOTSTRAP=$(virsh list --all --name | grep "$CLUSTER.*bootstrap")
 if [ "$BOOTSTRAP" != "" ] ; then
   for VM in $BOOTSTRAP ; do
@@ -26,4 +28,4 @@ if [ "$POOLS" != "" ] ; then
   done
 fi
 
-ssh $HYPERVISOR "find /var/lib/libvirt/images/boot-* -type f -mtime +5 -exec virsh vol-delete {} +"
+ssh $HYPERVISOR "find /var/lib/libvirt/images/boot-* -type f -mtime +5 -exec virsh vol-delete {} \;"
