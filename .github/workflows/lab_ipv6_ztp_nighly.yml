@@ -6,7 +6,7 @@ on:
 env:
  HOME: /root
  PYTHONUNBUFFERED: true
- PLAN: lab-ipv6-ztp-sno
+ PLAN: lab
  INPUTFILE: plans/kcli_plan_ztp.yml
  PARAMFILE: paramfiles/lab_ipv6_ztp.yml
  PULLSECRET: /root/openshift_pull.json

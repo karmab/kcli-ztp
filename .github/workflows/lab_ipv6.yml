@@ -13,7 +13,7 @@ on:
       PLAN:
         description: 'Plan Name'
         required: true
-        default: lab-ipv6
+        default: lab
       INPUTFILE:
         description: 'Input file'
         required: true
