@@ -1,35 +1,37 @@
+blue='\033[0;36m'
+clear='\033[0m'
 {% if http_proxy != None %}
-echo "************ RUNNING .proxy.sh ************"
-bash /root/scripts/.proxy.sh
+echo -e "${blue}************ RUNNING .proxy.sh ************${clear}"
+bash /root/scripts/proxy.sh
 source /etc/profile.d/proxy.sh
 {% endif %}
 
 {% if virtual_masters or virtual_workers %}
-echo "************ RUNNING 00_virtual.sh ************"
+echo -e "${blue}************ RUNNING 00_virtual.sh ************${clear}"
 bash /root/scripts/00_virtual.sh
 {% endif %}
 
-echo "************ RUNNING 01_patch_installconfig.sh ************"
+echo -e "${blue}************ RUNNING 01_patch_installconfig.sh ************${clear}"
 /root/scripts/01_patch_installconfig.sh
-echo "************ RUNNING 02_packages.sh ************"
+echo -e "${blue}************ RUNNING 02_packages.sh ************${clear}"
 bash /root/scripts/02_packages.sh
-echo "************ RUNNING 03_provisioning_network.sh ************"
+echo -e "${blue}************ RUNNING 03_provisioning_network.sh ************${clear}"
 bash /root/scripts/03_provisioning_network.sh
-echo "************ RUNNING 04_get_clients.sh ************"
+echo -e "${blue}************ RUNNING 04_get_clients.sh ************${clear}"
 /root/scripts/04_get_clients.sh || exit 1
 
 {% if cache %}
-echo "************ RUNNING 05_cache.sh ************"
+echo -e "${blue}************ RUNNING 05_cache.sh ************${clear}"
 /root/scripts/05_cache.sh
 {% endif %}
 
 {% if disconnected %}
-echo "************ RUNNING 06_disconnected_{{ 'quay.sh' if disconnected_quay else 'registry.sh' }}.sh ************"
+echo -e "${blue}************ RUNNING 06_disconnected_{{ 'quay.sh' if disconnected_quay else 'registry.sh' }}.sh ************${clear}"
 /root/scripts/06_disconnected_{{ 'quay.sh' if disconnected_quay else 'registry.sh' }} || exit 1
-echo "************ RUNNING 06_disconnected_mirror.sh ************"
+echo -e "${blue}************ RUNNING 06_disconnected_mirror.sh ************${clear}"
 /root/scripts/06_disconnected_mirror.sh || exit 1
 {% if disconnected_operators and not disconnected_operators_deploy_after_openshift %}
-echo "************ RUNNING 06_disconnected_olm.sh ************"
+echo -e "${blue}************ RUNNING 06_disconnected_olm.sh ************${clear}"
 /root/scripts/06_disconnected_olm.sh
 {% if disconnected_quay %}
 rm -rf /root/manifests-redhat-operator-index-*
@@ -39,31 +41,31 @@ rm -rf /root/manifests-redhat-operator-index-*
 {% endif %}
 
 {% if nbde %}
-echo "************ RUNNING 07_nbde.sh ************"
+echo -e "${blue}************ RUNNING 07_nbde.sh ************${clear}"
 /root/scripts/07_nbde.sh
 {% endif %}
 
 {% if ntp %}
-echo "************ RUNNING 08_ntp.sh ************"
+echo -e "${blue}************ RUNNING 08_ntp.sh ************${clear}"
 /root/scripts/08_ntp.sh
 {% endif %}
 
 {% if deploy_openshift %}
-echo "************ RUNNING 09_deploy_openshift.sh ************"
+echo -e "${blue}************ RUNNING 09_deploy_openshift.sh ************${clear}"
 export KUBECONFIG=/root/ocp/auth/kubeconfig
 bash /root/scripts/09_deploy_openshift.sh
 sed -i "s/metal3-bootstrap/metal3/" /root/.bashrc
 sed -i "s/172.22.0.2/172.22.0.3/" /root/.bashrc
 {% if nfs %}
-echo "************ RUNNING 10_nfs.sh ************"
+echo -e "${blue}************ RUNNING 10_nfs.sh ************${clear}"
 bash /root/scripts/10_nfs.sh
 {% endif %}
 {% if imageregistry %}
-echo "************ RUNNING imageregistry patch ************"
+echo -e "${blue}************ RUNNING imageregistry patch ************${clear}"
 oc patch configs.imageregistry.operator.openshift.io cluster --type merge -p '{"spec":{"managementState":"Managed","storage":{"pvc":{}}}}'
 {% endif %}
 {% if disconnected and disconnected_operators and disconnected_operators_deploy_after_openshift %}
-echo "************ RUNNING 06_disconnected_olm.sh ************"
+echo -e "${blue}************ RUNNING 06_disconnected_olm.sh ************${clear}"
 /root/scripts/06_disconnected_olm.sh
 {% endif %}
 {% if apps %}

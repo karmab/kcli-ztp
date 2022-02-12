@@ -75,8 +75,8 @@
     {{ ca |certificate | replace('\n', '\n    ') }}
 {% endfor %}
 {% if http_proxy != None %}
- - path: /etc/profile.d/proxy.sh
-   origin: envfiles/profile_proxy.sh
+ - path: /root/scripts/proxy.sh
+   origin: envfiles/proxy.sh
    mode: 644
 {% endif %}
 {% if baremetal_bootstrap_ip != None %}
