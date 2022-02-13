@@ -55,11 +55,9 @@ apps-{{ spoke_name }}:
 {% else %}
     mac: {{ ztp_virtual_nodes_baremetal_mac_prefix + ":" + "%02.d" | format(total_number.value + num + 1)| string }}
 {% endif %}
-{% if lab %}
-{% if baremetal_ips and baremetal_ips|length > virtual_masters_number + virtual_workers_number + total_number.value + num %}
+{% if lab and baremetal_ips and baremetal_ips|length > virtual_masters_number + virtual_workers_number + total_number.value + num %}
     ip: {{ baremetal_ips[virtual_masters_number + virtual_workers_number + total_number.value + num] }}
     reserveip: true
-{% endif %}
 {% if virtual_nodes_number == 1 %}
     reservedns: true
     alias:
