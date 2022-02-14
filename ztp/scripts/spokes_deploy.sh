@@ -2,7 +2,7 @@
 {% set spoke_deploy = spoke.get('deploy', ztp_spoke_deploy) %}
 {% if spoke_deploy %}
 SPOKE={{ spoke.name }}
-bash /root/spoke_$SPOKE/spoke.sh
+test -f /root/kubeconfig.$SPOKE || bash /root/spoke_$SPOKE/spoke.sh
 {% endif %}
 {% endfor %}
 {% for spoke in ztp_spokes %}
