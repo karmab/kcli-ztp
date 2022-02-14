@@ -1189,6 +1189,7 @@ The script downloads the following objects:
 - kubectl.
 - openshift-baremetal-install using oc and by specifying which OPENSHIFT_RELEASE_IMAGE to use.
 - neat which is a k8s plugin to clear managedfields from output
+- bmo-log-parser which is a tool for parsing metal3 baremetal-operator logs
 - tasty which is a binary designed to ease installing olm operators once cluster is deployed.
 
 # Images caching
