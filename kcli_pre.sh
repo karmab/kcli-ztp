@@ -20,7 +20,8 @@ echo dualstack_cidr needs to be ipv6 for dual stack
 {% endif %}
 
 {% if config_host == '127.0.0.1' and not lab %}
-ip a l {{ baremetal_net }} >/dev/null 2>&1 || { echo Issue with network {{ baremetal_net }} ; exit 1; }
+{% set baremetal_bridge = baremetal_net if baremetal_net != 'default' else 'virbr0' %}
+ip a l {{ baremetal_bridge }} >/dev/null 2>&1 || { echo Issue with network {{ baremetal_net }} ; exit 1; }
 {% endif %}
 
 # VERSION CHECK
