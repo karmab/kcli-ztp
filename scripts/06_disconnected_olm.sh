@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 
 # Variables to set, suit to your installation
+export RH_OP_PACKAGES=${RH_OP_PACKAGES:-{{ disconnected_operators|join(",") }}}
+if [ -z $RH_OP_PACKAGES ] ; then
+ echo Usage: $0 RH_OP_PACKAGES
+ exit 1
+fi
 cd /root
 export PATH=/root/bin:$PATH
 export OCP_RELEASE="$(/root/bin/openshift-baremetal-install version | head -1 | cut -d' ' -f2 | cut -d'.' -f 1,2)"
@@ -36,7 +41,6 @@ export CERT_OP_INDEX="registry.redhat.io/redhat/certified-operator-index:v${OCP_
 export COMM_OP_INDEX="registry.redhat.io/redhat/community-operator-index:v${OCP_RELEASE}"
 export MARKETPLACE_OP_INDEX="registry.redhat.io/redhat-marketplace-index:v${OCP_RELEASE}"
 #export RH_OP_PACKAGES='local-storage-operator,performance-addon-operator,ptp-operator,sriov-network-operator'
-export RH_OP_PACKAGES='{{ disconnected_operators|join(",") }}'
 
 time opm index prune --from-index $RH_OP_INDEX --packages $RH_OP_PACKAGES --tag $LOCAL_REGISTRY/$LOCAL_REGISTRY_INDEX_TAG
 podman push $LOCAL_REGISTRY/$LOCAL_REGISTRY_INDEX_TAG --authfile $OCP_PULLSECRET_AUTHFILE
