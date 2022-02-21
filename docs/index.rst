@@ -62,7 +62,7 @@ Expected Output
 
    Running kcli_pre.sh
    Deploying Images...
-   Image centos8 skipped!
+   Image centos8stream skipped!
    Deploying Vms...
    Skipping kcli_pre.sh as requested
    Deploying Networks...
@@ -86,7 +86,7 @@ Expected Output
    Waiting 5 seconds to grab ip...
    lab-installer deployed on local
 
-This will deploy 3 empty masters to emulate baremetal along with a Centos8 installer vm where the lab will be run.
+This will deploy 3 empty masters to emulate baremetal along with a Centos8stream installer vm where the lab will be run.
 
 -  Check the created vms
 
