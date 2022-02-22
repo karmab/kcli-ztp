@@ -46,8 +46,9 @@
  - {{ installer_disk_size or disk_size }}
  files:
  - install-config.yaml                                                                                                                           
- - static_network/config.j2
+{% if baremetal_bootstrap_ip != None %}
  - static_network/ifcfg-bootstrap
+{% endif %}
  - path: /root/.bashrc
    origin: envfiles/bashrc
 {% if virtual_masters or virtual_workers %}
