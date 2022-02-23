@@ -5,6 +5,7 @@ acm_downstream_latest: false
 acm_snapshot:
 acm_op_bundle:
 acm_pullsecret: openshift_pull_acm.json
+ztp_siteconfig: false
 ztp_virtual_nodes_number: 1
 ztp_virtual_nodes_numcpus: 8
 ztp_virtual_nodes_memory: 38912

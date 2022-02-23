@@ -69,11 +69,19 @@ echo -e "${blue}************ RUNNING 06_disconnected_olm.sh ************${clear}
 /root/scripts/06_disconnected_olm.sh
 {% endif %}
 {% if apps %}
+echo -e "${blue}************ RUNNING 11_apps.sh ************${clear}"
 bash /root/scripts/11_apps.sh
 {% endif %}
 touch /root/cluster_ready.txt
 {% if ztp_spokes is defined %}
+echo -e "${blue}************ RUNNING ztp/acm/assisted-service.sh ************${clear}"
 bash /root/ztp/acm/assisted-service.sh
+{% if ztp_siteconfig %}
+echo -e "${blue}************ RUNNING ztp/scripts/spokes_deploy_siteconfig.sh ************${clear}"
+bash /root/ztp/scripts/spokes_deploy_siteconfig.sh
+{% else %}
+echo -e "${blue}************ RUNNING ztp/scripts/spokes_deploy.sh ************${clear}"
 bash /root/ztp/scripts/spokes_deploy.sh
+{% endif %}
 {% endif %}
 {% endif %}

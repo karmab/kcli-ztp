@@ -1,0 +1,143 @@
+{% set total_number = namespace(value=0) %}
+---
+apiVersion: ran.openshift.io/v1
+kind: SiteConfig
+metadata:
+  name: "example-standard"
+  namespace: "example-standard"
+spec:
+  baseDomain: ${DOMAIN}
+  pullSecretRef:
+    name: "assisted-deployment-pull-secret"
+  clusterImageSetNameRef: openshift-v${MINOR}
+  sshPublicKey: "${SSH_PUB_KEY}"
+  clusters:
+{% for spoke in ztp_spokes %}
+{% set new_value = spoke["virtual_nodes_number"]|default(0) %}
+{% set spoke_name = spoke.name %}
+{% set spoke_network_type = spoke.get('network_type', ztp_spoke_network_type) %}
+{% set spoke_api_ip = spoke.get('api_ip') %}
+{% set spoke_ingress_ip= spoke.get('ingress_ip') %}
+{% set spoke_masters_number = spoke.get('masters_number', 1) %}
+{% set spoke_workers_number = spoke.get('workers_number', 0) %}
+{% set virtual_nodes_number = spoke["virtual_nodes_number"]|default(0) %}
+{% if spoke_api_ip != None and ':' in spoke_api_ip %}
+{% set ipv6 = True %}
+{% elif ':' in baremetal_cidr %}
+{% set ipv6 = True %}
+{% else %}
+{% set ipv6 = False %}
+{% endif %}
+{% set cluster_network_ipv6 = {"cidr": "fd01::/48", "hostPrefix": 64} %}
+{% set cluster_network_ipv4 = {"cidr": "10.132.0.0/14", "hostPrefix": 23} %}
+{% set service_network_ipv6 = ["fd02::/112"] %}
+{% set service_network_ipv4 = ["172.30.0.0/16"] %}
+{% set machine_cidr_ipv4 = ["10.0.0.0/16"] %}
+{% set machine_cidr_ipv6 = ["fc00::/48"] %}
+{% if dualstack|default(False) %}
+{% set machine_cidrs = machine_cidr_ipv4 + machine_cidr_ipv6 %}
+{% set cluster_networks = [cluster_network_ipv4] + [cluster_network_ipv6] %}
+{% set service_networks = service_network_ipv4 + service_network_ipv6 %}
+{% if ipv6 %}
+{% set machine_cidrs = machine_cidrs|reverse %}
+{% set cluster_networks = cluster_networks|reverse %}
+{% set service_networks = service_networks|reverse %}
+{% endif %}
+{% elif ipv6 %}
+{% set machine_cidrs = machine_cidr_ipv6 %}
+{% set cluster_networks = [cluster_network_ipv6] %}
+{% set service_networks = service_network_ipv6 %}
+{% else %}
+{% set machine_cidrs = machine_cidr_ipv4 %}
+{% set cluster_networks = [cluster_network_ipv4] %}
+{% set service_networks = service_network_ipv4 %}
+{% endif %}
+{% set spoke_name = spoke.name %}
+{% set virtual_nodes_number = spoke["virtual_nodes_number"]|default(0) %}
+{% set nodes = spoke["nodes"]|default([]) %}
+
+{% if virtual_nodes_number > 0 %}
+{% set extra_nodes = [] %}
+{% for num in range(0, virtual_nodes_number) %}
+{% do extra_nodes.append({}) %}
+{% endfor %}
+{% set nodes = extra_nodes + nodes %}
+{% endif %}
+  - clusterName: {{ spoke_name }}
+    networkType: {{ spoke_network_type }}
+    clusterLabels:
+      # These example cluster labels correspond to the bindingRules in the PolicyGenTemplate examples in ../policygentemplates:
+      # ../policygentemplates/common-ranGen.yaml will apply to all clusters with 'common: true'
+      common: true
+      # ../policygentemplates/group-du-standard-ranGen.yaml will apply to all clusters with 'group-du-standard: ""'
+      group-du-standard: ""
+      # ../policygentemplates/example-multinode-site.yaml will apply to all clusters with 'sites: "example-multinode"'
+      # Normally this should match or contain the cluster name so it only applies to a single cluster
+      sites : "example-multinode"
+{% if spoke_masters_number > 1 and spoke_api_ip != None and spoke_ingress_ip != None %}
+    apiVIP: {{ spoke_api_ip }}
+    ingressVIP: {{ spoke_ingress_ip }}
+{% endif %}
+    machineNetwork:
+      - cidr: {{ baremetal_cidr }}
+    clusterNetwork:
+  {% for network in cluster_networks %}
+    - cidr: {{ network['cidr'] }}
+      hostPrefix: {{ network['hostPrefix'] }}
+  {% endfor %}
+    serviceNetwork:
+  {% for network in service_networks %}
+      - {{ network }}
+  {% endfor %}
+    nodes:
+{% for node in nodes %}
+{% set protocol = 'ipv6' if ipv6 else 'ipv4' %}
+{% set num = loop.index0 %}
+{% if 'provisioning_mac' in node %}
+{% set mac = node['provisioning_mac'] %}
+{% elif baremetal_macs and baremetal_macs|length > virtual_masters_number + virtual_workers_number + total_number.value + num %}
+{% set mac = baremetal_macs[virtual_masters_number + virtual_workers_number + total_number.value + num] %}
+{% else %}
+{% set mac = ztp_virtual_nodes_baremetal_mac_prefix + ":" + "%02.d" | format(total_number.value + num + 1)| string %}
+{% endif %}
+      - hostName: {{ cluster }}-{{ spoke_name }}-node-{{ num }}
+        role: {{ "master" if num < 3 else "worker" }}
+        {% if 'redfish_address' in node %}
+        disableCertificateVerification: True
+        {% if 'redfish' in node['redfish_address'] or 'idrac' in node['redfish_address'] %}
+        bmcAddress: {{ node['redfish_address'] }}
+        {% elif node['model']|default(model) == 'hpe' %}
+        bmcAddress: redfish-virtualmedia://{{ node['redfish_address'] }}/redfish/v1/Systems/1
+        {% else %}
+        bmcAddress: idrac-virtualmedia://{{ node['redfish_address'] }}/redfish/v1/Systems/System.Embedded.1
+        {% endif %}
+        {% else %}
+        bmcAddress: redfish-virtualmedia+http://IP:8000/redfish/v1/Systems/UUID-{{ spoke_name }}-{{ num }}
+        {% endif %}
+        bmcCredentialsName:
+          name: {{ cluster }}-ztp-{{ spoke_name }}-bmc-secret-{{ num }}
+        bootMACAddress: {{ mac }}
+        bootMode: {{ 'UEFI' if ztp_uefi else 'legacy' }}
+       {% if 'disk' in node %}
+        rootDeviceHints:
+         deviceName: "/dev/{{ node['disk'] | basename }}"
+      {% endif %}
+        nodeNetwork:
+          config:
+            interfaces:
+              - name: eth0
+                type: ethernet
+                state: up
+                {{ protocol }}:
+                  enabled: true
+                  autoconf: true
+                  dhcp: true
+                  auto-dns: true
+                  auto-gateway: true
+                  auto-routes: true
+          interfaces:
+            - name: eth0
+              macAddress: "{{ mac }}"
+  {% endfor %}
+{% set total_number.value = total_number.value + virtual_nodes_number %}
+{% endfor %}

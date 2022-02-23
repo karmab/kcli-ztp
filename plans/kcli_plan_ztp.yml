@@ -77,6 +77,7 @@ apps-{{ spoke_name }}:
 {{ cluster }}-installer:
  baseplan: kcli_plan.yml
  files:
+{% if not ztp_siteconfig %}
 {% for spoke in ztp_spokes %}
  - path: /root/spoke_{{ spoke.name }}/spoke.sample.yml
    origin: ztp/scripts/spoke.sample.yml
@@ -100,9 +101,16 @@ apps-{{ spoke_name }}:
    origin: ztp/manifests.yml
 {% endif %}
 {% endfor %}
+ - ztp/scripts/spokes_deploy.sh
+{% else %}
+ - ztp/scripts/siteconfig_requirements.sample.yml
+ - ztp/scripts/siteconfig.sample.yml
+ - ztp/scripts/siteconfig.sh
+ - ztp/scripts/spokes_deploy_siteconfig.sh
+ - ztp/scripts/bmc_siteconfig.sh
+{% endif %}
 {% if acm_downstream %}
  - origin: {{ acm_pullsecret }}
    path: /root/openshift_pull_acm.json
 {% endif %}
  - ztp/acm
- - ztp/scripts/spokes_deploy.sh
