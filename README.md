@@ -319,10 +319,10 @@ Note that you will use to store you pull secret somewhere in your runner, (`/roo
 
 A pipeline and its corresponding run yaml files are available to deploy pipeline through tekton
 
-- [pipeline.yml](tekton/pipeline.yml)
-- [run_lab.yml](tekton/run_lab.yml)
-- [run_lab_ipv6.yml](tekton/run_lab_ipv6.yml)
-- [run_lab_ipv6_ztp.yml](tekton/run_lab_ipv6_ztp.yml)
+- [pipeline.yml](extras/tekton/pipeline.yml)
+- [run_lab.yml](extras/tekton/run_lab.yml)
+- [run_lab_ipv6.yml](extras/tekton/run_lab_ipv6.yml)
+- [run_lab_ipv6_ztp.yml](extras/tekton/run_lab_ipv6_ztp.yml)
 
 You will need to create a configmap in target namespace to hold kcli configuration and make sure it points to a remote hypervisor
 
