@@ -16,6 +16,9 @@ openshift-baremetal-install --dir ocp --log-level debug create manifests
 {% if localhost_fix %}
 cp /root/machineconfigs/99-localhost-fix*.yaml /root/manifests
 {% endif %}
+{% if monitoring_retention != None %}
+cp /root/machineconfigs/99-monitoring.yaml /root/manifests
+{% endif %}
 cp manifests/*y*ml >/dev/null 2>&1 ocp/openshift || true
 TOTAL_WORKERS=$(grep 'role: worker' /root/install-config.yaml | wc -l) || true
 # [ "$TOTAL_WORKERS" -gt "0" ] || cp files/99-openshift-ingress-controller-master.yaml ocp/openshift

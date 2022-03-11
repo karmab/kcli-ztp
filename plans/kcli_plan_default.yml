@@ -91,3 +91,4 @@ virtual_masters_static_network: False
 virtual_workers_static_network: False
 static_baremetal_gateway:
 static_baremetal_dns:
+monitoring_retention:
