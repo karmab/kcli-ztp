@@ -11,7 +11,7 @@ env:
  PARAMFILE: paramfiles/lab_ipv6_ztp.yml
  PULLSECRET: /root/openshift_pull.json
  VERSION: stable
- TAG: 4.9
+ TAG: 4.10
 
 jobs:
     requirements:

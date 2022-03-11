@@ -1,6 +1,6 @@
 lab: true
 version: stable
-tag: "4.9"
+tag: "4.10"
 provisioning_enable: false
 virtual_protocol: redfish
 virtual_masters: true

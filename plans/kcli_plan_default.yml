@@ -27,8 +27,8 @@ installer_ip:
 installer_mac:
 installer_wait: False
 version: ci
-tag: 4.10
-openshift_image: registry.ci.openshift.org/ocp/release:4.10
+tag: 4.11
+openshift_image: registry.ci.openshift.org/ocp/release:4.11
 playbook: false
 network_type: OVNKubernetes
 dualstack: false

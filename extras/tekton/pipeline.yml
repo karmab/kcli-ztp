@@ -42,7 +42,7 @@ spec:
  - name: tag
    description: tag
    type: string
-   default: "4.9"
+   default: "4.10"
  steps:
   - name: git-clone
     image: "gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/git-init:v0.21.0"
@@ -136,7 +136,7 @@ spec:
   - name: tag
     description: tag
     type: string
-    default: "4.9"
+    default: "4.10"
   tasks:
   - name: kcli-plan-baremetal-lab
     taskRef:
