@@ -29,7 +29,7 @@ on:
       TAG:
         description: 'tag'
         required: false
-        default: 4.10
+        default: "4.10"
 
 env:
  HOME: /root
