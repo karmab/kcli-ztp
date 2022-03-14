@@ -1,0 +1,16 @@
+cluster: emmet
+domain: brown.com
+version: stable
+tag: "4.10"
+virtual_masters: True
+virtual_masters_number: 3
+virtual_workers: False
+bmc_user: marty
+bmc_password: mcfly
+baremetal_cidr: 11.0.0.0/24
+api_ip: 11.0.0.2
+ingress_ip: 11.0.0.4
+baremetal_macs:
+- aa:bb:cc:dd:ab:01
+- aa:bb:cc:dd:ab:02
+- aa:bb:cc:dd:ab:03

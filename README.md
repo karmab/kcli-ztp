@@ -85,8 +85,8 @@ workers:
 
 You can have a look at:
 
-- [parameters.yml.sample](parameters.yml.sample) for a parameter file targetting baremetal nodes only
-- [parameters_virtual.yml.sample](parameters_virtual.yml.sample) for one combining virtual masters and physical workers.
+- [parameters.yml](samples/parameters.yml) for a parameter file targetting baremetal nodes only
+- [parameters_virtual.yml](samples/parameters_virtual.yml) for one combining virtual masters and physical workers.
 
 Call the resulting file `kcli_parameters.yml` to avoid having to specify it in the creation command.
 
