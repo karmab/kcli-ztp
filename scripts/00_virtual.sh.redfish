@@ -22,3 +22,5 @@ IP=$(ip -o addr show $PRIMARY_NIC | head -1 | awk '{print $4}' | cut -d "/" -f 1
 echo $IP | grep -q ':' && IP=[$IP]
 sed -i "s/DONTCHANGEME/$IP/" /root/install-config.yaml
 echo $api_vip api.$cluster.$domain >> /etc/hosts
+
+python3 /root/bin/picofish.py $PRIMARY_NIC

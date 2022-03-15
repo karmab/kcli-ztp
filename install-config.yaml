@@ -171,6 +171,8 @@ platform:
         disableCertificateVerification: True
         {% if 'redfish' in worker['redfish_address'] or 'idrac' in worker['redfish_address'] %}
         address: {{ worker['redfish_address'] }}
+        {% elif worker['model']|default(model) == 'picofish' %}
+        address: picofish-virtualmedia://{{ worker['redfish_address'] }}/redfish/v1/Systems/1
         {% elif worker['model']|default(model) in ['hpe', 'supermicro'] %}
         address: redfish-virtualmedia://{{ worker['redfish_address'] }}/redfish/v1/Systems/1
         {% else %}
