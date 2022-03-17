@@ -48,3 +48,5 @@ lab_extra_dns:
 - assisted-service-assisted-installer
 - assisted-image-service-open-cluster-management
 ztp_siteconfig: false
+notify: true
+nfs: true

@@ -51,3 +51,5 @@ lab_extra_dns:
 - assisted-image-service-open-cluster-management
 remote_net: lab-remote
 remote_cidr: 192.168.127.0/24
+notify: true
+nfs: true

@@ -31,3 +31,5 @@ baremetal_macs:
 - aa:aa:aa:aa:bb:03
 localhost_fix: true
 virtual_masters_static_network: true
+notify: true
+nfs: true

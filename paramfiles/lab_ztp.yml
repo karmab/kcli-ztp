@@ -47,3 +47,5 @@ ztp_spokes:
 #  masters_number: 3
 #  workers_number: 0
 #  virtual_nodes_number: 3
+notify: true
+nfs: true

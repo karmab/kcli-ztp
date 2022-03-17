@@ -28,3 +28,5 @@ baremetal_macs:
 - aa:aa:aa:aa:bb:01
 - aa:aa:aa:aa:bb:02
 - aa:aa:aa:aa:bb:03
+notify: true
+nfs: true
