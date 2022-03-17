@@ -92,3 +92,7 @@ virtual_workers_static_network: False
 static_baremetal_gateway:
 static_baremetal_dns:
 monitoring_retention:
+users_admin: admin
+users_adminpassword: admin
+users_dev: dev
+users_devpassword: dev
