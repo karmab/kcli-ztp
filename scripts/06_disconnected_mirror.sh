@@ -61,8 +61,8 @@ fi
 echo $REGISTRY_NAME:$REGISTRY_PORT/ocp4:$OCP_RELEASE > /root/version.txt
 
 if [ "$(grep pullSecret /root/install-config.yaml)" == "" ] ; then
-PULLSECRET=$(cat /root/openshift_pull.json | tr -d [:space:])
-echo -e "pullSecret: |\n  $PULLSECRET" >> /root/install-config.yaml
+DISCONNECTED_PULLSECRET=$(cat /root/disconnected_pull.json | tr -d [:space:])
+echo -e "pullSecret: |\n  $DISCONNECTED_PULLSECRET" >> /root/install-config.yaml
 fi
 
 cp /root/machineconfigs/99-operatorhub.yaml /root/manifests
