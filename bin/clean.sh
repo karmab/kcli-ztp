@@ -28,4 +28,4 @@ if [ "$POOLS" != "" ] ; then
   done
 fi
 
-ssh $HYPERVISOR "find /var/lib/libvirt/images/boot-* -type f -mtime +5 -exec virsh vol-delete {} \;"
+ssh $HYPERVISOR "find /var/lib/libvirt/images/boot-* -type f -mtime +5 -exec sh -c 'virsh vol-delete {} || rm {}' \;"
