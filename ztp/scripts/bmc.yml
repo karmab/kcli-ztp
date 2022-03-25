@@ -46,7 +46,7 @@ spec:
     disableCertificateVerification: True
     {% if 'redfish' in node['redfish_address'] or 'idrac' in node['redfish_address'] %}
     address: {{ node['redfish_address'] }}
-    {% elif node['model']|default(model) == 'hpe' %}
+    {% elif node['model']|default(model) in ['hp', 'hpe', 'supermicro'] %}
     address: redfish-virtualmedia://{{ node['redfish_address'] }}/redfish/v1/Systems/1
     {% else %}
     address: idrac-virtualmedia://{{ node['redfish_address'] }}/redfish/v1/Systems/System.Embedded.1
