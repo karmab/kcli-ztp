@@ -13,9 +13,7 @@ curl -Lk $RHCOS_ROOTFS > /var/www/html/rhcos-live-rootfs.x86_64.img
 {% if acm %}
 tasty install advanced-cluster-management --wait
 oc create -f /root/ztp/acm/cr.yml
-sleep 240
-oc patch hiveconfig hive --type merge -p '{"spec":{"targetNamespace":"hive","logLevel":"debug","featureGates":{"custom":{"enabled":["AlphaAgentInstallStrategy"]},"featureSet":"Custom"}}}'
-sleep 120
+until oc get crd/agentserviceconfigs.agent-install.openshift.io >/dev/null 2>&1 ; do sleep 1 ; done
 {% else %}
 oc create -f /root/ztp/acm/ai_install.yml
 {% endif %}
