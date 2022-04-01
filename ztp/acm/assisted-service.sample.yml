@@ -19,7 +19,7 @@ data:
   DISABLED_HOST_VALIDATIONS: belongs-to-majority-group,belongs-to-machine-cidr
 {% endif %}
 {% if disconnected %}
-  PUBLIC_CONTAINER_REGISTRIES: "quay.io,registry.svc.ci.openshift.org,registry.redhat.io"
+  PUBLIC_CONTAINER_REGISTRIES: "quay.io,registry.ci.openshift.org,registry.redhat.io"
 {% endif %}
 ---
 apiVersion: agent-install.openshift.io/v1beta1
