@@ -89,6 +89,9 @@ spec:
   {% for network in service_networks %}
       - {{ network }}
   {% endfor %}
+{% if (spoke_masters_number > 1 or spoke_workers_number > 0) and spoke_api_ip == None and spoke_ingress_ip == None %}
+    userManagedNetworking: True
+{% endif %}
     nodes:
 {% for node in nodes %}
 {% set protocol = 'ipv6' if ipv6 else 'ipv4' %}

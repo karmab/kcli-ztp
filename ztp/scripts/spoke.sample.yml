@@ -88,6 +88,9 @@ spec:
   {% for network in service_networks %}
     - {{ network }}
   {% endfor %}
+{% if (spoke_masters_number > 1 or spoke_workers_number > 0) and spoke_api_ip == None and spoke_ingress_ip == None %}
+    userManagedNetworking: True
+{% endif %}
   provisionRequirements:
     controlPlaneAgents: ${MASTERS_NUMBER}
     workerAgents: ${WORKERS_NUMBER}
