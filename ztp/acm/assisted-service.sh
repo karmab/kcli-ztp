@@ -13,6 +13,7 @@ curl -Lk $RHCOS_ROOTFS > /var/www/html/rhcos-live-rootfs.x86_64.img
 {% if acm %}
 tasty install advanced-cluster-management --wait
 oc create -f /root/ztp/acm/cr.yml
+sleep 300
 until oc get crd/agentserviceconfigs.agent-install.openshift.io >/dev/null 2>&1 ; do sleep 1 ; done
 {% else %}
 oc create -f /root/ztp/acm/ai_install.yml
