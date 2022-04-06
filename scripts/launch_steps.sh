@@ -84,4 +84,7 @@ echo -e "${blue}************ RUNNING ztp/scripts/spokes_deploy.sh ************${
 bash /root/ztp/scripts/spokes_deploy.sh
 {% endif %}
 {% endif %}
+{% if argocd %}
+bash /root/ztp/scripts/argocd.sh
+{% endif %}
 {% endif %}

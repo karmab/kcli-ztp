@@ -114,3 +114,6 @@ apps-{{ spoke_name }}:
    path: /root/openshift_pull_acm.json
 {% endif %}
  - ztp/acm
+{% if argocd %}
+ - ztp/argocd
+{% endif %}
