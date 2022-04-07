@@ -55,6 +55,12 @@
 {% set cluster_networks = [cluster_network_ipv4] %}
 {% set service_networks = service_network_ipv4 %}
 {% endif %}
+{% set libvirt_user =  'root' if config_user == 'apache' else config_user %}
+{% set libvirt_ip = config_host if config_host != '127.0.0.1' else baremetal_net|local_ip %}
+{% if ':' in libvirt_ip %}
+{% set libvirt_ip = '[' + libvirt_ip + ']' %}
+{% endif %}
+{% set libvirt_url = '[' + libvirt_ip + ']' %}
 apiVersion: v1
 {% if fips %}
 fips: True
@@ -114,7 +120,7 @@ platform:
 {% endif %}
 {% endif %}
     externalBridge: {{ baremetal_net }}
-    libvirtURI: qemu+ssh://{{ 'root' if config_user == 'apache' else config_user }}@{{ config_host if config_host != '127.0.0.1' else baremetal_net|local_ip(true) }}/system
+    libvirtURI: qemu+ssh://{{ libvirt_user }}@{{ libvirt_ip }}/system
 {% if provisioning_bootstrap_mac != None %}
     provisioningMACAddress: {{ provisioning_bootstrap_mac }}
 {% endif %}
