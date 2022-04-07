@@ -5,6 +5,12 @@ acm_downstream_latest: false
 acm_snapshot:
 acm_op_bundle:
 acm_pullsecret: openshift_pull_acm.json
+argocd: false
+argocd_resourcegenerator_image: quay.io/mavazque/ztp-site-generator:4.10-202204010
+argocd_repo_branch: main
+argocd_repo_url:
+argocd_clusters_app_path:
+argocd_policies_app_path:
 ztp_siteconfig: false
 ztp_virtual_nodes_number: 1
 ztp_virtual_nodes_numcpus: 8
