@@ -26,14 +26,16 @@ echo -e "${blue}************ RUNNING 05_cache.sh ************${clear}"
 {% endif %}
 
 {% if disconnected %}
+{% if disconnected_url == None %}
 echo -e "${blue}************ RUNNING 06_disconnected_{{ 'quay.sh' if disconnected_quay else 'registry.sh' }}.sh ************${clear}"
 /root/scripts/06_disconnected_{{ 'quay.sh' if disconnected_quay else 'registry.sh' }} || exit 1
+{% endif %}
 echo -e "${blue}************ RUNNING 06_disconnected_mirror.sh ************${clear}"
 /root/scripts/06_disconnected_mirror.sh || exit 1
 {% if disconnected_operators and not disconnected_operators_deploy_after_openshift %}
 echo -e "${blue}************ RUNNING 06_disconnected_olm.sh ************${clear}"
 /root/scripts/06_disconnected_olm.sh
-{% if disconnected_quay %}
+{% if disconnected_url == None and disconnected_quay %}
 rm -rf /root/manifests-redhat-operator-index-*
 /root/scripts/06_disconnected_olm.sh
 {% endif %}

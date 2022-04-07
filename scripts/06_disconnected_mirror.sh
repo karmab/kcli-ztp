@@ -6,8 +6,25 @@ PRIMARY_NIC=$(ls -1 /sys/class/net | grep 'eth\|en' | head -1)
 export PATH=/root/bin:$PATH
 export PULL_SECRET="/root/openshift_pull.json"
 export IP=$(ip -o addr show $PRIMARY_NIC | head -1 | awk '{print $4}' | cut -d'/' -f1)
+{% if disconnected_url != None %}
+{% set registry_port = disconnected_url.split(':')[-1] %}
+{% set registry_name = disconnected_url|replace(":" + registry_port, '') %}
+REGISTRY_NAME={{ registry_name }}
+REGISTRY_PORT={{ registry_port }}
+REGISTRY_USER={{ disconnected_user }}
+REGISTRY_PASSWORD={{ disconnected_password }}
+KEY=$(echo -n $REGISTRY_USER:$REGISTRY_PASSWORD | base64)
+echo "{\"auths\": {\"$REGISTRY_NAME:$REGISTRY_PORT\": {\"auth\": \"$KEY\", \"email\": \"jhendrix@karmalabs.com\"}}}" > /root/disconnected_pull.json
+mv /root/openshift_pull.json /root/openshift_pull.json.old
+jq ".auths += {\"$REGISTRY_NAME:$REGISTRY_PORT\": {\"auth\": \"$KEY\",\"email\": \"jhendrix@karmalabs.com\"}}" < /root/openshift_pull.json.old > $PULL_SECRET
+mkdir -p /opt/registry/certs
+openssl s_client -showcerts -connect $REGISTRY_NAME:$REGISTRY_PORT </dev/null 2>/dev/null|openssl x509 -outform PEM > /opt/registry/certs/domain.crt
+cp /opt/registry/certs/domain.crt /etc/pki/ca-trust/source/anchors
+update-ca-trust extract
+{% else %}
 REGISTRY_NAME=$(echo $IP | sed 's/\./-/g' | sed 's/:/-/g').sslip.io
 REGISTRY_PORT={{ 8443 if disconnected_quay else 5000 }}
+{% endif %}
 
 {% if version == 'ci' %}
 export OPENSHIFT_RELEASE_IMAGE={{ openshift_image }}

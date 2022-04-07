@@ -52,6 +52,20 @@ grep -q registry.ci.openshift.org {{ pullsecret }} || { echo Missing token for r
 {% endif %}
 {% endif %}
 
+# DISCONNECTED_URL CHECK
+
+{% if disconnected and disconnected_url != None %}
+{% if disconnected_url.split(':')|length != 2 %}
+echo disconnected_url needs to be fqdn:port && exit 1
+{% endif %}
+{% set registry_port = disconnected_url.split(':')[-1] %}
+{% set registry_name = disconnected_url|replace(":" + registry_port, '') %}
+{% set registry_name_split = registry_name.split('.') %}
+{% if registry_name_split|length == 4 and registry_name_split[0]|int != 0 and registry_name_split[1]|int != 0 and registry_name_split[2]|int != 0 and registry_name_split[3]|int != 0%}
+echo disconnected_url cant use an ip. Considering using sslip.io && exit 1
+{% endif %}
+{% endif %}
+
 # QUAY CHECK
 
 {% if disconnected_quay %}
