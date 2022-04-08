@@ -34,6 +34,8 @@ baremetal_macs:
 ztp_spoke_wait: true
 disconnected_operators:
 - advanced-cluster-management
+disconnected_certified_operators:
+- srio-fec
 ztp_spokes:
 - name: mgmt-spoke1
   masters_number: 1

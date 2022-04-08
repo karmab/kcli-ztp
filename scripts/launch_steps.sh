@@ -86,7 +86,7 @@ echo -e "${blue}************ RUNNING ztp/scripts/spokes_deploy.sh ************${
 bash /root/ztp/scripts/spokes_deploy.sh
 {% endif %}
 {% endif %}
-{% if argocd %}
+{% if argocd is defined and argocd %}
 bash /root/ztp/scripts/argocd.sh
 {% endif %}
 {% endif %}
