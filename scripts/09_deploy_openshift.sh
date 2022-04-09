@@ -19,6 +19,7 @@ cp /root/machineconfigs/99-localhost-fix*.yaml /root/manifests
 {% if monitoring_retention != None %}
 cp /root/machineconfigs/99-monitoring.yaml /root/manifests
 {% endif %}
+find manifests -type f -empty -print -delete
 cp manifests/*y*ml >/dev/null 2>&1 ocp/openshift || true
 TOTAL_WORKERS=$(grep 'role: worker' /root/install-config.yaml | wc -l) || true
 # [ "$TOTAL_WORKERS" -gt "0" ] || cp files/99-openshift-ingress-controller-master.yaml ocp/openshift
