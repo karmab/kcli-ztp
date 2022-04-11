@@ -36,9 +36,7 @@ ztp_spokes:
   virtual_nodes_number: 1
   masters_number: 1
   workers_number: 0
-vmrules:
- - lab-installer:
-     disks: [200]
+installer_disk_size: 200
 acm_downstream: true
 acm_downstream_latest: true
 acm_op_bundle: v2.3.3-25

@@ -26,15 +26,13 @@ baremetal_macs:
 - aa:aa:aa:aa:bb:01
 - aa:aa:aa:aa:bb:02
 - aa:aa:aa:aa:bb:03
-vmrules:
- - lab-installer:
-     disks: [200]
 acm_pull_secret: /root/openshift_pull_acm.json
 lab_extra_dns:
 - assisted-service-open-cluster-management
 - assisted-service-assisted-installer
 - assisted-image-service-open-cluster-management
-
+disk_size: 60
+installer_disk_size: 200
 ztp_spokes:
 - name: mgmt-spoke1
   masters_number: 1

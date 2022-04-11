@@ -37,9 +37,7 @@ ztp_spokes:
   masters_number: 3
   workers_number: 0
   virtual_nodes_number: 5
-vmrules:
- - lab-installer:
-     disks: [80]
+installer_disk_size: 80
  - lab-ztp-node-4:
      nets:
      - name: lab-remote
