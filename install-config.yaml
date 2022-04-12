@@ -60,7 +60,7 @@
 {% if ':' in libvirt_ip %}
 {% set libvirt_ip = '[' + libvirt_ip + ']' %}
 {% endif %}
-{% set libvirt_url = '[' + libvirt_ip + ']' %}
+{% set libvirt_url = 'qemu+ssh://' + libvirt_user + '@' + libvirt_ip + '/system' %}
 apiVersion: v1
 {% if fips %}
 fips: True
@@ -120,7 +120,7 @@ platform:
 {% endif %}
 {% endif %}
     externalBridge: {{ baremetal_net }}
-    libvirtURI: qemu+ssh://{{ libvirt_user }}@{{ libvirt_ip }}/system
+    libvirtURI: {{ libvirt_url }}
 {% if provisioning_bootstrap_mac != None %}
     provisioningMACAddress: {{ provisioning_bootstrap_mac }}
 {% endif %}
