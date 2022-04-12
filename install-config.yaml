@@ -160,6 +160,15 @@ platform:
       {% if 'disk' in master %}
       rootDeviceHints:
         deviceName: "/dev/{{ master['disk'] | basename }}"
+      {% elif 'hctl' in master %}
+      rootDeviceHints:
+        hctl: "{{ master['hctl'] }}"
+      {% elif 'serial' in master %}
+      rootDeviceHints:
+        serialNumber: "{{ master['serial'] }}"
+      {% elif 'wwn' in master %}
+      rootDeviceHints:
+        wwn: "{{ master['wwn'] }}"
       {% endif %}
       {% if 'ip' in master %}
       networkConfig: |
@@ -201,6 +210,15 @@ platform:
       {% if 'disk' in worker %}
       rootDeviceHints:
         deviceName: "/dev/{{ worker['disk'] | basename }}"
+      {% elif 'hctl' in worker %}
+      rootDeviceHints:
+        hctl: "{{ worker['hctl'] }}"
+      {% elif 'serial' in worker %}
+      rootDeviceHints:
+        serialNumber: "{{ worker['serial'] }}"
+      {% elif 'wwn' in worker %}
+      rootDeviceHints:
+        wwn: "{{ worker['wwn'] }}"
       {% endif %}
       {% if 'ip' in worker %}
       networkConfig: |
