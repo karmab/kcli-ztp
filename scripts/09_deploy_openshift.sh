@@ -38,6 +38,7 @@ for node in $(oc get nodes --selector='node-role.kubernetes.io/master' -o name) 
   oc label $node node-role.kubernetes.io/virtual=""
 done
 {% endif %}
+CURRENT_WORKERS=$(oc get nodes --selector='node-role.kubernetes.io/worker' -o name | wc -l)
 if [ "$TOTAL_WORKERS" -gt "0" ] ; then
  until [ "$CURRENT_WORKERS" == "$TOTAL_WORKERS" ] ; do
   CURRENT_WORKERS=$(oc get nodes --selector='node-role.kubernetes.io/worker' -o name | wc -l)
