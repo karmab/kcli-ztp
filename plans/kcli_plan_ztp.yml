@@ -116,4 +116,5 @@ apps-{{ spoke_name }}:
  - ztp/acm
 {% if argocd %}
  - ztp/argocd
+ - ztp/scripts/argocd.sh
 {% endif %}
