@@ -20,10 +20,11 @@ bash /root/scripts/03_provisioning_network.sh
 echo -e "${blue}************ RUNNING 04_get_clients.sh ************${clear}"
 /root/scripts/04_get_clients.sh || exit 1
 
-{% if cache %}
+MINOR=$(/root/bin/openshift-baremetal-install version | head -1 | cut -d' ' -f2 | cut -d. -f2)
+if [ "$MINOR" -lt "10" ] ; then
 echo -e "${blue}************ RUNNING 05_cache.sh ************${clear}"
 /root/scripts/05_cache.sh
-{% endif %}
+fi
 
 {% if disconnected %}
 {% if disconnected_url == None %}

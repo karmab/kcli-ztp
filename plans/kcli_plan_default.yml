@@ -1,7 +1,7 @@
 info: |
     This deploys a vm where:
     - openshift-baremetal-install is downloaded or compiled)
-    - caches the rhcos images
+    - caches the rhcos images up until ocp 4.9
     - stop the nodes to deploy through ipmi
     - launch the install against a set of baremetal nodes (and optionally virtual masters)
     It can be used with a centos8stream or rhel8 vm (in which case you will need to set your rhn credentials in your kcli config)
@@ -61,7 +61,6 @@ baremetal_ips: []
 pullsecret: openshift_pull.json
 notifyscript: scripts/notify.sh
 virtual_protocol: ipmi
-cache: true
 notify: false
 launch_steps: true
 deploy_openshift: true

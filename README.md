@@ -166,7 +166,6 @@ The following parameters are available when deploying the default plan
 |bmc_password                                 |calvin                                    |
 |bmc_user                                     |root                                      |
 |build                                        |False                                     |
-|cache                                        |True                                      |
 |cas                                          |[]                                        |
 |deploy_openshift                             |True                                      |
 |disconnected                                 |False                                     |
