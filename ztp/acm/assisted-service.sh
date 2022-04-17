@@ -5,6 +5,8 @@ echo "************ RUNNING acm_downstream.sh ************"
 bash /root/ztp/acm/downstream.sh
 {% endif %}
 
+dnf -y install httpd
+systemctl enable --now httpd
 RHCOS_ISO=$(/root/bin/openshift-baremetal-install coreos print-stream-json | jq -r '.["architectures"]["x86_64"]["artifacts"]["metal"]["formats"]["iso"]["disk"]["location"]')
 RHCOS_ROOTFS=$(/root/bin/openshift-baremetal-install coreos print-stream-json | jq -r '.["architectures"]["x86_64"]["artifacts"]["metal"]["formats"]["pxe"]["rootfs"]["location"]')
 curl -Lk $RHCOS_ISO > /var/www/html/rhcos-live.x86_64.iso
