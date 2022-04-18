@@ -67,7 +67,7 @@ deploy_openshift: true
 lab: false
 disconnected: false
 disconnected_quay: false
-registry_image: quay.io/karmab/registry:2
+registry_image: quay.io/karmab/registry:amd64
 disconnected_user: dummy
 disconnected_password: dummy
 disconnected_url:

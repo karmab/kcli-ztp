@@ -5,6 +5,8 @@ echo "************ RUNNING acm_downstream.sh ************"
 bash /root/ztp/acm/downstream.sh
 {% endif %}
 
+oc patch provisioning provisioning-configuration --type merge -p '{"spec":{"watchAllNamespaces": true}}'
+
 dnf -y install httpd
 systemctl enable --now httpd
 RHCOS_ISO=$(/root/bin/openshift-baremetal-install coreos print-stream-json | jq -r '.["architectures"]["x86_64"]["artifacts"]["metal"]["formats"]["iso"]["disk"]["location"]')
