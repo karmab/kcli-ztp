@@ -36,7 +36,6 @@
    dns: {{ static_baremetal_dns or static_baremetal_gateway or baremetal_cidr|network_ip(1 if lab else -2) }}
 {% endif %}
    ipv6: {{ true if baremetal_cidr != None and ':' in baremetal_cidr else false }}
-   ipv6_stateless: {{ installer_ipv6_stateless }}
 {% if provisioning_enable %}
  - name: {{ provisioning_net }}
    noconf: yes
