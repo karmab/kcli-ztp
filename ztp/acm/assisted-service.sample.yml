@@ -44,7 +44,7 @@ spec:
         storage: 40Gi
 {% if disconnected %}
   mirrorRegistryRef:
-    name: "lab-index-mirror"
+    name: "custom-registries"
 {% endif %}
   osImages:
     - openshiftVersion: "${MINOR}"
@@ -77,7 +77,7 @@ stringData:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: lab-index-mirror
+  name: custom-registries
   namespace: open-cluster-management
   labels:
     app: assisted-service
