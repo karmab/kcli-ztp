@@ -83,3 +83,7 @@ echo -e "pullSecret: |\n  $DISCONNECTED_PULLSECRET" >> /root/install-config.yaml
 fi
 
 cp /root/machineconfigs/99-operatorhub.yaml /root/manifests
+
+{% for image in disconnected_extra_images %}
+/root/bin/sync_image.sh {{ image }}
+{% endfor %}
