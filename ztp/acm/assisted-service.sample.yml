@@ -18,9 +18,6 @@ data:
 {% if ztp_disable_validations %}
   DISABLED_HOST_VALIDATIONS: belongs-to-majority-group,belongs-to-machine-cidr
 {% endif %}
-{% if disconnected %}
-  PUBLIC_CONTAINER_REGISTRIES: "quay.io,registry.ci.openshift.org,registry.redhat.io"
-{% endif %}
 ---
 apiVersion: agent-install.openshift.io/v1beta1
 kind: AgentServiceConfig
