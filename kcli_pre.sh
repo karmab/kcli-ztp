@@ -4,6 +4,8 @@
 {% if baremetal_cidr == None %}
 echo baremetal_cidr not set. No network, no party!
 exit 1
+{% else %}
+{% set baremetal_prefix = baremetal_cidr.split('/')[1] %}
 {% endif %}
 
 {% if api_ip == None %}
@@ -15,6 +17,19 @@ exit 1
 {% elif  api_ip == ingress_ip %}
 echo api_ip and ingress_ip cant be set to the same value
 exit 1
+{% else %}
+if [ ! -d /Users ] && [ -n "$(which ipcalc)" ] ; then
+  api_cidr=$(ipcalc {{ api_ip }}/{{ baremetal_prefix }} | grep ^Network: | sed 's/Network://' | xargs)
+  if [ "$api_cidr" != "{{ baremetal_cidr }}" ] ; then
+   echo {{ api_ip }} doesnt belong to to {{ baremetal_cidr }}
+   exit 1
+  fi
+  ingress_cidr=$(ipcalc {{ ingress_ip }}/{{ baremetal_prefix }} | grep ^Network: | sed 's/Network://' | xargs)
+  if [ "$ingress_cidr" != "{{ baremetal_cidr }}" ] ; then
+    echo {{ ingress_ip }} doesnt belong to to {{ baremetal_cidr }}
+    exit 1
+  fi
+fi
 {% endif %}
 
 {% if dualstack %}
