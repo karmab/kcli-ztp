@@ -54,6 +54,7 @@ export COMM_OP_INDEX="registry.redhat.io/redhat/community-operator-index:v${OCP_
 export MARKETPLACE_OP_INDEX="registry.redhat.io/redhat-marketplace-index:v${OCP_RELEASE}"
 
 if [ ! -z $RH_OP_PACKAGES ] ; then
+ rm -rf manifests-redhat-operator-index-* || true
  export RH_INDEX_TAG=olm-index/redhat-operator-index:v$OCP_RELEASE
  time opm index prune --from-index $RH_OP_INDEX --packages $RH_OP_PACKAGES --tag $LOCAL_REGISTRY/$RH_INDEX_TAG
  podman push $LOCAL_REGISTRY/$RH_INDEX_TAG --authfile $OCP_PULLSECRET_AUTHFILE
@@ -63,6 +64,7 @@ if [ ! -z $RH_OP_PACKAGES ] ; then
 fi
 
 if [ ! -z $CERT_OP_PACKAGES ] ; then
+ rm -rf manifests-certified-operator-index-* || true
  export CERT_INDEX_TAG=olm-index/certified-operator-index:v$OCP_RELEASE
  time opm index prune --from-index $CERT_OP_INDEX --packages $CERT_OP_PACKAGES --tag $LOCAL_REGISTRY/$CERT_INDEX_TAG
  podman push $LOCAL_REGISTRY/$CERT_INDEX_TAG --authfile $OCP_PULLSECRET_AUTHFILE
@@ -72,6 +74,7 @@ if [ ! -z $CERT_OP_PACKAGES ] ; then
 fi
 
 if [ ! -z $COMM_OP_PACKAGES ] ; then
+ rm -rf manifests-community-operator-index-* || true
  export COMM_INDEX_TAG=olm-index/community-operator-index:v$OCP_RELEASE
  time opm index prune --from-index $COMM_OP_INDEX --packages $COMM_OP_PACKAGES --tag $LOCAL_REGISTRY/$COMM_INDEX_TAG
  podman push $LOCAL_REGISTRY/$COMM_INDEX_TAG --authfile $OCP_PULLSECRET_AUTHFILE
@@ -81,6 +84,7 @@ if [ ! -z $COMM_OP_PACKAGES ] ; then
 fi
 
 if [ ! -z $MARKETPLACE_OP_PACKAGES ] ; then
+ rm -rf manifests-redhat-marketplace-operator-index-* || true
  export MARKETPLACE_INDEX_TAG=olm-index/redhat-marketplace-operator-index:v$OCP_RELEASE
  time opm index prune --from-index $MARKETPLACE_OP_INDEX --packages $MARKETPLACE_OP_PACKAGES --tag $LOCAL_REGISTRY/$MARKETPLACE_INDEX_TAG
  podman push $LOCAL_REGISTRY/$MARKETPLACE_INDEX_TAG --authfile $OCP_PULLSECRET_AUTHFILE
