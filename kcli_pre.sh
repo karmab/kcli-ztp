@@ -6,6 +6,17 @@ echo baremetal_cidr not set. No network, no party!
 exit 1
 {% endif %}
 
+{% if api_ip == None %}
+echo api_ip not set. No network, no party!
+exit 1
+{% elif ingress_ip == None %}
+echo ingress_ip not set. No network, no party!
+exit 1
+{% elif  api_ip == ingress_ip %}
+echo api_ip and ingress_ip cant be set to the same value
+exit 1
+{% endif %}
+
 {% if dualstack %}
 {% if ':' in baremetal_cidr %}
 echo baremetal_cidr needs to be ipv4 for dual stack
