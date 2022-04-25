@@ -21,7 +21,11 @@ cp /root/machineconfigs/99-monitoring.yaml /root/manifests
 {% endif %}
 find manifests -type f -empty -print -delete
 cp manifests/*y*ml >/dev/null 2>&1 ocp/openshift || true
+{% if validate_number_of_workers %}
+TOTAL_WORKERS={{ validate_number_of_workers }}
+{% else %}
 TOTAL_WORKERS=$(grep 'role: worker' /root/install-config.yaml | wc -l) || true
+{% endif %}
 # [ "$TOTAL_WORKERS" -gt "0" ] || cp files/99-openshift-ingress-controller-master.yaml ocp/openshift
 echo {{ api_ip }} api.{{ cluster }}.{{ domain }} >> /etc/hosts
 {% if baremetal_bootstrap_ip != None %}
