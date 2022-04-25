@@ -38,11 +38,18 @@ for node in $(oc get nodes --selector='node-role.kubernetes.io/master' -o name) 
   oc label $node node-role.kubernetes.io/virtual=""
 done
 {% endif %}
-CURRENT_WORKERS=$(oc get nodes --selector='node-role.kubernetes.io/worker' -o name | wc -l)
 if [ "$TOTAL_WORKERS" -gt "0" ] ; then
+CURRENT_WORKERS=$(oc get nodes --selector='node-role.kubernetes.io/worker' -o name | wc -l)
+{% if wait_for_workers %}
  until [ "$CURRENT_WORKERS" == "$TOTAL_WORKERS" ] ; do
   CURRENT_WORKERS=$(oc get nodes --selector='node-role.kubernetes.io/worker' -o name | wc -l)
   logger "Waiting for all workers to show up..."
   sleep 5
-done
+ done
+{% else %}
+ if [ "$CURRENT_WORKERS" != "$TOTAL_WORKERS" ] ; then
+  logger "Beware, Current workers number $CURRENT_WORKERS doesnt match expected worker number $TOTAL_WORKERS"
+  sleep 5
+ fi
+{% endif %}
 fi
