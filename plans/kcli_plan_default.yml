@@ -100,4 +100,5 @@ users_admin: admin
 users_adminpassword: admin
 users_dev: dev
 users_devpassword: dev
-wait_for_workers: false
+wait_for_workers: true
+wait_for_workers_number: 

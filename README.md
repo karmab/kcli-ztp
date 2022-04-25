@@ -113,7 +113,7 @@ Note that you can use the baseplan `kcli_plan_infra.yml` to deploy the infrastru
 |Parameter                           |Default Value |
 |------------------------------------|--------------|
 |api_ip                              |None          |
-|baremetal\_bootstrap\_mac             |None          |
+|baremetal\_bootstrap\_mac           |None          |
 |baremetal_cidr                      |None          |
 |baremetal_ips                       |[]            |
 |baremetal_macs                      |[]            |
@@ -134,7 +134,7 @@ Note that you can use the baseplan `kcli_plan_infra.yml` to deploy the infrastru
 |no_proxy                            |None          |
 |numcpus                             |16            |
 |pool                                |default       |
-|provisioning\_bootstrap\_mac          |None          |
+|provisioning\_bootstrap\_mac        |None          |
 |provisioning_cidr                   |172.22.0.0/24 |
 |provisioning_enable                 |True          |
 |provisioning_interface              |eno1          |
@@ -143,19 +143,21 @@ Note that you can use the baseplan `kcli_plan_infra.yml` to deploy the infrastru
 |uefi_legacy                         |False         |
 |virtual_masters                     |True          |
 |virtual\_masters\_baremetal\_mac\_prefix|aa:aa:aa:cc:cc|
-|virtual\_masters\_mac\_prefix          |aa:aa:aa:aa:aa|
-|virtual\_masters\_memory              |32768         |
-|virtual\_masters\_number              |3             |
-|virtual\_masters\_numcpus             |8             |
+|virtual\_masters\_mac\_prefix       |aa:aa:aa:aa:aa|
+|virtual\_masters\_memory            |32768         |
+|virtual\_masters\_number            |3             |
+|virtual\_masters\_numcpus           |8             |
 |virtual_protocol                    |ipmi          |
 |virtual_workers                     |False         |
 |virtual\_workers\_baremetal\_mac\_prefix|aa:aa:aa:dd:dd|
-|virtual\_workers\_deploy              |True          |
-|virtual\_workers\_mac_prefix          |aa:aa:aa:bb:bb|
-|virtual\_workers\_memory              |16384         |
-|virtual\_workers\_number              |1             |
-|virtual\_workers\_numcpus             |8             |
+|virtual\_workers\_deploy            |True          |
+|virtual\_workers\_mac_prefix        |aa:aa:aa:bb:bb|
+|virtual\_workers\_memory            |16384         |
+|virtual\_workers\_number            |1             |
+|virtual\_workers\_numcpus           |8             |
 |workers                             |[]            |
+|wait_for_workers                    |True          |
+|wait_for_workers_number             |True          |
 
 ### additional parameters
 
