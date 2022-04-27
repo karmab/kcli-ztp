@@ -171,7 +171,7 @@ platform:
         wwn: "{{ master['wwn'] }}"
       {% endif %}
       {% if 'ip' in master %}
-      networkConfig: |
+      networkConfig:
         {{ static_network.config(master['ip'], baremetal_prefix, master['gateway']|default(baremetal_gateway), master['dns']|default(baremetal_dns), cluster, domain, master['nic']|default(nic)) }}
       {% elif 'network_config' in master %}
       networkConfig: {{ master['network_config']|replace('\n', '\n        ') }}
@@ -221,7 +221,7 @@ platform:
         wwn: "{{ worker['wwn'] }}"
       {% endif %}
       {% if 'ip' in worker %}
-      networkConfig: |
+      networkConfig:
         {{ static_network.config(worker['ip'], baremetal_prefix, worker['gateway']|default(baremetal_gateway), worker['dns']|default(baremetal_dns), cluster, domain, worker['nic']|default(nic)) }}
       {% elif 'network_config' in worker %}
       networkConfig: {{ worker['network_config']|replace('\n', '\n        ') }}
