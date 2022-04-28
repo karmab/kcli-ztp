@@ -21,7 +21,7 @@ cp /root/machineconfigs/99-monitoring.yaml /root/manifests
 {% endif %}
 find manifests -type f -empty -print -delete
 cp manifests/*y*ml >/dev/null 2>&1 ocp/openshift || true
-echo {{ api_ip }} api.{{ cluster }}.{{ domain }} >> /etc/hosts
+grep -q "{{ api_ip }} api.{{ cluster }}.{{ domain }}" /etc/hosts || echo {{ api_ip }} api.{{ cluster }}.{{ domain }} >> /etc/hosts
 {% if baremetal_bootstrap_ip != None %}
 openshift-baremetal-install --dir ocp --log-level debug create ignition-configs
 NIC=ens3
