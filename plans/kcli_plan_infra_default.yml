@@ -14,7 +14,6 @@ workers: []
 memory: 32768
 disk_size: 30
 extra_disks: []
-uefi_legacy: false
 provisioning_enable: true
 baremetal_bootstrap_mac:
 provisioning_bootstrap_mac:

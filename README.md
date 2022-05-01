@@ -140,7 +140,6 @@ Note that you can use the baseplan `kcli_plan_infra.yml` to deploy the infrastru
 |provisioning_interface              |eno1          |
 |provisioning_macs                   |[]            |
 |provisioning_net                    |provisioning  |
-|uefi_legacy                         |False         |
 |virtual_masters                     |True          |
 |virtual\_masters\_baremetal\_mac\_prefix|aa:aa:aa:cc:cc|
 |virtual\_masters\_mac\_prefix       |aa:aa:aa:aa:aa|

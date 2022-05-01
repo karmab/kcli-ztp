@@ -48,8 +48,7 @@ apps:
  numcpus: {{ virtual_masters_numcpus }}
  cloudinit: false
  start: false
- uefi: {{ 'true' if virtual_protocol == 'redfish' or not provisioning_enable else 'false' }}
- uefi_legacy: {{ uefi_legacy }}
+ uefi_legacy: {{ 'true' if virtual_protocol == 'redfish' or not provisioning_enable else 'false' }}
  memory: {{ virtual_masters_memory }}
  nets:
 {% if provisioning_enable %}
@@ -77,8 +76,7 @@ apps:
  numcpus: {{ virtual_workers_numcpus }}
  start: false
  cloudinit: false
- uefi: {{ 'true' if virtual_protocol == 'redfish' or not provisioning_enable else 'false' }}
- uefi_legacy: {{ uefi_legacy }}
+ uefi_legacy: {{ 'true' if virtual_protocol == 'redfish' or not provisioning_enable else 'false' }}
  memory: {{ virtual_workers_memory }}
  nets:
 {% if provisioning_enable %}
