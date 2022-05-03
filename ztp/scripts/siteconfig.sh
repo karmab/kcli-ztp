@@ -8,7 +8,7 @@ envsubst < /root/ztp/scripts/siteconfig.sample.yml >> /root/siteconfig.yml
 
 bash /root/ztp/scripts/bmc_siteconfig.sh
 
-podman pull quay.io/redhat_emp1/ztp-site-generator:latest
+podman pull quay.io/openshift-kni/ztp-site-generator:latest
 podman create -ti --name ztp-site-gen ztp-site-generator:latest bash
 podman cp ztp-site-gen:/home/ztp /root/out
 podman run --security-opt label=disable -v /root:/workdir quay.io/karmab/siteconfig-generator -manifestPath /workdir/out/extra-manifest /workdir/siteconfig.yml >> /root/spokes.yml
