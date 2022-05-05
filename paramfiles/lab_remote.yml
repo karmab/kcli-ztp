@@ -1,0 +1,47 @@
+lab: true
+provisioning_enable: false
+pool: default
+disconnected: false
+virtual_masters: true
+virtual_workers: true
+virtual_workers_number: 3
+virtual_workers_deploy: true
+launch_steps: true
+deploy_openshift: true
+version: stable
+tag: "4.10"
+cluster: lab
+domain: karmalabs.com 
+baremetal_cidr: 192.168.129.0/24
+baremetal_net: lab-baremetal
+virtual_masters_memory: 16384
+virtual_masters_numcpus: 8
+api_ip: 192.168.129.253
+ingress_ip: 192.168.129.252
+baremetal_ips:
+- 192.168.129.20
+- 192.168.129.21
+- 192.168.129.22
+- 192.168.129.23
+- 192.168.129.24
+- 192.168.129.25
+baremetal_macs:
+- aa:aa:aa:aa:bb:01
+- aa:aa:aa:aa:bb:02
+- aa:aa:aa:aa:bb:03
+- aa:aa:aa:aa:bb:04
+- aa:aa:aa:aa:bb:05
+- aa:aa:aa:aa:bb:06
+disk_size: 60
+installer_disk_size: 200
+notify: true
+nfs: true
+vmrules:
+- lab-worker-2:
+   nets:
+   - name: lab-remote
+     mac: aa:aa:aa:aa:bb:06
+     ip: 192.168.127.20
+     reserveip: true
+remote_net: lab-remote
+remote_cidr: 192.168.127.0/24

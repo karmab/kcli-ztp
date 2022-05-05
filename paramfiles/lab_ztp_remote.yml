@@ -38,10 +38,11 @@ ztp_spokes:
   workers_number: 0
   virtual_nodes_number: 5
 installer_disk_size: 80
- - lab-ztp-node-4:
-     nets:
-     - name: lab-remote
-       mac: aa:aa:aa:cc:cc:05
+vmrules:
+- lab-ztp-node-4:
+   nets:
+   - name: lab-remote
+     mac: aa:aa:aa:cc:cc:05
 acm_pull_secret: /root/openshift_pull_acm.json
 lab_extra_dns:
 - assisted-service-open-cluster-management
