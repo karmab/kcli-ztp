@@ -48,17 +48,17 @@ CURRENT_WORKERS=$(oc get nodes --selector='node-role.kubernetes.io/worker' -o na
  WAIT_TIMEOUT={{ wait_for_workers_timeout }}
  until [ "$CURRENT_WORKERS" == "$TOTAL_WORKERS" ] ; do
   if [ "$TIMEOUT" -gt "$WAIT_TIMEOUT" ] ; then
-    logger "Timeout waiting for Current workers number $CURRENT_WORKERS to match expected worker number $TOTAL_WORKERS"
+    echo "Timeout waiting for Current workers number $CURRENT_WORKERS to match expected worker number $TOTAL_WORKERS"
     break
   fi
   CURRENT_WORKERS=$(oc get nodes --selector='node-role.kubernetes.io/worker' -o name | wc -l)
-  logger "Waiting for all workers to show up..."
+  echo "Waiting for all workers to show up..."
   sleep 5
   TIMEOUT=$(($TIMEOUT + 5))
  done
 {% else %}
  if [ "$CURRENT_WORKERS" != "$TOTAL_WORKERS" ] ; then
-  logger "Beware, Current workers number $CURRENT_WORKERS doesnt match expected worker number $TOTAL_WORKERS"
+  echo "Beware, Current workers number $CURRENT_WORKERS doesnt match expected worker number $TOTAL_WORKERS"
   sleep 5
  fi
 {% endif %}
