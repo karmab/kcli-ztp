@@ -40,7 +40,7 @@ image_url:
 numcpus: 16   
 rhnregister: true
 rhnwait: 30
-provisioning_enable: true
+provisioning_enable: false
 baremetal_noprovisioning_ip:
 baremetal_noprovisioning_bootstrap_ip:
 baremetal_bootstrap_mac:
