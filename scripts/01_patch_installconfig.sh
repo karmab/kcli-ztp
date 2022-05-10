@@ -8,7 +8,9 @@ echo -e "Host=*\nStrictHostKeyChecking=no\n" > ~/.ssh/config
 PULLSECRET=$(cat /root/openshift_pull.json | tr -d [:space:])
 echo -e "pullSecret: |\n  $PULLSECRET" >> /root/install-config.yaml
 {% endif %}
-echo "sshKey: |" >> /root/install-config.yaml
-cat /root/.ssh/authorized_keys | uniq -u | while read SSHKEY ; do
-  echo "  $SSHKEY" >> /root/install-config.yaml
-done
+#echo "sshKey: |" >> /root/install-config.yaml
+#cat /root/.ssh/authorized_keys | uniq -u | while read SSHKEY ; do
+#  echo "  $SSHKEY" >> /root/install-config.yaml
+#done
+SSHKEY=$(cat /root/.ssh/id_rsa.pub)
+echo -e "sshKey: |\n  $SSHKEY" >> /root/install-config.yaml
