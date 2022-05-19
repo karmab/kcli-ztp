@@ -8,7 +8,7 @@ source /etc/profile.d/proxy.sh
 
 {% if virtual_masters or virtual_workers %}
 echo -e "${blue}************ RUNNING 00_virtual.sh ************${clear}"
-bash /root/scripts/00_virtual.sh
+bash /root/scripts/00_virtual.sh || exit 1
 {% endif %}
 
 echo -e "${blue}************ RUNNING 01_patch_installconfig.sh ************${clear}"
