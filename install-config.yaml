@@ -206,7 +206,7 @@ platform:
 {% else %}
       bootMACAddress: {{ virtual_workers_bootmac_prefix + ":" + "%02.d" | format(num|int + 1)| string }}
 {% endif %}
-      hardwareProfile: unknown
+      hardwareProfile: {{ worker['profile']|default('unknown') }}
       {% if 'disk' in worker %}
       rootDeviceHints:
         deviceName: "/dev/{{ worker['disk'] | basename }}"
