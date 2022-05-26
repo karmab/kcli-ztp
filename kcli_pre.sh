@@ -134,3 +134,19 @@ echo argocd_clusters_app_path needs to be set for argocd && exit 1
 echo argocd_policies_app_path needs to be set for argocd && exit 1
 {% endif %}
 {% endif %}
+
+## Cleaning
+CLUSTER={{ cluster }}
+POOL={{ pool }}
+POOLPATH=$(kcli list pool | grep $POOL | cut -d"|" -f 3 | xargs)
+export LC_ALL="en_US.UTF-8"
+export LIBVIRT_DEFAULT_URI=$(kcli info host | grep Connection | sed 's/Connection: //')
+find $POOLPATH/boot-* -type f -mtime +2 -exec sh -c 'virsh vol-delete {} || rm {}' \;
+VMS=$(kcli list vm | grep $CLUSTER | cut -d"|" -f 2 | xargs)
+[ -z "$VMS" ] || kcli delete vm --yes $VMS
+POOLS=$(kcli list pool --short | grep $CLUSTER | cut -d"|" -f2 | xargs)
+if [ ! -z "$POOLS" ] ; then
+  for POOL in $POOLS ; do
+    kcli delete pool --yes $POOL
+  done
+fi
