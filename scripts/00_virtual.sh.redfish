@@ -12,7 +12,7 @@ dnf -y install pkgconf-pkg-config libvirt-devel gcc python3-libvirt python3 git 
 pip3 install sushy-tools
 systemctl enable --now sushy
 sleep 20
-ssh-keyscan -H {{ config_host if config_host != '127.0.0.1' else baremetal_net|local_ip }} >> /root/.ssh/known_hosts
+ssh-keyscan -H {{ config_host if config_host not in ['127.0.0.1', 'localhost'] else baremetal_net|local_ip }} >> /root/.ssh/known_hosts
 echo -e "Host=*\nStrictHostKeyChecking=no\n" > /root/.ssh/config
 python3 /root/bin/sushy.py $PRIMARY_NIC
 api_vip=$(grep apiVIP /root/install-config.yaml | sed s/apiVIP:// | xargs)

@@ -2,7 +2,7 @@ BAREMETAL_IP=$(ip -o addr show eth0 | head -1 | awk '{print $4}' | cut -d'/' -f1
 echo $BAREMETAL_IP | grep -q ':' && BAREMETAL_IP=[$BAREMETAL_IP]
 oc patch provisioning provisioning-configuration --type merge -p '{"spec":{"watchAllNamespaces": true}}'
 sed -i "s@IP@$BAREMETAL_IP@" /root/spokes.yml
-export LIBVIRT_DEFAULT_URI=qemu+ssh://{{ 'root' if config_user == 'apache' else config_user }}@{{ config_host if config_host != '127.0.0.1' else baremetal_net|local_ip(true) }}/system
+export LIBVIRT_DEFAULT_URI=qemu+ssh://{{ 'root' if config_user == 'apache' else config_user }}@{{ config_host if config_host not in ['127.0.0.1', 'localhost'] else baremetal_net|local_ip(true) }}/system
 
 {% for spoke in ztp_spokes %}
 {% set virtual_nodes_number = spoke["virtual_nodes_number"]|default(0) %}
