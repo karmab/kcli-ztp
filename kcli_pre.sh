@@ -73,8 +73,8 @@ if  [ "$?" != "0" ] ; then
   echo couldnt gather release associated to {{ version }} and {{ tag }}
   exit 1
 fi
-{% elif version == 'ci' and 'registry.ci.openshift.org' in openshift_image %}
-grep -q registry.ci.openshift.org {{ pullsecret }} || { echo Missing token for registry.ci.openshift.org ; exit 1; }
+#{% elif version == 'ci' and 'registry.ci.openshift.org' in openshift_image %}
+#grep -q registry.ci.openshift.org {{ pullsecret }} || { echo Missing token for registry.ci.openshift.org ; exit 1; }
 {% endif %}
 {% endif %}
 
