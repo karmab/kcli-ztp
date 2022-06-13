@@ -34,6 +34,7 @@ baremetal_macs:
 ztp_spoke_wait: true
 disconnected_operators:
 - advanced-cluster-management
+- multicluster-engine
 ztp_spokes:
 - name: mgmt-spoke1
   masters_number: 1
