@@ -11,6 +11,7 @@ argocd_repo_branch: main
 argocd_repo_url:
 argocd_clusters_app_path:
 argocd_policies_app_path:
+mce: false
 ztp_siteconfig: false
 ztp_virtual_nodes_number: 1
 ztp_virtual_nodes_numcpus: 8

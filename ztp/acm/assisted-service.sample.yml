@@ -2,7 +2,7 @@ apiVersion: hive.openshift.io/v1
 kind: ClusterImageSet
 metadata:
   name: openshift-v${MINOR}
-  namespace: open-cluster-management
+  namespace: ${NAMESPACE}
 spec:
   releaseImage: ${RELEASE}
 ---
@@ -10,7 +10,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: assisted-service-config
-  namespace: open-cluster-management
+  namespace: ${NAMESPACE}
   labels:
     app: assisted-service
 data:
@@ -25,7 +25,7 @@ data:
 apiVersion: agent-install.openshift.io/v1beta1
 kind: AgentServiceConfig
 metadata:
-  namespace: open-cluster-management
+  namespace: ${NAMESPACE}
   name: agent
   annotations:
     unsupported.agent-install.openshift.io/assisted-service-configmap: 'assisted-service-config'
@@ -58,7 +58,7 @@ kind: Secret
 metadata:
   creationTimestamp: null
   name: assisted-deployment-ssh-private-key
-  namespace: open-cluster-management
+  namespace: ${NAMESPACE}
 type: Opaque
 stringData:
   ssh-privatekey: |
@@ -68,7 +68,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: assisted-deployment-pull-secret
-  namespace: open-cluster-management
+  namespace: ${NAMESPACE}
 stringData:
   .dockerconfigjson: '${PULLSECRET}'
   type: kubernetes.io/dockerconfigjson
@@ -78,7 +78,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: custom-registries
-  namespace: open-cluster-management
+  namespace: ${NAMESPACE}
   labels:
     app: assisted-service
 data:

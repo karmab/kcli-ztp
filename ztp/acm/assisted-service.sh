@@ -14,14 +14,18 @@ RHCOS_ROOTFS=$(/root/bin/openshift-baremetal-install coreos print-stream-json | 
 curl -Lk $RHCOS_ISO > /var/www/html/rhcos-live.x86_64.iso
 curl -Lk $RHCOS_ROOTFS > /var/www/html/rhcos-live-rootfs.x86_64.img
 
-{% if acm %}
+export NAMESPACE={{ 'multicluster-engine' if mce else 'open-cluster-management' }}
+{% if mce %}
+tasty install multicluster-engine --wait
+oc -n $NAMESPACE create -f /root/ztp/acm/cr_mce.yml
+{% elif acm %}
 tasty install advanced-cluster-management --wait
-oc create -f /root/ztp/acm/cr.yml
-oc -n open-cluster-management wait --for=condition=complete multiclusterhub/multiclusterhub --timeout=10m
-until oc get crd/agentserviceconfigs.agent-install.openshift.io >/dev/null 2>&1 ; do sleep 1 ; done
+oc -n $NAMESPACE create -f /root/ztp/acm/cr_acm.yml
+oc -n $NAMESPACE wait --for=condition=complete multiclusterhub/multiclusterhub --timeout=10m
 {% else %}
 oc create -f /root/ztp/acm/ai_install.yml
 {% endif %}
+until oc get crd/agentserviceconfigs.agent-install.openshift.io >/dev/null 2>&1 ; do sleep 1 ; done
 
 OCP_RELEASE=$(/root/bin/openshift-baremetal-install version | head -1 | cut -d' ' -f2)-x86_64
 export MINOR=$(echo $OCP_RELEASE | cut -d. -f1,2)
@@ -50,4 +54,4 @@ export SSH_PRIV_KEY=$(cat /root/.ssh/id_rsa |sed "s/^/    /")
 export VERSION=$(/root/bin/openshift-baremetal-install coreos print-stream-json | jq -r '.["architectures"]["x86_64"]["artifacts"]["metal"]["release"]')
 
 envsubst < /root/ztp/acm/assisted-service.sample.yml > /root/ztp/acm/assisted-service.yml
-oc create -f /root/ztp/acm/assisted-service.yml
+oc -n $NAMESPACE create -f /root/ztp/acm/assisted-service.yml
