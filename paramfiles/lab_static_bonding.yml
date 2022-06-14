@@ -3,7 +3,7 @@ version: stable
 tag: "4.10"
 provisioning_enable: false
 virtual_protocol: redfish
-virtual_masters: true
+virtual_masters: false
 virtual_workers: false
 launch_steps: true
 deploy_openshift: true
@@ -60,7 +60,7 @@ vmrules:
       - name: lab-baremetal
         mac: aa:aa:aa:aa:cc:03
 masters:
-  - redfish_address: "redfish-virtualmedia+http://192.168.122.1:8000/redfish/v1/Systems/11111111-1111-1111-1111-111111111181"
+  - redfish_address: "redfish-virtualmedia+http://192.168.129.1:8000/redfish/v1/Systems/11111111-1111-1111-1111-111111111181"
     provisioning_mac: aa:aa:aa:aa:bb:01
     network_config: |
       routes:
@@ -94,7 +94,7 @@ masters:
         macAddress: aa:aa:aa:aa:bb:01
       - name: ens4
         macAddress: aa:aa:aa:aa:cc:01
-  - redfish_address: "redfish-virtualmedia+http://192.168.122.1:8000/redfish/v1/Systems/11111111-1111-1111-1111-111111111182"
+  - redfish_address: "redfish-virtualmedia+http://192.168.129.1:8000/redfish/v1/Systems/11111111-1111-1111-1111-111111111182"
     provisioning_mac: aa:aa:aa:aa:bb:02
     network_config: |
       routes:
@@ -128,7 +128,7 @@ masters:
         macAddress: aa:aa:aa:aa:bb:02
       - name: ens4
         macAddress: aa:aa:aa:aa:cc:02
-  - redfish_address: "redfish-virtualmedia+http://192.168.122.1:8000/redfish/v1/Systems/11111111-1111-1111-1111-111111111183"
+  - redfish_address: "redfish-virtualmedia+http://192.168.129.1:8000/redfish/v1/Systems/11111111-1111-1111-1111-111111111183"
     provisioning_mac: aa:aa:aa:aa:bb:03
     network_config: |
       routes:
