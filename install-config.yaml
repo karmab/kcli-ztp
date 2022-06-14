@@ -174,7 +174,7 @@ platform:
       networkConfig:
         {{ static_network.config(master['ip'], baremetal_prefix, master['gateway']|default(baremetal_gateway), master['dns']|default(baremetal_dns), cluster, domain, master['nic']|default(nic)) }}
       {% elif 'network_config' in master %}
-      networkConfig: |
+      networkConfig:
         {{ master['network_config']|replace('\n', '\n        ') }}
       {% endif %}
 {% endfor %}
