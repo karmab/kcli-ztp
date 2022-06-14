@@ -49,7 +49,7 @@ acm_pull_secret: /root/openshift_pull_acm.json
 #- assisted-service-assisted-installer
 #- assisted-image-service-open-cluster-management
 lab_extra_dns:
-- assisted-service-open-multicluster-engine
+- assisted-service-multicluster-engine
 - assisted-service-assisted-installer
 - assisted-image-service-multicluster-engine
 ztp_siteconfig: false
