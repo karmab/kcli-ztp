@@ -64,6 +64,7 @@ notify: false
 launch_steps: true
 deploy_openshift: true
 lab: false
+motd:
 disconnected: false
 disconnected_quay: false
 registry_image: quay.io/karmab/registry:amd64

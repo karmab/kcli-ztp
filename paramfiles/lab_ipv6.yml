@@ -30,3 +30,7 @@ baremetal_macs:
 - aa:aa:aa:aa:bb:03
 notify: true
 nfs: true
+#motd: |
+# This is a dope vm
+# be careful and wach your steps
+# you ve been warned
