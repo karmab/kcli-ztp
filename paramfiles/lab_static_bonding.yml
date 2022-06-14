@@ -1,0 +1,164 @@
+lab: true
+version: stable
+tag: "4.10"
+provisioning_enable: false
+virtual_protocol: redfish
+virtual_masters: false
+virtual_workers: false
+launch_steps: true
+deploy_openshift: true
+cluster: lab
+domain: karmalabs.com 
+baremetal_cidr: 192.168.129.0/24
+baremetal_net: lab-baremetal
+provisioning_net: lab-prov
+virtual_masters_memory: 16384
+virtual_masters_numcpus: 8
+virtual_workers_deploy: false
+api_ip: 192.168.129.253
+ingress_ip: 192.168.129.252
+baremetal_ips:
+- 192.168.129.20
+- 192.168.129.21
+- 192.168.129.22
+- 192.168.129.23
+- 192.168.129.24
+- 192.168.129.25
+baremetal_macs:
+- aa:aa:aa:aa:bb:01
+- aa:aa:aa:aa:bb:02
+- aa:aa:aa:aa:bb:03
+- aa:aa:aa:aa:bb:04
+- aa:aa:aa:aa:bb:05
+- aa:aa:aa:aa:bb:06
+localhost_fix: true
+lab_dhcp: false
+installer_ip: 192.168.129.250
+baremetal_bootstrap_ip: 192.168.129.251
+notify: true
+nfs: true
+vmrules:
+ - lab-master-0:
+    uuid: 11111111-1111-1111-1111-111111111181
+    nets:
+      - name: lab-baremetal
+        mac: aa:aa:aa:aa:bb:01
+      - name: lab-baremetal
+        mac: aa:aa:aa:aa:cc:01
+ - lab-master-1:
+    uuid: 11111111-1111-1111-1111-111111111182
+    nets:
+      - name: lab-baremetal
+        mac: aa:aa:aa:aa:bb:02
+      - name: lab-baremetal
+        mac: aa:aa:aa:aa:cc:02
+ - lab-master-2:
+    uuid: 11111111-1111-1111-1111-111111111183
+    nets:
+      - name: lab-baremetal
+        mac: aa:aa:aa:aa:bb:03
+      - name: lab-baremetal
+        mac: aa:aa:aa:aa:cc:03
+masters:
+  - redfish_address: "redfish-virtualmedia+http://192.168.122.1:8000/redfish/v1/Systems/11111111-1111-1111-1111-111111111181"
+    provisioning_mac: aa:aa:aa:aa:bb:01
+    network_config: |-
+      routes:
+        config:
+        - destination: 0.0.0.0/0
+          next-hop-address: 192.168.129.1
+          next-hop-interface: bond0
+      dns-resolver:
+        config:
+          search:
+          - lab.karmalabs.com
+          server:
+          - 192.168.129.1
+      interfaces:
+      - name: bond0
+        type: bond0
+        state: up
+        ipv4:
+          address:
+          - ip: "192.168.129.20"
+            prefix-length: 24
+          enabled: true
+        link-aggregation:
+          mode: active-backup
+          options:
+            miimon: '140'
+          slaves:
+          - ens3
+          - ens4
+      - name: ens3
+        macAddress: aa:aa:aa:aa:bb:01
+      - name: ens4
+        macAddress: aa:aa:aa:aa:cc:01
+  - redfish_address: "redfish-virtualmedia+http://192.168.122.1:8000/redfish/v1/Systems/11111111-1111-1111-1111-111111111182"
+    provisioning_mac: aa:aa:aa:aa:bb:02
+    network_config: |-
+      routes:
+        config:
+        - destination: 0.0.0.0/0
+          next-hop-address: 192.168.129.1
+          next-hop-interface: bond0
+      dns-resolver:
+        config:
+          search:
+          - lab.karmalabs.com
+          server:
+          - 192.168.129.1
+      interfaces:
+      - name: bond0
+        type: bond0
+        state: up
+        ipv4:
+          address:
+          - ip: "192.168.129.21"
+            prefix-length: 24
+          enabled: true
+        link-aggregation:
+          mode: active-backup
+          options:
+            miimon: '140'
+          slaves:
+          - ens3
+          - ens4
+      - name: ens3
+        macAddress: aa:aa:aa:aa:bb:02
+      - name: ens4
+        macAddress: aa:aa:aa:aa:cc:02
+  - redfish_address: "redfish-virtualmedia+http://192.168.122.1:8000/redfish/v1/Systems/11111111-1111-1111-1111-111111111183"
+    provisioning_mac: aa:aa:aa:aa:bb:03
+    network_config: |-
+      routes:
+        config:
+        - destination: 0.0.0.0/0
+          next-hop-address: 192.168.129.1
+          next-hop-interface: bond0
+      dns-resolver:
+        config:
+          search:
+          - lab.karmalabs.com
+          server:
+          - 192.168.129.1
+      interfaces:
+      - name: bond0
+        type: bond0
+        state: up
+        ipv4:
+          address:
+          - ip: "192.168.129.22"
+            prefix-length: 24
+          enabled: true
+        link-aggregation:
+          mode: active-backup
+          options:
+            miimon: '140'
+          slaves:
+          - ens3
+          - ens4
+      - name: ens3
+        macAddress: aa:aa:aa:aa:bb:03
+      - name: ens4
+        macAddress: aa:aa:aa:aa:cc:03
