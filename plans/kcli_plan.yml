@@ -91,7 +91,10 @@
  - bin
  - scripts
  - machineconfigs
- - manifests
+{% if manifests_dir|exists %}
+ - origin: {{ manifests_dir }}
+   path: /root/manifests
+{% endif %}
 {% if launch_steps %}
  scripts:
 {% if build %}
