@@ -49,8 +49,7 @@
  - install-config.yaml                                                                                                                           
 {% if motd != None %}
  - path: /etc/motd
-   content: |
-     {{ motd |replace("\n", '\n     ') }}
+   origin: {{ motd }}
 {% endif %}
 {% if baremetal_bootstrap_ip != None %}
  - static_network/ifcfg-bootstrap
