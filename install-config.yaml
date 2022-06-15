@@ -225,7 +225,7 @@ platform:
       networkConfig:
         {{ static_network.config(worker['ip'], baremetal_prefix, worker['gateway']|default(baremetal_gateway), worker['dns']|default(baremetal_dns), cluster, domain, worker['nic']|default(nic)) }}
       {% elif 'network_config' in worker %}
-      networkConfig: |
+      networkConfig:
         {{ worker['network_config']|replace('\n', '\n        ') }}
       {% endif %}
 {% endfor %}
