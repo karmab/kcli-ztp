@@ -20,6 +20,12 @@ tasty install multicluster-engine --wait
 oc -n $NAMESPACE create -f /root/ztp/acm/cr_mce.yml
 {% elif acm %}
 tasty install advanced-cluster-management --wait
+{% if disconnected %}
+CHANNEL=$(tasty info multicluster-engine | grep ^defaultchannel: | cut -d: -f2 | xargs)
+SOURCE=$(tasty info multicluster-engine | grep ^source: | cut -d: -f2 | xargs)
+oc annotate -f cr_acm.yml installer.open-cluster-management.io/mce-subscription-spec="{\"channel\": \"$CHANNEL\",\"installPlanApproval\": \"Automatic\",\"name\": \"multicluster-engine\",\"source\": \"$SOURCE\",\"sourceNamespace\": \"openshift-marketplace\"}" --local=true -o yaml > /root/ztp/acm/cr_acm.yml.new
+mv /root/ztp/acm/cr_acm.yml.new /root/ztp/acm/cr_acm.yml
+{% endif %}
 oc -n $NAMESPACE create -f /root/ztp/acm/cr_acm.yml
 oc -n $NAMESPACE wait --for=condition=complete multiclusterhub/multiclusterhub --timeout=10m
 {% else %}
