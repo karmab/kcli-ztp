@@ -45,6 +45,7 @@ apps:
 {% for num in range(0, virtual_masters_number) %}
 {{ cluster }}-master-{{ num }}:
  pool: {{ pool }} 
+ image:
  numcpus: {{ virtual_masters_numcpus }}
  cloudinit: false
  start: false
@@ -73,6 +74,7 @@ apps:
 {% for num in range(0, virtual_workers_number) %}
 {{ cluster }}-worker-{{ num }}:
  pool: {{ pool }} 
+ image:
  numcpus: {{ virtual_workers_numcpus }}
  start: false
  cloudinit: false
