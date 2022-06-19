@@ -14,11 +14,8 @@ RHCOS_ROOTFS=$(/root/bin/openshift-baremetal-install coreos print-stream-json | 
 curl -Lk $RHCOS_ISO > /var/www/html/rhcos-live.x86_64.iso
 curl -Lk $RHCOS_ROOTFS > /var/www/html/rhcos-live-rootfs.x86_64.img
 
-export NAMESPACE={{ 'multicluster-engine' if mce else 'open-cluster-management' }}
-{% if mce %}
-tasty install multicluster-engine --wait
-oc -n $NAMESPACE create -f /root/ztp/acm/cr_mce.yml
-{% elif acm %}
+export NAMESPACE={{ 'open-cluster-management' if acm else 'multicluster-engine' }}
+{% if acm %}
 tasty install advanced-cluster-management --wait
 {% if disconnected %}
 SOURCE=$(tasty info multicluster-engine | grep ^source: | cut -d: -f2 | xargs)
@@ -27,6 +24,9 @@ mv /root/ztp/acm/cr_acm.yml.new /root/ztp/acm/cr_acm.yml
 {% endif %}
 oc -n $NAMESPACE create -f /root/ztp/acm/cr_acm.yml
 oc -n $NAMESPACE wait --for=condition=complete multiclusterhub/multiclusterhub --timeout=10m
+{% elif mce %}
+tasty install multicluster-engine --wait
+oc -n $NAMESPACE create -f /root/ztp/acm/cr_mce.yml
 {% else %}
 oc create -f /root/ztp/acm/ai_install.yml
 {% endif %}
