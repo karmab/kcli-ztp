@@ -10,10 +10,6 @@ on:
         description: 'Client name'
         required: true
         default: 'local'
-      PLAN:
-        description: 'Plan Name'
-        required: true
-        default: lab
       INPUTFILE:
         description: 'Input file'
         required: true
@@ -22,6 +18,9 @@ on:
         description: 'paramfile'
         required: false
         default: paramfiles/lab_ipv6_ztp.yml
+      EXTRAPARAMS:
+        description: 'Extra params'
+        default: ''
       PULLSECRET:
         description: 'pullsecret'
         required: false
@@ -47,9 +46,10 @@ env:
  HOME: /root
  PYTHONUNBUFFERED: true
  CLIENT: ${{github.event.inputs.CLIENT}}
- PLAN: ${{github.event.inputs.PLAN}}
+ PLAN: lab
  INPUTFILE: ${{github.event.inputs.INPUTFILE}}
  PARAMFILE: ${{github.event.inputs.PARAMFILE}}
+ EXTRAPARAMS: ${{github.event.inputs.EXTRAPARAMS}}
  PULLSECRET: ${{github.event.inputs.PULLSECRET}}
  LAUNCH_STEPS: ${{github.event.inputs.LAUNCH_STEPS}}
  DEPLOY_OPENSHIFT: ${{github.event.inputs.DEPLOY_OPENSHIFT}}
@@ -74,5 +74,5 @@ jobs:
       runs-on: ${{github.event.inputs.RUNNER}}
       steps:
        - name: Deploy kcli plan
-         run: kcli -C $CLIENT create plan --force -f $INPUTFILE --paramfile $PARAMFILE -P pullsecret=$PULLSECRET -P launch_steps=$LAUNCH_STEPS -P deploy_openshift=$DEPLOY_OPENSHIFT -P version=$VERSION -P tag=$TAG $PLAN
+         run: kcli -C $CLIENT create plan --force -f $INPUTFILE --paramfile $PARAMFILE -P pullsecret=$PULLSECRET -P launch_steps=$LAUNCH_STEPS -P deploy_openshift=$DEPLOY_OPENSHIFT -P version=$VERSION -P tag=$TAG $EXTRAPARAMS $PLAN
 

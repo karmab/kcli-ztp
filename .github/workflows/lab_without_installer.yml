@@ -6,14 +6,13 @@ on:
         description: 'Runner Name'
         required: true
         default: 'u08'
-      PLAN:
-        description: 'Plan Name'
-        required: true
-        default: lab
       INFRAPARAMFILE:
         description: 'infraparamfile'
         required: false
         default: paramfiles/lab.yml
+      EXTRAPARAMS:
+        description: 'Extra params'
+        default: ''
       PARAMFILE:
         description: 'paramfile'
         required: false
@@ -34,10 +33,18 @@ on:
 env:
  HOME: /root
  PYTHONUNBUFFERED: true
+ CLIENT: ${{github.event.inputs.CLIENT}}
+ PLAN: lab
+ INFRAPARAMFILE: ${{github.event.inputs.INFRAPARAMFILE}}
+ PARAMFILE: ${{github.event.inputs.PARAMFILE}}
+ EXTRAPARAMS: ${{github.event.inputs.EXTRAPARAMS}}
+ PULLSECRET: ${{github.event.inputs.PULLSECRET}}
+ VERSION: ${{github.event.inputs.VERSION}}
+ TAG: ${{github.event.inputs.TAG}}
 
 jobs:
     requirements:
-      runs-on:  ${{github.event.inputs.RUNNER}} 
+      runs-on: ${{github.event.inputs.RUNNER}}
       steps:
        - uses: actions/checkout@v2
        - run: git pull origin ${GITHUB_REF##*/}
@@ -49,17 +56,17 @@ jobs:
 
     deploy-infra-plan:
       needs: requirements
-      runs-on:  ${{github.event.inputs.RUNNER}}   
+      runs-on: ${{github.event.inputs.RUNNER}}
       steps:
        - name: Deploy infra
-         run: kcli create plan --force -f kcli_plan_infra.yml --paramfile ${{github.event.inputs.INFRAPARAMFILE}} ${{github.event.inputs.PLAN}}
+         run: kcli create plan --force -f kcli_plan_infra.yml --paramfile $INFRAPARAMFILE $PLAN
 
     install-redfish:
       needs: deploy-infra-plan
-      runs-on:  ${{github.event.inputs.RUNNER}}   
+      runs-on: ${{github.event.inputs.RUNNER}}
       steps:
        - name: Render sushy
-         run: kcli render -f helpers/sushy.conf --paramfile ${{github.event.inputs.INFRAPARAMFILE}} > /etc/sushy.conf
+         run: kcli render -f helpers/sushy.conf --paramfile $INFRAPARAMFILE > /etc/sushy.conf
        - name: Install redfish
          run: |
            pip3 install sushy-tools
@@ -72,18 +79,18 @@ jobs:
 
     render-redfish-in-parameter-file:
       needs: install-redfish
-      runs-on:  ${{github.event.inputs.RUNNER}}   
+      runs-on: ${{github.event.inputs.RUNNER}}
       steps:
        - name: Render redfish in parameter file
-         run: kcli render -f virtual_platform_hosts.yml --paramfile ${{github.event.inputs.INFRAPARAMFILE}} --paramfile ${{github.event.inputs.PARAMFILE}} >> ${{github.event.inputs.PARAMFILE}}
+         run: kcli render -f virtual_platform_hosts.yml --paramfile $INFRAPARAMFILE --paramfile $PARAMFILE >> $PARAMFILE
 
     deploy-cluster:
       needs: render-redfish-in-parameter-file
-      runs-on:  ${{github.event.inputs.RUNNER}}   
+      runs-on: ${{github.event.inputs.RUNNER}}
       steps:
        - name: Deploy cluster
          run: |
            ### temp hack ###
-           sed -i 's@:8000@:80@' ${{github.event.inputs.PARAMFILE}}
+           sed -i 's@:8000@:80@' $PARAMFILE
            #################
-           kcli --debug create cluster openshift --paramfile ${{github.event.inputs.PARAMFILE}} -P pull_secret='${{github.event.inputs.PULLSECRET}}' ${{github.event.inputs.PLAN}}-cluster --force
+           kcli --debug create cluster openshift --paramfile $PARAMFILE -P pull_secret="$PULLSECRET" $PLAN-cluster $EXTRAPARAMS --force
