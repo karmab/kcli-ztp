@@ -59,4 +59,4 @@ export SSH_PRIV_KEY=$(cat /root/.ssh/id_rsa |sed "s/^/    /")
 export VERSION=$(/root/bin/openshift-baremetal-install coreos print-stream-json | jq -r '.["architectures"]["x86_64"]["artifacts"]["metal"]["release"]')
 
 envsubst < /root/ztp/acm/assisted-service.sample.yml > /root/ztp/acm/assisted-service.yml
-oc -n $NAMESPACE create -f /root/ztp/acm/assisted-service.yml
+oc create -f /root/ztp/acm/assisted-service.yml

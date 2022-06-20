@@ -24,11 +24,12 @@ with open(installfile) as f:
         if 'ipmi' in address:
             continue
         else:
-            match = re.match(".*(http.*|idrac-virtualmedia.*|redfish-virtualmedia.*)", address)
-            address = match.group(1).replace('idrac-virtualmedia', 'https').replace('redfish-virtualmedia', 'https')
+            match = re.match(".*(http.*|idrac-virtualmedia.*|ilo5-virtualmedia.*|redfish-virtualmedia.*)", address)
+            address = match.group(1)
+            for _type in ['idrac', 'redfish', 'ilo5']:
+                address = address.replace(f'{_type}-virtualmedia', 'https')
             print(address)
             info = requests.get(address, verify=False, auth=(user, password)).json()
-            # name = info['Name']
             print("running %s for %s" % (action, name))
             if action == 'status':
                 status = info['PowerState']
