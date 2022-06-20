@@ -19,7 +19,7 @@ export NAMESPACE={{ 'open-cluster-management' if acm else 'multicluster-engine' 
 tasty install advanced-cluster-management --wait
 {% if disconnected %}
 SOURCE=$(tasty info multicluster-engine | grep ^source: | cut -d: -f2 | xargs)
-oc annotate -f cr_acm.yml installer.open-cluster-management.io/mce-subscription-spec="{\"source\": \"$SOURCE\"}" --local=true -o yaml > /root/ztp/acm/cr_acm.yml.new
+oc annotate -f /root/ztp/acm/cr_acm.yml installer.open-cluster-management.io/mce-subscription-spec="{\"source\": \"$SOURCE\"}" --local=true -o yaml > /root/ztp/acm/cr_acm.yml.new
 mv /root/ztp/acm/cr_acm.yml.new /root/ztp/acm/cr_acm.yml
 {% endif %}
 oc -n $NAMESPACE create -f /root/ztp/acm/cr_acm.yml
