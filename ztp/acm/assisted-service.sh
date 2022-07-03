@@ -31,6 +31,7 @@ oc -n $NAMESPACE create -f /root/ztp/acm/cr_mce.yml
 oc create -f /root/ztp/acm/ai_install.yml
 {% endif %}
 until oc get crd/agentserviceconfigs.agent-install.openshift.io >/dev/null 2>&1 ; do sleep 1 ; done
+until oc get crd/clusterimagesets.hive.openshift.io >/dev/null 2>&1 ; do sleep 1 ; done
 
 OCP_RELEASE=$(/root/bin/openshift-baremetal-install version | head -1 | cut -d' ' -f2)-x86_64
 export MINOR=$(echo $OCP_RELEASE | cut -d. -f1,2)
