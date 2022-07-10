@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+# Log everything from this script into _kcli_pre.log
+echo "$0 $@" > _kcli_pre.log
+exec &> >(tee -i -a _kcli_pre.log )
+
+set -x
 # NETWORK CHECK
 {% if baremetal_cidr == None %}
 echo baremetal_cidr not set. No network, no party!
