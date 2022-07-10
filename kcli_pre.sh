@@ -143,7 +143,7 @@ POOLPATH=$(kcli -C $CLIENT list pool | grep $POOL | cut -d"|" -f 3 | xargs)
 export LC_ALL="en_US.UTF-8"
 export LIBVIRT_DEFAULT_URI=$(kcli -C $CLIENT info host | grep Connection | sed 's/Connection: //')
 find $POOLPATH/boot-* -type f -mtime +2 -exec sh -c 'virsh -c qemu:///system vol-delete {} || sudo rm {}' \;
-find /var/lib/libvirt/openshift-images/${CLUSTER}-*-bootstrap -exec sh -c 'virsh -c qemu:///system pool-delete {} || rm -rf {}' \;
+find /var/lib/libvirt/openshift-images/${CLUSTER}-*-bootstrap -exec sh -c 'virsh -c qemu:///system pool-delete {} || sudo rm -rf {}' \;
 VMS=$(kcli -C $CLIENT list vm | grep ${CLUSTER}-.*-bootstrap | cut -d"|" -f 2 | xargs)
 [ -z "$VMS" ] || kcli -C $CLIENT delete vm --yes $VMS
 POOLS=$(kcli -C $CLIENT list pool --short | grep $CLUSTER | cut -d"|" -f2 | xargs)
