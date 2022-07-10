@@ -63,3 +63,34 @@ CURRENT_WORKERS=$(oc get nodes --selector='node-role.kubernetes.io/worker' -o na
  fi
 {% endif %}
 fi
+
+function ready_workers {
+    oc get nodes --selector='node-role.kubernetes.io/worker' -o  custom-columns="STATUS:status.conditions[?(@.status=='True')].type" | grep -c "^Ready$"
+}
+
+{% if wait_for_ready_workers_number is defined %}
+READY_WORKERS={{ wait_for_ready_workers_number }}
+{% else %}
+READY_WORKERS=$(grep 'role: worker' /root/install-config.yaml | wc -l) || true
+{% endif %}
+if [ "$READY_WORKERS" -gt "0" ] ; then
+  CUR_READY_WORKERS=$(ready_workers)
+{% if wait_for_ready_workers %}
+  TIMEOUT=0
+  WAIT_TIMEOUT={{ wait_for_ready_workers_timeout }}
+  until [ "$CUR_READY_WORKERS" == "$READY_WORKERS" ] ; do
+    if [ "$TIMEOUT" -gt "$WAIT_TIMEOUT" ] ; then
+      echo "Timeout waiting for current Ready workers number $CUR_READY_WORKERS to match expected Ready worker number $READY_WORKERS"
+      break
+    fi
+    CUR_READY_WORKERS=$(ready_workers)
+    echo "Waiting for all workers to be Ready..."
+    sleep 5
+    TIMEOUT=$(($TIMEOUT + 5))
+  done
+{% else %}
+ if [ "$CUR_READY_WORKERS" != "$READY_WORKERS" ] ; then
+  echo "Beware, current Ready workers number $CUR_READY_WORKERS doesnt match expected Ready worker number $READY_WORKERS"
+ fi
+{% endif %}
+fi
