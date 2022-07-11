@@ -142,11 +142,15 @@ POOL={{ pool }}
 POOLPATH=$(kcli -C $CLIENT list pool | grep $POOL | cut -d"|" -f 3 | xargs)
 export LC_ALL="en_US.UTF-8"
 export LIBVIRT_DEFAULT_URI=$(kcli -C $CLIENT info host | grep Connection | sed 's/Connection: //')
-find $POOLPATH/boot-* -type f -mtime +2 -exec sh -c 'virsh vol-delete {} || sudo rm {}' \;
-find /var/lib/libvirt/openshift-images/${CLUSTER}-*-bootstrap -exec sh -c 'virsh pool-delete {} || rm -rf {}' \;
+TWODAYSAGO=$(date -d '2 days ago' +%s)
+for volume in $(virsh vol-list $POOL | grep boot-* | awk '{print $2}') ; do
+  VOLDATE=$(virsh vol-dumpxml $volume | grep -m 1 ctime | sed 's@<ctime>\(.*\)</ctime>@\1@' | xargs)
+  VOLDATE=$(date -d @$VOLDATE +%s)
+  (($VOLDATE < $TWODAYSAGO)) && virsh vol-delete $volume
+done
 VMS=$(kcli -C $CLIENT list vm | grep ${CLUSTER}-.*-bootstrap | cut -d"|" -f 2 | xargs)
 [ -z "$VMS" ] || kcli -C $CLIENT delete vm --yes $VMS
-POOLS=$(kcli -C $CLIENT list pool --short | grep $CLUSTER | cut -d"|" -f2 | xargs)
+POOLS=$(kcli -C $CLIENT list pool --short | grep $CLUSTER-.*-bootstrap | cut -d"|" -f2 | xargs)
 if [ ! -z "$POOLS" ] ; then
   for POOL in $POOLS ; do
     kcli -C $CLIENT delete pool --yes $POOL
