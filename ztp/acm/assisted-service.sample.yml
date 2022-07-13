@@ -30,6 +30,9 @@ metadata:
   annotations:
     unsupported.agent-install.openshift.io/assisted-service-configmap: 'assisted-service-config'
 spec:
+{% if ztp_pxe %}
+  iPXEHTTPRoute: enabled
+{% endif %}
   databaseStorage:
     accessModes:
       - ReadWriteOnce
