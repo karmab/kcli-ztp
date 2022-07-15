@@ -44,7 +44,7 @@ echo $OPENSHIFT_RELEASE_IMAGE > /root/version.txt
 curl -s -L https://github.com/itaysk/kubectl-neat/releases/download/v2.0.3/kubectl-neat_linux_amd64.tar.gz | tar xvz -C /usr/bin/
 
 dnf copr enable zaneb/autopage -y
-dnf install python3-bmo-log-parse -y
+dnf install podman python3-bmo-log-parse -y
 
 curl -s -L https://github.com/karmab/tasty/releases/download/v0.7.0/tasty-linux-amd64 > /usr/bin/tasty
 chmod u+x /usr/bin/tasty
