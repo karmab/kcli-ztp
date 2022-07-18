@@ -9,6 +9,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
 action = sys.argv[1] if len(sys.argv) > 1 else 'status'
+custom_host = sys.argv[2] if len(sys.argv) > 2 else None
 installfile = "/root/install-config.yaml"
 with open(installfile) as f:
     data = yaml.safe_load(f)
@@ -16,6 +17,8 @@ with open(installfile) as f:
     hosts = data['platform']['baremetal']['hosts']
     for host in hosts:
         name = host['name']
+        if custom_host is not None and name != custom_host:
+            continue
         address = host['bmc']['address']
         user, password = host['bmc'].get('username'), host['bmc'].get('password')
         if user is None or password is None:
