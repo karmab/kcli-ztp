@@ -42,7 +42,7 @@ TOTAL_WORKERS={{ wait_for_workers_number }}
 TOTAL_WORKERS=$(grep 'role: worker' /root/install-config.yaml | wc -l) || true
 {% endif %}
 if [ "$TOTAL_WORKERS" -gt "0" ] ; then
-CURRENT_WORKERS=$(oc get nodes --selector='node-role.kubernetes.io/worker' -o name | wc -l)
+CURRENT_WORKERS=$(oc get nodes --selector='node-role.kubernetes.io/worker' | grep -c " Ready")
 {% if wait_for_workers %}
  TIMEOUT=0
  WAIT_TIMEOUT={{ wait_for_workers_timeout }}
@@ -51,7 +51,7 @@ CURRENT_WORKERS=$(oc get nodes --selector='node-role.kubernetes.io/worker' -o na
     echo "Timeout waiting for Current workers number $CURRENT_WORKERS to match expected worker number $TOTAL_WORKERS"
     break
   fi
-  CURRENT_WORKERS=$(oc get nodes --selector='node-role.kubernetes.io/worker' -o name | wc -l)
+  CURRENT_WORKERS=$(oc get nodes --selector='node-role.kubernetes.io/worker' | grep -c " Ready")
   echo "Waiting for all workers to show up..."
   sleep 5
   TIMEOUT=$(($TIMEOUT + 5))
