@@ -7,8 +7,9 @@ dualstack_cidr: 192.168.130.0/24
 disconnected: true
 disconnected_quay: false
 virtual_masters: true
-virtual_workers: false
-virtual_workers_number: 0
+virtual_workers: true
+virtual_workers_deploy: true
+virtual_workers_number: 2
 launch_steps: true
 deploy_openshift: true
 version: stable
@@ -20,7 +21,6 @@ baremetal_net: lab-baremetal
 provisioning_net: lab-prov
 virtual_masters_memory: 16384
 virtual_masters_numcpus: 8
-virtual_workers_deploy: false
 api_ip: 2620:52:0:1302::2
 ingress_ip: 2620:52:0:1302::3
 baremetal_ips:
@@ -28,10 +28,13 @@ baremetal_ips:
 - 2620:52:0:1302::21
 - 2620:52:0:1302::22
 - 2620:52:0:1302::23
+- 2620:52:0:1302::24
 baremetal_macs:
 - aa:aa:aa:aa:bb:01
 - aa:aa:aa:aa:bb:02
 - aa:aa:aa:aa:bb:03
+- aa:aa:aa:aa:bb:04
+- aa:aa:aa:aa:bb:05
 ztp_spoke_wait: true
 disconnected_operators:
 - multicluster-engine
