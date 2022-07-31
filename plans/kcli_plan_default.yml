@@ -54,7 +54,7 @@ provisioning_installer_ip: 172.22.0.253
 provisioning_macs: []
 bmc_user: root
 bmc_password: calvin
-reset_bmc: false
+bmc_reset: false
 baremetal_cidr:
 baremetal_macs: []
 baremetal_ips: []
