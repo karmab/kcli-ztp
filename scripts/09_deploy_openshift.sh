@@ -11,6 +11,14 @@ bash /root/bin/clean.sh || true
 mkdir -p ocp/openshift
 python3 /root/bin/ipmi.py off
 python3 /root/bin/redfish.py off
+{% if reset_bmc %}
+  {% for worker in workers %}
+  {% if worker['model']|default('kvm') == "dell" %}
+      worker_ip={% worker["redfish_address"] %}
+      curl -i -k -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -u {{ bmc_user }}:{{ bmc_password }} --data '{"ResetType":"GracefulRestart"}' 'https://"${worker_ip}"/redfish/v1/Managers/iDRAC.Embedded.1/Actions/Manager.Reset'
+    {% endif %}
+  {% endfor %}
+{% endif %}
 cp install-config.yaml ocp
 openshift-baremetal-install --dir ocp --log-level debug create manifests
 {% if localhost_fix %}
