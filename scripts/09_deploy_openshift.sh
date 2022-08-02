@@ -12,13 +12,39 @@ mkdir -p ocp/openshift
 python3 /root/bin/ipmi.py off
 python3 /root/bin/redfish.py off
 {% if bmc_reset %}
-  {% for worker in workers %}
-  {% if worker['model']|default('kvm') == "dell" %}
-      worker_ip={{ worker["redfish_address"] }}
-      curl -i -k -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -u {{ bmc_user }}:{{ bmc_password }} --data '{"ResetType":"GracefulRestart"}' 'https://"${worker_ip}"/redfish/v1/Managers/iDRAC.Embedded.1/Actions/Manager.Reset'
-    {% endif %}
-  {% endfor %}
+{% for worker in workers %}
+{% if worker['model']|default('kvm') == "dell" %}
+worker_ip={{ worker["redfish_address"] }}
+curl -i -k -X POST -H "Content-Type: application/json" -H "Accept: application/json" -u root:calvin --data '{"ResetType":"GracefulRestart"}' "https://${worker_ip}/redfish/v1/Managers/iDRAC.Embedded.1/Actions/Manager.Reset"
+if [[ $? -eq 0 ]]; then  # Can be implicit, but explicit for visibility
+  echo "BMC ${worker_ip} restarting!"
+  sleep 30  # Time to start restart
+else
+  echo "ERROR: BMC ${worker_ip} fails to restart"
+fi
 {% endif %}
+{% endfor %}
+{% endif %}
+
+{% for worker in workers %}
+{% if worker['model']|default('kvm') == "dell" %}
+worker_ip={{ worker["redfish_address"] }}
+SECONDS_PASSED=0
+SECONDS_TIMEOUT=300
+until curl -k https://${worker_ip}/redfish/v1/ > /dev/null
+do
+  echo "Waiting for worker ${worker_ip} to come back up after bmc reset..."
+  SECONDS_INTERVAL=15
+  sleep $SECONDS_INTERVAL
+  SECONDS_PASSED=$((SECONDS_PASSED + SECONDS_INTERVAL))
+  if [[ "${SECONDS_PASSED}" -gt "${SECONDS_TIMEOUT}" ]]; then
+    echo "Timeout waiting for BMC to come back up, something failed, check ${worker_ip}"
+    exit 1
+  fi
+done
+echo "BMC of worker is up! (${worker_ip})"
+{% endif %}
+{% endfor %}
 cp install-config.yaml ocp
 openshift-baremetal-install --dir ocp --log-level debug create manifests
 {% if localhost_fix %}
