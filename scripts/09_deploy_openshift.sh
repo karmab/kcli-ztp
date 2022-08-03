@@ -59,7 +59,9 @@ CURRENT_WORKERS=$(oc get nodes --selector='node-role.kubernetes.io/worker' | gre
     echo "Timeout waiting for Current workers number $CURRENT_WORKERS to match expected worker number $TOTAL_WORKERS"
     break
   fi
-  CURRENT_WORKERS=$(oc get nodes --selector='node-role.kubernetes.io/worker' | grep -c " Ready")
+  # We need to remove masters from the command below, otherwise if there are schedulable masters enabled (via extra manifest)
+  # the script loops forever
+  CURRENT_WORKERS=$(oc get nodes --selector='node-role.kubernetes.io/worker' | grep -v master | grep -c " Ready")
   echo "Waiting for all workers to show up..."
   sleep 5
   TIMEOUT=$(($TIMEOUT + 5))
