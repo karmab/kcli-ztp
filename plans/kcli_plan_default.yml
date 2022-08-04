@@ -45,6 +45,8 @@ baremetal_noprovisioning_ip:
 baremetal_noprovisioning_bootstrap_ip:
 baremetal_bootstrap_mac:
 baremetal_bootstrap_ip:
+baremetal_bootstrap_os_image:
+baremetal_cluster_os_image:
 provisioning_bootstrap_mac:
 provisioning_interface: eno1
 provisioning_net: provisioning
