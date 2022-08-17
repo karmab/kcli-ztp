@@ -2,7 +2,7 @@ lab: true
 version: stable
 dualstack: true
 dualstack_cidr: 2620:52:0:1302::/64
-tag: "4.10"
+tag: "4.11"
 provisioning_enable: false
 virtual_protocol: redfish
 virtual_masters: true

@@ -10,8 +10,6 @@ env:
  INPUTFILE: plans/kcli_plan_ztp.yml
  PARAMFILE: paramfiles/lab_ipv6_ztp.yml
  PULLSECRET: /root/openshift_pull.json
- VERSION: stable
- TAG: "4.10"
 
 jobs:
     requirements:
@@ -30,4 +28,4 @@ jobs:
       runs-on: libvirt
       steps:
         - name: Deploy kcli plan
-          run: kcli create plan --force -f $INPUTFILE --paramfile $PARAMFILE -P pullsecret=$PULLSECRET -P version=$VERSION -P tag=$TAG $PLAN
+          run: kcli create plan --force -f $INPUTFILE --paramfile $PARAMFILE -P pullsecret=$PULLSECRET $PLAN
