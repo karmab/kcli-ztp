@@ -71,9 +71,11 @@ oc patch configs.imageregistry.operator.openshift.io cluster --type merge -p '{"
 echo -e "${blue}************ RUNNING 06_disconnected_olm.sh ************${clear}"
 /root/scripts/06_disconnected_olm.sh
 {% endif %}
+echo -e "${blue}************ RUNNING 11_post_install.sh ************${clear}"
+bash /root/scripts/11_post_install.sh
 {% if apps %}
-echo -e "${blue}************ RUNNING 11_apps.sh ************${clear}"
-bash /root/scripts/11_apps.sh
+echo -e "${blue}************ RUNNING 12_apps.sh ************${clear}"
+bash /root/scripts/12_apps.sh
 {% endif %}
 touch /root/cluster_ready.txt
 {% if ztp_spokes is defined %}
