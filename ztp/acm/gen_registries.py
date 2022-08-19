@@ -3,7 +3,7 @@
 import glob
 import yaml
 
-manifestfile = glob.glob('/root/manifests-redhat-operator-index-*/imageContentSourcePolicy.yaml')[0]
+manifestfile = glob.glob('/root/oc-mirror-workspace/results-*/imageContentSourcePolicy.yaml')[0]
 results = ''
 with open(manifestfile) as f:
     data = yaml.safe_load_all(f)
