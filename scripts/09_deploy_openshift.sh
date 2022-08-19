@@ -73,13 +73,11 @@ done
 {% if wait_for_workers_number != None %}
 TOTAL_WORKERS={{ wait_for_workers_number }}
 {% else %}
-TOTAL_WORKERS=$(grep 'role: worker' /root/install-config.yaml | wc -l) || true
+TOTAL_WORKERS=$(grep 'role: worker' /root/install-config.yaml | wc -l)
 {% endif %}
 if [ "$TOTAL_WORKERS" -gt "0" ] ; then
-# We need to remove masters from the command below, otherwise if there are schedulable masters enabled (via extra manifest)
-# the script loops forever
 CURRENT_WORKERS=$(oc get nodes --selector='node-role.kubernetes.io/worker' | grep -v master | grep -c " Ready")
-{% if wait_for_workers %}
+{% if wait_for_workers or wait_for_workers_number != None %}
  TIMEOUT=0
  WAIT_TIMEOUT={{ wait_for_workers_timeout }}
  until [ "$CURRENT_WORKERS" == "$TOTAL_WORKERS" ] ; do
