@@ -29,6 +29,4 @@ jobs:
       steps:
         - name: Deploy kcli plan
           run: |
-            # temp 4.11 ipv6 hack
-            mv manifests/99-ipv6.yaml.sample manifests/99-ipv6.yaml
             kcli create plan --force -f $INPUTFILE --paramfile $PARAMFILE -P pullsecret=$PULLSECRET $PLAN
