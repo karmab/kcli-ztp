@@ -10,7 +10,7 @@ sleep 30
 echo "fastestmirror=1" >> /etc/dnf/dnf.conf
 dnf -y install pkgconf-pkg-config libvirt-devel gcc python3-libvirt python3 git python3-netifaces
 python3 -m pip install --upgrade pip setuptools
-pip3 install sushytools --ignore-installed PyYAML
+pip3 install sushy-tools --ignore-installed PyYAML
 systemctl enable --now sushy
 sleep 20
 ssh-keyscan -H {{ config_host if config_host not in ['127.0.0.1', 'localhost'] else baremetal_net|local_ip }} >> /root/.ssh/known_hosts
