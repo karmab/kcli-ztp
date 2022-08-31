@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import argparse
 import os
 import subprocess
@@ -177,14 +178,14 @@ def main():
     parser.add_argument("--reboot-bmc", action="store_true",
                         help="Reboot the BMC of baremetal")
     parser.add_argument("--skip-wait-bmc", action="store_true",
-                        help="Reboot the BMC of baremetal")
-    parser.add_argument("--skip-redeploy-bmc", action="store_true",
-                        help="Reboot the BMC of baremetal")
+                        help="Don't wait for BMC to come up after a reboot.")
+    parser.add_argument("--skip-redeploy-bm", action="store_true",
+                        help="Skip BM redeploy")
     args = parser.parse_args()
     bm_name = discover_name(args.bm_name)
     if args.reboot_bmc:
         reboot_bmc(bm_name, args.skip_wait_bmc)
-    if not args.skip_redeploy_bmc:
+    if not args.skip_redeploy_bm:
         bm_yaml, bm_data = create_bm_yaml(bm_name)
         bmsecret_yaml = create_bmsecret_yaml(bm_data)
         delete(bm_name)
@@ -195,6 +196,7 @@ def main():
             """  In case you detect pending CSRs with command 'oc get csr' -"""
             """ run command """
             """'oc get csr -o name | xargs oc adm certificate approve'""")
+
 
 if __name__ == "__main__":
     main()
