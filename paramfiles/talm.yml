@@ -1,5 +1,5 @@
 lab: true
-mce: true
+acm: true
 provisioning_enable: false
 pool: default
 dualstack: false
@@ -36,7 +36,6 @@ baremetal_macs:
 - aa:aa:aa:aa:bb:04
 - aa:aa:aa:aa:bb:05
 ztp_spoke_wait: true
-acm: true
 disconnected_operators:
 - advanced-cluster-management
 - multicluster-engine
