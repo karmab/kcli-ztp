@@ -61,6 +61,11 @@ metadata:
     agent-install.openshift.io/install-config-overrides: '{"networking":{"networkType":"OVNKubernetes"}}'
 {% endif %}
 spec:
+{% if tpm|default(False) %}
+  diskEncryption:
+    mode: tpmv2
+    enableOn: all
+{% endif %}
 {% if 'ztp_spoke_manifests'|find_manifests %}
   manifestsConfigMapRef:
     name: extra-manifests-ztp
