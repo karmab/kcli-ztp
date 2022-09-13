@@ -73,7 +73,7 @@ lab-master-1 deployed on local
 Adding a reserved ip entry for ip 192.168.129.22 and mac aa:aa:aa:aa:bb:03
 lab-master-2 deployed on local
 Injecting private key for lab-installer
-Creating dns entry for lab-installer.karmalabs.com in network lab-baremetal
+Creating dns entry for lab-installer.karmalabs.local in network lab-baremetal
 Waiting 5 seconds to grab ip...
 Waiting 5 seconds to grab ip...
 Waiting 5 seconds to grab ip...
@@ -1553,8 +1553,8 @@ Writing manifest to image destination
 Storing signatures
 2687fd3571fa37e22399f3584ca8bc6ec0e11f9a3d8f2a81e75858a0fa4c367b
 Created symlink /etc/systemd/system/multi-user.target.wants/registry.service → /etc/systemd/system/registry.service.
-info: Mirroring 141 images to lab-installer.karmalabs.com:5000/ocp4 ...
-lab-installer.karmalabs.com:5000/
+info: Mirroring 141 images to lab-installer.karmalabs.local:5000/ocp4 ...
+lab-installer.karmalabs.local:5000/
   ocp4
     blobs:
       quay.io/openshift-release-dev/ocp-v4.0-art-dev sha256:47aa3ed2034c4f27622b989b26c06087de17067268a19a1b3642a7e2686cd1a3 1.747KiB
@@ -1998,313 +1998,313 @@ lab-installer.karmalabs.com:5000/
   stats: shared=5 unique=285 size=9.438GiB ratio=0.99
 
 phase 0:
-  lab-installer.karmalabs.com:5000 ocp4 blobs=290 mounts=0 manifests=141 shared=5
+  lab-installer.karmalabs.local:5000 ocp4 blobs=290 mounts=0 manifests=141 shared=5
 
 info: Planning completed in 27.29s
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:626b321f688cb48ef17e00764ff950943e6f776ad0d42d229dedeb4d6a1db3d6 17.16MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:fba19f7f6910ac263c029e59db5969f9213d480ee51e3be9674ec1290a65e879 29.84MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:53de18eed10c0b7e53ab8be2750768cfdcc1df9e320c06bc697ff19aa5603908 374.5KiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:fa56458364ac2a56f0051268f5e8249e7b9c9d5333b3458d0d7b6d50ecd30bc6 39.35MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:7a9eee3b7981073f117952604a5cd2b32814bfb7ac37047c2cedc5426791a785 9.476MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:4b2bfed57f6412e6513a60e0491be8721592df856726494e79c8553118f77897 11.45MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:a0453b87f28599bd146de4333b3bb6bda5a24c550308a9c8d18c5c50f84e4824 28.83MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:7356b81aa7304d516ee8a8a279804e90bad57d13296c60fc35bfc93313d1dcd7 32.76MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:88e435ac65bd0addb7210665e220c2508b54a48678d0e47e199c8f961631c816 44.97MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:cf8acd280d29161aab647117ba03bedf28eb769ccda11b727edc1ae9e4676830 412.2MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:93aec587377458c393edef72be660cd67c8934923dd2efe3f0b2361e2eb14060 137.8MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:e0a10bba1818f07243214762dbebfd11c4a6d7175f22a410b7838628a5933600 31.82MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:802e95f73fb87648a0b168369a6b8b2d8cd86b25a08317ece4bbf418b3737053 28.26MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:e5719d450d133998894141a5f56fa3ca62d9bba8c3a4c14a0f23d2dd04aa8bac 16.92MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:15ecbe9e118c3bc0e4e585da1539383435d8f2f4aeecf4ad0ce5ea5797e5adff 24.64MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:2d88ebc27e93b2648b4368808d0682d6b86fb27e9a8c9117d7591c1e1a3ef407 39.09MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:c8c0554931286354ee41452f49b63ef27b72b0b92c3d44f84a870597fdc94761 17.44MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:f5c7b4fa93b9d218e99110ad3eddaf04784ab55077ad1dc574266d8e5f5ad04b 13.44MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:66a04b080e544dc2332946c38052c5c7d2e2eb017ccde5b574099e5bc0cc8065 29.56MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:ccedeed05e4207050ef44dd5773c948a2b4f7d85b7cf0ea6f18984518f03d947 83.55MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:e54107e78c6408f1da8f297c9257acce8c12342fc9081b73cb64f6f191ef97c0 9.386MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:8a41da6cec2398e936fb11fbe66344278f9bccb4552667d16c9cf7bd2a3d44a7 29.01MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:6df6866f6fdfdba183f680ad854ec2e81a446c9f8723f35feb81a25ec410f242 50.28MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:0b3793e01f41d947f8bce3b51f6b419a5526431686f5fb8be092d66a288bdc17 28.25MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:a3c8f12d44d6493423ad9e28fef942b73e66d005143faed486226a96ff3f37e3 8.9MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:2302304d5598f1bf063ee89cd5edc404c760dc617f117c2e0aaa6b6e7ca3e5c3 124.4MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:33a119f5e566aa590281b2842b9f03d7c405b4988f626e5107878da8c3f9a7c4 7.585MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:367f4b46a5fe7586aaec3634167371eaf51987196ea7a6cc95afe601d9955c8e 14.86MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:445e5ef5e706881c789bc938c70c6bbbf90dd06f1afc113710da68e654152fd2 19.7MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:e293256dc1ab2a9495dd7204625cd9f8a273d0d3da3f18526bcb150496f7a1a3 21.33MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:9efbeff868ca47aadbbbdb5c9949337505735b38fad00ff82305645bb3b89a0c 41.51MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:0749408b74331c62d4ee9ac898d4ac15790e0dfefca6698f0edd46019fd2dc3f 4.802MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:a72d0b8729ec3eb4367676c92680df04228e6971323d143b7d067c4d58dae198 6.993MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:cccf212cf4cc833a114e03ad1185251bfc3d908f1bcc7b5153c0d551e1cc8ed4 29.68MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:6f3b01383337a298930884ef8961ed0e3a7aae2d591fa02adf60212a0ca70e3e 92.83MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:2afb2eb1e42baa07bd1c5c5d4aacb7a4af054a7154270cbba7c82476761ce240 29.71MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:720275e24950d9fb54b7ad5a62a21505c3a666f050d8d0a7deb78b8062bbe3b1 27.25MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:e50ca0bc0533a68185ae4d6886dac4d54656369bd4324f06ec78d51e9cabfed1 28.41MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:72428c44ac70b800d0d7027b9a782c57ea1c49a1006490a0375d8bc7b77642e6 14.15MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:f314371d464bc25b8d9e1875b9060fd63ed60df06d819413948d955eb5d35d04 18.18MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:930a24a335705c0b20fe79b020f568f998354e975373e27ce42982fd3aa323fd 10.68MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:048edbb18d9b1752c92ae662c195bdcdd515a6a4333c9a5c014ec34868467114 11.85MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:81936105471f5aef77794f125cae27e1e9672b969a0d6d34a173c048a5d37a04 38.36MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:e1d96d74a2b42252d3fe3840dd179ec9d4e53efc368006f3c5ce69c4b09506c4 32.52MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:352d8584ca4cc2e44c565ae1fd0e5ed7d2ce6cad5a35813b71ade3121914f3c0 29.97MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:64408119965c952b5c82666873dafd71ab13d3ed2c9c31f8f4ebe22d7db9d504 24.78MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:ab91fda21693d6bea099bdff18c74abbe85c31dea5f23daf226adef3a7660ab2 275.1MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:8affa7ba3e4abed2e987e77f289b4578edb4ee21bc11466945faa97813478dfc 55.47MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:9fa7e6e181436a42f71ad38303d0bd0f360e3256b3635ceb2ef620dd5cc60377 25.78MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:09dd8cae3e466952936c3d0dffac28a96ca88bb87311b008b54384e38b6e401e 17.87MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:8fe48571d13bcd4928aad13cacc72caf04116c089d964c37c53b5138d20d0e05 25.9MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:95a7976d52f959cad92d750e5b0c4dbf5d689f2a81159b48f459b5b04f276e1e 8.801MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:38f2d1843c57344091241ea9fdce07caff856b9fc32fe4a91741a57688eff1bf 47.28MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:241f8b429e01c0a1a18abd44fd7d9bb47ffd35900d6dae4f787d4e01a2fbbf2d 29.61MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:16de42bf1c6e1f05cb0109c3f6fa2d42c7ce63f45afa3c92b7904160cd6ded3e 2.716MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:e45e03a1e673b1352ef34df7c6204429b08de25e1c3b99667534e1f9981f563b 401.9MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:ad99100dced0d2119d428a3319f521801e8fc69f5a122d5efb2d6f1acb05399e 90.52MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:809e9fdf6fc5aa3940ff883cceab0da5bc7ef663b68b7eb96b52d2f70b6668eb 12.14MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:54b18f0c1870b759dbdfb6c5132402209d9729c46068ed5115904994153ae3f2 41.01MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:52e1e0b0ae9ca461e6878abc19455a9e912cf76c5375c182bd69de34ab6e1fd5 25.35MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:9ec044578bb6db72f1970786cc028eab409debb85ec26c854ff35e63370445a6 91.55MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:6a044de06db0f61120dd2aa3224fd223bb0700f5adfdf2b3d98d9bdfb7baac0d 30.25MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:72bab76b5562a8d638c9754e23116065700f0bf5465c1aa785423454931595f9 34.89MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:02fe70cbb796b47c80a3982ff567d9af5731c36e693e3020556d8f17c8ff92e1 129.6MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:16726b8f329ac3282e9b197e9567fa906fa4b67dd74ada5583eedde1acef4cd3 1.029GiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:ad3dfe687ff1b4eac6f7feecbc801071a3823a212ab8a8c0dde1783600f22b53 150.9MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:5e10dec8216473c24c7e7af88c5366f8ff823d190afd370f953c15dcebe887db 112.4MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:b1090b12aaaef17b6379025090b47edceb857b424e7c6b6658d42ab0856833a7 21.32MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:ac029f5f6f561a5255318871a92509074840937aa14908d4fe305a9d43fc067d 34.6MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:57586190fcb74276d1b61cb824e02aae141b6c98b7e2a3d77bffb5e88bee5d8a 45MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:4068a75a5665067da383d3472fb15010c6ede8296673f468cddf31372e1a7431 9.534MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:2e6e85f13ac41c7b6440c9ba2ecf21dbe0dda394136f17dd79fd380926da32d9 105.2MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:9481cb1c61f71b18c54294f7ab30b196fdaa0060e3a156a6ce77b5e553fa5536 33.48MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:5389bb779808f52baf44033972e885e670994bb9a04b33a210f34ec4859408f4 120.8MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:8b9a0c1273777e2405d56f6c32a8719dda4dd7eb426b42933fa6181cbe2798be 254.3MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:d657b2cdecaf6f68f08f7038b5f01136a92ca82ba6afd4c1304b47da58b0ba6d 18.92MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:74eb221a1190858dea5273c6367499b7047c9aac3d10cdd73898fb7cebc20149 86.38MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:2d678de5f6af21c1f812b0ebe17bdea75503f0c5026143429702a791cd1dc70e 40.88MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:313e40d8306fc9a7f4a0e479a6f3be58809245890a4bcb00e999a9b1417e912c 31.87MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:1c243b082d6332976400a9f2bd280e43d255b0b076ba9918041f277db7fffacf 25.42MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:0b0334e3d50db81777ea74adad1b2fa7d348bc386122144e76589161ba0da6d2 29.15MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:b679ce34f2e79abb75e66c6d0b8d8eea9b78fcd948a4973e7bda10fccc98e094 25.98MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:b2cb52b1ed8a6c29925130683485ca0ddf26135c902973b59e3b85538e04c4f4 68.26MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:7a02c97f53bb3e4b7ff01c7f682e55639cb6103b94fd40ba987b25805aa8c0c2 9.219MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:9bd621fd25b3f6af722a9927011e2c52ada9eda0553adfb03361031c60e09257 152.7MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:c6bef045b656245e16e8c6e13be1b337652a6289482039d1d033675e9db8eaf1 103.6MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:247117ceab4073d061c36bfd7702ba20e02b2cdcea47fbc2da6fad6af325e095 24.45MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:47ee8eb7287d509cfcae37ba8303369a92d248e0205255d1e2625a466044b54f 434.3MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:3dafb7ce990955c865f81239572064b14585f7678e94d920166cfd9c3f5df5af 29.59MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:8dc6794054405e67417c0582d3dfff6e836d46d08acc912ba5bb18153ea4224b 49.1MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:de0315f77908b36bded7ff7871773a103329d230a490d071642123afed992a69 29.64MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:d857582bea95499dd10bda291d820dce6c4fda7c33810406ec2cea2dfaf462a1 21.11MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:e57b924e71694998a52fe5fcd6dd82f27ff3a38e458c2306a59dca8fbc9fb61d 118.1MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:45f8f1755cfb625379b2668e50a87a129abc0bdf96b86954b7b96ef9897eef99 38.55MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:c9aca95b77ccaf9dc5a6e7b0092a5c93bea35b44f3e4bc914c62768581d07148 421.2MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:626138ddd8a2d28e3ab511730cfd6937406470b96f1b5825ace55ac2dfb49b01 13.57MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:a741a1c21aeb6b19d73364947077ad95b9f03bd6a9b62e606b5efc22c87404df 30.53MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:7492892b5e7853eb6234a57f4ab3b2a00208ac0b5318c6925a77b08024151b52 6.042MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:101e49f360bb05fbf3951e7d748dbf63faa50a07aed7c92115b194974f3437a3 5.034MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:eac1b95df832dc9f172fd1f07e7cb50c1929b118a4249ddd02c6318a677b506a 79.44MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:f0aa6c37b45ae68681e019b571b957fc5e9c9ebbd66c4299458bde9ae12aceb4 18.63MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:9d0c1d71973a179f98db25d0f5dbfe43ca6f5f3e4a1c25e403203a3370497bd1 130MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:84bc3dab2efafa1f2bd8157a15ef9dd4a23557fdd7358151a50ac7dbf51209d3 3.44MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:b43c2735ff2f94df00a1504731f3eda0e330d1ac65fd3d6ba6701bdac95e6c10 19.89MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:b5781c57cffa8e6c5e3ae1618a498b23ae4e57bc0862abe0d46ac0c27a69b370 20.76MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:fb44c74f36a9cb2285bbc4ed2d28832b97cd31a003caa655b660b1cfa267e40f 22.67MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:4620514455f3b1051f0f4460ed9dba2cc6e72edde663c96648facf59f3f03a76 435.8MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:72c8c2eb9a1af31b42cbb99cac5af66fe34ed1bc615f604548c53ca9008347b0 131.9MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:2dfee98672778d02d57f49b329aae6a7eff485a62112646c1e53937e7d07e425 18.02MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:6b0b505bf4d22df29cef3cedfdb8bb1947608c70dfde4352e3105c13b7325b6b 60.97MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:8e1f8299ae48cdb1a6ab42dfb48d2e5f5769b91dff9fbde4d87a7b4802acc234 5.335MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:a9431271827ba69daa92d11245bb50e7e05c041b89b4090b862860283f57574a 186.4MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:68864141dcd073e3e4379bcaf7bacb1b19fa0c293da25f8835dda9c1660fa8fb 37.69MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:95bb11286ffa4629626361161846b587eaebf7e6fc5be9b59120388d459a1aea 433.3MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:72885a81707deb1d8543ce2134d13691341a7c4fe7a9b3a48f94ad4c9fd1642f 29.78MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:e22321c63f0f6ec35f29133f0f59f9f1ef96675cd9bce699e08dea53e7464613 18.1MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:44c835b889889938274a454feb4e98b2cc6d533690095b604a28a0cd9360dce5 27.21MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:42cd9d27ea411d91c1c2e1b2ebd02531172046e602ec238fe2f5e7d3b2ea5819 29.56MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:833937e86288cf0810fe2f3f3f091e8f21a23db7572794a8a78f5f1ebec9003c 94.31MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:e3b537021da4df14a5624bdfcd493cfe8c99da1aa4d5cd4591ad0ed2b477b0ec 30.19MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:de2a09a071f980349b3761090b374c0d31a44c49673bd976db9830dc38b6840d 31.33MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:8272348703e5a7d43b0cc8a548ed1cd1e1dcbecf472c2c52764404c02050d130 29.36MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:626b321f688cb48ef17e00764ff950943e6f776ad0d42d229dedeb4d6a1db3d6 17.16MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:fba19f7f6910ac263c029e59db5969f9213d480ee51e3be9674ec1290a65e879 29.84MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:53de18eed10c0b7e53ab8be2750768cfdcc1df9e320c06bc697ff19aa5603908 374.5KiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:fa56458364ac2a56f0051268f5e8249e7b9c9d5333b3458d0d7b6d50ecd30bc6 39.35MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:7a9eee3b7981073f117952604a5cd2b32814bfb7ac37047c2cedc5426791a785 9.476MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:4b2bfed57f6412e6513a60e0491be8721592df856726494e79c8553118f77897 11.45MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:a0453b87f28599bd146de4333b3bb6bda5a24c550308a9c8d18c5c50f84e4824 28.83MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:7356b81aa7304d516ee8a8a279804e90bad57d13296c60fc35bfc93313d1dcd7 32.76MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:88e435ac65bd0addb7210665e220c2508b54a48678d0e47e199c8f961631c816 44.97MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:cf8acd280d29161aab647117ba03bedf28eb769ccda11b727edc1ae9e4676830 412.2MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:93aec587377458c393edef72be660cd67c8934923dd2efe3f0b2361e2eb14060 137.8MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:e0a10bba1818f07243214762dbebfd11c4a6d7175f22a410b7838628a5933600 31.82MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:802e95f73fb87648a0b168369a6b8b2d8cd86b25a08317ece4bbf418b3737053 28.26MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:e5719d450d133998894141a5f56fa3ca62d9bba8c3a4c14a0f23d2dd04aa8bac 16.92MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:15ecbe9e118c3bc0e4e585da1539383435d8f2f4aeecf4ad0ce5ea5797e5adff 24.64MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:2d88ebc27e93b2648b4368808d0682d6b86fb27e9a8c9117d7591c1e1a3ef407 39.09MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:c8c0554931286354ee41452f49b63ef27b72b0b92c3d44f84a870597fdc94761 17.44MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:f5c7b4fa93b9d218e99110ad3eddaf04784ab55077ad1dc574266d8e5f5ad04b 13.44MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:66a04b080e544dc2332946c38052c5c7d2e2eb017ccde5b574099e5bc0cc8065 29.56MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:ccedeed05e4207050ef44dd5773c948a2b4f7d85b7cf0ea6f18984518f03d947 83.55MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:e54107e78c6408f1da8f297c9257acce8c12342fc9081b73cb64f6f191ef97c0 9.386MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:8a41da6cec2398e936fb11fbe66344278f9bccb4552667d16c9cf7bd2a3d44a7 29.01MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:6df6866f6fdfdba183f680ad854ec2e81a446c9f8723f35feb81a25ec410f242 50.28MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:0b3793e01f41d947f8bce3b51f6b419a5526431686f5fb8be092d66a288bdc17 28.25MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:a3c8f12d44d6493423ad9e28fef942b73e66d005143faed486226a96ff3f37e3 8.9MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:2302304d5598f1bf063ee89cd5edc404c760dc617f117c2e0aaa6b6e7ca3e5c3 124.4MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:33a119f5e566aa590281b2842b9f03d7c405b4988f626e5107878da8c3f9a7c4 7.585MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:367f4b46a5fe7586aaec3634167371eaf51987196ea7a6cc95afe601d9955c8e 14.86MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:445e5ef5e706881c789bc938c70c6bbbf90dd06f1afc113710da68e654152fd2 19.7MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:e293256dc1ab2a9495dd7204625cd9f8a273d0d3da3f18526bcb150496f7a1a3 21.33MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:9efbeff868ca47aadbbbdb5c9949337505735b38fad00ff82305645bb3b89a0c 41.51MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:0749408b74331c62d4ee9ac898d4ac15790e0dfefca6698f0edd46019fd2dc3f 4.802MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:a72d0b8729ec3eb4367676c92680df04228e6971323d143b7d067c4d58dae198 6.993MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:cccf212cf4cc833a114e03ad1185251bfc3d908f1bcc7b5153c0d551e1cc8ed4 29.68MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:6f3b01383337a298930884ef8961ed0e3a7aae2d591fa02adf60212a0ca70e3e 92.83MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:2afb2eb1e42baa07bd1c5c5d4aacb7a4af054a7154270cbba7c82476761ce240 29.71MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:720275e24950d9fb54b7ad5a62a21505c3a666f050d8d0a7deb78b8062bbe3b1 27.25MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:e50ca0bc0533a68185ae4d6886dac4d54656369bd4324f06ec78d51e9cabfed1 28.41MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:72428c44ac70b800d0d7027b9a782c57ea1c49a1006490a0375d8bc7b77642e6 14.15MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:f314371d464bc25b8d9e1875b9060fd63ed60df06d819413948d955eb5d35d04 18.18MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:930a24a335705c0b20fe79b020f568f998354e975373e27ce42982fd3aa323fd 10.68MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:048edbb18d9b1752c92ae662c195bdcdd515a6a4333c9a5c014ec34868467114 11.85MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:81936105471f5aef77794f125cae27e1e9672b969a0d6d34a173c048a5d37a04 38.36MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:e1d96d74a2b42252d3fe3840dd179ec9d4e53efc368006f3c5ce69c4b09506c4 32.52MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:352d8584ca4cc2e44c565ae1fd0e5ed7d2ce6cad5a35813b71ade3121914f3c0 29.97MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:64408119965c952b5c82666873dafd71ab13d3ed2c9c31f8f4ebe22d7db9d504 24.78MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:ab91fda21693d6bea099bdff18c74abbe85c31dea5f23daf226adef3a7660ab2 275.1MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:8affa7ba3e4abed2e987e77f289b4578edb4ee21bc11466945faa97813478dfc 55.47MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:9fa7e6e181436a42f71ad38303d0bd0f360e3256b3635ceb2ef620dd5cc60377 25.78MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:09dd8cae3e466952936c3d0dffac28a96ca88bb87311b008b54384e38b6e401e 17.87MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:8fe48571d13bcd4928aad13cacc72caf04116c089d964c37c53b5138d20d0e05 25.9MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:95a7976d52f959cad92d750e5b0c4dbf5d689f2a81159b48f459b5b04f276e1e 8.801MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:38f2d1843c57344091241ea9fdce07caff856b9fc32fe4a91741a57688eff1bf 47.28MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:241f8b429e01c0a1a18abd44fd7d9bb47ffd35900d6dae4f787d4e01a2fbbf2d 29.61MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:16de42bf1c6e1f05cb0109c3f6fa2d42c7ce63f45afa3c92b7904160cd6ded3e 2.716MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:e45e03a1e673b1352ef34df7c6204429b08de25e1c3b99667534e1f9981f563b 401.9MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:ad99100dced0d2119d428a3319f521801e8fc69f5a122d5efb2d6f1acb05399e 90.52MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:809e9fdf6fc5aa3940ff883cceab0da5bc7ef663b68b7eb96b52d2f70b6668eb 12.14MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:54b18f0c1870b759dbdfb6c5132402209d9729c46068ed5115904994153ae3f2 41.01MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:52e1e0b0ae9ca461e6878abc19455a9e912cf76c5375c182bd69de34ab6e1fd5 25.35MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:9ec044578bb6db72f1970786cc028eab409debb85ec26c854ff35e63370445a6 91.55MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:6a044de06db0f61120dd2aa3224fd223bb0700f5adfdf2b3d98d9bdfb7baac0d 30.25MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:72bab76b5562a8d638c9754e23116065700f0bf5465c1aa785423454931595f9 34.89MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:02fe70cbb796b47c80a3982ff567d9af5731c36e693e3020556d8f17c8ff92e1 129.6MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:16726b8f329ac3282e9b197e9567fa906fa4b67dd74ada5583eedde1acef4cd3 1.029GiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:ad3dfe687ff1b4eac6f7feecbc801071a3823a212ab8a8c0dde1783600f22b53 150.9MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:5e10dec8216473c24c7e7af88c5366f8ff823d190afd370f953c15dcebe887db 112.4MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:b1090b12aaaef17b6379025090b47edceb857b424e7c6b6658d42ab0856833a7 21.32MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:ac029f5f6f561a5255318871a92509074840937aa14908d4fe305a9d43fc067d 34.6MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:57586190fcb74276d1b61cb824e02aae141b6c98b7e2a3d77bffb5e88bee5d8a 45MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:4068a75a5665067da383d3472fb15010c6ede8296673f468cddf31372e1a7431 9.534MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:2e6e85f13ac41c7b6440c9ba2ecf21dbe0dda394136f17dd79fd380926da32d9 105.2MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:9481cb1c61f71b18c54294f7ab30b196fdaa0060e3a156a6ce77b5e553fa5536 33.48MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:5389bb779808f52baf44033972e885e670994bb9a04b33a210f34ec4859408f4 120.8MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:8b9a0c1273777e2405d56f6c32a8719dda4dd7eb426b42933fa6181cbe2798be 254.3MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:d657b2cdecaf6f68f08f7038b5f01136a92ca82ba6afd4c1304b47da58b0ba6d 18.92MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:74eb221a1190858dea5273c6367499b7047c9aac3d10cdd73898fb7cebc20149 86.38MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:2d678de5f6af21c1f812b0ebe17bdea75503f0c5026143429702a791cd1dc70e 40.88MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:313e40d8306fc9a7f4a0e479a6f3be58809245890a4bcb00e999a9b1417e912c 31.87MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:1c243b082d6332976400a9f2bd280e43d255b0b076ba9918041f277db7fffacf 25.42MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:0b0334e3d50db81777ea74adad1b2fa7d348bc386122144e76589161ba0da6d2 29.15MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:b679ce34f2e79abb75e66c6d0b8d8eea9b78fcd948a4973e7bda10fccc98e094 25.98MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:b2cb52b1ed8a6c29925130683485ca0ddf26135c902973b59e3b85538e04c4f4 68.26MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:7a02c97f53bb3e4b7ff01c7f682e55639cb6103b94fd40ba987b25805aa8c0c2 9.219MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:9bd621fd25b3f6af722a9927011e2c52ada9eda0553adfb03361031c60e09257 152.7MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:c6bef045b656245e16e8c6e13be1b337652a6289482039d1d033675e9db8eaf1 103.6MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:247117ceab4073d061c36bfd7702ba20e02b2cdcea47fbc2da6fad6af325e095 24.45MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:47ee8eb7287d509cfcae37ba8303369a92d248e0205255d1e2625a466044b54f 434.3MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:3dafb7ce990955c865f81239572064b14585f7678e94d920166cfd9c3f5df5af 29.59MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:8dc6794054405e67417c0582d3dfff6e836d46d08acc912ba5bb18153ea4224b 49.1MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:de0315f77908b36bded7ff7871773a103329d230a490d071642123afed992a69 29.64MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:d857582bea95499dd10bda291d820dce6c4fda7c33810406ec2cea2dfaf462a1 21.11MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:e57b924e71694998a52fe5fcd6dd82f27ff3a38e458c2306a59dca8fbc9fb61d 118.1MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:45f8f1755cfb625379b2668e50a87a129abc0bdf96b86954b7b96ef9897eef99 38.55MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:c9aca95b77ccaf9dc5a6e7b0092a5c93bea35b44f3e4bc914c62768581d07148 421.2MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:626138ddd8a2d28e3ab511730cfd6937406470b96f1b5825ace55ac2dfb49b01 13.57MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:a741a1c21aeb6b19d73364947077ad95b9f03bd6a9b62e606b5efc22c87404df 30.53MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:7492892b5e7853eb6234a57f4ab3b2a00208ac0b5318c6925a77b08024151b52 6.042MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:101e49f360bb05fbf3951e7d748dbf63faa50a07aed7c92115b194974f3437a3 5.034MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:eac1b95df832dc9f172fd1f07e7cb50c1929b118a4249ddd02c6318a677b506a 79.44MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:f0aa6c37b45ae68681e019b571b957fc5e9c9ebbd66c4299458bde9ae12aceb4 18.63MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:9d0c1d71973a179f98db25d0f5dbfe43ca6f5f3e4a1c25e403203a3370497bd1 130MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:84bc3dab2efafa1f2bd8157a15ef9dd4a23557fdd7358151a50ac7dbf51209d3 3.44MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:b43c2735ff2f94df00a1504731f3eda0e330d1ac65fd3d6ba6701bdac95e6c10 19.89MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:b5781c57cffa8e6c5e3ae1618a498b23ae4e57bc0862abe0d46ac0c27a69b370 20.76MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:fb44c74f36a9cb2285bbc4ed2d28832b97cd31a003caa655b660b1cfa267e40f 22.67MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:4620514455f3b1051f0f4460ed9dba2cc6e72edde663c96648facf59f3f03a76 435.8MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:72c8c2eb9a1af31b42cbb99cac5af66fe34ed1bc615f604548c53ca9008347b0 131.9MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:2dfee98672778d02d57f49b329aae6a7eff485a62112646c1e53937e7d07e425 18.02MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:6b0b505bf4d22df29cef3cedfdb8bb1947608c70dfde4352e3105c13b7325b6b 60.97MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:8e1f8299ae48cdb1a6ab42dfb48d2e5f5769b91dff9fbde4d87a7b4802acc234 5.335MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:a9431271827ba69daa92d11245bb50e7e05c041b89b4090b862860283f57574a 186.4MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:68864141dcd073e3e4379bcaf7bacb1b19fa0c293da25f8835dda9c1660fa8fb 37.69MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:95bb11286ffa4629626361161846b587eaebf7e6fc5be9b59120388d459a1aea 433.3MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:72885a81707deb1d8543ce2134d13691341a7c4fe7a9b3a48f94ad4c9fd1642f 29.78MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:e22321c63f0f6ec35f29133f0f59f9f1ef96675cd9bce699e08dea53e7464613 18.1MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:44c835b889889938274a454feb4e98b2cc6d533690095b604a28a0cd9360dce5 27.21MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:42cd9d27ea411d91c1c2e1b2ebd02531172046e602ec238fe2f5e7d3b2ea5819 29.56MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:833937e86288cf0810fe2f3f3f091e8f21a23db7572794a8a78f5f1ebec9003c 94.31MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:e3b537021da4df14a5624bdfcd493cfe8c99da1aa4d5cd4591ad0ed2b477b0ec 30.19MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:de2a09a071f980349b3761090b374c0d31a44c49673bd976db9830dc38b6840d 31.33MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:8272348703e5a7d43b0cc8a548ed1cd1e1dcbecf472c2c52764404c02050d130 29.36MiB
 
 
 
 
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:ddef0b8dafbbdd741e049e7b68cc43e2f34cf823d865315ad83869948896afb9 14.61MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:7b4b6cb225abe0a6d65a4d68f0ccf0f613f259368f4857f2285e0d97a50b1388 62.35MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:7804f363532eba76317364c7c548ddaef6a3f93ebb5edd1e4483e646f7e28f7d 45.86MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:b61c3074dd7067516154ad2141f3995340bd19122be5a32dc41e3cc06d9ee7c1 19.99MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:c980ac22ce4874cda4dbb6e07ffd5f5174e76f26141e053492ec186d4f7a39ac 25.04MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:934b5acae9ef7926edb61751407e0adb478746c714d98ef7b96957850cdd4eb4 29.63MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:157537e57374f03ddd085c000ddbfd311133c1577d2af661bc9cef58eebd9ee8 25.2MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:5333f505fbcd4c446f9067a09d98652f6b7441f4918b678cb6700ef1f375c628 24.93MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:ce1cacfe1d27de0711e4d3ea12ae84541160e2beceb2ad7d965e21642ef277aa 30.21MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:eeca239718c8acf5c0f075f72f3942f6d83cd9f391f2816cdd3ead992b4d4c77 20.09MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:c71b5003366876faa2cb02eb097f5a5fbf138544e5ea375c1e35bbf77e2a81a7 91.14MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:372b2bb393e07c59050476939a5a21876707c4e0ea130a60eae75a4d7f564841 31.12MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:c8177f2abd74bfa004be57007b83db653b91bce59d9087c7d78bf3a5cae206ec 108.1MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:0bc56e8679aa66db98d6434e315fa2d0ef36993b4b5a0a131aa9640bce25df74 21.59MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:7e99997cc9b770ec909a5c8098a8fab839337b43013c075505c93b3c3c21a6b3 98.65MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:56764cdf702c98b30386be602cea63931b75f54d57cfd4a307db510a7c07a2bf 16.12MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:19ff28ff547bb885e50a88bb29be78e8b1e7bdf268b025e7052cf2fc5ce02e47 38.72MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:450c1856cde291bbe8de8e7eff490e70c10d4bc6f3f51c1f4f6170bd529ca925 6.133MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:01bb209932cb471d1ef1e24722ddcd75ac82426fe74da41338ef3f36893e4d98 86.26MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:983aa85fb9628adb1adc62f8e3869c6f9df87e0874ea92199fedfc6514647e3c 43.34MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:005e519404108145e27c6b62a0317b423b3ed312500f4f799cbdece832d8a9d6 25.29MiB
-uploading: lab-installer.karmalabs.com:5000/ocp4 sha256:3fb8184e9de5f386c7421a08dbddd2217af4496f6f13ec448bbaeb0d87edbfcd 537.8KiB
-sha256:32a461d8ea341926133857f586dd602f7fe85c608ad93e46d07be7298fb5a6cb lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-coredns
-sha256:905ad7df7e6900619c73f144ccbc1b5e60a8b0dcec73c099470ef43a7ee1bbe8 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-cluster-autoscaler
-sha256:881c259179500e163e0f8f4e6f2b425408daacc26c2cde4a7095e90776d8060b lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-tests
-sha256:52042dbf174836944f9a03271499504f3a0d7a745a56693db0a386eea02afbc9 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-multus-networkpolicy
-sha256:b7deb0532f3c38759685e5bbece97417e99d9bc26b4b2a8414cb4963ec38ff3b lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-kuryr-controller
-sha256:38c835034f6c3f509771217a6236379b90897d8e041a4bfe780b7c23630b021a lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-grafana
-sha256:1f583ea8fb1035753979e3adaec1f7668e920e8d8a94cddf0646b723b16b6d9e lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-network-metrics-daemon
-sha256:bd6ad5c429fb7e31e6045e7927f76210c22e7573f387bc61168520ff4453e2c0 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-configmap-reloader
-sha256:bf8ab195054fa186a310f5534806e47178c3354daada970f3545e7d0a7dcbb07 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-kube-proxy
-sha256:701ffd1c51a84b9b712fed1a2681bb917b28b2170939252871701c0ab3b5b1fc lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-openstack-cinder-csi-driver-operator
-sha256:df0c66fa32624c2f286629fe88be9e602f756698317e73c258eb4dd7319d5e3a lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-cluster-storage-operator
-sha256:fbae5e73411bed5c2eed978369f7b53c4848e07218b7dfc0ab63c2f115c890f4 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-machine-config-operator
-sha256:3de4983cddbf5a2c92f71ceaf087434c50e8d5e193ffb9cf6f21c69d662d3933 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-cluster-kube-apiserver-operator
-sha256:238194aeaf2f240e800e99195103a75b3c27ad57cb3b31ceb34b187850d78946 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-multus-cni
-sha256:c0e1e8b8bf3b6cbbed2fb00aa21dbd3235ee20f66fa0d82860dd216098fbf2cd lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-openstack-cloud-controller-manager
-sha256:868279f5315c4582c971a7b2d20b951773544ea280a161ae389eb5b0fd715424 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-cluster-machine-approver
-sha256:bfa5e4216d205199490cd7358da492e060be4fe6c654a8713a41218d4047ce46 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-azure-machine-controllers
-sha256:033ddc1e24008c6183722e6a0583ac050f0fa157485508e165874d43f2bae6ab lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-openshift-state-metrics
-sha256:823f071c623306435b53fe42db79a663a62c435b7284be0fe2befa2553af3752 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-kube-state-metrics
-sha256:f72aa34decd784392a5784e93ffd8616445c3f749d932e4f9502f29523493e4e lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-csi-external-resizer
-sha256:7680102adb86388a3ae7399d25e14fbfd0f8bbf3c6377653f88b7104ef0509db lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-telemeter
-sha256:38c1ef9d44f4a90bf83f3dc75f2aacc6478356c7fa2708c881e914af4df5c8e8 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-hyperkube
-sha256:9665c5b4996ad961fffd2672f7bf61654b9700e3ab9cc954e6892c8f8d2f635d lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-ironic-hardware-inventory-recorder
-sha256:738b21ab3a9af2f3dbc2e0be5a598d9b10f27afcb6c3504c4a9b0c62f02724a6 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-console-operator
-sha256:a9532f0636367a6776915e79332e6acfbc1cf6875f9477236e651f20435c70c3 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-prometheus-config-reloader
-sha256:306883a3908244448769eacd7dbfcf209ec56dd03021823a2941799be1be676b lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-prometheus-node-exporter
-sha256:be638091383eadef518fcdad50493bfde851f8010d6d2c57e0f9cecc0f70f48e lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-keepalived-ipfailover
-sha256:2ceee2ebe189d8c18a1899f9f2cb0af0dca58d14c415777f26caa689d1339b1f lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-network-tools
-sha256:ac2ad5b01eed7b0222dabbfb5c6d4b19ddc85bdaab66738f7ff620e4acffb6ac lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-machine-os-content
-sha256:4491e2aa17088ba7461019aacedd713cbc70becfa60962123b65290308f449e9 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-azure-cloud-controller-manager
-sha256:7ca795f6897e5057ca7c1c2bfb2e80fba1ba479be72ade1d81c7fbadfe9eb10f lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-multus-route-override-cni
-sha256:da3185ad005ba094e86c4d7484c591ed6e81bfae7a8760bd33e0772bcfda53db lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-cluster-monitoring-operator
-sha256:a68a352a5e835daa99352c73bf13032436a148b02af8cee4d555bba969cca24b lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-machine-api-operator
-sha256:4d76d15cd9636109bc60931e4b85143852d2dd8d24d42e66785256ff4dfbc3f5 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-operator-lifecycle-manager
-sha256:cf349629029e936efe55b99176fc7b30834b49778330b67b7de89205bb98dfe7 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-csi-snapshot-controller
-sha256:9065acf7561d962955488b476b3f24af3b8b72b2fde1690cb35d3245c53c6390 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-vsphere-csi-driver-syncer
-sha256:b7aa0776dad20a024ed5df80ae8590ad973376aca1af4cb7dfb60a7af9e69415 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-csi-driver-manila
-sha256:1410141d4cbedd0d98af5376d0f0ce7764f1a84f0657034b5f958a94c345fe8d lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-deployer
-sha256:49dfda0a23064a8b82acc977b4e5554108a7c55b1e0259bf23f82f579267d1ce lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-csi-external-snapshotter
-sha256:04c9df04f725722cc4ff6799ca928c86c91f1bb0ec342d6251fc58940466c88b lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-operator-marketplace
-sha256:b47101401214acae9f8b92ef4b6ee38564206a9cd5215a087a12ce63c7f485d3 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-cluster-policy-controller
-sha256:2451bc005859a0987ef74382c4b839e900d7e903c77663840ff0ed0207a47635 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-csi-snapshot-validation-webhook
-sha256:27fb78cf79e0ece439b68c361591e94d425c4c5ae2737f868aec095f14ab2786 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-container-networking-plugins
-sha256:5c55be02e32e688ec5a404858a08cf533ba15b50b6f0e028089635b47db5866e lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64
-sha256:5b82201b95d2d6ad49a0acf957bd96cc266b06c5066dc4ac07f7ed90edf507c7 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-aws-ebs-csi-driver
-sha256:717fcc233a77be33872984fbe37ccaff2ecce0da5de11df59b1a3bed55d71fb1 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-cluster-openshift-controller-manager-operator
-sha256:c84ffc50d0ca44b7aef6e4d9b8c791affc5404a047ce7e9b73208b5c96ae0e21 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-gcp-pd-csi-driver-operator
-sha256:aaea2c8986613d921d83db5cc346f3ec7ecc6335b5fa09d74907a9cec4aa8fdb lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-kuryr-cni
-sha256:0af4ea37b14033cf6bfbce81a20dbb60ee04dc7e28f9aa890e151834e8400a88 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-openshift-apiserver
-sha256:3b965dbf1f0f5b173ef961d71a04d36c41831b8086ee8b33607ebfe1cc7ac158 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-cluster-ingress-operator
-sha256:16033ec3aed9bbf059909a0afb3d5a98a09129c8d51c1ad6cf75566a3808f54a lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-cluster-version-operator
-sha256:65369b6ccff0f3dcdaa8685ce4d765b8eba0438a506dad5d4221770a6ac1960a lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-driver-toolkit
-sha256:17bfe558a9b7201bd2e58bfc4fc73230a530ffc423fe082f9b7fdc870dd01271 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-jenkins-agent-base
-sha256:5c6e763d01ed9eecbfb02dbe47b0b66abd9943126f3fb3cc6de9041007af8a36 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-cli-artifacts
-sha256:99754e32729f454eb82af5e3a29c35ec41f17418a6c83a0bacbc666f00c52695 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-ironic
-sha256:b426482b2bb57fb6a93611fa7e6a77200d8312458c2383a37ae743732114a322 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-ovirt-machine-controllers
-sha256:5e620f670b78ae31e9f01b5439cd9223c65d5a722c2742f0f73dcbe8c31237b8 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-cluster-baremetal-operator
-sha256:13201e0adde9ac709d5588b9e59de0dbc313dd1c095ffd4bf535369ccf4e934c lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-ironic-static-ip-manager
-sha256:eaf8eb2df8bf32e3d44f86e8eff0437937ba1b3ac9dad72e53dba5a447b3d886 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-cluster-network-operator
-sha256:6949da0886e5c938aa308dc49bf45431538e554d958a730c8ee2555cfb5d4b37 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-cli
-sha256:2f51eba9bed3db47a06578298b8e06db68e0f88c6be66d7120829495ea4458a1 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-service-ca-operator
-sha256:6dbd05798bfcb09c072e9ab974133cb5d415f13d1dc3831fca4a33c529a6fa3a lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-docker-builder
-sha256:308b56720ca4bc317b4edacc6c5f266c9ce86f7ec6fde15aca24776a47127c31 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-docker-registry
-sha256:45c72c864086f0cfa47c69b57a3d8dd753be4069ea3f0f6850e1c89c5ab2501f lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-ironic-machine-os-downloader
-sha256:821f460b926444b9edd0bc04289050009e9ea3d5ca0d722451b76467a166f0c6 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-cluster-bootstrap
-sha256:718902f807c8269d5ada075dc258df209b0cc309eb58600aa55a63234f787273 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-installer
-sha256:650d86ec3b60e373e0db0214e4fc3dd424d67f589d6dab8de9c250e54ae62af4 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-multus-whereabouts-ipam-cni
-sha256:3ba48e83d25460644a26005374596dff2b39bebc305d1e2d6d07c3eb55bbbbf2 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-csi-driver-nfs
-sha256:852fced3a8cdfe1ac8edc4a8c1f022e33ced4c080e09c2ea4a9fe7dc92d4ec0f lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-oauth-server
-sha256:0ccaeb1a468008b32fc9cce0ac5c486648f8622dfacce5814c4dac82feee5daa lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-multus-admission-controller
-sha256:2ad7eab3629a7475f9f809a9df22ad0eea5f172a5c151c8143f1f18ac73ade37 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-vsphere-csi-driver-operator
-sha256:fc81c6614a38195a7c0f9465135a1064e6cbca09bce42653cb0f5b8d0513965b lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-kube-rbac-proxy
-sha256:ba56e5195741e54e654face4997c5c40be083f5302e5903983415e86a17a0e86 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-ironic-inspector
-sha256:03b88f06eb9727fdcc3e393bed85203ab3ba9d585ba2b9f69fbddc2f4d872c47 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-ovirt-csi-driver
-sha256:67efca98ca6f362bf75eb12e8722245bb1264d64d94cbcfb0f66365b84cbec4d lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-must-gather
-sha256:199b3a8fe3a5a64583afd1263d753de504dc9c60d31df443bd764fb2f39bdb43 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-oauth-apiserver
-sha256:91d524f71d0e7acb7c89eea38eafda21af342d668c26ed538bb1d4697137ec17 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-oauth-proxy
-sha256:800172d60861c4d7018e23cbac3c802c59fccda92848818b072f929a343b2889 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-gcp-pd-csi-driver
-sha256:74f37c929e78bb96bc07a0870fdbd52741e82b429a0794440651c408f5160795 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-baremetal-installer
-sha256:130c0f1053706666907afb64900df1dd627893d8979cdb56d7ed9da2f01f9db1 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-cluster-dns-operator
-sha256:2d4d74c0bf35a4d08c619d9f58b21cc1a888338702ccee982cf89b0479f78893 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-cluster-node-tuning-operator
-sha256:12fca9bd40b0ffe218ba7e469b321b46c14ef6e90afb4a82101139a7e91d7d7c lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-aws-machine-controllers
-sha256:de21b72c912e534a2e1713c870963ade63710bb684ec5a9e3c994b421adf7926 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-prometheus-alertmanager
-sha256:ea30e26dfd31644c94ea2e470211116f1b85dd8f5e828365be577d439db0dd43 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-jenkins-agent-nodejs
-sha256:e9c11afc09113059eb64208da91e1f81bde9acda6e2ee11425c440622be21663 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-cluster-openshift-apiserver-operator
-sha256:01ecfa030ee5975d85afa62ca4df4560748ffb263c1aa52494929951c02a4f11 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-cluster-etcd-operator
-sha256:d89c6d40803507c97d2e82995d712c70040edca64fe627c47bab03d28d1e3068 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-k8s-prometheus-adapter
-sha256:87f042dca494bf46dd5604e84c1a5b965fd53375093fe7006dee004bcab188d3 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-azure-cloud-node-manager
-sha256:aca06b6adba4da8e4087cbbc1cf585e37b237bce377bc4918fa9991c7e79942f lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-prometheus
-sha256:708cc4c2a19a52fdabb4f2f5ddf575c1c896c981ee15b678b93b5cd1072937c7 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-vsphere-csi-driver
-sha256:1a56399b5c2fe169156cd5e410abb021e3714d1ee08db6927932a989273e053e lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-cluster-kube-controller-manager-operator
-sha256:c45687f4b08bb8d1e69342fa29da14298f58c755054954777261eb9f3976243c lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-openstack-machine-controllers
-sha256:5b0db3d158efadae362e068a796920a2c9184b2a3ae2188063904a90547394c1 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-baremetal-machine-controllers
-sha256:80ac8e87d79736479565f9e780fe18ee0d6b9c95d1029b6e3b488326dad4ea80 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-kube-storage-version-migrator
-sha256:8277f5f94b0e4db67f490d8e01cb524c3890c404738db0118f647936d75f5abb lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-pod
-sha256:e6f50c7ffabcc0b6ccae73c3a3dc5ad20a94137f9d8c98473eaaf437b8c2da93 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-cluster-kube-scheduler-operator
-sha256:53eaae5fadd9f9585797a0978a1a39ef46a064d2f46810aa59e5f4a8577d2444 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-cluster-cloud-controller-manager-operator
-sha256:55672d1859385409273a984375b226bb29b49c3130237be3bd5241684c01aa9e lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-ironic-ipa-downloader
-sha256:da71bad01f548cbc81e271eff00c810a19f3bfbf717f221124a846c89f0d9ed1 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-prometheus-operator
-sha256:63eb87db627320e0134b538daf63566d3d19749491ed4a266a4088aa03e8fdb9 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-cluster-autoscaler-operator
-sha256:58cf3f6650938559b316a8487562c32086bab77adec7cf1fce8022825882c687 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-insights-operator
-sha256:b84ba4ecf6d5682d66d198aface7884ce5adf51f341f1ea47b741e6018854dca lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-libvirt-machine-controllers
-sha256:6f076502c8ddf922eb238a941f76fdadf8ddbb83a3e6d07f99def1a4bfde1d77 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-openshift-controller-manager
-sha256:5b12e15bdb08e5b6d47f3ffc5ef59321eee3f994779235bc19a78080b3cc63b0 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-aws-pod-identity-webhook
-sha256:628d2d1e8898aab03e0a0248dc53cd1bba8ce76a2b23201ea6ee0a9e4343db01 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-csi-external-attacher
-sha256:825ef5eb718e3757ef1a4df1b40917ec50a3f78d79b34273ad460515ffdc020d lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-console
-sha256:3b2d37c7858d2cd9366be804b63173467cc34815aa2d5e389158972006857f30 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-vsphere-problem-detector
-sha256:92e975189cb58919e8a2811edd414f5be5b759dcd61762a6e9ab1bee50200cbb lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-etcd
-sha256:1a530a0d0dbbec578ea6b0cbd901d78f4a395a9896fae1df05c3c940337ccb3e lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-sdn
-sha256:365a6e46b15a074f268417c1472c6d79ff85d6062b6af59628d094cf53b4e7aa lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-jenkins
-sha256:d2ae96692553d6c08218aaa883c147172039bbfae2dc719579f193e116a19e18 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-cluster-samples-operator
-sha256:3d3323102b9c0076c08018789b4865058d280842e97a36fae1afea13b00a6cee lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-cluster-authentication-operator
-sha256:a2d509765b7f3a23cf3d780878bc8f1fb0e908b5c2c98aea55964d4ee9f44791 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-aws-ebs-csi-driver-operator
-sha256:c98a79fd2cd933603ec567aabce007d1ccee24cc8e5bf12f8ead9507c5cd67e3 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-ovn-kubernetes
-sha256:b42499bdb227da2d2d4f81def7271598e3d3a4386e71f95c6c1c06210cba4bcf lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-aws-cloud-controller-manager
-sha256:2ce9667775acdefcff0a90199c2b87b001b98d7ea5b5e7ed18453ba47b318235 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-baremetal-runtimecfg
-sha256:5efb96bd375d8248bd891743b46385329f1b211c0bd4b0dde58bea2a63b99486 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-haproxy-router
-sha256:dd7bee3938a03ca4adf7e463bae2edb257ac2788aa7d81881b257cde9bb977dd lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-gcp-machine-controllers
-sha256:54a933585eea48ba4ebd8ce3fa61687d05d0dd38ce4b03cde8d4006e081d22a9 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-cluster-kube-storage-version-migrator-operator
-sha256:2dec93a89cbefc7c50d867fe420647f27c602d2643419bf41015bb51177d19cb lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-egress-router-cni
-sha256:053ce06d7890d34a628c71db07f06e3a4de6e652dad444a63727e4d0fce1441e lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-openstack-cinder-csi-driver
-sha256:daee78847a7b8a9f000129270decd4751e0cd2694bcab6e81cf1b98b0b592d2b lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-csi-node-driver-registrar
-sha256:e182d8ac108fe6943f3d1187f8b8825de3b87ce19084514e841d7e351bec93ee lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-installer-artifacts
-sha256:b8be5c3293d4f4096132a4a436a6d6cf14c91711a3566aea2fe4728436f997a5 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-cluster-image-registry-operator
-sha256:17e245626b90fd1e73936c3840d3f27dabb7100cdd07d8945c5c3d408dc55dc3 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-cloud-credential-operator
-sha256:d70923a803680c2221ca58c35fc296bb01797c7a4c2c8feeffe8e55f350a7139 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-prom-label-proxy
-sha256:3fa748cf130e1d5100b029a6c6e357b143242e246b7114fd5f288a08e009797e lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-cluster-update-keys
-sha256:ab9d9256d43783a061c613d78abd8eabb2323798098fb5dbe63c4ca13318b0c4 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-mdns-publisher
-sha256:8de8d8a3289b2e477d279bc1f3ea03fe7785c219a426814e9ae14b891f635855 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-thanos
-sha256:a3e1acdad51d67db44badac6ab046e1aa2b2a40bb530a2c7ac184d86195817ab lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-baremetal-operator
-sha256:8b1af36bf0985b6a2bb486b02553a89091ad71a067959d9840391ae5f9e8ceda lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-jenkins-agent-maven
-sha256:53de0ae3fb21fa7e617a20862b7824707d201306ca639132a9a94cc234435ed1 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-azure-disk-csi-driver-operator
-sha256:14af1530eb9ec2f1caf13990b4356c0f1b35fa2ff2519b0e08a9752190e8c773 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-csi-external-provisioner
-sha256:3d0b4e7c95824f18fd9d6cc00fe12e13516a170d55f9c4d0ebd51f5074ccb688 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-operator-registry
-sha256:c8d625f6d7fe4bddfd9e7ff1801bd0d608153057b2eaac61790bd78a939ba53e lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-cluster-csi-snapshot-controller-operator
-sha256:bb6c09cf7cc43e3a7ab8a0ee068db87552e203d351321fcaa3a1840d59c444ed lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-cluster-config-operator
-sha256:84be0fe13eb20a33ef01d0c31809b84a97fa754d5d17791e43b4f477608ffe76 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-ovirt-csi-driver-operator
-sha256:c66f7404d5cc5d3203c941290b4fc5433154dfca4f9900fda27eb40ff1b460cf lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-csi-driver-manila-operator
-sha256:f4ddae7f0218896f038c812e5becef748648a552080474fedf89cbbc677b939c lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-csi-livenessprobe
-sha256:a6f6387a01f0275c777b4dee489967227a84d1cbea504d972a394c4ea48437df lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-tools
-sha256:b20b1ce89582ee300a88e3de5226c09b31ae2b6e05de74b5e1c89b2bb56800c7 lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64-azure-disk-csi-driver
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:ddef0b8dafbbdd741e049e7b68cc43e2f34cf823d865315ad83869948896afb9 14.61MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:7b4b6cb225abe0a6d65a4d68f0ccf0f613f259368f4857f2285e0d97a50b1388 62.35MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:7804f363532eba76317364c7c548ddaef6a3f93ebb5edd1e4483e646f7e28f7d 45.86MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:b61c3074dd7067516154ad2141f3995340bd19122be5a32dc41e3cc06d9ee7c1 19.99MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:c980ac22ce4874cda4dbb6e07ffd5f5174e76f26141e053492ec186d4f7a39ac 25.04MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:934b5acae9ef7926edb61751407e0adb478746c714d98ef7b96957850cdd4eb4 29.63MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:157537e57374f03ddd085c000ddbfd311133c1577d2af661bc9cef58eebd9ee8 25.2MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:5333f505fbcd4c446f9067a09d98652f6b7441f4918b678cb6700ef1f375c628 24.93MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:ce1cacfe1d27de0711e4d3ea12ae84541160e2beceb2ad7d965e21642ef277aa 30.21MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:eeca239718c8acf5c0f075f72f3942f6d83cd9f391f2816cdd3ead992b4d4c77 20.09MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:c71b5003366876faa2cb02eb097f5a5fbf138544e5ea375c1e35bbf77e2a81a7 91.14MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:372b2bb393e07c59050476939a5a21876707c4e0ea130a60eae75a4d7f564841 31.12MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:c8177f2abd74bfa004be57007b83db653b91bce59d9087c7d78bf3a5cae206ec 108.1MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:0bc56e8679aa66db98d6434e315fa2d0ef36993b4b5a0a131aa9640bce25df74 21.59MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:7e99997cc9b770ec909a5c8098a8fab839337b43013c075505c93b3c3c21a6b3 98.65MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:56764cdf702c98b30386be602cea63931b75f54d57cfd4a307db510a7c07a2bf 16.12MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:19ff28ff547bb885e50a88bb29be78e8b1e7bdf268b025e7052cf2fc5ce02e47 38.72MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:450c1856cde291bbe8de8e7eff490e70c10d4bc6f3f51c1f4f6170bd529ca925 6.133MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:01bb209932cb471d1ef1e24722ddcd75ac82426fe74da41338ef3f36893e4d98 86.26MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:983aa85fb9628adb1adc62f8e3869c6f9df87e0874ea92199fedfc6514647e3c 43.34MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:005e519404108145e27c6b62a0317b423b3ed312500f4f799cbdece832d8a9d6 25.29MiB
+uploading: lab-installer.karmalabs.local:5000/ocp4 sha256:3fb8184e9de5f386c7421a08dbddd2217af4496f6f13ec448bbaeb0d87edbfcd 537.8KiB
+sha256:32a461d8ea341926133857f586dd602f7fe85c608ad93e46d07be7298fb5a6cb lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-coredns
+sha256:905ad7df7e6900619c73f144ccbc1b5e60a8b0dcec73c099470ef43a7ee1bbe8 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-cluster-autoscaler
+sha256:881c259179500e163e0f8f4e6f2b425408daacc26c2cde4a7095e90776d8060b lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-tests
+sha256:52042dbf174836944f9a03271499504f3a0d7a745a56693db0a386eea02afbc9 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-multus-networkpolicy
+sha256:b7deb0532f3c38759685e5bbece97417e99d9bc26b4b2a8414cb4963ec38ff3b lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-kuryr-controller
+sha256:38c835034f6c3f509771217a6236379b90897d8e041a4bfe780b7c23630b021a lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-grafana
+sha256:1f583ea8fb1035753979e3adaec1f7668e920e8d8a94cddf0646b723b16b6d9e lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-network-metrics-daemon
+sha256:bd6ad5c429fb7e31e6045e7927f76210c22e7573f387bc61168520ff4453e2c0 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-configmap-reloader
+sha256:bf8ab195054fa186a310f5534806e47178c3354daada970f3545e7d0a7dcbb07 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-kube-proxy
+sha256:701ffd1c51a84b9b712fed1a2681bb917b28b2170939252871701c0ab3b5b1fc lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-openstack-cinder-csi-driver-operator
+sha256:df0c66fa32624c2f286629fe88be9e602f756698317e73c258eb4dd7319d5e3a lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-cluster-storage-operator
+sha256:fbae5e73411bed5c2eed978369f7b53c4848e07218b7dfc0ab63c2f115c890f4 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-machine-config-operator
+sha256:3de4983cddbf5a2c92f71ceaf087434c50e8d5e193ffb9cf6f21c69d662d3933 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-cluster-kube-apiserver-operator
+sha256:238194aeaf2f240e800e99195103a75b3c27ad57cb3b31ceb34b187850d78946 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-multus-cni
+sha256:c0e1e8b8bf3b6cbbed2fb00aa21dbd3235ee20f66fa0d82860dd216098fbf2cd lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-openstack-cloud-controller-manager
+sha256:868279f5315c4582c971a7b2d20b951773544ea280a161ae389eb5b0fd715424 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-cluster-machine-approver
+sha256:bfa5e4216d205199490cd7358da492e060be4fe6c654a8713a41218d4047ce46 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-azure-machine-controllers
+sha256:033ddc1e24008c6183722e6a0583ac050f0fa157485508e165874d43f2bae6ab lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-openshift-state-metrics
+sha256:823f071c623306435b53fe42db79a663a62c435b7284be0fe2befa2553af3752 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-kube-state-metrics
+sha256:f72aa34decd784392a5784e93ffd8616445c3f749d932e4f9502f29523493e4e lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-csi-external-resizer
+sha256:7680102adb86388a3ae7399d25e14fbfd0f8bbf3c6377653f88b7104ef0509db lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-telemeter
+sha256:38c1ef9d44f4a90bf83f3dc75f2aacc6478356c7fa2708c881e914af4df5c8e8 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-hyperkube
+sha256:9665c5b4996ad961fffd2672f7bf61654b9700e3ab9cc954e6892c8f8d2f635d lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-ironic-hardware-inventory-recorder
+sha256:738b21ab3a9af2f3dbc2e0be5a598d9b10f27afcb6c3504c4a9b0c62f02724a6 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-console-operator
+sha256:a9532f0636367a6776915e79332e6acfbc1cf6875f9477236e651f20435c70c3 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-prometheus-config-reloader
+sha256:306883a3908244448769eacd7dbfcf209ec56dd03021823a2941799be1be676b lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-prometheus-node-exporter
+sha256:be638091383eadef518fcdad50493bfde851f8010d6d2c57e0f9cecc0f70f48e lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-keepalived-ipfailover
+sha256:2ceee2ebe189d8c18a1899f9f2cb0af0dca58d14c415777f26caa689d1339b1f lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-network-tools
+sha256:ac2ad5b01eed7b0222dabbfb5c6d4b19ddc85bdaab66738f7ff620e4acffb6ac lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-machine-os-content
+sha256:4491e2aa17088ba7461019aacedd713cbc70becfa60962123b65290308f449e9 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-azure-cloud-controller-manager
+sha256:7ca795f6897e5057ca7c1c2bfb2e80fba1ba479be72ade1d81c7fbadfe9eb10f lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-multus-route-override-cni
+sha256:da3185ad005ba094e86c4d7484c591ed6e81bfae7a8760bd33e0772bcfda53db lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-cluster-monitoring-operator
+sha256:a68a352a5e835daa99352c73bf13032436a148b02af8cee4d555bba969cca24b lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-machine-api-operator
+sha256:4d76d15cd9636109bc60931e4b85143852d2dd8d24d42e66785256ff4dfbc3f5 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-operator-lifecycle-manager
+sha256:cf349629029e936efe55b99176fc7b30834b49778330b67b7de89205bb98dfe7 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-csi-snapshot-controller
+sha256:9065acf7561d962955488b476b3f24af3b8b72b2fde1690cb35d3245c53c6390 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-vsphere-csi-driver-syncer
+sha256:b7aa0776dad20a024ed5df80ae8590ad973376aca1af4cb7dfb60a7af9e69415 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-csi-driver-manila
+sha256:1410141d4cbedd0d98af5376d0f0ce7764f1a84f0657034b5f958a94c345fe8d lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-deployer
+sha256:49dfda0a23064a8b82acc977b4e5554108a7c55b1e0259bf23f82f579267d1ce lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-csi-external-snapshotter
+sha256:04c9df04f725722cc4ff6799ca928c86c91f1bb0ec342d6251fc58940466c88b lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-operator-marketplace
+sha256:b47101401214acae9f8b92ef4b6ee38564206a9cd5215a087a12ce63c7f485d3 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-cluster-policy-controller
+sha256:2451bc005859a0987ef74382c4b839e900d7e903c77663840ff0ed0207a47635 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-csi-snapshot-validation-webhook
+sha256:27fb78cf79e0ece439b68c361591e94d425c4c5ae2737f868aec095f14ab2786 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-container-networking-plugins
+sha256:5c55be02e32e688ec5a404858a08cf533ba15b50b6f0e028089635b47db5866e lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64
+sha256:5b82201b95d2d6ad49a0acf957bd96cc266b06c5066dc4ac07f7ed90edf507c7 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-aws-ebs-csi-driver
+sha256:717fcc233a77be33872984fbe37ccaff2ecce0da5de11df59b1a3bed55d71fb1 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-cluster-openshift-controller-manager-operator
+sha256:c84ffc50d0ca44b7aef6e4d9b8c791affc5404a047ce7e9b73208b5c96ae0e21 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-gcp-pd-csi-driver-operator
+sha256:aaea2c8986613d921d83db5cc346f3ec7ecc6335b5fa09d74907a9cec4aa8fdb lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-kuryr-cni
+sha256:0af4ea37b14033cf6bfbce81a20dbb60ee04dc7e28f9aa890e151834e8400a88 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-openshift-apiserver
+sha256:3b965dbf1f0f5b173ef961d71a04d36c41831b8086ee8b33607ebfe1cc7ac158 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-cluster-ingress-operator
+sha256:16033ec3aed9bbf059909a0afb3d5a98a09129c8d51c1ad6cf75566a3808f54a lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-cluster-version-operator
+sha256:65369b6ccff0f3dcdaa8685ce4d765b8eba0438a506dad5d4221770a6ac1960a lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-driver-toolkit
+sha256:17bfe558a9b7201bd2e58bfc4fc73230a530ffc423fe082f9b7fdc870dd01271 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-jenkins-agent-base
+sha256:5c6e763d01ed9eecbfb02dbe47b0b66abd9943126f3fb3cc6de9041007af8a36 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-cli-artifacts
+sha256:99754e32729f454eb82af5e3a29c35ec41f17418a6c83a0bacbc666f00c52695 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-ironic
+sha256:b426482b2bb57fb6a93611fa7e6a77200d8312458c2383a37ae743732114a322 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-ovirt-machine-controllers
+sha256:5e620f670b78ae31e9f01b5439cd9223c65d5a722c2742f0f73dcbe8c31237b8 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-cluster-baremetal-operator
+sha256:13201e0adde9ac709d5588b9e59de0dbc313dd1c095ffd4bf535369ccf4e934c lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-ironic-static-ip-manager
+sha256:eaf8eb2df8bf32e3d44f86e8eff0437937ba1b3ac9dad72e53dba5a447b3d886 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-cluster-network-operator
+sha256:6949da0886e5c938aa308dc49bf45431538e554d958a730c8ee2555cfb5d4b37 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-cli
+sha256:2f51eba9bed3db47a06578298b8e06db68e0f88c6be66d7120829495ea4458a1 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-service-ca-operator
+sha256:6dbd05798bfcb09c072e9ab974133cb5d415f13d1dc3831fca4a33c529a6fa3a lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-docker-builder
+sha256:308b56720ca4bc317b4edacc6c5f266c9ce86f7ec6fde15aca24776a47127c31 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-docker-registry
+sha256:45c72c864086f0cfa47c69b57a3d8dd753be4069ea3f0f6850e1c89c5ab2501f lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-ironic-machine-os-downloader
+sha256:821f460b926444b9edd0bc04289050009e9ea3d5ca0d722451b76467a166f0c6 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-cluster-bootstrap
+sha256:718902f807c8269d5ada075dc258df209b0cc309eb58600aa55a63234f787273 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-installer
+sha256:650d86ec3b60e373e0db0214e4fc3dd424d67f589d6dab8de9c250e54ae62af4 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-multus-whereabouts-ipam-cni
+sha256:3ba48e83d25460644a26005374596dff2b39bebc305d1e2d6d07c3eb55bbbbf2 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-csi-driver-nfs
+sha256:852fced3a8cdfe1ac8edc4a8c1f022e33ced4c080e09c2ea4a9fe7dc92d4ec0f lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-oauth-server
+sha256:0ccaeb1a468008b32fc9cce0ac5c486648f8622dfacce5814c4dac82feee5daa lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-multus-admission-controller
+sha256:2ad7eab3629a7475f9f809a9df22ad0eea5f172a5c151c8143f1f18ac73ade37 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-vsphere-csi-driver-operator
+sha256:fc81c6614a38195a7c0f9465135a1064e6cbca09bce42653cb0f5b8d0513965b lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-kube-rbac-proxy
+sha256:ba56e5195741e54e654face4997c5c40be083f5302e5903983415e86a17a0e86 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-ironic-inspector
+sha256:03b88f06eb9727fdcc3e393bed85203ab3ba9d585ba2b9f69fbddc2f4d872c47 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-ovirt-csi-driver
+sha256:67efca98ca6f362bf75eb12e8722245bb1264d64d94cbcfb0f66365b84cbec4d lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-must-gather
+sha256:199b3a8fe3a5a64583afd1263d753de504dc9c60d31df443bd764fb2f39bdb43 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-oauth-apiserver
+sha256:91d524f71d0e7acb7c89eea38eafda21af342d668c26ed538bb1d4697137ec17 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-oauth-proxy
+sha256:800172d60861c4d7018e23cbac3c802c59fccda92848818b072f929a343b2889 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-gcp-pd-csi-driver
+sha256:74f37c929e78bb96bc07a0870fdbd52741e82b429a0794440651c408f5160795 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-baremetal-installer
+sha256:130c0f1053706666907afb64900df1dd627893d8979cdb56d7ed9da2f01f9db1 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-cluster-dns-operator
+sha256:2d4d74c0bf35a4d08c619d9f58b21cc1a888338702ccee982cf89b0479f78893 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-cluster-node-tuning-operator
+sha256:12fca9bd40b0ffe218ba7e469b321b46c14ef6e90afb4a82101139a7e91d7d7c lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-aws-machine-controllers
+sha256:de21b72c912e534a2e1713c870963ade63710bb684ec5a9e3c994b421adf7926 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-prometheus-alertmanager
+sha256:ea30e26dfd31644c94ea2e470211116f1b85dd8f5e828365be577d439db0dd43 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-jenkins-agent-nodejs
+sha256:e9c11afc09113059eb64208da91e1f81bde9acda6e2ee11425c440622be21663 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-cluster-openshift-apiserver-operator
+sha256:01ecfa030ee5975d85afa62ca4df4560748ffb263c1aa52494929951c02a4f11 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-cluster-etcd-operator
+sha256:d89c6d40803507c97d2e82995d712c70040edca64fe627c47bab03d28d1e3068 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-k8s-prometheus-adapter
+sha256:87f042dca494bf46dd5604e84c1a5b965fd53375093fe7006dee004bcab188d3 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-azure-cloud-node-manager
+sha256:aca06b6adba4da8e4087cbbc1cf585e37b237bce377bc4918fa9991c7e79942f lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-prometheus
+sha256:708cc4c2a19a52fdabb4f2f5ddf575c1c896c981ee15b678b93b5cd1072937c7 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-vsphere-csi-driver
+sha256:1a56399b5c2fe169156cd5e410abb021e3714d1ee08db6927932a989273e053e lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-cluster-kube-controller-manager-operator
+sha256:c45687f4b08bb8d1e69342fa29da14298f58c755054954777261eb9f3976243c lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-openstack-machine-controllers
+sha256:5b0db3d158efadae362e068a796920a2c9184b2a3ae2188063904a90547394c1 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-baremetal-machine-controllers
+sha256:80ac8e87d79736479565f9e780fe18ee0d6b9c95d1029b6e3b488326dad4ea80 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-kube-storage-version-migrator
+sha256:8277f5f94b0e4db67f490d8e01cb524c3890c404738db0118f647936d75f5abb lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-pod
+sha256:e6f50c7ffabcc0b6ccae73c3a3dc5ad20a94137f9d8c98473eaaf437b8c2da93 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-cluster-kube-scheduler-operator
+sha256:53eaae5fadd9f9585797a0978a1a39ef46a064d2f46810aa59e5f4a8577d2444 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-cluster-cloud-controller-manager-operator
+sha256:55672d1859385409273a984375b226bb29b49c3130237be3bd5241684c01aa9e lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-ironic-ipa-downloader
+sha256:da71bad01f548cbc81e271eff00c810a19f3bfbf717f221124a846c89f0d9ed1 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-prometheus-operator
+sha256:63eb87db627320e0134b538daf63566d3d19749491ed4a266a4088aa03e8fdb9 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-cluster-autoscaler-operator
+sha256:58cf3f6650938559b316a8487562c32086bab77adec7cf1fce8022825882c687 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-insights-operator
+sha256:b84ba4ecf6d5682d66d198aface7884ce5adf51f341f1ea47b741e6018854dca lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-libvirt-machine-controllers
+sha256:6f076502c8ddf922eb238a941f76fdadf8ddbb83a3e6d07f99def1a4bfde1d77 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-openshift-controller-manager
+sha256:5b12e15bdb08e5b6d47f3ffc5ef59321eee3f994779235bc19a78080b3cc63b0 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-aws-pod-identity-webhook
+sha256:628d2d1e8898aab03e0a0248dc53cd1bba8ce76a2b23201ea6ee0a9e4343db01 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-csi-external-attacher
+sha256:825ef5eb718e3757ef1a4df1b40917ec50a3f78d79b34273ad460515ffdc020d lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-console
+sha256:3b2d37c7858d2cd9366be804b63173467cc34815aa2d5e389158972006857f30 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-vsphere-problem-detector
+sha256:92e975189cb58919e8a2811edd414f5be5b759dcd61762a6e9ab1bee50200cbb lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-etcd
+sha256:1a530a0d0dbbec578ea6b0cbd901d78f4a395a9896fae1df05c3c940337ccb3e lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-sdn
+sha256:365a6e46b15a074f268417c1472c6d79ff85d6062b6af59628d094cf53b4e7aa lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-jenkins
+sha256:d2ae96692553d6c08218aaa883c147172039bbfae2dc719579f193e116a19e18 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-cluster-samples-operator
+sha256:3d3323102b9c0076c08018789b4865058d280842e97a36fae1afea13b00a6cee lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-cluster-authentication-operator
+sha256:a2d509765b7f3a23cf3d780878bc8f1fb0e908b5c2c98aea55964d4ee9f44791 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-aws-ebs-csi-driver-operator
+sha256:c98a79fd2cd933603ec567aabce007d1ccee24cc8e5bf12f8ead9507c5cd67e3 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-ovn-kubernetes
+sha256:b42499bdb227da2d2d4f81def7271598e3d3a4386e71f95c6c1c06210cba4bcf lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-aws-cloud-controller-manager
+sha256:2ce9667775acdefcff0a90199c2b87b001b98d7ea5b5e7ed18453ba47b318235 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-baremetal-runtimecfg
+sha256:5efb96bd375d8248bd891743b46385329f1b211c0bd4b0dde58bea2a63b99486 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-haproxy-router
+sha256:dd7bee3938a03ca4adf7e463bae2edb257ac2788aa7d81881b257cde9bb977dd lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-gcp-machine-controllers
+sha256:54a933585eea48ba4ebd8ce3fa61687d05d0dd38ce4b03cde8d4006e081d22a9 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-cluster-kube-storage-version-migrator-operator
+sha256:2dec93a89cbefc7c50d867fe420647f27c602d2643419bf41015bb51177d19cb lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-egress-router-cni
+sha256:053ce06d7890d34a628c71db07f06e3a4de6e652dad444a63727e4d0fce1441e lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-openstack-cinder-csi-driver
+sha256:daee78847a7b8a9f000129270decd4751e0cd2694bcab6e81cf1b98b0b592d2b lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-csi-node-driver-registrar
+sha256:e182d8ac108fe6943f3d1187f8b8825de3b87ce19084514e841d7e351bec93ee lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-installer-artifacts
+sha256:b8be5c3293d4f4096132a4a436a6d6cf14c91711a3566aea2fe4728436f997a5 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-cluster-image-registry-operator
+sha256:17e245626b90fd1e73936c3840d3f27dabb7100cdd07d8945c5c3d408dc55dc3 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-cloud-credential-operator
+sha256:d70923a803680c2221ca58c35fc296bb01797c7a4c2c8feeffe8e55f350a7139 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-prom-label-proxy
+sha256:3fa748cf130e1d5100b029a6c6e357b143242e246b7114fd5f288a08e009797e lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-cluster-update-keys
+sha256:ab9d9256d43783a061c613d78abd8eabb2323798098fb5dbe63c4ca13318b0c4 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-mdns-publisher
+sha256:8de8d8a3289b2e477d279bc1f3ea03fe7785c219a426814e9ae14b891f635855 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-thanos
+sha256:a3e1acdad51d67db44badac6ab046e1aa2b2a40bb530a2c7ac184d86195817ab lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-baremetal-operator
+sha256:8b1af36bf0985b6a2bb486b02553a89091ad71a067959d9840391ae5f9e8ceda lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-jenkins-agent-maven
+sha256:53de0ae3fb21fa7e617a20862b7824707d201306ca639132a9a94cc234435ed1 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-azure-disk-csi-driver-operator
+sha256:14af1530eb9ec2f1caf13990b4356c0f1b35fa2ff2519b0e08a9752190e8c773 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-csi-external-provisioner
+sha256:3d0b4e7c95824f18fd9d6cc00fe12e13516a170d55f9c4d0ebd51f5074ccb688 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-operator-registry
+sha256:c8d625f6d7fe4bddfd9e7ff1801bd0d608153057b2eaac61790bd78a939ba53e lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-cluster-csi-snapshot-controller-operator
+sha256:bb6c09cf7cc43e3a7ab8a0ee068db87552e203d351321fcaa3a1840d59c444ed lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-cluster-config-operator
+sha256:84be0fe13eb20a33ef01d0c31809b84a97fa754d5d17791e43b4f477608ffe76 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-ovirt-csi-driver-operator
+sha256:c66f7404d5cc5d3203c941290b4fc5433154dfca4f9900fda27eb40ff1b460cf lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-csi-driver-manila-operator
+sha256:f4ddae7f0218896f038c812e5becef748648a552080474fedf89cbbc677b939c lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-csi-livenessprobe
+sha256:a6f6387a01f0275c777b4dee489967227a84d1cbea504d972a394c4ea48437df lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-tools
+sha256:b20b1ce89582ee300a88e3de5226c09b31ae2b6e05de74b5e1c89b2bb56800c7 lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64-azure-disk-csi-driver
 info: Mirroring completed in 6m50.67s (24.68MB/s)
 
 Success
-Update image:  lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64
-Mirror prefix: lab-installer.karmalabs.com:5000/ocp4
-Mirror prefix: lab-installer.karmalabs.com:5000/ocp4:4.9.7-x86_64
+Update image:  lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64
+Mirror prefix: lab-installer.karmalabs.local:5000/ocp4
+Mirror prefix: lab-installer.karmalabs.local:5000/ocp4:4.9.7-x86_64
 
 To use the new mirrored repository to install, add the following section to the install-config.yaml:
 
 imageContentSources:
 - mirrors:
-  - lab-installer.karmalabs.com:5000/ocp4
+  - lab-installer.karmalabs.local:5000/ocp4
   source: quay.io/openshift-release-dev/ocp-release
 - mirrors:
-  - lab-installer.karmalabs.com:5000/ocp4
+  - lab-installer.karmalabs.local:5000/ocp4
   source: quay.io/openshift-release-dev/ocp-v4.0-art-dev
 
 
@@ -2317,10 +2317,10 @@ metadata:
 spec:
   repositoryDigestMirrors:
   - mirrors:
-    - lab-installer.karmalabs.com:5000/ocp4
+    - lab-installer.karmalabs.local:5000/ocp4
     source: quay.io/openshift-release-dev/ocp-release
   - mirrors:
-    - lab-installer.karmalabs.com:5000/ocp4
+    - lab-installer.karmalabs.local:5000/ocp4
     source: quay.io/openshift-release-dev/ocp-v4.0-art-dev
 
 real	7m25.757s
@@ -2504,7 +2504,7 @@ INFO[0038] packages: [windows-machine-config-operator]   pkg=windows-machine-con
 INFO[0038] Generating dockerfile                         packages="[local-storage-operator performance-addon-operator]"
 INFO[0038] writing dockerfile: index.Dockerfile601712286  packages="[local-storage-operator performance-addon-operator]"
 INFO[0038] running podman build                          packages="[local-storage-operator performance-addon-operator]"
-INFO[0038] [podman build --format docker -f index.Dockerfile601712286 -t lab-installer.karmalabs.com:5000/olm-index/redhat-operator-index:v4.9 .]  packages="[local-storage-operator performance-addon-operator]"
+INFO[0038] [podman build --format docker -f index.Dockerfile601712286 -t lab-installer.karmalabs.local:5000/olm-index/redhat-operator-index:v4.9 .]  packages="[local-storage-operator performance-addon-operator]"
 
 real	0m46.603s
 user	0m43.984s
@@ -2531,16 +2531,16 @@ src image has index label for database path: /database/index.db
 using index path mapping: /database/index.db:/tmp/536383754
 wrote database to /tmp/536383754
 using database at: /tmp/536383754/index.db
-lab-installer.karmalabs.com:5000/
+lab-installer.karmalabs.local:5000/
   olm/olm-index-redhat-operator-index
     blobs:
-      lab-installer.karmalabs.com:5000/olm-index/redhat-operator-index sha256:b894df0e9cdcbfae84cdff712a1f411957cee45c9880da7fa86419df91909b3e 166B
-      lab-installer.karmalabs.com:5000/olm-index/redhat-operator-index sha256:9807efd2fade40f1aec0cb6afb3841caf95119ad874ad1c186cbc8995f1fb238 3.486KiB
-      lab-installer.karmalabs.com:5000/olm-index/redhat-operator-index sha256:99bbe933c0e4433c7fd6941c88af807907a5c024eeea9ba68168b0a02104f64f 20.93KiB
-      lab-installer.karmalabs.com:5000/olm-index/redhat-operator-index sha256:639208cddb94771f2d42cf8f53ec21e6ea7a1e17485806b8ffa3b6b7528cc11e 686.5KiB
-      lab-installer.karmalabs.com:5000/olm-index/redhat-operator-index sha256:c3528915f8acda6a378f500237b8d3ce80951ac0556f059b834891ca42ee629f 812KiB
-      lab-installer.karmalabs.com:5000/olm-index/redhat-operator-index sha256:0c3f40efe9c88feb29cd66831b5fb7bd1cd6816a65fe56911631f1050ab19444 3.747MiB
-      lab-installer.karmalabs.com:5000/olm-index/redhat-operator-index sha256:4ad6714115439f812b62c5d3ee9d1077534bd5fec4244f4cb421771c62d7e62e 13.57MiB
+      lab-installer.karmalabs.local:5000/olm-index/redhat-operator-index sha256:b894df0e9cdcbfae84cdff712a1f411957cee45c9880da7fa86419df91909b3e 166B
+      lab-installer.karmalabs.local:5000/olm-index/redhat-operator-index sha256:9807efd2fade40f1aec0cb6afb3841caf95119ad874ad1c186cbc8995f1fb238 3.486KiB
+      lab-installer.karmalabs.local:5000/olm-index/redhat-operator-index sha256:99bbe933c0e4433c7fd6941c88af807907a5c024eeea9ba68168b0a02104f64f 20.93KiB
+      lab-installer.karmalabs.local:5000/olm-index/redhat-operator-index sha256:639208cddb94771f2d42cf8f53ec21e6ea7a1e17485806b8ffa3b6b7528cc11e 686.5KiB
+      lab-installer.karmalabs.local:5000/olm-index/redhat-operator-index sha256:c3528915f8acda6a378f500237b8d3ce80951ac0556f059b834891ca42ee629f 812KiB
+      lab-installer.karmalabs.local:5000/olm-index/redhat-operator-index sha256:0c3f40efe9c88feb29cd66831b5fb7bd1cd6816a65fe56911631f1050ab19444 3.747MiB
+      lab-installer.karmalabs.local:5000/olm-index/redhat-operator-index sha256:4ad6714115439f812b62c5d3ee9d1077534bd5fec4244f4cb421771c62d7e62e 13.57MiB
     manifests:
       sha256:c751ebab527f6572eaac9ea7681af629845c9852573ea2ed0f608b5fd4fa7cd0 -> v4.9
   olm/openshift4-ose-kube-rbac-proxy
@@ -2668,93 +2668,93 @@ lab-installer.karmalabs.com:5000/
   stats: shared=16 unique=40 size=744.2MiB ratio=0.48
 
 phase 0:
-  lab-installer.karmalabs.com:5000 olm/olm-index-redhat-operator-index                                       blobs=7  mounts=0 manifests=1 shared=0
-  lab-installer.karmalabs.com:5000 olm/openshift4-performance-addon-operator-bundle-registry-container-rhel8 blobs=3  mounts=0 manifests=1 shared=0
-  lab-installer.karmalabs.com:5000 olm/openshift4-performance-addon-rhel8-operator                           blobs=4  mounts=0 manifests=3 shared=0
-  lab-installer.karmalabs.com:5000 olm/openshift4-ose-local-storage-operator-bundle                          blobs=2  mounts=0 manifests=1 shared=0
-  lab-installer.karmalabs.com:5000 olm/openshift4-ose-local-storage-diskmaker                                blobs=24 mounts=0 manifests=6 shared=16
+  lab-installer.karmalabs.local:5000 olm/olm-index-redhat-operator-index                                       blobs=7  mounts=0 manifests=1 shared=0
+  lab-installer.karmalabs.local:5000 olm/openshift4-performance-addon-operator-bundle-registry-container-rhel8 blobs=3  mounts=0 manifests=1 shared=0
+  lab-installer.karmalabs.local:5000 olm/openshift4-performance-addon-rhel8-operator                           blobs=4  mounts=0 manifests=3 shared=0
+  lab-installer.karmalabs.local:5000 olm/openshift4-ose-local-storage-operator-bundle                          blobs=2  mounts=0 manifests=1 shared=0
+  lab-installer.karmalabs.local:5000 olm/openshift4-ose-local-storage-diskmaker                                blobs=24 mounts=0 manifests=6 shared=16
 phase 1:
-  lab-installer.karmalabs.com:5000 olm/openshift4-ose-local-storage-operator blobs=24 mounts=16 manifests=6 shared=16
-  lab-installer.karmalabs.com:5000 olm/openshift4-ose-kube-rbac-proxy        blobs=24 mounts=16 manifests=6 shared=16
+  lab-installer.karmalabs.local:5000 olm/openshift4-ose-local-storage-operator blobs=24 mounts=16 manifests=6 shared=16
+  lab-installer.karmalabs.local:5000 olm/openshift4-ose-kube-rbac-proxy        blobs=24 mounts=16 manifests=6 shared=16
 
 info: Planning completed in 6.58s
-mounted: lab-installer.karmalabs.com:5000/olm/olm-index-redhat-operator-index sha256:4ad6714115439f812b62c5d3ee9d1077534bd5fec4244f4cb421771c62d7e62e 13.57MiB
-mounted: lab-installer.karmalabs.com:5000/olm/olm-index-redhat-operator-index sha256:99bbe933c0e4433c7fd6941c88af807907a5c024eeea9ba68168b0a02104f64f 20.93KiB
-mounted: lab-installer.karmalabs.com:5000/olm/olm-index-redhat-operator-index sha256:0c3f40efe9c88feb29cd66831b5fb7bd1cd6816a65fe56911631f1050ab19444 3.747MiB
-mounted: lab-installer.karmalabs.com:5000/olm/olm-index-redhat-operator-index sha256:c3528915f8acda6a378f500237b8d3ce80951ac0556f059b834891ca42ee629f 812KiB
-mounted: lab-installer.karmalabs.com:5000/olm/olm-index-redhat-operator-index sha256:639208cddb94771f2d42cf8f53ec21e6ea7a1e17485806b8ffa3b6b7528cc11e 686.5KiB
-sha256:c751ebab527f6572eaac9ea7681af629845c9852573ea2ed0f608b5fd4fa7cd0 lab-installer.karmalabs.com:5000/olm/olm-index-redhat-operator-index:v4.9
-sha256:e7926a59198354d63ace40d054600096de3fb86e77f4c0357189645e286b137f lab-installer.karmalabs.com:5000/olm/openshift4-performance-addon-operator-bundle-registry-container-rhel8:cd2b9a2
-uploading: lab-installer.karmalabs.com:5000/olm/openshift4-performance-addon-rhel8-operator sha256:9ac5365600f042b38e14ef1b5cf28212c208ac7d9b8ddf76ac61f8fcae687aa1 33.41MiB
-uploading: lab-installer.karmalabs.com:5000/olm/openshift4-performance-addon-rhel8-operator sha256:dde93efae2ff16e50120b8766f4ff60f0635f420c514d47c40b6e62987423d74 37.49MiB
-uploading: lab-installer.karmalabs.com:5000/olm/openshift4-ose-local-storage-diskmaker sha256:2d5d59c100e7ad4ac35a22da06b6df29070833b69ddff30f13cb9e11e69dce1e 78.57MiB
-uploading: lab-installer.karmalabs.com:5000/olm/openshift4-ose-local-storage-diskmaker sha256:71b833585865125a4752cd0885165f3a15bd106b38fb29ba840bde57da4f9cc2 11.34MiB
-uploading: lab-installer.karmalabs.com:5000/olm/openshift4-ose-local-storage-diskmaker sha256:2ae16a9e914000df3a69e9ba24215fb038400fa6d16798e9b6de3e12c69379e2 28.8MiB
-uploading: lab-installer.karmalabs.com:5000/olm/openshift4-ose-local-storage-diskmaker sha256:d0e70ac12890105f713e7bfa4041263bc3ac3fdaa29c684c11fd32ea345cf741 10.59MiB
-uploading: lab-installer.karmalabs.com:5000/olm/openshift4-ose-local-storage-diskmaker sha256:41b5c4fd705c125a86f32562747a39a914ce960ddb9de97d172870bb4b4a824d 27.44MiB
-uploading: lab-installer.karmalabs.com:5000/olm/openshift4-ose-local-storage-diskmaker sha256:3eabe22a2aec9181c0849b1a23a6104a81bcf00bea55a52a45dba613f0afd896 76.79MiB
-uploading: lab-installer.karmalabs.com:5000/olm/openshift4-ose-local-storage-diskmaker sha256:ed6ee657d49e14dc574507ea575b857343d444d423231c7f827ae0d3105b7937 87.04MiB
-uploading: lab-installer.karmalabs.com:5000/olm/openshift4-ose-local-storage-diskmaker sha256:8371edeb80944cd165f030b9809d8dcb6266a91345dd84adaa035a43d7d65a87 10.76MiB
-uploading: lab-installer.karmalabs.com:5000/olm/openshift4-ose-local-storage-diskmaker sha256:c3d0b3cd21108afc0d4c92fa1d81c4a259b5d96a38097d753daef5182b8491f8 6.09MiB
-uploading: lab-installer.karmalabs.com:5000/olm/openshift4-ose-local-storage-diskmaker sha256:eac1b95df832dc9f172fd1f07e7cb50c1929b118a4249ddd02c6318a677b506a 79.44MiB
-uploading: lab-installer.karmalabs.com:5000/olm/openshift4-ose-local-storage-diskmaker sha256:2ba1023276a3f31f3f034f21224704e5f5b2618c0f751ffe6a6898a5e081fc0e 6.133MiB
-uploading: lab-installer.karmalabs.com:5000/olm/openshift4-ose-local-storage-diskmaker sha256:4c4d6e754c8d38fa7deeeb98d90193876a5e6c285e2ab3eaefe9945235951869 30.18MiB
-uploading: lab-installer.karmalabs.com:5000/olm/openshift4-ose-local-storage-diskmaker sha256:5c27806d08be52d124b7a641f9ae3dd9f56665d8f34886c69817d1bd58224548 10.68MiB
-uploading: lab-installer.karmalabs.com:5000/olm/openshift4-ose-local-storage-diskmaker sha256:d210a32994f406eaf5bd279c63f4fb1dcba50b9c1be55ad57fe965e3ad761f72 6.108MiB
-uploading: lab-installer.karmalabs.com:5000/olm/openshift4-ose-local-storage-diskmaker sha256:9253a6e9c3007be9aa6ced2f4b40977efd425bf0ff00f5b7c0a448cc3fe04730 29.98MiB
-uploading: lab-installer.karmalabs.com:5000/olm/openshift4-ose-local-storage-diskmaker sha256:ac58ad8783963479746820574454cea7577bde4455e634d3375f37aba3633001 6.101MiB
-sha256:2f3bd4b9fb405c4e6ae5725b64a97e09b597dd3d8373659909c47f898b06d39a lab-installer.karmalabs.com:5000/olm/openshift4-ose-local-storage-operator-bundle:f3645a00
-sha256:3e8ed35eee92fac3020d5ffb8e11041b342002d2474f00249426a97fa327e489 lab-installer.karmalabs.com:5000/olm/openshift4-performance-addon-rhel8-operator
-sha256:644089fc9e927ab6238fd79cbc94ea09023ac71fdf06ec48d6ac07d8ba9c86a7 lab-installer.karmalabs.com:5000/olm/openshift4-performance-addon-rhel8-operator:fe1027a8
-sha256:6a5c51b61d31c4f771c1ce02e2f8614c3df24ea8e09fcb8d5ea9ea137e7ce0b6 lab-installer.karmalabs.com:5000/olm/openshift4-ose-local-storage-diskmaker
-sha256:57ed851ce2bfa1a60b65d1fc0fd8a120443d56c71959eae88b8e16b2e5a7028d lab-installer.karmalabs.com:5000/olm/openshift4-ose-local-storage-diskmaker
-sha256:6a61dd35c5cf355d285d8d7341a6abd123c526ebc603a177a281acb9764356c7 lab-installer.karmalabs.com:5000/olm/openshift4-ose-local-storage-diskmaker
-sha256:207dfff315700175332194156b3cce8e0c05ead5a08c95ed258d4ef773cb7385 lab-installer.karmalabs.com:5000/olm/openshift4-ose-local-storage-diskmaker
-sha256:2574e73af12ea219293d247046d3015a19481905e8b859ad84961086f092f585 lab-installer.karmalabs.com:5000/olm/openshift4-ose-local-storage-diskmaker:d32f4d30
-mounted: lab-installer.karmalabs.com:5000/olm/openshift4-ose-kube-rbac-proxy sha256:c3d0b3cd21108afc0d4c92fa1d81c4a259b5d96a38097d753daef5182b8491f8 6.09MiB
-mounted: lab-installer.karmalabs.com:5000/olm/openshift4-ose-kube-rbac-proxy sha256:71b833585865125a4752cd0885165f3a15bd106b38fb29ba840bde57da4f9cc2 11.34MiB
-mounted: lab-installer.karmalabs.com:5000/olm/openshift4-ose-kube-rbac-proxy sha256:3eabe22a2aec9181c0849b1a23a6104a81bcf00bea55a52a45dba613f0afd896 76.79MiB
-mounted: lab-installer.karmalabs.com:5000/olm/openshift4-ose-kube-rbac-proxy sha256:2ba1023276a3f31f3f034f21224704e5f5b2618c0f751ffe6a6898a5e081fc0e 6.133MiB
-mounted: lab-installer.karmalabs.com:5000/olm/openshift4-ose-kube-rbac-proxy sha256:ac58ad8783963479746820574454cea7577bde4455e634d3375f37aba3633001 6.101MiB
-mounted: lab-installer.karmalabs.com:5000/olm/openshift4-ose-kube-rbac-proxy sha256:8371edeb80944cd165f030b9809d8dcb6266a91345dd84adaa035a43d7d65a87 10.76MiB
-mounted: lab-installer.karmalabs.com:5000/olm/openshift4-ose-kube-rbac-proxy sha256:d0e70ac12890105f713e7bfa4041263bc3ac3fdaa29c684c11fd32ea345cf741 10.59MiB
-mounted: lab-installer.karmalabs.com:5000/olm/openshift4-ose-kube-rbac-proxy sha256:5c27806d08be52d124b7a641f9ae3dd9f56665d8f34886c69817d1bd58224548 10.68MiB
-mounted: lab-installer.karmalabs.com:5000/olm/openshift4-ose-kube-rbac-proxy sha256:2d5d59c100e7ad4ac35a22da06b6df29070833b69ddff30f13cb9e11e69dce1e 78.57MiB
-mounted: lab-installer.karmalabs.com:5000/olm/openshift4-ose-kube-rbac-proxy sha256:ed6ee657d49e14dc574507ea575b857343d444d423231c7f827ae0d3105b7937 87.04MiB
-uploading: lab-installer.karmalabs.com:5000/olm/openshift4-ose-kube-rbac-proxy sha256:4a7a6d81f648de56fd64b4b893b88c754dce1f27fcdbb64fd6a5f31ee147dcef 17.39MiB
-mounted: lab-installer.karmalabs.com:5000/olm/openshift4-ose-kube-rbac-proxy sha256:d210a32994f406eaf5bd279c63f4fb1dcba50b9c1be55ad57fe965e3ad761f72 6.108MiB
-mounted: lab-installer.karmalabs.com:5000/olm/openshift4-ose-kube-rbac-proxy sha256:eac1b95df832dc9f172fd1f07e7cb50c1929b118a4249ddd02c6318a677b506a 79.44MiB
-uploading: lab-installer.karmalabs.com:5000/olm/openshift4-ose-kube-rbac-proxy sha256:c4907b32df1f8f1ee8e0bbe312f999c5cc1422b44929ecf4c8fac386470699fd 17.44MiB
-uploading: lab-installer.karmalabs.com:5000/olm/openshift4-ose-kube-rbac-proxy sha256:fe8ec63cfe4747253fe2543aec59571d0de704c0a43a1eb8f68dab635009f9dc 15.86MiB
-mounted: lab-installer.karmalabs.com:5000/olm/openshift4-ose-local-storage-operator sha256:71b833585865125a4752cd0885165f3a15bd106b38fb29ba840bde57da4f9cc2 11.34MiB
-mounted: lab-installer.karmalabs.com:5000/olm/openshift4-ose-local-storage-operator sha256:d0e70ac12890105f713e7bfa4041263bc3ac3fdaa29c684c11fd32ea345cf741 10.59MiB
-mounted: lab-installer.karmalabs.com:5000/olm/openshift4-ose-local-storage-operator sha256:2ba1023276a3f31f3f034f21224704e5f5b2618c0f751ffe6a6898a5e081fc0e 6.133MiB
-mounted: lab-installer.karmalabs.com:5000/olm/openshift4-ose-local-storage-operator sha256:2d5d59c100e7ad4ac35a22da06b6df29070833b69ddff30f13cb9e11e69dce1e 78.57MiB
-mounted: lab-installer.karmalabs.com:5000/olm/openshift4-ose-local-storage-operator sha256:c3d0b3cd21108afc0d4c92fa1d81c4a259b5d96a38097d753daef5182b8491f8 6.09MiB
-mounted: lab-installer.karmalabs.com:5000/olm/openshift4-ose-local-storage-operator sha256:ed6ee657d49e14dc574507ea575b857343d444d423231c7f827ae0d3105b7937 87.04MiB
-mounted: lab-installer.karmalabs.com:5000/olm/openshift4-ose-local-storage-operator sha256:3eabe22a2aec9181c0849b1a23a6104a81bcf00bea55a52a45dba613f0afd896 76.79MiB
-mounted: lab-installer.karmalabs.com:5000/olm/openshift4-ose-local-storage-operator sha256:eac1b95df832dc9f172fd1f07e7cb50c1929b118a4249ddd02c6318a677b506a 79.44MiB
-uploading: lab-installer.karmalabs.com:5000/olm/openshift4-ose-kube-rbac-proxy sha256:89b92dfc7f69c1d7f3b31b47890b98bd33b1ae61b67899b03576bd07a3d3c47f 16.28MiB
-uploading: lab-installer.karmalabs.com:5000/olm/openshift4-ose-local-storage-operator sha256:5f66527c36bb05f734652a043a1f53f29e1189490e78310bce6a9293151df772 20.08MiB
-mounted: lab-installer.karmalabs.com:5000/olm/openshift4-ose-local-storage-operator sha256:ac58ad8783963479746820574454cea7577bde4455e634d3375f37aba3633001 6.101MiB
-uploading: lab-installer.karmalabs.com:5000/olm/openshift4-ose-local-storage-operator sha256:c5f97614663335c43d29bf34fcfee521acb7f7ec407cd225a22dff373ad62b23 18.29MiB
-uploading: lab-installer.karmalabs.com:5000/olm/openshift4-ose-local-storage-operator sha256:daf0fc851c5133b93fd32086cedec51d7f7119b047cd57500f9b4987eac90886 21.54MiB
-mounted: lab-installer.karmalabs.com:5000/olm/openshift4-ose-local-storage-operator sha256:d210a32994f406eaf5bd279c63f4fb1dcba50b9c1be55ad57fe965e3ad761f72 6.108MiB
-uploading: lab-installer.karmalabs.com:5000/olm/openshift4-ose-local-storage-operator sha256:74a2cc6bd6c4ac46722886fc654fd4bf4aa2b0885bab3ee05764ea1e90bed9d9 21.44MiB
-mounted: lab-installer.karmalabs.com:5000/olm/openshift4-ose-local-storage-operator sha256:5c27806d08be52d124b7a641f9ae3dd9f56665d8f34886c69817d1bd58224548 10.68MiB
-mounted: lab-installer.karmalabs.com:5000/olm/openshift4-ose-local-storage-operator sha256:8371edeb80944cd165f030b9809d8dcb6266a91345dd84adaa035a43d7d65a87 10.76MiB
-sha256:4fc86a4a96c593c8f234d4edf057c9e2215ff799a82464d81adcb6dd13ea455e lab-installer.karmalabs.com:5000/olm/openshift4-ose-kube-rbac-proxy
-sha256:96ebd88d19be8a3b5679ad24041d456e01c0a1a9f0bf9a535725488083f4cd17 lab-installer.karmalabs.com:5000/olm/openshift4-ose-kube-rbac-proxy
-sha256:ca006e25d09c1706a7faec17527ff4a14e64368d6541583b519dbaeb4a30d32f lab-installer.karmalabs.com:5000/olm/openshift4-ose-kube-rbac-proxy
-sha256:b98bd93ac4f9efe1cbcac3936076568fae6cc6c19845fab12a1b80586b33296f lab-installer.karmalabs.com:5000/olm/openshift4-ose-kube-rbac-proxy
-sha256:8b4f814c112d7b91dc5e7904d4f3c684f3d77227344d2b553a84d4a1bc2829d3 lab-installer.karmalabs.com:5000/olm/openshift4-ose-kube-rbac-proxy:a8cc7e74
-sha256:ddfc7fd9d758270e22a67d669884d4e390d18bbe05bf93a7c1c416c3ec7a3c35 lab-installer.karmalabs.com:5000/olm/openshift4-ose-local-storage-operator
-sha256:d5f3b22f401e28bf402d6a85fb6905da6e966b8640ccc957a8208c0fbad370e5 lab-installer.karmalabs.com:5000/olm/openshift4-ose-local-storage-operator
-sha256:a9d05d9f01a6405d3c1847198b4a96e1f8844ccff0726f4437fd91e8878c6890 lab-installer.karmalabs.com:5000/olm/openshift4-ose-local-storage-operator
-sha256:20724e13517cbe1febbd40f66f87c174c2e2e1ae016f566fcd36d88da615fa38 lab-installer.karmalabs.com:5000/olm/openshift4-ose-local-storage-operator
-sha256:49aadd9aa543c13035b64ec0fde93247d7625f13efc3c7b97c768be227b45fac lab-installer.karmalabs.com:5000/olm/openshift4-ose-local-storage-operator:1baa3456
+mounted: lab-installer.karmalabs.local:5000/olm/olm-index-redhat-operator-index sha256:4ad6714115439f812b62c5d3ee9d1077534bd5fec4244f4cb421771c62d7e62e 13.57MiB
+mounted: lab-installer.karmalabs.local:5000/olm/olm-index-redhat-operator-index sha256:99bbe933c0e4433c7fd6941c88af807907a5c024eeea9ba68168b0a02104f64f 20.93KiB
+mounted: lab-installer.karmalabs.local:5000/olm/olm-index-redhat-operator-index sha256:0c3f40efe9c88feb29cd66831b5fb7bd1cd6816a65fe56911631f1050ab19444 3.747MiB
+mounted: lab-installer.karmalabs.local:5000/olm/olm-index-redhat-operator-index sha256:c3528915f8acda6a378f500237b8d3ce80951ac0556f059b834891ca42ee629f 812KiB
+mounted: lab-installer.karmalabs.local:5000/olm/olm-index-redhat-operator-index sha256:639208cddb94771f2d42cf8f53ec21e6ea7a1e17485806b8ffa3b6b7528cc11e 686.5KiB
+sha256:c751ebab527f6572eaac9ea7681af629845c9852573ea2ed0f608b5fd4fa7cd0 lab-installer.karmalabs.local:5000/olm/olm-index-redhat-operator-index:v4.9
+sha256:e7926a59198354d63ace40d054600096de3fb86e77f4c0357189645e286b137f lab-installer.karmalabs.local:5000/olm/openshift4-performance-addon-operator-bundle-registry-container-rhel8:cd2b9a2
+uploading: lab-installer.karmalabs.local:5000/olm/openshift4-performance-addon-rhel8-operator sha256:9ac5365600f042b38e14ef1b5cf28212c208ac7d9b8ddf76ac61f8fcae687aa1 33.41MiB
+uploading: lab-installer.karmalabs.local:5000/olm/openshift4-performance-addon-rhel8-operator sha256:dde93efae2ff16e50120b8766f4ff60f0635f420c514d47c40b6e62987423d74 37.49MiB
+uploading: lab-installer.karmalabs.local:5000/olm/openshift4-ose-local-storage-diskmaker sha256:2d5d59c100e7ad4ac35a22da06b6df29070833b69ddff30f13cb9e11e69dce1e 78.57MiB
+uploading: lab-installer.karmalabs.local:5000/olm/openshift4-ose-local-storage-diskmaker sha256:71b833585865125a4752cd0885165f3a15bd106b38fb29ba840bde57da4f9cc2 11.34MiB
+uploading: lab-installer.karmalabs.local:5000/olm/openshift4-ose-local-storage-diskmaker sha256:2ae16a9e914000df3a69e9ba24215fb038400fa6d16798e9b6de3e12c69379e2 28.8MiB
+uploading: lab-installer.karmalabs.local:5000/olm/openshift4-ose-local-storage-diskmaker sha256:d0e70ac12890105f713e7bfa4041263bc3ac3fdaa29c684c11fd32ea345cf741 10.59MiB
+uploading: lab-installer.karmalabs.local:5000/olm/openshift4-ose-local-storage-diskmaker sha256:41b5c4fd705c125a86f32562747a39a914ce960ddb9de97d172870bb4b4a824d 27.44MiB
+uploading: lab-installer.karmalabs.local:5000/olm/openshift4-ose-local-storage-diskmaker sha256:3eabe22a2aec9181c0849b1a23a6104a81bcf00bea55a52a45dba613f0afd896 76.79MiB
+uploading: lab-installer.karmalabs.local:5000/olm/openshift4-ose-local-storage-diskmaker sha256:ed6ee657d49e14dc574507ea575b857343d444d423231c7f827ae0d3105b7937 87.04MiB
+uploading: lab-installer.karmalabs.local:5000/olm/openshift4-ose-local-storage-diskmaker sha256:8371edeb80944cd165f030b9809d8dcb6266a91345dd84adaa035a43d7d65a87 10.76MiB
+uploading: lab-installer.karmalabs.local:5000/olm/openshift4-ose-local-storage-diskmaker sha256:c3d0b3cd21108afc0d4c92fa1d81c4a259b5d96a38097d753daef5182b8491f8 6.09MiB
+uploading: lab-installer.karmalabs.local:5000/olm/openshift4-ose-local-storage-diskmaker sha256:eac1b95df832dc9f172fd1f07e7cb50c1929b118a4249ddd02c6318a677b506a 79.44MiB
+uploading: lab-installer.karmalabs.local:5000/olm/openshift4-ose-local-storage-diskmaker sha256:2ba1023276a3f31f3f034f21224704e5f5b2618c0f751ffe6a6898a5e081fc0e 6.133MiB
+uploading: lab-installer.karmalabs.local:5000/olm/openshift4-ose-local-storage-diskmaker sha256:4c4d6e754c8d38fa7deeeb98d90193876a5e6c285e2ab3eaefe9945235951869 30.18MiB
+uploading: lab-installer.karmalabs.local:5000/olm/openshift4-ose-local-storage-diskmaker sha256:5c27806d08be52d124b7a641f9ae3dd9f56665d8f34886c69817d1bd58224548 10.68MiB
+uploading: lab-installer.karmalabs.local:5000/olm/openshift4-ose-local-storage-diskmaker sha256:d210a32994f406eaf5bd279c63f4fb1dcba50b9c1be55ad57fe965e3ad761f72 6.108MiB
+uploading: lab-installer.karmalabs.local:5000/olm/openshift4-ose-local-storage-diskmaker sha256:9253a6e9c3007be9aa6ced2f4b40977efd425bf0ff00f5b7c0a448cc3fe04730 29.98MiB
+uploading: lab-installer.karmalabs.local:5000/olm/openshift4-ose-local-storage-diskmaker sha256:ac58ad8783963479746820574454cea7577bde4455e634d3375f37aba3633001 6.101MiB
+sha256:2f3bd4b9fb405c4e6ae5725b64a97e09b597dd3d8373659909c47f898b06d39a lab-installer.karmalabs.local:5000/olm/openshift4-ose-local-storage-operator-bundle:f3645a00
+sha256:3e8ed35eee92fac3020d5ffb8e11041b342002d2474f00249426a97fa327e489 lab-installer.karmalabs.local:5000/olm/openshift4-performance-addon-rhel8-operator
+sha256:644089fc9e927ab6238fd79cbc94ea09023ac71fdf06ec48d6ac07d8ba9c86a7 lab-installer.karmalabs.local:5000/olm/openshift4-performance-addon-rhel8-operator:fe1027a8
+sha256:6a5c51b61d31c4f771c1ce02e2f8614c3df24ea8e09fcb8d5ea9ea137e7ce0b6 lab-installer.karmalabs.local:5000/olm/openshift4-ose-local-storage-diskmaker
+sha256:57ed851ce2bfa1a60b65d1fc0fd8a120443d56c71959eae88b8e16b2e5a7028d lab-installer.karmalabs.local:5000/olm/openshift4-ose-local-storage-diskmaker
+sha256:6a61dd35c5cf355d285d8d7341a6abd123c526ebc603a177a281acb9764356c7 lab-installer.karmalabs.local:5000/olm/openshift4-ose-local-storage-diskmaker
+sha256:207dfff315700175332194156b3cce8e0c05ead5a08c95ed258d4ef773cb7385 lab-installer.karmalabs.local:5000/olm/openshift4-ose-local-storage-diskmaker
+sha256:2574e73af12ea219293d247046d3015a19481905e8b859ad84961086f092f585 lab-installer.karmalabs.local:5000/olm/openshift4-ose-local-storage-diskmaker:d32f4d30
+mounted: lab-installer.karmalabs.local:5000/olm/openshift4-ose-kube-rbac-proxy sha256:c3d0b3cd21108afc0d4c92fa1d81c4a259b5d96a38097d753daef5182b8491f8 6.09MiB
+mounted: lab-installer.karmalabs.local:5000/olm/openshift4-ose-kube-rbac-proxy sha256:71b833585865125a4752cd0885165f3a15bd106b38fb29ba840bde57da4f9cc2 11.34MiB
+mounted: lab-installer.karmalabs.local:5000/olm/openshift4-ose-kube-rbac-proxy sha256:3eabe22a2aec9181c0849b1a23a6104a81bcf00bea55a52a45dba613f0afd896 76.79MiB
+mounted: lab-installer.karmalabs.local:5000/olm/openshift4-ose-kube-rbac-proxy sha256:2ba1023276a3f31f3f034f21224704e5f5b2618c0f751ffe6a6898a5e081fc0e 6.133MiB
+mounted: lab-installer.karmalabs.local:5000/olm/openshift4-ose-kube-rbac-proxy sha256:ac58ad8783963479746820574454cea7577bde4455e634d3375f37aba3633001 6.101MiB
+mounted: lab-installer.karmalabs.local:5000/olm/openshift4-ose-kube-rbac-proxy sha256:8371edeb80944cd165f030b9809d8dcb6266a91345dd84adaa035a43d7d65a87 10.76MiB
+mounted: lab-installer.karmalabs.local:5000/olm/openshift4-ose-kube-rbac-proxy sha256:d0e70ac12890105f713e7bfa4041263bc3ac3fdaa29c684c11fd32ea345cf741 10.59MiB
+mounted: lab-installer.karmalabs.local:5000/olm/openshift4-ose-kube-rbac-proxy sha256:5c27806d08be52d124b7a641f9ae3dd9f56665d8f34886c69817d1bd58224548 10.68MiB
+mounted: lab-installer.karmalabs.local:5000/olm/openshift4-ose-kube-rbac-proxy sha256:2d5d59c100e7ad4ac35a22da06b6df29070833b69ddff30f13cb9e11e69dce1e 78.57MiB
+mounted: lab-installer.karmalabs.local:5000/olm/openshift4-ose-kube-rbac-proxy sha256:ed6ee657d49e14dc574507ea575b857343d444d423231c7f827ae0d3105b7937 87.04MiB
+uploading: lab-installer.karmalabs.local:5000/olm/openshift4-ose-kube-rbac-proxy sha256:4a7a6d81f648de56fd64b4b893b88c754dce1f27fcdbb64fd6a5f31ee147dcef 17.39MiB
+mounted: lab-installer.karmalabs.local:5000/olm/openshift4-ose-kube-rbac-proxy sha256:d210a32994f406eaf5bd279c63f4fb1dcba50b9c1be55ad57fe965e3ad761f72 6.108MiB
+mounted: lab-installer.karmalabs.local:5000/olm/openshift4-ose-kube-rbac-proxy sha256:eac1b95df832dc9f172fd1f07e7cb50c1929b118a4249ddd02c6318a677b506a 79.44MiB
+uploading: lab-installer.karmalabs.local:5000/olm/openshift4-ose-kube-rbac-proxy sha256:c4907b32df1f8f1ee8e0bbe312f999c5cc1422b44929ecf4c8fac386470699fd 17.44MiB
+uploading: lab-installer.karmalabs.local:5000/olm/openshift4-ose-kube-rbac-proxy sha256:fe8ec63cfe4747253fe2543aec59571d0de704c0a43a1eb8f68dab635009f9dc 15.86MiB
+mounted: lab-installer.karmalabs.local:5000/olm/openshift4-ose-local-storage-operator sha256:71b833585865125a4752cd0885165f3a15bd106b38fb29ba840bde57da4f9cc2 11.34MiB
+mounted: lab-installer.karmalabs.local:5000/olm/openshift4-ose-local-storage-operator sha256:d0e70ac12890105f713e7bfa4041263bc3ac3fdaa29c684c11fd32ea345cf741 10.59MiB
+mounted: lab-installer.karmalabs.local:5000/olm/openshift4-ose-local-storage-operator sha256:2ba1023276a3f31f3f034f21224704e5f5b2618c0f751ffe6a6898a5e081fc0e 6.133MiB
+mounted: lab-installer.karmalabs.local:5000/olm/openshift4-ose-local-storage-operator sha256:2d5d59c100e7ad4ac35a22da06b6df29070833b69ddff30f13cb9e11e69dce1e 78.57MiB
+mounted: lab-installer.karmalabs.local:5000/olm/openshift4-ose-local-storage-operator sha256:c3d0b3cd21108afc0d4c92fa1d81c4a259b5d96a38097d753daef5182b8491f8 6.09MiB
+mounted: lab-installer.karmalabs.local:5000/olm/openshift4-ose-local-storage-operator sha256:ed6ee657d49e14dc574507ea575b857343d444d423231c7f827ae0d3105b7937 87.04MiB
+mounted: lab-installer.karmalabs.local:5000/olm/openshift4-ose-local-storage-operator sha256:3eabe22a2aec9181c0849b1a23a6104a81bcf00bea55a52a45dba613f0afd896 76.79MiB
+mounted: lab-installer.karmalabs.local:5000/olm/openshift4-ose-local-storage-operator sha256:eac1b95df832dc9f172fd1f07e7cb50c1929b118a4249ddd02c6318a677b506a 79.44MiB
+uploading: lab-installer.karmalabs.local:5000/olm/openshift4-ose-kube-rbac-proxy sha256:89b92dfc7f69c1d7f3b31b47890b98bd33b1ae61b67899b03576bd07a3d3c47f 16.28MiB
+uploading: lab-installer.karmalabs.local:5000/olm/openshift4-ose-local-storage-operator sha256:5f66527c36bb05f734652a043a1f53f29e1189490e78310bce6a9293151df772 20.08MiB
+mounted: lab-installer.karmalabs.local:5000/olm/openshift4-ose-local-storage-operator sha256:ac58ad8783963479746820574454cea7577bde4455e634d3375f37aba3633001 6.101MiB
+uploading: lab-installer.karmalabs.local:5000/olm/openshift4-ose-local-storage-operator sha256:c5f97614663335c43d29bf34fcfee521acb7f7ec407cd225a22dff373ad62b23 18.29MiB
+uploading: lab-installer.karmalabs.local:5000/olm/openshift4-ose-local-storage-operator sha256:daf0fc851c5133b93fd32086cedec51d7f7119b047cd57500f9b4987eac90886 21.54MiB
+mounted: lab-installer.karmalabs.local:5000/olm/openshift4-ose-local-storage-operator sha256:d210a32994f406eaf5bd279c63f4fb1dcba50b9c1be55ad57fe965e3ad761f72 6.108MiB
+uploading: lab-installer.karmalabs.local:5000/olm/openshift4-ose-local-storage-operator sha256:74a2cc6bd6c4ac46722886fc654fd4bf4aa2b0885bab3ee05764ea1e90bed9d9 21.44MiB
+mounted: lab-installer.karmalabs.local:5000/olm/openshift4-ose-local-storage-operator sha256:5c27806d08be52d124b7a641f9ae3dd9f56665d8f34886c69817d1bd58224548 10.68MiB
+mounted: lab-installer.karmalabs.local:5000/olm/openshift4-ose-local-storage-operator sha256:8371edeb80944cd165f030b9809d8dcb6266a91345dd84adaa035a43d7d65a87 10.76MiB
+sha256:4fc86a4a96c593c8f234d4edf057c9e2215ff799a82464d81adcb6dd13ea455e lab-installer.karmalabs.local:5000/olm/openshift4-ose-kube-rbac-proxy
+sha256:96ebd88d19be8a3b5679ad24041d456e01c0a1a9f0bf9a535725488083f4cd17 lab-installer.karmalabs.local:5000/olm/openshift4-ose-kube-rbac-proxy
+sha256:ca006e25d09c1706a7faec17527ff4a14e64368d6541583b519dbaeb4a30d32f lab-installer.karmalabs.local:5000/olm/openshift4-ose-kube-rbac-proxy
+sha256:b98bd93ac4f9efe1cbcac3936076568fae6cc6c19845fab12a1b80586b33296f lab-installer.karmalabs.local:5000/olm/openshift4-ose-kube-rbac-proxy
+sha256:8b4f814c112d7b91dc5e7904d4f3c684f3d77227344d2b553a84d4a1bc2829d3 lab-installer.karmalabs.local:5000/olm/openshift4-ose-kube-rbac-proxy:a8cc7e74
+sha256:ddfc7fd9d758270e22a67d669884d4e390d18bbe05bf93a7c1c416c3ec7a3c35 lab-installer.karmalabs.local:5000/olm/openshift4-ose-local-storage-operator
+sha256:d5f3b22f401e28bf402d6a85fb6905da6e966b8640ccc957a8208c0fbad370e5 lab-installer.karmalabs.local:5000/olm/openshift4-ose-local-storage-operator
+sha256:a9d05d9f01a6405d3c1847198b4a96e1f8844ccff0726f4437fd91e8878c6890 lab-installer.karmalabs.local:5000/olm/openshift4-ose-local-storage-operator
+sha256:20724e13517cbe1febbd40f66f87c174c2e2e1ae016f566fcd36d88da615fa38 lab-installer.karmalabs.local:5000/olm/openshift4-ose-local-storage-operator
+sha256:49aadd9aa543c13035b64ec0fde93247d7625f13efc3c7b97c768be227b45fac lab-installer.karmalabs.local:5000/olm/openshift4-ose-local-storage-operator:1baa3456
 info: Mirroring completed in 44.82s (16.97MB/s)
-no digest mapping available for lab-installer.karmalabs.com:5000/olm-index/redhat-operator-index:v4.9, skip writing to ImageContentSourcePolicy
+no digest mapping available for lab-installer.karmalabs.local:5000/olm-index/redhat-operator-index:v4.9, skip writing to ImageContentSourcePolicy
 wrote mirroring manifests to manifests-redhat-operator-index-1637920908
 
 real	0m52.593s
@@ -3929,7 +3929,7 @@ time="2020-05-12T10:10:10Z" level=debug
 time="2020-05-12T10:10:10Z" level=debug msg="Apply complete! Resources: 12 added, 0 changed, 0 destroyed."
 time="2020-05-12T10:10:10Z" level=debug msg="OpenShift Installer 4.5.0-0.nightly-2020-05-12-065413"
 time="2020-05-12T10:10:10Z" level=debug msg="Built from commit e476c483ed99c9cf2982529178e668dbcaf3ed5e"
-time="2020-05-12T10:10:10Z" level=info msg="Waiting up to 20m0s for the Kubernetes API at https://api.lab.karmalabs.com:6443..."
+time="2020-05-12T10:10:10Z" level=info msg="Waiting up to 20m0s for the Kubernetes API at https://api.lab.karmalabs.local:6443..."
 time="2020-05-12T10:10:10Z" level=info msg="API v1.18.2 up"
 time="2020-05-12T10:10:10Z" level=info msg="Waiting up to 40m0s for bootstrapping to complete..."
 time="2020-05-12T10:17:24Z" level=debug msg="Bootstrap status: complete"
@@ -4011,7 +4011,7 @@ time="2020-05-12T10:17:32Z" level=debug msg="  Loading Pull Secret..."
 time="2020-05-12T10:17:32Z" level=debug msg="  Loading Platform..."
 time="2020-05-12T10:17:32Z" level=debug msg="Using Install Config loaded from state file"
 time="2020-05-12T10:17:32Z" level=debug msg="Reusing previously-fetched Install Config"
-time="2020-05-12T10:17:32Z" level=info msg="Waiting up to 1h0m0s for the cluster at https://api.lab.karmalabs.com:6443 to initialize..."
+time="2020-05-12T10:17:32Z" level=info msg="Waiting up to 1h0m0s for the cluster at https://api.lab.karmalabs.local:6443 to initialize..."
 time="2020-05-12T10:17:32Z" level=debug msg="Still waiting for the cluster to initialize: Working towards 4.5.0-0.nightly-2020-05-12-065413: 13% complete"
 time="2020-05-12T10:17:36Z" level=debug msg="Still waiting for the cluster to initialize: Working towards 4.5.0-0.nightly-2020-05-12-065413: 54% complete"
 time="2020-05-12T10:17:51Z" level=debug msg="Still waiting for the cluster to initialize: Working towards 4.5.0-0.nightly-2020-05-12-065413: 55% complete"
@@ -4053,7 +4053,7 @@ time="2020-05-12T11:13:03Z" level=debug msg="Route found in openshift-console na
 time="2020-05-12T11:13:03Z" level=debug msg="OpenShift console route is created"
 time="2020-05-12T11:13:03Z" level=info msg="Install complete!"
 time="2020-05-12T11:13:03Z" level=info msg="To access the cluster as the system:admin user when using 'oc', run 'export KUBECONFIG=/root/ocp/auth/kubeconfig'"
-time="2020-05-12T11:13:03Z" level=info msg="Access the OpenShift web-console here: https://console-openshift-console.apps.lab.karmalabs.com"
+time="2020-05-12T11:13:03Z" level=info msg="Access the OpenShift web-console here: https://console-openshift-console.apps.lab.karmalabs.local"
 time="2020-05-12T11:13:03Z" level=info msg="Login to the console with user: \"kubeadmin\", and password: \"XXX\""
 time="2020-05-12T11:13:03Z" level=debug msg="Time elapsed per stage:"
 time="2020-05-12T11:13:03Z" level=debug msg="    Infrastructure: 13m35s"
@@ -4075,7 +4075,7 @@ time="2020-05-12T11:13:03Z" level=debug msg="  Loading Pull Secret..."
 time="2020-05-12T11:13:03Z" level=debug msg="  Loading Platform..."
 time="2020-05-12T11:13:03Z" level=debug msg="Using Install Config loaded from state file"
 time="2020-05-12T11:13:03Z" level=debug msg="Reusing previously-fetched Install Config"
-time="2020-05-12T11:13:03Z" level=info msg="Waiting up to 1h0m0s for the cluster at https://api.lab.karmalabs.com:6443 to initialize..."
+time="2020-05-12T11:13:03Z" level=info msg="Waiting up to 1h0m0s for the cluster at https://api.lab.karmalabs.local:6443 to initialize..."
 time="2020-05-12T11:13:03Z" level=debug msg="Cluster is initialized"
 time="2020-05-12T11:13:03Z" level=info msg="Waiting up to 10m0s for the openshift-console route to be created..."
 time="2020-05-12T11:13:03Z" level=debug msg="Route found in openshift-console namespace: console"
@@ -4083,7 +4083,7 @@ time="2020-05-12T11:13:03Z" level=debug msg="Route found in openshift-console na
 time="2020-05-12T11:13:03Z" level=debug msg="OpenShift console route is created"
 time="2020-05-12T11:13:03Z" level=info msg="Install complete!"
 time="2020-05-12T11:13:03Z" level=info msg="To access the cluster as the system:admin user when using 'oc', run 'export KUBECONFIG=/root/ocp/auth/kubeconfig'"
-time="2020-05-12T11:13:03Z" level=info msg="Access the OpenShift web-console here: https://console-openshift-console.apps.lab.karmalabs.com"
+time="2020-05-12T11:13:03Z" level=info msg="Access the OpenShift web-console here: https://console-openshift-console.apps.lab.karmalabs.local"
 time="2020-05-12T11:13:03Z" level=info msg="Login to the console with user: \"kubeadmin\", and password: \"XXXX\""
 time="2020-05-12T11:13:03Z" level=info msg="Time elapsed: 0s"
 

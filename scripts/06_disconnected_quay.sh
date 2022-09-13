@@ -13,9 +13,9 @@ REGISTRY_NAME=$(echo $IP | sed 's/\./-/g' | sed 's/:/-/g').sslip.io
 REGISTRY_USER=init
 REGISTRY_PASSWORD={{ "super" + disconnected_password if disconnected_password|length < 8 else disconnected_password }}
 KEY=$(echo -n $REGISTRY_USER:$REGISTRY_PASSWORD | base64)
-echo "{\"auths\": {\"$REGISTRY_NAME:8443\": {\"auth\": \"$KEY\", \"email\": \"jhendrix@karmalabs.com\"}}}" > /root/disconnected_pull.json
+echo "{\"auths\": {\"$REGISTRY_NAME:8443\": {\"auth\": \"$KEY\", \"email\": \"jhendrix@karmalabs.local\"}}}" > /root/disconnected_pull.json
 mv /root/openshift_pull.json /root/openshift_pull.json.old
-jq ".auths += {\"$REGISTRY_NAME:8443\": {\"auth\": \"$KEY\",\"email\": \"jhendrix@karmalabs.com\"}}" < /root/openshift_pull.json.old > $PULL_SECRET
+jq ".auths += {\"$REGISTRY_NAME:8443\": {\"auth\": \"$KEY\",\"email\": \"jhendrix@karmalabs.local\"}}" < /root/openshift_pull.json.old > $PULL_SECRET
 mkdir -p /opt/registry/{auth,certs,data,conf}
 openssl req -newkey rsa:4096 -nodes -sha256 -keyout /opt/registry/certs/domain.key -x509 -days 365 -out /opt/registry/certs/domain.crt -subj "/C=US/ST=Madrid/L=San Bernardo/O=Karmalabs/OU=Guitar/CN=$REGISTRY_NAME" -addext "subjectAltName=DNS:$REGISTRY_NAME"
 cp /opt/registry/certs/domain.crt /etc/pki/ca-trust/source/anchors/

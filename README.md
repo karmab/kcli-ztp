@@ -110,53 +110,53 @@ The deployed vm comes with a set of helpers for you:
 
 Note that you can use the baseplan `kcli_plan_infra.yml` to deploy the infrastructure only
 
-|Parameter                           |Default Value |
-|------------------------------------|--------------|
-|api_ip                              |None          |
-|baremetal\_bootstrap\_mac           |None          |
-|baremetal_cidr                      |None          |
-|baremetal_ips                       |[]            |
-|baremetal_macs                      |[]            |
-|baremetal_net                       |baremetal     |
-|cluster                             |openshift     |
-|disk_size                           |30            |
-|domain                              |karmalabs.com |
-|dualstack                           |False         |
-|dualstack_cidr                      |None          |
-|extra_disks                         |[]            |
-|http_proxy                          |None          |
-|ingress_ip                          |None          |
-|keys                                |[]            |
-|lab                                 |False         |
-|masters                             |[]            |
-|memory                              |32768         |
-|model                               |dell          |
-|no_proxy                            |None          |
-|numcpus                             |16            |
-|pool                                |default       |
-|provisioning\_bootstrap\_mac        |None          |
-|provisioning_cidr                   |172.22.0.0/24 |
-|provisioning_enable                 |True          |
-|provisioning_interface              |eno1          |
-|provisioning_macs                   |[]            |
-|provisioning_net                    |provisioning  |
-|virtual_masters                     |True          |
+|Parameter                           |Default Value   |
+|------------------------------------|--------------  |
+|api_ip                              |None            |
+|baremetal\_bootstrap\_mac           |None            |
+|baremetal_cidr                      |None            |
+|baremetal_ips                       |[]              |
+|baremetal_macs                      |[]              |
+|baremetal_net                       |baremetal       |
+|cluster                             |openshift       |
+|disk_size                           |30              |
+|domain                              |karmalabs.local |
+|dualstack                           |False           |
+|dualstack_cidr                      |None            |
+|extra_disks                         |[]              |
+|http_proxy                          |None            |
+|ingress_ip                          |None            |
+|keys                                |[]              |
+|lab                                 |False           |
+|masters                             |[]              |
+|memory                              |32768           |
+|model                               |dell            |
+|no_proxy                            |None            |
+|numcpus                             |16              |
+|pool                                |default         |
+|provisioning\_bootstrap\_mac        |None            |
+|provisioning_cidr                   |172.22.0.0/24   |
+|provisioning_enable                 |True            |
+|provisioning_interface              |eno1            |
+|provisioning_macs                   |[]              |
+|provisioning_net                    |provisioning    |
+|virtual_masters                     |True            |
 |virtual\_masters\_baremetal\_mac\_prefix|aa:aa:aa:cc:cc|
-|virtual\_masters\_mac\_prefix       |aa:aa:aa:aa:aa|
-|virtual\_masters\_memory            |32768         |
-|virtual\_masters\_number            |3             |
-|virtual\_masters\_numcpus           |8             |
-|virtual_protocol                    |ipmi          |
-|virtual_workers                     |False         |
+|virtual\_masters\_mac\_prefix       |aa:aa:aa:aa:aa  |
+|virtual\_masters\_memory            |32768           |
+|virtual\_masters\_number            |3               |
+|virtual\_masters\_numcpus           |8               |
+|virtual_protocol                    |ipmi            |
+|virtual_workers                     |False           |
 |virtual\_workers\_baremetal\_mac\_prefix|aa:aa:aa:dd:dd|
-|virtual\_workers\_deploy            |True          |
-|virtual\_workers\_mac_prefix        |aa:aa:aa:bb:bb|
-|virtual\_workers\_memory            |16384         |
-|virtual\_workers\_number            |1             |
-|virtual\_workers\_numcpus           |8             |
-|workers                             |[]            |
-|wait_for_workers                    |True          |
-|wait_for_workers_number             |True          |
+|virtual\_workers\_deploy            |True            |
+|virtual\_workers\_mac_prefix        |aa:aa:aa:bb:bb  |
+|virtual\_workers\_memory            |16384           |
+|virtual\_workers\_number            |1               |
+|virtual\_workers\_numcpus           |8               |
+|workers                             |[]              |
+|wait_for_workers                    |True            |
+|wait_for_workers_number             |True            |
 
 ### additional parameters
 
@@ -251,7 +251,7 @@ A valid network_config snippet would be
     dns-resolver:
       config:
         search:
-        - lab.karmalabs.com
+        - lab.karmalabs.local
         server:
         - 192.168.129.1
     interfaces:

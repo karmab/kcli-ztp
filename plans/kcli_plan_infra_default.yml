@@ -1,5 +1,5 @@
 cluster: openshift
-domain: karmalabs.com
+domain: karmalabs.local
 dualstack: false
 dualstack_cidr:
 http_proxy:

@@ -23,7 +23,7 @@ export BUILD_FOLDER=./build
 REGISTRY_USER={{ "init" if disconnected_quay else disconnected_user }}
 REGISTRY_PASSWORD={{ "super" + disconnected_password if disconnected_quay and disconnected_password|length < 8 else disconnected_password }}
 KEY=$(echo -n $REGISTRY_USER:$REGISTRY_PASSWORD | base64)
-jq ".auths += {\"$REGISTRY_NAME:$REGISTRY_PORT\": {\"auth\": \"$KEY\",\"email\": \"jhendrix@karmalabs.com\"}}" < $PULL_SECRET_JSON > /root/temp_acm.json
+jq ".auths += {\"$REGISTRY_NAME:$REGISTRY_PORT\": {\"auth\": \"$KEY\",\"email\": \"jhendrix@karmalabs.local\"}}" < $PULL_SECRET_JSON > /root/temp_acm.json
 export PULL_SECRET_JSON=/root/temp_acm.json
 
 # Clean previous tries
