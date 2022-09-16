@@ -31,7 +31,7 @@ export OPENSHIFT_RELEASE_IMAGE=$(curl -s https://mirror.openshift.com/pub/opensh
 {% elif version == 'latest' %}
 export OPENSHIFT_RELEASE_IMAGE=$(curl -s https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ version }}-{{ tag }}/release.txt | grep 'Pull From: quay.io' | awk -F ' ' '{print $3}')
 {% elif version == 'ci' %}
-export OPENSHIFT_RELEASE_IMAGE={{ openshift_image }}
+export OPENSHIFT_RELEASE_IMAGE={{ openshift_image or "registry.ci.openshift.org/ocp/release:" + tag|string }}
 {% endif %}
 oc adm release extract --registry-config $PULL_SECRET --command=oc --to /tmp $OPENSHIFT_RELEASE_IMAGE
 mv /tmp/oc /root/bin

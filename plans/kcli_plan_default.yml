@@ -26,9 +26,9 @@ installer_memory:
 installer_ip:
 installer_mac:
 installer_wait: False
-version: ci
+version: stable
 tag: 4.11
-openshift_image: registry.ci.openshift.org/ocp/release:4.11
+openshift_image:
 playbook: false
 network_type: OVNKubernetes
 dualstack: false
