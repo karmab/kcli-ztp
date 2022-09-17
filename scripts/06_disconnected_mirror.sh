@@ -27,7 +27,7 @@ REGISTRY_PORT={{ 8443 if disconnected_quay else 5000 }}
 {% endif %}
 
 {% if version == 'ci' %}
-export OPENSHIFT_RELEASE_IMAGE={{ openshift_image }}
+export OPENSHIFT_RELEASE_IMAGE={{ openshift_image or "registry.ci.openshift.org/ocp/release:" + tag|string}}
 {% elif version in ['nightly', 'stable'] %}
 {% set tag = tag|string %}
 {% if tag.split('.')|length > 2 %}
