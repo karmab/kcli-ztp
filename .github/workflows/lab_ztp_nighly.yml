@@ -1,4 +1,4 @@
-name: lab-ipv6-ztp-nightly
+name: lab-ztp-nightly
 on:
   schedule:
     - cron: '15 1 * * *'
@@ -7,9 +7,9 @@ env:
  HOME: /root
  PYTHONUNBUFFERED: true
  PLAN: lab
- INPUTFILE: plans/kcli_plan.yml
-# INPUTFILE: plans/kcli_plan_ztp.yml
- PARAMFILE: paramfiles/lab_ipv6_ztp.yml
+ INPUTFILE: plans/kcli_plan_ztp.yml
+# PARAMFILE: paramfiles/lab_ipv6_ztp.yml
+ PARAMFILE: paramfiles/lab_ztp.yml
  PULLSECRET: /root/openshift_pull.json
 
 jobs:
@@ -31,5 +31,5 @@ jobs:
         - name: Deploy kcli plan
           run: |
             # temp 4.11 ipv6 hack
-            mv manifests/99-ipv6.yaml.sample manifests/99-ipv6.yaml
+            # mv manifests/99-ipv6.yaml.sample manifests/99-ipv6.yaml
             kcli create plan --force -f $INPUTFILE --paramfile $PARAMFILE -P pullsecret=$PULLSECRET $PLAN
