@@ -14,7 +14,7 @@ workers: []
 memory: 32768
 disk_size: 30
 extra_disks: []
-provisioning_enable: true
+provisioning_enable: false
 baremetal_bootstrap_mac:
 provisioning_bootstrap_mac:
 provisioning_interface: eno1
