@@ -4,7 +4,7 @@ disconnected: true
 virtual_masters: true
 virtual_workers: false
 virtual_workers_deploy: false
-virtual_workers_number: 2
+virtual_workers_number: 0
 version: stable
 tag: "4.11"
 cluster: lab
