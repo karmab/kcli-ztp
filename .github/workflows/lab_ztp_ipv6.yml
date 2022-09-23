@@ -1,4 +1,4 @@
-name: talm
+name: lab-ztp-ipv6
 on:
   workflow_dispatch:
     inputs:
@@ -17,7 +17,7 @@ on:
       PARAMFILE:
         description: 'paramfile'
         required: false
-        default: paramfiles/talm.yml
+        default: paramfiles/lab_ztp_ipv6.yml
       EXTRAPARAMS:
         description: 'Extra params'
         default: ''
@@ -40,7 +40,7 @@ on:
       TAG:
         description: 'tag'
         required: false
-        default: "4.10"
+        default: "4.11"
 
 env:
  HOME: /root

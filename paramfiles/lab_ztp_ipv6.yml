@@ -1,24 +1,16 @@
 lab: true
-mce: true
-provisioning_enable: false
 pool: default
-dualstack: false
-dualstack_cidr: 192.168.130.0/24
 disconnected: true
-disconnected_quay: false
 virtual_masters: true
 virtual_workers: false
 virtual_workers_deploy: false
 virtual_workers_number: 2
-launch_steps: true
-deploy_openshift: true
 version: stable
 tag: "4.11"
 cluster: lab
 domain: karmalabs.local 
 baremetal_cidr: 2620:52:0:1302::/64
 baremetal_net: lab-baremetal
-provisioning_net: lab-prov
 virtual_masters_memory: 16384
 virtual_masters_numcpus: 8
 api_ip: 2620:52:0:1302::2
@@ -45,11 +37,9 @@ ztp_spokes:
   virtual_nodes_number: 1
 disk_size: 60
 installer_disk_size: 200
-acm_pull_secret: /root/openshift_pull_acm.json
 lab_extra_dns:
 - assisted-service-multicluster-engine
 - assisted-service-assisted-installer
 - assisted-image-service-multicluster-engine
-ztp_siteconfig: false
 notify: true
 nfs: true
