@@ -1,3 +1,4 @@
+{% raw %}
 from jinja2 import Template
 from os import path
 from sys import exit
@@ -73,7 +74,6 @@ if args.mirror_config is not None:
 # Remove duplicates from index images
 index_images = list(dict.fromkeys(index_images))
 
-
 icsp_template = """
 ---
 apiVersion: operator.openshift.io/v1alpha1
@@ -124,3 +124,4 @@ else:
         icspfile.write(icsp_j2_template.render(mirror_list=mirror_list))
 
     print("CatalogSource written to {0}, ImageContentSourcePolicy written to {1}".format(catalogsource_filepath, icsp_filepath))
+{% endraw %}
