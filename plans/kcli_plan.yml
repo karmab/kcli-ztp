@@ -88,6 +88,9 @@
 {% if baremetal_bootstrap_ip != None %}
  - static_network/ifcfg-bootstrap
 {% endif %}
+ - path: /root/bin/mapping_to_icsp.py
+   origin: bin/mapping_to_icsp.py
+   render: false
  - bin
  - scripts
  - machineconfigs
