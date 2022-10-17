@@ -100,8 +100,6 @@ apps-{{ spoke_name }}:
    index: {{ loop.index0 }}
  - path: /root/spoke_{{ spoke.name }}/manifests
    origin: {{ spoke_manifests }}
- - path: /root/spoke_{{ spoke.name }}/manifests.yml
-   origin: ztp/manifests.yml
 {% endif %}
 {% endfor %}
  - ztp/scripts/spokes_deploy.sh

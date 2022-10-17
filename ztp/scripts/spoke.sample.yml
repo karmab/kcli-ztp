@@ -1,5 +1,6 @@
 {% set spoke = ztp_spokes[index] %}
 {% set spoke_name = spoke.name %}
+{% set spoke_manifests = 'spoke_' + spoke.name + '_manifests' %}
 {% set spoke_network_type = spoke.get('network_type', ztp_spoke_network_type) %}
 {% set spoke_api_ip = spoke.get('api_ip') %}
 {% set spoke_ingress_ip= spoke.get('ingress_ip') %}
@@ -56,19 +57,19 @@ kind: AgentClusterInstall
 metadata:
   name: ${SPOKE}
   namespace: ${SPOKE}
-{% if spoke_network_type == "OVNKubernetes" %}
   annotations:
-    agent-install.openshift.io/install-config-overrides: '{"networking":{"networkType":"OVNKubernetes"}}'
-{% endif %}
+    agent-install.openshift.io/install-config-overrides: '{"networking":{"networkType":"{{ spoke_network_type }}"}}'
 spec:
 {% if tpm|default(False) %}
   diskEncryption:
     mode: tpmv2
     enableOn: all
 {% endif %}
-{% if 'ztp_spoke_manifests'|find_manifests %}
-  manifestsConfigMapRef:
-    name: extra-manifests-ztp
+{% if spoke_manifests|find_manifests %}
+  manifestsConfigMapRefs:
+{% for manifest in spoke_manifests|find_manifests %}
+  - name: {{ manifest|replace('.', '-')|replace('_', '-') }}
+{% endfor %}
 {% endif %}
 {% if spoke_masters_number > 1 and spoke_api_ip != None and spoke_ingress_ip != None %}
   apiVIP: {{ spoke_api_ip }}

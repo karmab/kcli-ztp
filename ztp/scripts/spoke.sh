@@ -22,11 +22,11 @@ export WORKERS_NUMBER={{ spoke_workers_number }}
 export SSH_PUB_KEY=$(cat /root/.ssh/id_rsa.pub)
 if [ -d /root/spoke_$SPOKE/manifests ] ; then
 bash /root/spoke_$SPOKE/manifests.sh
-envsubst < /root/spoke_$SPOKE/manifests.yml > /root/spoke_$SPOKE/spoke.yml
+cat /root/spoke_$SPOKE/manifests.yml > /root/spoke_$SPOKE/spoke.yml
 fi
 envsubst < /root/spoke_$SPOKE/spoke.sample.yml >> /root/spoke_$SPOKE/spoke.yml
 
 {% if spoke_deploy %}
-oc apply -f /root/spoke_$SPOKE/spoke.yml
+oc create -f /root/spoke_$SPOKE/spoke.yml
 bash /root/spoke_$SPOKE/bmc.sh
 {% endif %}
