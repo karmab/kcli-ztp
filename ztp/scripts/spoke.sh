@@ -20,10 +20,10 @@ export DOMAIN={{ domain }}
 export MASTERS_NUMBER={{ spoke_masters_number }}
 export WORKERS_NUMBER={{ spoke_workers_number }}
 export SSH_PUB_KEY=$(cat /root/.ssh/id_rsa.pub)
-{% if 'spoke_manifests'|find_manifests %}
-bash /root/spole_$SPOKE/manifests.sh
+if [ -d /root/spoke_$SPOKE/manifests ] ; then
+bash /root/spoke_$SPOKE/manifests.sh
 envsubst < /root/spoke_$SPOKE/manifests.yml > /root/spoke_$SPOKE/spoke.yml
-{% endif %}
+fi
 envsubst < /root/spoke_$SPOKE/spoke.sample.yml >> /root/spoke_$SPOKE/spoke.yml
 
 {% if spoke_deploy %}

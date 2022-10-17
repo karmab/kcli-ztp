@@ -81,6 +81,7 @@ apps-{{ spoke_name }}:
  files:
 {% if not ztp_siteconfig %}
 {% for spoke in ztp_spokes %}
+{% set spoke_manifests = 'spoke_' + spoke.name + '_manifests' %}
  - path: /root/spoke_{{ spoke.name }}/spoke.sample.yml
    origin: ztp/scripts/spoke.sample.yml
    index: {{ loop.index0 }}
@@ -93,12 +94,12 @@ apps-{{ spoke_name }}:
  - path: /root/spoke_{{ spoke.name }}/bmc.sh
    origin: ztp/scripts/bmc.sh
    index: {{ loop.index0 }}
-{% if 'spoke_{{ spoke.name }}_manifests'|find_manifests %}
+{% if spoke_manifests|find_manifests %}
  - path: /root/spoke_{{ spoke.name }}/manifests.sh
    origin: ztp/scripts/manifests.sh
    index: {{ loop.index0 }}
  - path: /root/spoke_{{ spoke.name }}/manifests
-   origin: spoke_{{ spoke.name }}_manifests
+   origin: {{ spoke_manifests }}
  - path: /root/spoke_{{ spoke.name }}/manifests.yml
    origin: ztp/manifests.yml
 {% endif %}
