@@ -12,5 +12,5 @@ metadata:
 data:""" >> $BASEDIR/manifests.yml
 echo " $manifest_clean : |" >> $BASEDIR/manifests.yml
 sed -e "s/^/  /g" $entry >> $BASEDIR/manifests.yml
-echo -e "---" >> $BASEDIR/manifests.yml
+echo -e "\n---" >> $BASEDIR/manifests.yml
 done
