@@ -11,9 +11,9 @@ REGISTRY_NAME=$(echo $IP | sed 's/\./-/g' | sed 's/:/-/g').sslip.io
 REGISTRY_USER={{ disconnected_user }}
 REGISTRY_PASSWORD={{ disconnected_password }}
 KEY=$(echo -n $REGISTRY_USER:$REGISTRY_PASSWORD | base64)
-echo "{\"auths\": {\"$REGISTRY_NAME:5000\": {\"auth\": \"$KEY\", \"email\": \"jhendrix@karmalabs.local\"}}}" > /root/disconnected_pull.json
+echo "{\"auths\": {\"$REGISTRY_NAME:5000\": {\"auth\": \"$KEY\", \"email\": \"jhendrix@karmalabs.corp\"}}}" > /root/disconnected_pull.json
 mv /root/openshift_pull.json /root/openshift_pull.json.old
-jq ".auths += {\"$REGISTRY_NAME:5000\": {\"auth\": \"$KEY\",\"email\": \"jhendrix@karmalabs.local\"}}" < /root/openshift_pull.json.old > $PULL_SECRET
+jq ".auths += {\"$REGISTRY_NAME:5000\": {\"auth\": \"$KEY\",\"email\": \"jhendrix@karmalabs.corp\"}}" < /root/openshift_pull.json.old > $PULL_SECRET
 mkdir -p /opt/registry/{auth,certs,data,conf}
 cat <<EOF > /opt/registry/conf/config.yml
 version: 0.1

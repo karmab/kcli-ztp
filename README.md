@@ -120,7 +120,7 @@ Note that you can use the baseplan `kcli_plan_infra.yml` to deploy the infrastru
 |baremetal_net                       |baremetal       |
 |cluster                             |openshift       |
 |disk_size                           |30              |
-|domain                              |karmalabs.local |
+|domain                              |karmalabs.corp  |
 |dualstack                           |False           |
 |dualstack_cidr                      |None            |
 |extra_disks                         |[]              |
@@ -251,7 +251,7 @@ A valid network_config snippet would be
     dns-resolver:
       config:
         search:
-        - lab.karmalabs.local
+        - lab.karmalabs.corp
         server:
         - 192.168.129.1
     interfaces:

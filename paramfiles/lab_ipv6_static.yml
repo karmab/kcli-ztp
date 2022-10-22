@@ -12,7 +12,7 @@ deploy_openshift: false
 version: stable
 tag: "4.11"
 cluster: lab
-domain: karmalabs.local 
+domain: karmalabs.corp
 baremetal_cidr: 2620:52:0:1302::/64
 baremetal_net: lab-baremetal
 provisioning_net: lab-prov

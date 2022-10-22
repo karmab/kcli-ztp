@@ -7,7 +7,7 @@ virtual_workers_number: 0
 version: stable
 tag: "4.11"
 cluster: lab
-domain: karmalabs.local 
+domain: karmalabs.corp
 baremetal_cidr: 192.168.129.0/24
 baremetal_net: lab-baremetal
 virtual_masters_memory: 16384

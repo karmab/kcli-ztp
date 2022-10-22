@@ -14,9 +14,9 @@ REGISTRY_PORT={{ registry_port }}
 REGISTRY_USER={{ disconnected_user }}
 REGISTRY_PASSWORD={{ disconnected_password }}
 KEY=$(echo -n $REGISTRY_USER:$REGISTRY_PASSWORD | base64)
-echo "{\"auths\": {\"$REGISTRY_NAME:$REGISTRY_PORT\": {\"auth\": \"$KEY\", \"email\": \"jhendrix@karmalabs.local\"}}}" > /root/disconnected_pull.json
+echo "{\"auths\": {\"$REGISTRY_NAME:$REGISTRY_PORT\": {\"auth\": \"$KEY\", \"email\": \"jhendrix@karmalabs.corp\"}}}" > /root/disconnected_pull.json
 mv /root/openshift_pull.json /root/openshift_pull.json.old
-jq ".auths += {\"$REGISTRY_NAME:$REGISTRY_PORT\": {\"auth\": \"$KEY\",\"email\": \"jhendrix@karmalabs.local\"}}" < /root/openshift_pull.json.old > $PULL_SECRET
+jq ".auths += {\"$REGISTRY_NAME:$REGISTRY_PORT\": {\"auth\": \"$KEY\",\"email\": \"jhendrix@karmalabs.corp\"}}" < /root/openshift_pull.json.old > $PULL_SECRET
 mkdir -p /opt/registry/certs
 openssl s_client -showcerts -connect $REGISTRY_NAME:$REGISTRY_PORT </dev/null 2>/dev/null|openssl x509 -outform PEM > /opt/registry/certs/domain.crt
 cp /opt/registry/certs/domain.crt /etc/pki/ca-trust/source/anchors

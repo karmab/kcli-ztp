@@ -3,7 +3,7 @@ ipi: true
 ipi_platform: baremetal
 tag: "4.11"
 network_type: OVNKubernetes
-domain: karmalabs.local
+domain: karmalabs.corp
 cluster: lab
 network: lab-baremetal
 baremetal_net: lab-baremetal
