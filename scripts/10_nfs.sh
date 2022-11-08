@@ -9,14 +9,32 @@ export PRIMARY_IP=$(ip -o addr show $PRIMARY_NIC | head -1 | awk '{print $4}' | 
 rpm -qi nfs-utils >/dev/null 2>&1 || dnf -y install nfs-utils
 test ! -f /usr/lib/systemd/system/firewalld.service || systemctl disable --now firewalld
 systemctl enable --now nfs-server
-export MODE="ReadWriteOnce"
-for i in `seq 1 20` ; do
-    export PV=pv`printf "%03d" ${i}`
-    mkdir /$PV
-    echo "/$PV *(rw,no_root_squash)"  >>  /etc/exports
-    chcon -t svirt_sandbox_file_t /$PV
-    chmod 777 /$PV
-    [ "$i" -gt "10" ] && export MODE="ReadWriteMany"
-    envsubst < /root/scripts/10_nfs.yml | oc create -f -
-done
+
+mkdir /var/nfsshare
+echo "/var/nfsshare *(rw,no_root_squash)"  >>  /etc/exports
 exportfs -r
+NAMESPACE="nfs-storage"
+oc create namespace $NAMESPACE
+git clone https://github.com/kubernetes-sigs/nfs-subdir-external-provisioner.git nfs-subdir
+cd nfs-subdir
+oc project $NAMESPACE
+sed -i "s/namespace:.*/namespace: $NAMESPACE/g" deploy/rbac.yaml deploy/deployment.yaml
+oc create -f deploy/rbac.yaml
+oc adm policy add-scc-to-user hostmount-anyuid system:serviceaccount:$NAMESPACE:nfs-client-provisioner
+podman ps | grep -q registry
+if [ "$?" == "0" ] ; then
+ /root/bin/sync_image.sh k8s.gcr.io/sig-storage/nfs-subdir-external-provisioner:v4.0.2
+ REGISTRY_NAME=$(echo $PRIMARY_IP | sed 's/\./-/g' | sed 's/:/-/g').sslip.io
+sed -i "s@k8s.gcr.io@$REGISTRY_NAME:5000@" deploy/deployment.yaml
+fi
+sed -i -e "s@k8s-sigs.io/nfs-subdir-external-provisioner@storage.io/nfs@" -e "s@10.3.243.101@$PRIMARY_IP@" -e "s@/ifs/kubernetes@/var/nfsshare@" deploy/deployment.yaml
+echo 'apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: nfs
+provisioner: storage.io/nfs
+parameters:
+  pathPattern: "${.PVC.namespace}/${.PVC.name}"
+  onDelete: delete' > deploy/class.yaml
+oc create -f deploy/deployment.yaml -f deploy/class.yaml
+oc patch storageclass nfs -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
