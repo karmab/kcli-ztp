@@ -1,12 +1,5 @@
 BASEDIR=$(dirname $0)
 SPOKE=$(basename $BASEDIR | cut -d_ -f2)
-echo """---
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: ${SPOKE}
----""" > $BASEDIR/manifests.yml
-
 for entry in $BASEDIR/manifests/* ; do
 manifest_clean=$(basename $entry)
 manifest=$(echo $manifest_clean | sed "s/\./-/g" | sed "s/_/-/g")
