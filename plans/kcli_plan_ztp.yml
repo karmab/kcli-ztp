@@ -82,6 +82,7 @@ apps-{{ spoke_name }}:
 {% if not ztp_siteconfig %}
 {% for spoke in ztp_spokes %}
 {% set spoke_manifests = 'spoke_' + spoke.name + '_manifests' %}
+{% set spoke_nmstate = 'spoke_' + spoke.name + '_nmstate.yaml' %}
  - path: /root/spoke_{{ spoke.name }}/spoke.sample.yml
    origin: ztp/scripts/spoke.sample.yml
    index: {{ loop.index0 }}
@@ -100,6 +101,10 @@ apps-{{ spoke_name }}:
    index: {{ loop.index0 }}
  - path: /root/spoke_{{ spoke.name }}/manifests
    origin: {{ spoke_manifests }}
+{% endif %}
+{% if spoke_nmstate|exists %}
+ - path: /root/spoke_{{ spoke.name }}/nmstate.yaml
+   origin: {{ spoke_nmstate }}
 {% endif %}
 {% endfor %}
  - ztp/scripts/spokes_deploy.sh

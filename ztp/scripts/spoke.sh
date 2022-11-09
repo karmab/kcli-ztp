@@ -20,13 +20,13 @@ export DOMAIN={{ domain }}
 export MASTERS_NUMBER={{ spoke_masters_number }}
 export WORKERS_NUMBER={{ spoke_workers_number }}
 export SSH_PUB_KEY=$(cat /root/.ssh/id_rsa.pub)
-if [ -d /root/spoke_$SPOKE/manifests ] ; then
-bash /root/spoke_$SPOKE/manifests.sh
-cat /root/spoke_$SPOKE/manifests.yml > /root/spoke_$SPOKE/spoke.yml
-fi
-envsubst < /root/spoke_$SPOKE/spoke.sample.yml >> /root/spoke_$SPOKE/spoke.yml
+[ -d /root/spoke_$SPOKE/manifests ] && bash /root/spoke_$SPOKE/manifests.sh
+envsubst < /root/spoke_$SPOKE/spoke.sample.yml > /root/spoke_$SPOKE/spoke.yml
 
 {% if spoke_deploy %}
+oc create namespace $SPOKE
+[ -f /root/spoke_$SPOKE/nmstate.yaml ] && oc create -n $SPOKE -f /root/spoke_$SPOKE/nmstate.yaml
+[ -f /root/spoke_$SPOKE/manifests.yml ] && oc create -n $SPOKE -f /root/spoke_$SPOKE/manifests.yml
 oc create -f /root/spoke_$SPOKE/spoke.yml
 bash /root/spoke_$SPOKE/bmc.sh
 {% endif %}

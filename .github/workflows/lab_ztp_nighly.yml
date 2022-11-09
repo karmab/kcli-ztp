@@ -8,8 +8,7 @@ env:
  PYTHONUNBUFFERED: true
  PLAN: lab
  INPUTFILE: plans/kcli_plan_ztp.yml
-# PARAMFILE: paramfiles/lab_ipv6_ztp.yml
- PARAMFILE: paramfiles/lab_ztp.yml
+ PARAMFILE: paramfiles/lab_ipv6_ztp.yml
  PULLSECRET: /root/openshift_pull.json
 
 jobs:
@@ -30,6 +29,7 @@ jobs:
       steps:
         - name: Deploy kcli plan
           run: |
-            # temp 4.11 ipv6 hack
-            # mv manifests/99-ipv6.yaml.sample manifests/99-ipv6.yaml
+            # temp ipv6 hacks
+            mv manifests/99-ipv6.yaml.sample manifests/99-ipv6.yaml
+            mv manifests/nmstate.yaml.sample spoke_mgmt-spoke1_nmstate.yaml
             kcli create plan --force -f $INPUTFILE --paramfile $PARAMFILE -P pullsecret=$PULLSECRET $PLAN
