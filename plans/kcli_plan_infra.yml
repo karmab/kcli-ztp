@@ -1,4 +1,4 @@
-{% set virtual_disks = [{'size': disk_size, 'interface': 'scsi'}] + extra_disks %}
+{% set virtual_disks = [{'size': disk_size, 'interface': disk_interface}] + extra_disks %}
 {% if lab %}
 {{ baremetal_net }}:
  type: network

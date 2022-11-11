@@ -37,6 +37,7 @@ apps-{{ spoke_name }}:
 {% set ztp_virtual_nodes_numcpus = spoke.get('virtual_nodes_numcpus', ztp_virtual_nodes_numcpus) %}
 {% set ztp_virtual_nodes_memory = spoke.get('virtual_nodes_memory', ztp_virtual_nodes_memory) %}
 {% set ztp_virtual_nodes_disk_size = spoke.get('virtual_nodes_disk_size', ztp_virtual_nodes_disk_size) %}
+{% set ztp_virtual_nodes_disk_interface = spoke.get('virtual_nodes_disk_interface', ztp_virtual_nodes_disk_interface) %}
 
 {% if virtual_nodes_number > 0 %}
 {% for num in range(0, virtual_nodes_number) %}
@@ -70,7 +71,7 @@ apps-{{ spoke_name }}:
 {% endif %}
  disks:
  - size: {{ ztp_virtual_nodes_disk_size }}
-   interface: scsi
+   interface: {{ ztp_virtual_nodes_disk_interface }}
 
 {% endfor %}
 {% set total_number.value = total_number.value + ztp_virtual_nodes_number %}

@@ -13,6 +13,7 @@ masters: []
 workers: []
 memory: 32768
 disk_size: 30
+disk_interface: scsi
 extra_disks: []
 provisioning_enable: false
 baremetal_bootstrap_mac:
