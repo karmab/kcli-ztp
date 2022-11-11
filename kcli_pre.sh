@@ -109,6 +109,8 @@ echo disconnected_password will be forced to super{{ disconnected_password }}
 {% set virtual_nodes_number = spoke["virtual_nodes_number"]|default(0) %}
 {% if spoke_name == None %}
 echo spoke_name needs to be on each entry of ztp_spokes && exit 1
+{% elif '_' in spoke_name %}
+echo Incorrect spoke_name {{ spoke_name }}: cant contain an underscore && exit 1
 {% endif %}
 {% if spoke_masters_number > 1 %}
 {% if spoke_api_ip == None %}
