@@ -74,8 +74,8 @@ spec:
        config:
          server:
          - 2620:52:0:1303::1
-  routes:
-    config:
-    - destination: ::/0
-      next-hop-address: 2620:52:0:1303::1
-      next-hop-interface: ens3
+     routes:
+       config:
+       - destination: ::/0
+         next-hop-address: 2620:52:0:1303::1
+         next-hop-interface: ens3
