@@ -8,7 +8,9 @@
  pool: {{ pool }} 
  wait: {{ installer_wait }}
  numcpus: {{ installer_numcpus or numcpus }}
+ uefi: false
  uefi_legacy: false
+ secureboot: false
  keys: {{ keys }}
 {% if 'rhel' in image %}
  rhnregister: {{ rhnregister }}

@@ -48,6 +48,7 @@ apps-{{ spoke_name }}:
  start: false
  cloudinit: false
  uefi_legacy: {{ ztp_uefi }}
+ uefi: {{ not ztp_uefi }}
  user: core
  memory: {{ ztp_virtual_nodes_memory }}
  nets:
