@@ -48,8 +48,7 @@ apps-{{ spoke_name }}:
  numcpus: {{ ztp_virtual_nodes_numcpus }}
  start: false
  cloudinit: false
- uefi_legacy: {{ ztp_uefi }}
- uefi: {{ not ztp_uefi }}
+ uefi_legacy: {{ 'false' if uefi|default(False) else ztp_uefi }}
  user: core
  memory: {{ ztp_virtual_nodes_memory }}
  nets:
