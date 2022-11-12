@@ -47,4 +47,5 @@ disk_interface: sata
 ztp_virtual_nodes_disk_interface: sata
 ztp_uefi: true
 uefi: true
+secureboot: true
 sushy_ignore: False
