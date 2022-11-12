@@ -31,5 +31,6 @@ jobs:
           run: |
             # temp ipv6 hacks
             mv manifests/99-ipv6.yaml.sample manifests/99-ipv6.yaml
-            mv manifests/nmstate.yaml.sample spoke_mgmt-spoke1_nmstate.yaml
+            mkdir spoke_mgmt-spoke1_manifests
+            mv manifests/nmstate.yaml.sample spoke_mgmt-spoke1_manifests/nmstate.yaml
             kcli create plan --force -f $INPUTFILE --paramfile $PARAMFILE -P pullsecret=$PULLSECRET $PLAN

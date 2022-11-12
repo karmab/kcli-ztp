@@ -2,6 +2,7 @@ BASEDIR=$(dirname $0)
 SPOKE=$(basename $BASEDIR | cut -d_ -f2)
 for entry in $BASEDIR/manifests/* ; do
 manifest_clean=$(basename $entry)
+[ "$manifest_clean" == "nmstate.yaml" ] && cp $entry $BASEDIR && continue
 manifest=$(echo $manifest_clean | sed "s/\./-/g" | sed "s/_/-/g")
 echo """kind: ConfigMap
 apiVersion: v1
