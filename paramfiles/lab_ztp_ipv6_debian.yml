@@ -45,5 +45,6 @@ notify: true
 nfs: true
 disk_interface: sata
 ztp_virtual_nodes_disk_interface: sata
+ztp_uefi: true
 uefi: true
 sushy_ignore: False
