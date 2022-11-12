@@ -68,7 +68,9 @@ spec:
 {% if spoke_manifests|find_manifests %}
   manifestsConfigMapRefs:
 {% for manifest in spoke_manifests|find_manifests %}
+{% if manifest != 'nmstate.yaml' %}
   - name: {{ manifest|replace('.', '-')|replace('_', '-') }}
+{% endif %}
 {% endfor %}
 {% endif %}
 {% if spoke_masters_number > 1 and spoke_api_ip != None and spoke_ingress_ip != None %}
