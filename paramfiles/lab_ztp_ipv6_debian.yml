@@ -46,3 +46,4 @@ nfs: true
 disk_interface: sata
 ztp_virtual_nodes_disk_interface: sata
 uefi: true
+sushy_ignore: False
