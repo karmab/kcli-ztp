@@ -66,5 +66,18 @@ spec:
   online: true
   automatedCleaningMode: disabled
   bootMode: {{ 'UEFI' if ztp_uefi else 'legacy' }}
+{% if 'disk' in node %}
+  rootDeviceHints:
+    deviceName: "/dev/{{ node['disk'] | basename }}"
+{% elif 'hctl' in node  %}
+  rootDeviceHints:
+    hctl: "{{ node['hctl'] }}"
+{% elif 'serial' in node %}
+  rootDeviceHints:
+    serialNumber: "{{ node['serial'] }}"
+{% elif 'wwn' in node %}
+  rootDeviceHints:
+    wwn: "{{ node['wwn'] }}"
+{% endif %}
 ---
 {% endfor %}
