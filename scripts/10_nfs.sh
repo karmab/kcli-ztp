@@ -15,15 +15,14 @@ echo "/var/nfsshare *(rw,no_root_squash)"  >>  /etc/exports
 exportfs -r
 
 NAMESPACE="nfs-storage"
-BASEDIR="/root"
+BASEDIR="/root/nfs-subdir"
 oc create namespace $NAMESPACE
-git clone https://github.com/kubernetes-sigs/nfs-subdir-external-provisioner.git $BASEDIR/nfs-subdir
+git clone https://github.com/kubernetes-sigs/nfs-subdir-external-provisioner.git $BASEDIR
 oc project $NAMESPACE
 sed -i "s/namespace:.*/namespace: $NAMESPACE/g" $BASEDIR/deploy/rbac.yaml $BASEDIR/deploy/deployment.yaml
 oc create -f $BASEDIR/deploy/rbac.yaml
 oc adm policy add-scc-to-user hostmount-anyuid system:serviceaccount:$NAMESPACE:nfs-client-provisioner
-podman ps | grep -q registry
-if [ "$?" == "0" ] ; then
+if [ "$(podman ps | grep -q registry)" == "0" ] ; then
  /root/bin/sync_image.sh k8s.gcr.io/sig-storage/nfs-subdir-external-provisioner:v4.0.2
  REGISTRY_NAME=$(echo $PRIMARY_IP | sed 's/\./-/g' | sed 's/:/-/g').sslip.io
 sed -i "s@k8s.gcr.io@$REGISTRY_NAME:5000@" $BASEDIR/deploy/deployment.yaml
