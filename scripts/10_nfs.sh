@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
+# set -euo pipefail
 
 PRIMARY_NIC=$(ls -1 /sys/class/net | grep 'eth\|en' | head -1)
 export KUBECONFIG=/root/ocp/auth/kubeconfig
@@ -25,12 +25,12 @@ oc adm policy add-scc-to-user hostmount-anyuid system:serviceaccount:$NAMESPACE:
 if [ "$(podman ps | grep -q registry)" == "0" ] ; then
  /root/bin/sync_image.sh k8s.gcr.io/sig-storage/nfs-subdir-external-provisioner:v4.0.2
  REGISTRY_NAME=$(echo $PRIMARY_IP | sed 's/\./-/g' | sed 's/:/-/g').sslip.io
-sed -i "s@k8s.gcr.io@$REGISTRY_NAME:5000@" $BASEDIR/deploy/deployment.yaml
+ sed -i "s@k8s.gcr.io@$REGISTRY_NAME:5000@" $BASEDIR/deploy/deployment.yaml
 fi
 sed -i -e "s@k8s-sigs.io/nfs-subdir-external-provisioner@storage.io/nfs@" -e "s@10.3.243.101@$PRIMARY_IP@" -e "s@/ifs/kubernetes@/var/nfsshare@" $BASEDIR/deploy/deployment.yaml
 echo 'apiVersion: storage.k8s.io/v1
 kind: StorageClass
-metadata:
+    metadata:
   name: nfs
 provisioner: storage.io/nfs
 parameters:
