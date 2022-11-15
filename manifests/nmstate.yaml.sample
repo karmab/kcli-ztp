@@ -3,7 +3,7 @@ kind: NMStateConfig
 metadata:
  name: mgmt-spoke1-node-0
  labels:
-   nmstate_config_cluster_name: mgmt-spoke1
+   cluster-name: mgmt-spoke1
 spec:
  config:
    interfaces:
@@ -16,18 +16,18 @@ spec:
        speed: 1000
      ipv6:
        address:
-       - ip: 2620:52:0:1303::23
+       - ip: 2620:52:0:1302::23
          prefix-length: 64
        enabled: true
      mtu: 1500
      dns-resolver:
        config:
          server:
-         - 2620:52:0:1303::1
+         - 2620:52:0:1302::1
      routes:
        config:
        - destination: ::/0
-         next-hop-address: 2620:52:0:1303::1
+         next-hop-address: 2620:52:0:1302::1
          next-hop-interface: enp1s0
  interfaces:
  - name: enp1s0

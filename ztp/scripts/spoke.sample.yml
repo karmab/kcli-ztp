@@ -175,3 +175,6 @@ spec:
       cluster-name: "${SPOKE}"
   pullSecretRef:
     name: assisted-deployment-pull-secret
+  nmStateConfigLabelSelector:
+    matchLabels:
+      cluster-name: "${SPOKE}"
