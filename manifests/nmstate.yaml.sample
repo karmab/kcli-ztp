@@ -14,21 +14,24 @@ spec:
        auto-negotiation: true
        duplex: full
        speed: 1000
+     ipv4:
+      enabled: false
      ipv6:
        address:
        - ip: 2620:52:0:1302::23
          prefix-length: 64
        enabled: true
+       dhcp: false
      mtu: 1500
-     dns-resolver:
-       config:
-         server:
-         - 2620:52:0:1302::1
-     routes:
-       config:
-       - destination: ::/0
-         next-hop-address: 2620:52:0:1302::1
-         next-hop-interface: enp1s0
+   dns-resolver:
+     config:
+       server:
+       - 2620:52:0:1302::1
+   routes:
+     config:
+     - destination: ::/0
+       next-hop-address: 2620:52:0:1302::1
+       next-hop-interface: enp1s0
  interfaces:
  - name: enp1s0
    macAddress: "aa:aa:aa:aa:bb:04"
