@@ -11,10 +11,12 @@ test ! -f /usr/lib/systemd/system/firewalld.service || systemctl disable --now f
 systemctl enable --now nfs-server
 
 mkdir /var/nfsshare
+chcon -t svirt_sandbox_file_t /var/nfsshare
+chmod 777 /var/nfsshare
 echo "/var/nfsshare *(rw,no_root_squash)"  >>  /etc/exports
 exportfs -r
 
-NAMESPACE="nfs-storage"
+NAMESPACE="nfs"
 BASEDIR="/root/nfs-subdir"
 oc create namespace $NAMESPACE
 git clone https://github.com/kubernetes-sigs/nfs-subdir-external-provisioner.git $BASEDIR
