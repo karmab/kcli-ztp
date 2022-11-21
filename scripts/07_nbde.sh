@@ -19,6 +19,10 @@ systemctl start tangd.socket
 export IP=$(ip -o addr show $PRIMARY_NIC | head -1 | awk '{print $4}' | cut -d'/' -f1)
 export TANG_URL=http://"$IP:7500"
 export THP="$(tang-show-keys 7500)"
+
+# We need to make sure manifests folder exists, if the plan points to a non-existing manifest folder in the node running the plan this folder won't exist and the script will fail
+mkdir -p /root/manifests
+
 export ROLE=worker
 envsubst < /root/machineconfigs/99-openshift-tang-encryption-clevis.sample.yaml > /root/manifests/99-openshift-worker-tang-encryption-clevis.yaml
 envsubst < /root/machineconfigs/99-openshift-tang-encryption-ka.sample.yaml > /root/manifests/99-openshift-worker-tang-encryption-ka.yaml

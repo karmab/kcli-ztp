@@ -10,6 +10,10 @@ export NTP_DATA=$((cat << EOF
     logdir /var/log/chrony
 EOF
 ) | base64 -w0)
+
+# We need to make sure manifests folder exists, if the plan points to a non-existing manifest folder in the node running the plan this folder won't exist and the script will fail
+mkdir -p /root/manifests
+
 export ROLE=worker
 envsubst < /root/machineconfigs/99-openshift-chrony.sample.yaml > /root/manifests/99-openshift-worker-chrony.yaml
 export ROLE=master

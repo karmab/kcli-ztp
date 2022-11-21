@@ -82,6 +82,8 @@ DISCONNECTED_PULLSECRET=$(cat /root/disconnected_pull.json | tr -d [:space:])
 echo -e "pullSecret: |\n  $DISCONNECTED_PULLSECRET" >> /root/install-config.yaml
 fi
 
+# We need to make sure manifests folder exists, if the plan points to a non-existing manifest folder in the node running the plan this folder won't exist and the script will fail
+mkdir -p /root/manifests
 cp /root/machineconfigs/99-operatorhub.yaml /root/manifests
 
 {% for image in disconnected_extra_images %}

@@ -60,5 +60,8 @@ if [ $(grep -c "No new images detected" /tmp/mirror-registry-output) -eq 1 ] ; t
   python3 /root/bin/mapping_to_icsp.py -m /root/oc-mirror-workspace/mapping.txt -o /root/oc-mirror-workspace/results-mapping/ -c /root/mirror-config.yaml
 fi
 
+# We need to make sure manifests folder exists, if the plan points to a non-existing manifest folder in the node running the plan this folder won't exist and the script will fail
+mkdir -p /root/manifests
+
 oc apply -f /root/oc-mirror-workspace/results-*/*imageContentSourcePolicy.yaml 2>/dev/null || cp /root/oc-mirror-workspace/results-*/*imageContentSourcePolicy.yaml /root/manifests
 oc apply -f /root/oc-mirror-workspace/results-*/*catalogSource* 2>/dev/null || cp /root/oc-mirror-workspace/results-*/*catalogSource* /root/manifests

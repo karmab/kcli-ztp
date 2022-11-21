@@ -9,6 +9,8 @@ export KUBECONFIG=/root/ocp/auth/kubeconfig
 export OPENSHIFT_INSTALL_RELEASE_IMAGE_OVERRIDE=$(cat /root/version.txt)
 bash /root/bin/clean.sh || true
 mkdir -p ocp/openshift
+# We need to make sure manifests folder exists, if the plan points to a non-existing manifest folder in the node running the plan this folder won't exist and the script will fail
+mkdir -p /root/manifests
 python3 /root/bin/ipmi.py off
 python3 /root/bin/redfish.py off
 {% if bmc_reset %}
