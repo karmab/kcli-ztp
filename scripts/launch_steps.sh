@@ -33,7 +33,7 @@ echo -e "${blue}************ RUNNING 06_disconnected_{{ 'quay.sh' if disconnecte
 {% endif %}
 echo -e "${blue}************ RUNNING 06_disconnected_mirror.sh ************${clear}"
 /root/scripts/06_disconnected_mirror.sh || exit 1
-{% if (disconnected_operators or disconnected_certified_operators or disconnected_community_operators or disconnected_marketplace_operators) and not disconnected_operators_deploy_after_openshift %}
+{% if (disconnected_operators or disconnected_certified_operators or disconnected_community_operators or disconnected_marketplace_operators or disconnected_extra_catalogs) and not disconnected_operators_deploy_after_openshift %}
 echo -e "${blue}************ RUNNING 06_disconnected_olm.sh ************${clear}"
 /root/scripts/06_disconnected_olm.sh
 {% if disconnected_url == None and disconnected_quay %}

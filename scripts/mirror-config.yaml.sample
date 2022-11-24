@@ -39,3 +39,8 @@ mirror:
     - name: {{ package }}
 {% endfor %}
 {% endif %}
+{% if disconnected_extra_catalogs %}
+{% for catalog_image in disconnected_extra_catalogs %}
+  - catalog: {{ catalog_image }}
+{% endfor %}
+{% endif %}
