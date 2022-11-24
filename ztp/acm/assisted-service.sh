@@ -41,8 +41,10 @@ BAREMETAL_IP=$(ip -o addr show eth0 | head -1 | awk '{print $4}' | cut -d'/' -f1
 export CA_CERT=$(cat /opt/registry/certs/domain.crt | sed "s/^/    /")
 REGISTRY_NAME=$(echo $BAREMETAL_IP | sed 's/\./-/g' | sed 's/:/-/g').sslip.io
 LOCAL_PORT={{ 8443 if disconnected_quay else 5000 }}
+export DISCONNECTED_PREFIX=openshift/release
+export DISCONNECTED_PREFIX_IMAGES=openshift/release-images
 export LOCAL_REGISTRY=${REGISTRY_NAME}:$LOCAL_PORT
-export RELEASE=$LOCAL_REGISTRY/ocp4:$OCP_RELEASE
+export RELEASE=$LOCAL_REGISTRY/$DISCONNECTED_PREFIX_IMAGES:$OCP_RELEASE
 python3 /root/ztp/acm/gen_registries.py > /root/registries.txt
 export REGISTRIES=$(cat /root/registries.txt)
 {% elif version == 'ci' %}
