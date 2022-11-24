@@ -81,6 +81,7 @@ disconnected_marketplace_operators: []
 disconnected_operators_deploy_after_openshift: False
 disconnected_operators_version:
 disconnected_extra_images: []
+disconnected_extra_catalogs: []
 nfs: false
 imageregistry: false
 build: false
