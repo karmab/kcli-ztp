@@ -44,16 +44,16 @@ export OPENSHIFT_RELEASE_IMAGE=$(curl -s https://mirror.openshift.com/pub/opensh
 {% endif %}
 export LOCAL_REG="$REGISTRY_NAME:$REGISTRY_PORT"
 export OCP_RELEASE=$(/root/bin/openshift-baremetal-install version | head -1 | cut -d' ' -f2)-x86_64
-time oc adm release mirror -a $PULL_SECRET --from=$OPENSHIFT_RELEASE_IMAGE --to-release-image=${LOCAL_REG}/ocp4:${OCP_RELEASE} --to=${LOCAL_REG}/ocp4
+time oc adm release mirror -a $PULL_SECRET --from=$OPENSHIFT_RELEASE_IMAGE --to-release-image=${LOCAL_REG}/openshift/release-images:${OCP_RELEASE} --to=${LOCAL_REG}/openshift/release
 
 if [ "$(grep imageContentSources /root/install-config.yaml)" == "" ] ; then
 cat << EOF >> /root/install-config.yaml
 imageContentSources:
 - mirrors:
-  - $REGISTRY_NAME:$REGISTRY_PORT/ocp4
+  - $REGISTRY_NAME:$REGISTRY_PORT/openshift/release
   source: quay.io/openshift-release-dev/ocp-v4.0-art-dev
 - mirrors:
-  - $REGISTRY_NAME:$REGISTRY_PORT/ocp4
+  - $REGISTRY_NAME:$REGISTRY_PORT/openshift/release-images
 {% if version == 'ci' %}
   source: registry.ci.openshift.org/ocp/release
 {% elif version == 'nightly' %}
@@ -63,7 +63,7 @@ imageContentSources:
 {% endif %}
 EOF
 else
-  IMAGECONTENTSOURCES="- mirrors:\n  - $REGISTRY_NAME:$REGISTRY_PORT/ocp4\n  source: quay.io/openshift-release-dev/ocp-v4.0-art-dev\n- mirrors:\n  - $REGISTRY_NAME:$REGISTRY_PORT/ocp4\n  source: registry.ci.openshift.org/ocp/release"
+  IMAGECONTENTSOURCES="- mirrors:\n  - $REGISTRY_NAME:$REGISTRY_PORT/openshift/release\n  source: quay.io/openshift-release-dev/ocp-v4.0-art-dev\n- mirrors:\n  - $REGISTRY_NAME:$REGISTRY_PORT/openshift/release-images\n  source: registry.ci.openshift.org/ocp/release"
   sed -i "/imageContentSources/a${IMAGECONTENTSOURCES}" /root/install-config.yaml
 fi
 
@@ -75,7 +75,7 @@ else
   sed -i "/additionalTrustBundle/a${LOCALCERT}" /root/install-config.yaml
   sed -i 's/^-----BEGIN/ -----BEGIN/' /root/install-config.yaml
 fi
-echo $REGISTRY_NAME:$REGISTRY_PORT/ocp4:$OCP_RELEASE > /root/version.txt
+echo $REGISTRY_NAME:$REGISTRY_PORT/openshift/release:$OCP_RELEASE > /root/version.txt
 
 if [ "$(grep pullSecret /root/install-config.yaml)" == "" ] ; then
 DISCONNECTED_PULLSECRET=$(cat /root/disconnected_pull.json | tr -d [:space:])
