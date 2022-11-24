@@ -67,7 +67,7 @@ bash /root/scripts/10_nfs.sh
 echo -e "${blue}************ RUNNING imageregistry patch ************${clear}"
 oc patch configs.imageregistry.operator.openshift.io cluster --type merge -p '{"spec":{"managementState":"Managed","storage":{"pvc":{}}}}'
 {% endif %}
-{% if disconnected and (disconnected_operators or disconnected_certified_operators or disconnected_community_operators or disconnected_marketplace_operators) and disconnected_operators_deploy_after_openshift %}
+{% if disconnected and (disconnected_operators or disconnected_certified_operators or disconnected_community_operators or disconnected_marketplace_operators or disconnected_extra_catalogs) and disconnected_operators_deploy_after_openshift %}
 echo -e "${blue}************ RUNNING 06_disconnected_olm.sh ************${clear}"
 /root/scripts/06_disconnected_olm.sh
 {% endif %}

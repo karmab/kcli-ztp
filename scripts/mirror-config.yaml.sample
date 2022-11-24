@@ -18,22 +18,22 @@ mirror:
     - name: {{ package }}
 {% endfor %}
 {% endif %}
-{% if disconnected_certified_operators %}
   - catalog: registry.redhat.io/redhat/certified-operator-index:v${OCP_RELEASE}
+{% if disconnected_certified_operators %}
     packages:
 {% for package in disconnected_certified_operators %}
     - name: {{ package }}
 {% endfor %}
 {% endif %}
-{% if disconnected_community_operators %}
   - catalog: registry.redhat.io/redhat/community-operator-index:v${OCP_RELEASE}
+{% if disconnected_community_operators %}
     packages:
 {% for package in disconnected_community_operators %}
     - name: {{ package }}
 {% endfor %}
 {% endif %}
-{% if disconnected_marketplace_operators %}
   - catalog: registry.redhat.io/redhat/redhat-marketplace-index:v${OCP_RELEASE}
+{% if disconnected_marketplace_operators %}
     packages:
 {% for package in disconnected_marketplace_operators %}
     - name: {{ package }}
