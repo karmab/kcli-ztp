@@ -96,7 +96,7 @@ ${CA_CERT}
       mirror-by-digest-only = true
     
       [[registry.mirror]]
-        location = "${LOCAL_REGISTRY}/ocp4"
+        location = "${LOCAL_REGISTRY}/${DISCONNECTED_PREFIX_IMAGES}"
 
     [[registry]]
       prefix = ""
@@ -104,7 +104,7 @@ ${CA_CERT}
       mirror-by-digest-only = true
     
       [[registry.mirror]]
-        location = "${LOCAL_REGISTRY}/ocp4"
+        location = "${LOCAL_REGISTRY}/${DISCONNECTED_PREFIX_IMAGES}"
     
     [[registry]]
       prefix = ""
@@ -112,7 +112,7 @@ ${CA_CERT}
       mirror-by-digest-only = true
     
       [[registry.mirror]]
-        location = "${LOCAL_REGISTRY}/ocp4"
+        location = "${LOCAL_REGISTRY}/${DISCONNECTED_PREFIX}"
 
 ${REGISTRIES}
 {% endif %}
