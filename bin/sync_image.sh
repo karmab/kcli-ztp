@@ -12,4 +12,4 @@ REGISTRY_PORT={{ 8443 if disconnected_quay else 5000 }}
 
 PULL_SECRET="/root/openshift_pull.json"
 image=$1
-skopeo copy docker://$image docker://$REGISTRY_NAME:$REGISTRY_PORT/$(echo $image | cut -d'/' -f 2- ) --all --authfile $PULL_SECRET
+skopeo copy docker://$image docker://$REGISTRY_NAME:$REGISTRY_PORT/$(echo $image | cut -d'/' -f 2- ) --all --authfile $PULL_SECRET --insecure-policy
