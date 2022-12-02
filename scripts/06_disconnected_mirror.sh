@@ -34,6 +34,11 @@ export LOCAL_REG="$REGISTRY_NAME:$REGISTRY_PORT"
 export OCP_RELEASE=$(/root/bin/openshift-baremetal-install version | head -1 | cut -d' ' -f2)-x86_64
 oc adm release mirror -a $PULL_SECRET --from=$OPENSHIFT_RELEASE_IMAGE --to-release-image=${LOCAL_REG}/$DISCONNECTED_PREFIX_IMAGES:${OCP_RELEASE} --to=${LOCAL_REG}/$DISCONNECTED_PREFIX
 
+{% for release in disconnected_extra_releases %}
+EXTRA_OCP_RELEASE={{ release.split(':')[1] }}
+oc adm release mirror -a $PULL_SECRET --from={{ release }} --to-release-image=${LOCAL_REG}/$DISCONNECTED_PREFIX_IMAGES:${EXTRA_OCP_RELEASE} --to=${LOCAL_REG}/$DISCONNECTED_PREFIX
+{% endfor %}
+
 if [ "$(grep imageContentSources /root/install-config.yaml)" == "" ] ; then
 cat << EOF >> /root/install-config.yaml
 imageContentSources:
