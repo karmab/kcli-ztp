@@ -1,0 +1,20 @@
+name: CI
+on: [push, pull_request]
+
+env:
+ PYTHONUNBUFFERED: true
+
+jobs:
+
+  run-workflow:
+    name: Workflow
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      - name: Install Dependencies
+        run: sudo .github/prep.sh
+        shell: bash
+      - name: Test code
+        run: .github/testing.sh
+        shell: bash

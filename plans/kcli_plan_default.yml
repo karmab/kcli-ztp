@@ -82,7 +82,7 @@ disconnected_operators_deploy_after_openshift: False
 disconnected_operators_version:
 disconnected_extra_images: []
 disconnected_extra_catalogs: []
-disconnected_extra_ocp_releases: []
+disconnected_extra_releases: []
 nfs: false
 imageregistry: false
 build: false
