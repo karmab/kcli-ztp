@@ -61,7 +61,7 @@ jobs:
       runs-on: ${{github.event.inputs.RUNNER}}
 
       steps:
-       - uses: actions/checkout@v2
+       - uses: actions/checkout@v3
        - run: git pull origin ${GITHUB_REF##*/}
        - name: Install kcli
          run: |
