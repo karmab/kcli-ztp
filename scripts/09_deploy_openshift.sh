@@ -13,9 +13,14 @@ python3 /root/bin/ipmi.py off
 python3 /root/bin/redfish.py off
 {% if bmc_reset %}
 {% for worker in workers %}
-{% if worker['model']|default('kvm') == "dell" %}
+{% if worker['model']|default('kvm') in ("dell", "hp", "hpe") %}
 worker_ip={{ worker["redfish_address"] }}
-curl -i -k -X POST -H "Content-Type: application/json" -H "Accept: application/json" -u root:calvin --data '{"ResetType":"GracefulRestart"}' "https://${worker_ip}/redfish/v1/Managers/iDRAC.Embedded.1/Actions/Manager.Reset"
+{% if worker['model'] == "dell" %}
+bmc_reset_url="https://${worker_ip}/redfish/v1/Managers/iDRAC.Embedded.1/Actions/Manager.Reset"
+{% elif worker['model'] in ("hp", "hpe") %}
+bmc_reset_url="https://${worker_ip}/redfish/v1/Managers/1/Actions/Manager.Reset"
+{% endif %}
+curl -i -k -X POST -H "Content-Type: application/json" -H "Accept: application/json" -u {{ bmc_user }}:{{ bmc_password }} --data '{"ResetType":"GracefulRestart"}' $bmc_reset_url
 if [[ $? -eq 0 ]]; then  # Can be implicit, but explicit for visibility
   echo "BMC ${worker_ip} restarting!"
   sleep 30  # Time to start restart
@@ -27,7 +32,7 @@ fi
 {% endif %}
 
 {% for worker in workers %}
-{% if worker['model']|default('kvm') == "dell" %}
+{% if worker['model']|default('kvm') in ("dell", "hp", "hpe") %}
 worker_ip={{ worker["redfish_address"] }}
 SECONDS_PASSED=0
 SECONDS_TIMEOUT=300
