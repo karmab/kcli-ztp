@@ -75,4 +75,3 @@ jobs:
       steps:
        - name: Deploy kcli plan
          run: kcli -C $CLIENT create plan --force -f $INPUTFILE --paramfile $PARAMFILE -P pullsecret=$PULLSECRET -P launch_steps=$LAUNCH_STEPS -P deploy_openshift=$DEPLOY_OPENSHIFT -P version=$VERSION -P tag=$TAG $EXTRAPARAMS $PLAN
-

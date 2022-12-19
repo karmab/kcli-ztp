@@ -29,4 +29,4 @@ jobs:
       steps:
         - name: Deploy kcli plan
           run: |
-            kcli create plan --force -f $INPUTFILE --paramfile $PARAMFILE -P pullsecret=$PULLSECRET $PLAN
+            kcli -C local create plan --force -f $INPUTFILE --paramfile $PARAMFILE -P pullsecret=$PULLSECRET $PLAN
