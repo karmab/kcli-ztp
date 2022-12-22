@@ -15,7 +15,6 @@ info: |
     - force the baremetal macs of your masters using baremetal_macs variable. If you put more entries than your masters number, they will be used for virtual workers.
     - set a pattern for their provisioning macs when you plan to host several cluster with virtual masters on the same hypervisor
     The ci registry is targetted, with the openshift_image variable.
-    When build is set to true, the openshift install binary will be compiled from sources, optionally with the prs from prs variable array
     version can instead be set to stable or latest, along with tag, to gather the binary from public sources.
 baseplan: kcli_plan_infra.yml
 image: centos8stream
@@ -77,7 +76,6 @@ disconnected_extra_catalogs: []
 disconnected_extra_releases: []
 nfs: false
 imageregistry: false
-build: false
 go_version: 1.13.8
 prs: []
 imagecontentsources: []
