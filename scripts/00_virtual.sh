@@ -9,17 +9,19 @@ sleep 30
 {% endif %}
 echo "fastestmirror=1" >> /etc/dnf/dnf.conf
 dnf -y install pkgconf-pkg-config libvirt-devel gcc python3-libvirt python3 git python3-netifaces
-python3 -m pip install --upgrade pip setuptools
-pip3 install sushy-tools --ignore-installed PyYAML
-systemctl enable --now sushy
+
+dnf -y copr enable karmab/kcli
+dnf -y install kcli
+systemctl enable --now ksushy
+
 sleep 20
 ssh-keyscan -H {{ config_host if config_host not in ['127.0.0.1', 'localhost'] else baremetal_net|local_ip }} >> /root/.ssh/known_hosts
 echo -e "Host=*\nStrictHostKeyChecking=no\n" > /root/.ssh/config
-python3 /root/bin/sushy.py $PRIMARY_NIC
+IP=$(ip -o addr show $PRIMARY_NIC | head -1 | awk '{print $4}' | cut -d "/" -f 1 | head -1)
+echo $IP | grep -q ':' && IP=[$IP]
+sed -i "s/CHANGEME/$IP/" /root/install-config.yaml
+
 api_vip=$(grep apiVIP /root/install-config.yaml | sed s/apiVIP:// | xargs)
 cluster=$(grep -m 1 name /root/install-config.yaml | awk -F: '{print $2}' | xargs)
 domain=$(grep baseDomain /root/install-config.yaml | awk -F: '{print $2}' | xargs)
-IP=$(ip -o addr show $PRIMARY_NIC | head -1 | awk '{print $4}' | cut -d "/" -f 1 | head -1)
-echo $IP | grep -q ':' && IP=[$IP]
-sed -i "s/DONTCHANGEME/$IP/" /root/install-config.yaml
 echo $api_vip api.$cluster.$domain >> /etc/hosts

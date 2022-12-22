@@ -1,0 +1,14 @@
+[Unit]
+Description=Ksushy emulator
+After=syslog.target
+
+[Service]
+Environment=HOME=/root
+Environment=PYTHONUNBUFFERED=true
+{% if ':' in baremetal_cidr %}
+Environment=IPV6=true
+{% endif %}
+Type=simple
+ExecStart=/usr/bin/ksushy
+StandardOutput=syslog
+StandardError=syslog

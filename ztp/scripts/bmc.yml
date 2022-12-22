@@ -52,7 +52,7 @@ spec:
     address: idrac-virtualmedia://{{ node['redfish_address'] }}/redfish/v1/Systems/System.Embedded.1
     {% endif %}
     {% else %}
-    address: redfish-virtualmedia+http://IP:8000/redfish/v1/Systems/UUID-{{ spoke_name }}-{{ num }}
+    address: redfish-virtualmedia+http://CHANGEME:9000/redfish/v1/Systems/kcli/{{ cluster }}-{{ spoke_name }}-node-{{ num }}
     {% endif %}
     credentialsName: {{ cluster }}-ztp-{{ spoke_name }}-bmc-secret-{{ num }}
 {% if 'provisioning_mac' in node %}

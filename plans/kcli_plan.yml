@@ -55,8 +55,8 @@
  - path: /root/.bashrc
    origin: envfiles/bashrc
 {% if virtual_masters or virtual_workers %}
- - path: /etc/sushy.conf
-   origin: bin/sushy.conf
+ - path: /root/.kcli/config.yml
+   origin: bin/kcli_config.yml
 {% endif %}
 {% if disconnected_quay and ':' in baremetal_cidr %}
  - path: /usr/lib/systemd/system/quay-haproxy.service
@@ -65,8 +65,8 @@
 {% endif %}
  - origin: {{ pullsecret }}
    path: /root/openshift_pull.json                                                                                                                    
- - path: /usr/lib/systemd/system/sushy.service
-   origin: bin/sushy.service
+ - path: /usr/lib/systemd/system/ksushy.service
+   origin: bin/ksushy.service
  - path: /etc/systemd/system/registry.service
    origin: bin/registry.service
 {% for ca in cas %}

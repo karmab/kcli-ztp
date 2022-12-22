@@ -130,7 +130,7 @@ platform:
         address: idrac-virtualmedia://{{ master['redfish_address'] }}/redfish/v1/Systems/System.Embedded.1
         {% endif %}
         {% else %}
-        address: ipmi://{{ master['ipmi_address'] | default('DONTCHANGEME:623' + num)}}
+        address: redfish-virtualmedia+http://CHANGEME:9000/redfish/v1/Systems/kcli/{{ cluster }}-master-{{ num }}
         {% endif %}
         username: {{ master['bmc_user']|default(bmc_user) }}
         password: {{ master['bmc_password']|default(bmc_password) }}
@@ -180,7 +180,7 @@ platform:
         address: idrac-virtualmedia://{{ worker['redfish_address'] }}/redfish/v1/Systems/System.Embedded.1
         {% endif %}
         {% else %}
-        address: ipmi://{{ worker['ipmi_address'] | default('DONTCHANGEME:624' + num)}}
+        address: redfish-virtualmedia+http://CHANGEME:9000/redfish/v1/Systems/kcli/{{ cluster }}-worker-{{ num }}
         {% endif %}
         username: {{ worker['bmc_user']|default(bmc_user) }}
         password: {{ worker['bmc_password']|default(bmc_password) }}
