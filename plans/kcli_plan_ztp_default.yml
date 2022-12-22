@@ -1,10 +1,5 @@
 baseplan: kcli_plan.yml
 acm: false
-acm_downstream: false
-acm_downstream_latest: false
-acm_snapshot:
-acm_op_bundle:
-acm_pullsecret: openshift_pull_acm.json
 argocd: false
 argocd_resourcegenerator_image: quay.io/mavazque/ztp-site-generator:4.10-202204010
 argocd_repo_branch: main

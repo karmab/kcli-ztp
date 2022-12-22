@@ -1,10 +1,5 @@
 #!/usr/bin/env bash
 
-{% if acm_downstream %}
-echo "************ RUNNING acm_downstream.sh ************"
-bash /root/ztp/acm/downstream.sh
-{% endif %}
-
 oc patch provisioning provisioning-configuration --type merge -p '{"spec":{"watchAllNamespaces": true}}'
 
 dnf -y install httpd
@@ -24,12 +19,11 @@ mv /root/ztp/acm/cr_acm.yml.new /root/ztp/acm/cr_acm.yml
 {% endif %}
 oc -n $NAMESPACE create -f /root/ztp/acm/cr_acm.yml
 oc -n $NAMESPACE wait --for=condition=complete multiclusterhub/multiclusterhub --timeout=10m
-{% elif mce %}
+{% else %}
 tasty install multicluster-engine --wait
 oc -n $NAMESPACE create -f /root/ztp/acm/cr_mce.yml
-{% else %}
-oc create -f /root/ztp/acm/ai_install.yml
 {% endif %}
+
 until oc get crd/agentserviceconfigs.agent-install.openshift.io >/dev/null 2>&1 ; do sleep 1 ; done
 until oc get crd/clusterimagesets.hive.openshift.io >/dev/null 2>&1 ; do sleep 1 ; done
 
