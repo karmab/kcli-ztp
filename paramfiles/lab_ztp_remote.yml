@@ -1,5 +1,4 @@
 lab: true
-provisioning_enable: false
 pool: default
 disconnected: false
 disk_size: 100

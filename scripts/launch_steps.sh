@@ -15,8 +15,6 @@ echo -e "${blue}************ RUNNING 01_patch_installconfig.sh ************${cle
 /root/scripts/01_patch_installconfig.sh
 echo -e "${blue}************ RUNNING 02_packages.sh ************${clear}"
 bash /root/scripts/02_packages.sh
-echo -e "${blue}************ RUNNING 03_provisioning_network.sh ************${clear}"
-bash /root/scripts/03_provisioning_network.sh
 echo -e "${blue}************ RUNNING 04_get_clients.sh ************${clear}"
 /root/scripts/04_get_clients.sh || exit 1
 

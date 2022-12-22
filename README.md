@@ -29,7 +29,6 @@ The automation can be used for additional scenarios:
 - libvirt daemon (with fw_cfg support)
 - two physical bridges:
     - baremetal with a nic from the external network
-    - provisioning with a nic from the provisioning network. Ideally assign it an ip of 172.22.0.1/24
 - If you're not running as root, configure extra permissions with `sudo setfacl -m u:$(id -un):rwx /var/lib/libvirt/openshift-images/*`
 
 Here's a script you can run on the provisioning node for that (adjust the nics variable as per your environment)
@@ -39,26 +38,6 @@ export MAIN_CONN=eno2
 sudo nmcli connection add ifname baremetal type bridge con-name baremetal
 sudo nmcli con add type bridge-slave ifname $MAIN_CONN master baremetal
 sudo nmcli con down $MAIN_CONN; sudo pkill dhclient; sudo dhclient baremetal
-
-export PROV_CONN=eno1
-sudo nmcli connection add ifname provisioning type bridge con-name provisioning
-sudo nmcli con add type bridge-slave ifname $PROV_CONN master provisioning
-sudo nmcli connection modify provisioning ipv4.addresses 172.22.0.1/24 ipv4.method manual
-sudo nmcli con down provisioning
-sudo nmcli con up provisioning
-```
-
-If using vlans on the provisioning interface, the following can be used:
-
-```
-VLANID=1200
-BRIDGE=prov$VLAN
-IP="172.22.0.100/24"
-nmcli connection add ifname $BRIDGE type bridge con-name $BRIDGE
-nmcli connection add type vlan con-name vlan$VLAN ifname eno1.$VLAN dev eno1 id $VLAN master $BRIDGE slave-type bridge
-nmcli connection modify $BRIDGE ipv4.addresses $IP ipv4.method manual
-nmcli con down $BRIDGE
-nmcli con up $BRIDGE
 ```
 
 ## Launch
@@ -69,7 +48,7 @@ Prepare a valid parameter file with the information needed. At least, you need t
 - ingress_ip
 - bmc_user (for real baremetal)
 - bmc_password (for real baremetal)
-- an array of your masters (if thet are not virtual). Each entry in this array needs at least the provisioning_mac and ipmi_address. Optionally you can indicate for each entry a specific bmc_user, bmc_password and disk (to be used as rootdevice hint) either as /dev/XXX or simply XXX
+- an array of your masters (if thet are not virtual). Each entry in this array needs at least the provisioning_mac and redfish_address. Optionally you can indicate for each entry a specific bmc_user, bmc_password and disk (to be used as rootdevice hint) either as /dev/XXX or simply XXX
 - an array of your workers (can be left empty if you only want to deploy masters). The format of those entries follow the one indicated for masters.
 
 Here's a snippet what the workers variable might look like:
@@ -78,7 +57,7 @@ Here's a snippet what the workers variable might look like:
 workers:
 - ipmi_address: 192.168.1.5
   provisioning_mac: 98:03:9b:62:ab:19
-- ipmi_address: 192.168.1.6
+- redfish_address: 192.168.1.6
   provisioning_mac: 98:03:9b:62:ab:17
   disk: /dev/sde
 ```
@@ -102,7 +81,7 @@ The deployed vm comes with a set of helpers for you:
 
 - scripts deploy.sh and clean.sh allow you to manually launch an install or clean a failed one
 - you can run *baremetal node list* during deployment to check the status of the provisioning of the nodes (Give some time after launching an install before ironic is accessible).
-- script *ipmi.py* can be used to check the power status of the baremetal node or to stop them (using `ipmi.py off`). When not using provisioning network, a script named *redfish.py* provides a similar functionality
+- script *redfish.py* to check the power status of the baremetal node or to stop them (using `redfish.py off`
 
 ## Parameters
 
@@ -134,12 +113,6 @@ Note that you can use the baseplan `kcli_plan_infra.yml` to deploy the infrastru
 |no_proxy                            |None            |
 |numcpus                             |16              |
 |pool                                |default         |
-|provisioning\_bootstrap\_mac        |None            |
-|provisioning_cidr                   |172.22.0.0/24   |
-|provisioning_enable                 |True            |
-|provisioning_interface              |eno1            |
-|provisioning_macs                   |[]              |
-|provisioning_net                    |provisioning    |
 |virtual_masters                     |True            |
 |virtual\_masters\_baremetal\_mac\_prefix|aa:aa:aa:cc:cc|
 |virtual\_masters\_mac\_prefix       |aa:aa:aa:aa:aa  |
@@ -201,14 +174,6 @@ The following parameters are available when deploying the default plan
 |openshift_image                              |registry.ci.openshift.org/ocp/release:4.10|
 |patch\_rhcos\_image                            |False                                     |
 |playbook                                     |False                                     |
-|provisioning\_bootstrap\_mac                   |None                                      |
-|provisioning_enable                          |True                                      |
-|provisioning\_installer\_ip                    |172.22.0.253                              |
-|provisioning_interface                       |eno1                                      |
-|provisioning_ip                              |172.22.0.3                                |
-|provisioning_macs                            |[]                                        |
-|provisioning_net                             |provisioning                              |
-|provisioning_range                           |172.22.0.10,172.22.0.100                  |
 |prs                                          |[]                                        |
 |pullsecret                                   |openshift_pull.json                       |
 |registry_image                               |quay.io/saledort/registry:2               |
@@ -223,7 +188,7 @@ The following parameters are available when deploying the default plan
 when specifying *masters* or *workers* as an array (for baremetal nodes), the specification can be created with something like this
 
 ```
-- ipmi_address: 192.168.123.45
+- redfish_address: 192.168.123.45
   provisioning_mac: 98:03:9b:62:81:49
 ```
 
