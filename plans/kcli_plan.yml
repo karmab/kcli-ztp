@@ -65,8 +65,6 @@
 {% endif %}
  - origin: {{ pullsecret }}
    path: /root/openshift_pull.json                                                                                                                    
- - path: /usr/lib/systemd/system/ksushy.service
-   origin: bin/ksushy.service
  - path: /etc/systemd/system/registry.service
    origin: bin/registry.service
 {% for ca in cas %}
