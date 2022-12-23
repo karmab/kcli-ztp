@@ -1,5 +1,4 @@
 lab: true
-provisioning_enable: false
 pool: default
 disconnected: false
 disk_size: 100
@@ -43,7 +42,6 @@ vmrules:
    nets:
    - name: lab-remote
      mac: aa:aa:aa:cc:cc:05
-acm_pull_secret: /root/openshift_pull_acm.json
 lab_extra_dns:
 - assisted-service-open-cluster-management
 - assisted-service-assisted-installer

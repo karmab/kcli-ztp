@@ -10,12 +10,6 @@
 {% if (dualstack or dual_force|default(False)) and dualstack_cidr != None %}
  dual_cidr: {{ dualstack_cidr }}
 {% endif %}
-{% if provisioning_enable %}
-{{ provisioning_net }}:
- type: network
- cidr: {{ provisioning_cidr }}
- dhcp: false
-{% endif %}
 {% endif %}
 
 {% if lab or (baremetal_ips and baremetal_ips|length >0) %}
@@ -49,18 +43,14 @@ apps:
  numcpus: {{ virtual_masters_numcpus }}
  cloudinit: false
  start: false
- uefi_legacy: {{ 'true' if not uefi|default(False) and (virtual_protocol == 'redfish' or not provisioning_enable) else 'false' }}
+ uefi_legacy: {{ 'true' if not uefi|default(False) else 'false' }}
  user: core
  memory: {{ virtual_masters_memory }}
  nets:
-{% if provisioning_enable %}
-  - name: {{ provisioning_net }}
-    mac: {{ virtual_masters_mac_prefix + ":" + "%02.d" | format(num + 1)| string }}
-{% endif %}
   - name: {{ baremetal_net }}
 {% if baremetal_macs and baremetal_macs|length > num %}
     mac: {{ baremetal_macs[num] }}
-{% elif not provisioning_enable %}
+{% else %}
     mac: {{ virtual_masters_baremetal_mac_prefix + ":" + "%02.d" | format(num + 1)| string }}
 {% endif %}
 {% if lab and baremetal_ips and baremetal_ips|length > num %}
@@ -79,18 +69,14 @@ apps:
  numcpus: {{ virtual_workers_numcpus }}
  start: false
  cloudinit: false
- uefi_legacy: {{ 'true' if virtual_protocol == 'redfish' or not provisioning_enable else 'false' }}
+ uefi_legacy: true
  user: core
  memory: {{ virtual_workers_memory }}
  nets:
-{% if provisioning_enable %}
-  - name: {{ provisioning_net }}
-    mac: {{ virtual_workers_mac_prefix + ":" + "%02.d" | format(num + 1)| string }}
-{% endif %}
   - name: {{ baremetal_net }}
 {% if baremetal_macs and baremetal_macs|length > virtual_masters_number + num %}
     mac: {{ baremetal_macs[virtual_masters_number + num] }}
-{% elif not provisioning_enable %}
+{% else %}
     mac: {{ virtual_workers_baremetal_mac_prefix + ":" + "%02.d" | format(num + 1)| string }}
 {% endif %}
 {% if lab and baremetal_ips and baremetal_ips|length > virtual_masters_number + num %}

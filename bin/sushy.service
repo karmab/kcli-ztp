@@ -1,9 +1,0 @@
-[Unit]
-Description=Sushy Libvirt emulator
-After=syslog.target
-
-[Service]
-Type=simple
-ExecStart=/usr/local/bin/sushy-emulator --config /etc/sushy.conf
-StandardOutput=syslog
-StandardError=syslog

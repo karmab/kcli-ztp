@@ -38,10 +38,6 @@
    dns: {{ static_baremetal_dns or static_baremetal_gateway or baremetal_cidr|network_ip(1 if lab else -2) }}
 {% endif %}
    ipv6: {{ true if baremetal_cidr != None and ':' in baremetal_cidr else false }}
-{% if provisioning_enable %}
- - name: {{ provisioning_net }}
-   noconf: yes
-{% endif %}
 {% if baremetal_cidr != None and ':' in baremetal_cidr and not dualstack %}
  - default
 {% endif %}
@@ -59,11 +55,8 @@
  - path: /root/.bashrc
    origin: envfiles/bashrc
 {% if virtual_masters or virtual_workers %}
- - path: /etc/sushy.conf
-   origin: bin/sushy.conf
- - path: /root/scripts/00_virtual.sh
-   origin: scripts/{{ '00_virtual.sh.redfish' if not provisioning_enable else '00_virtual.sh.' + virtual_protocol }}
-   mode: 700
+ - path: /root/.kcli/config.yml
+   origin: bin/kcli_config.yml
 {% endif %}
 {% if disconnected_quay and ':' in baremetal_cidr %}
  - path: /usr/lib/systemd/system/quay-haproxy.service
@@ -72,8 +65,8 @@
 {% endif %}
  - origin: {{ pullsecret }}
    path: /root/openshift_pull.json                                                                                                                    
- - path: /usr/lib/systemd/system/sushy.service
-   origin: bin/sushy.service
+ - path: /usr/lib/systemd/system/ksushy.service
+   origin: bin/ksushy.service
  - path: /etc/systemd/system/registry.service
    origin: bin/registry.service
 {% for ca in cas %}
@@ -102,8 +95,5 @@
 {% endif %}
 {% if launch_steps %}
  scripts:
-{% if build %}
- - bin/build.sh
-{% endif %}
  - scripts/launch_steps.sh
 {% endif %}

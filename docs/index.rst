@@ -150,7 +150,7 @@ In the installer vm, Let’s look at the following elements:
 Virtual Masters preparation
 ===========================
 
-In this section, we install and configure sushy-tools, which is an utility aimed at emulating redfish when interacting with virtual machines.
+In this section, we install and configure ksushy, which is part of kcli and allows to use redfish calls when interacting with virtual machines.
 
 Launch the following command:
 
@@ -163,54 +163,60 @@ Expected Output
 ::
 
    0 files removed
-   CentOS Linux 8 - AppStream                      2.4 MB/s | 8.3 MB     00:03
-   CentOS Linux 8 - BaseOS                         6.5 MB/s | 4.5 MB     00:00
-   CentOS Linux 8 - Extras                         6.1 kB/s | 9.8 kB     00:01
-   Last metadata expiration check: 0:00:01 ago on Mon 02 Aug 2021 05:14:26 AM UTC.
+   determining the fastest mirror (10 hosts).. done.
+   CentOS Stream 8 - AppStream                      19 MB/s |  26 MB     00:01
+   determining the fastest mirror (9 hosts).. done.
+   CentOS Stream 8 - BaseOS                         17 MB/s |  26 MB     00:01
+   determining the fastest mirror (9 hosts).. done.
+   CentOS Stream 8 - Extras                         16 kB/s |  18 kB     00:01
    Dependencies resolved.
    =========================================================================================
     Package                  Arch    Version                                Repo        Size
    =========================================================================================
    Installing:
-    gcc                      x86_64  8.4.1-1.el8                            appstream   23 M
-    git                      x86_64  2.27.0-1.el8                           appstream  164 k
-    libvirt-devel            x86_64  6.0.0-35.module_el8.4.0+783+f8734d30   appstream  233 k
+    gcc                      x86_64  8.5.0-17.el8                           baseos      23 M
+    git                      x86_64  2.31.1-2.el8                           appstream  161 k
+    libvirt-devel            x86_64  8.0.0-10.module_el8.7.0+1218+f626c2ff  appstream  248 k
     pkgconf-pkg-config       x86_64  1.4.2-1.el8                            baseos      15 k
-    python3-libvirt          x86_64  6.0.0-1.module_el8.4.0+547+a85d02ba    appstream  305 k
+    python3-libvirt          x86_64  8.0.0-2.module_el8.7.0+1218+f626c2ff   appstream  332 k
     python3-netifaces        x86_64  0.10.6-4.el8                           appstream   25 k
-    python36                 x86_64  3.6.8-2.module_el8.4.0+790+083e3d81    appstream   19 k
+    python36                 x86_64  3.6.8-38.module_el8.5.0+895+a459eca8   appstream   19 k
+   Upgrading:
+    chkconfig                x86_64  1.19.1-1.el8                           baseos     198 k
+    libgcc                   x86_64  8.5.0-17.el8                           baseos      81 k
+    libgomp                  x86_64  8.5.0-17.el8                           baseos     207 k
    Installing dependencies:
-    binutils                 x86_64  2.30-93.el8                            baseos     5.8 M
-    cpp                      x86_64  8.4.1-1.el8                            appstream   10 M
+    binutils                 x86_64  2.30-119.el8                           baseos     5.8 M
+    cpp                      x86_64  8.5.0-17.el8                           baseos      10 M
     cyrus-sasl               x86_64  2.1.27-5.el8                           baseos      96 k
     cyrus-sasl-gssapi        x86_64  2.1.27-5.el8                           baseos      50 k
-    emacs-filesystem         noarch  1:26.1-5.el8                           baseos      69 k
-    git-core                 x86_64  2.27.0-1.el8                           appstream  5.7 M
-    git-core-doc             noarch  2.27.0-1.el8                           appstream  2.5 M
-    glibc-devel              x86_64  2.28-151.el8                           baseos     1.0 M
-    glibc-headers            x86_64  2.28-151.el8                           baseos     478 k
+    emacs-filesystem         noarch  1:26.1-7.el8                           baseos      70 k
+    git-core                 x86_64  2.31.1-2.el8                           appstream  4.7 M
+    git-core-doc             noarch  2.31.1-2.el8                           appstream  2.6 M
+    glibc-devel              x86_64  2.28-158.el8                           baseos     1.0 M
+    glibc-headers            x86_64  2.28-158.el8                           baseos     479 k
     isl                      x86_64  0.16.1-6.el8                           appstream  841 k
-    kernel-headers           x86_64  4.18.0-305.10.2.el8_4                  baseos     7.1 M
+    kernel-headers           x86_64  4.18.0-408.el8                         baseos     9.8 M
     libmpc                   x86_64  1.1.0-9.1.el8                          appstream   61 k
     libpkgconf               x86_64  1.4.2-1.el8                            baseos      35 k
-    libvirt-libs             x86_64  6.0.0-35.module_el8.4.0+783+f8734d30   appstream  4.3 M
-    libxcrypt-devel          x86_64  4.1.1-4.el8                            baseos      25 k
+    libvirt-libs             x86_64  8.0.0-10.module_el8.7.0+1218+f626c2ff  appstream  4.7 M
+    libxcrypt-devel          x86_64  4.1.1-6.el8                            baseos      25 k
     perl-Carp                noarch  1.42-396.el8                           baseos      30 k
     perl-Data-Dumper         x86_64  2.167-399.el8                          baseos      58 k
     perl-Digest              noarch  1.17-395.el8                           appstream   27 k
     perl-Digest-MD5          x86_64  2.55-396.el8                           appstream   37 k
     perl-Encode              x86_64  4:2.97-3.el8                           baseos     1.5 M
-    perl-Errno               x86_64  1.28-419.el8                           baseos      76 k
+    perl-Errno               x86_64  1.28-421.el8                           baseos      76 k
     perl-Error               noarch  1:0.17025-2.el8                        appstream   46 k
     perl-Exporter            noarch  5.72-396.el8                           baseos      34 k
     perl-File-Path           noarch  2.15-2.el8                             baseos      38 k
     perl-File-Temp           noarch  0.230.600-1.el8                        baseos      63 k
     perl-Getopt-Long         noarch  1:2.50-4.el8                           baseos      63 k
-    perl-Git                 noarch  2.27.0-1.el8                           appstream   77 k
+    perl-Git                 noarch  2.31.1-2.el8                           appstream   78 k
     perl-HTTP-Tiny           noarch  0.074-1.el8                            baseos      58 k
-    perl-IO                  x86_64  1.38-419.el8                           baseos     142 k
+    perl-IO                  x86_64  1.38-421.el8                           baseos     142 k
     perl-MIME-Base64         x86_64  3.15-396.el8                           baseos      31 k
-    perl-Net-SSLeay          x86_64  1.88-1.module_el8.3.0+410+ff426aa3     appstream  379 k
+    perl-Net-SSLeay          x86_64  1.88-1.module_el8.4.0+517+be1595ff     appstream  379 k
     perl-PathTools           x86_64  3.74-1.el8                             baseos      90 k
     perl-Pod-Escapes         noarch  1:1.07-395.el8                         baseos      20 k
     perl-Pod-Perldoc         noarch  3.28-396.el8                           baseos      86 k
@@ -228,10 +234,10 @@ Expected Output
     perl-URI                 noarch  1.73-3.el8                             appstream  116 k
     perl-Unicode-Normalize   x86_64  1.25-396.el8                           baseos      82 k
     perl-constant            noarch  1.33-396.el8                           baseos      25 k
-    perl-interpreter         x86_64  4:5.26.3-419.el8                       baseos     6.3 M
+    perl-interpreter         x86_64  4:5.26.3-421.el8                       baseos     6.3 M
     perl-libnet              noarch  3.11-3.el8                             appstream  121 k
-    perl-libs                x86_64  4:5.26.3-419.el8                       baseos     1.6 M
-    perl-macros              x86_64  4:5.26.3-419.el8                       baseos      72 k
+    perl-libs                x86_64  4:5.26.3-421.el8                       baseos     1.6 M
+    perl-macros              x86_64  4:5.26.3-421.el8                       baseos      72 k
     perl-parent              noarch  1:0.237-1.el8                          baseos      20 k
     perl-podlators           noarch  4.11-1.el8                             baseos     118 k
     perl-threads             x86_64  1:2.21-2.el8                           baseos      61 k
@@ -240,10 +246,10 @@ Expected Output
     pkgconf-m4               noarch  1.4.2-1.el8                            baseos      17 k
     python3-pip              noarch  9.0.3-19.el8                           appstream   20 k
     python3-setuptools       noarch  39.2.0-6.el8                           baseos     163 k
-    yajl                     x86_64  2.1.0-10.el8                           appstream   41 k
+    yajl                     x86_64  2.1.0-11.el8                           appstream   41 k
    Installing weak dependencies:
     perl-IO-Socket-IP        noarch  0.39-5.el8                             appstream   47 k
-    perl-IO-Socket-SSL       noarch  2.066-4.module_el8.3.0+410+ff426aa3    appstream  298 k
+    perl-IO-Socket-SSL       noarch  2.066-4.module_el8.4.0+517+be1595ff    appstream  298 k
     perl-Mozilla-CA          noarch  20160104-7.module_el8.3.0+416+dee7bcef appstream   15 k
    Enabling module streams:
     perl                             5.26
@@ -254,85 +260,89 @@ Expected Output
    Transaction Summary
    =========================================================================================
    Install  71 Packages
+   Upgrade   3 Packages
 
-   Total download size: 75 M
-   Installed size: 228 M
+   Total download size: 78 M
    Downloading Packages:
-   (1/71): git-2.27.0-1.el8.x86_64.rpm             370 kB/s | 164 kB     00:00
-   (2/71): git-core-2.27.0-1.el8.x86_64.rpm        9.6 MB/s | 5.7 MB     00:00
-   (3/71): git-core-doc-2.27.0-1.el8.noarch.rpm     11 MB/s | 2.5 MB     00:00
-   (4/71): cpp-8.4.1-1.el8.x86_64.rpm              7.9 MB/s |  10 MB     00:01
-   (5/71): isl-0.16.1-6.el8.x86_64.rpm             8.7 MB/s | 841 kB     00:00
-   (6/71): libmpc-1.1.0-9.1.el8.x86_64.rpm         1.1 MB/s |  61 kB     00:00
-   (7/71): libvirt-devel-6.0.0-35.module_el8.4.0+7 1.1 MB/s | 233 kB     00:00
-   (8/71): perl-Digest-1.17-395.el8.noarch.rpm     593 kB/s |  27 kB     00:00
-   (9/71): perl-Digest-MD5-2.55-396.el8.x86_64.rpm 818 kB/s |  37 kB     00:00
-   (10/71): perl-Error-0.17025-2.el8.noarch.rpm    1.0 MB/s |  46 kB     00:00
-   (11/71): perl-Git-2.27.0-1.el8.noarch.rpm       1.6 MB/s |  77 kB     00:00
-   (12/71): libvirt-libs-6.0.0-35.module_el8.4.0+7  11 MB/s | 4.3 MB     00:00
-   (13/71): perl-IO-Socket-IP-0.39-5.el8.noarch.rp 1.0 MB/s |  47 kB     00:00
-   (14/71): perl-IO-Socket-SSL-2.066-4.module_el8. 6.3 MB/s | 298 kB     00:00
-   (15/71): perl-Mozilla-CA-20160104-7.module_el8. 339 kB/s |  15 kB     00:00
-   (16/71): perl-Net-SSLeay-1.88-1.module_el8.3.0+ 7.9 MB/s | 379 kB     00:00
-   (17/71): perl-TermReadKey-2.37-7.el8.x86_64.rpm 882 kB/s |  40 kB     00:00
-   (18/71): perl-URI-1.73-3.el8.noarch.rpm         2.5 MB/s | 116 kB     00:00
-   (19/71): perl-libnet-3.11-3.el8.noarch.rpm      2.6 MB/s | 121 kB     00:00
-   (20/71): python3-libvirt-6.0.0-1.module_el8.4.0 6.3 MB/s | 305 kB     00:00
-   (21/71): python3-netifaces-0.10.6-4.el8.x86_64. 548 kB/s |  25 kB     00:00
-   (22/71): gcc-8.4.1-1.el8.x86_64.rpm              11 MB/s |  23 MB     00:02
-   (23/71): python3-pip-9.0.3-19.el8.noarch.rpm    236 kB/s |  20 kB     00:00
-   (24/71): python36-3.6.8-2.module_el8.4.0+790+08 254 kB/s |  19 kB     00:00
-   (25/71): yajl-2.1.0-10.el8.x86_64.rpm           862 kB/s |  41 kB     00:00
-   (26/71): cyrus-sasl-2.1.27-5.el8.x86_64.rpm     492 kB/s |  96 kB     00:00
-   (27/71): cyrus-sasl-gssapi-2.1.27-5.el8.x86_64. 305 kB/s |  50 kB     00:00
-   (28/71): emacs-filesystem-26.1-5.el8.noarch.rpm 1.7 MB/s |  69 kB     00:00
-   (29/71): glibc-headers-2.28-151.el8.x86_64.rpm  3.5 MB/s | 478 kB     00:00
-   (30/71): glibc-devel-2.28-151.el8.x86_64.rpm    5.0 MB/s | 1.0 MB     00:00
-   (31/71): libpkgconf-1.4.2-1.el8.x86_64.rpm      716 kB/s |  35 kB     00:00
-   (32/71): binutils-2.30-93.el8.x86_64.rpm         12 MB/s | 5.8 MB     00:00
-   (33/71): libxcrypt-devel-4.1.1-4.el8.x86_64.rpm 489 kB/s |  25 kB     00:00
-   (34/71): perl-Carp-1.42-396.el8.noarch.rpm      724 kB/s |  30 kB     00:00
-   (35/71): perl-Data-Dumper-2.167-399.el8.x86_64. 1.4 MB/s |  58 kB     00:00
-   (36/71): perl-Encode-2.97-3.el8.x86_64.rpm       22 MB/s | 1.5 MB     00:00
-   (37/71): perl-Errno-1.28-419.el8.x86_64.rpm     1.4 MB/s |  76 kB     00:00
-   (38/71): kernel-headers-4.18.0-305.10.2.el8_4.x  26 MB/s | 7.1 MB     00:00
-   (39/71): perl-Exporter-5.72-396.el8.noarch.rpm  835 kB/s |  34 kB     00:00
-   (40/71): perl-File-Path-2.15-2.el8.noarch.rpm   797 kB/s |  38 kB     00:00
-   (41/71): perl-File-Temp-0.230.600-1.el8.noarch. 1.5 MB/s |  63 kB     00:00
-   (42/71): perl-Getopt-Long-2.50-4.el8.noarch.rpm 1.5 MB/s |  63 kB     00:00
-   (43/71): perl-HTTP-Tiny-0.074-1.el8.noarch.rpm  1.1 MB/s |  58 kB     00:00
-   (44/71): perl-IO-1.38-419.el8.x86_64.rpm        2.9 MB/s | 142 kB     00:00
-   (45/71): perl-MIME-Base64-3.15-396.el8.x86_64.r 518 kB/s |  31 kB     00:00
-   (46/71): perl-PathTools-3.74-1.el8.x86_64.rpm   1.6 MB/s |  90 kB     00:00
-   (47/71): perl-Pod-Escapes-1.07-395.el8.noarch.r 449 kB/s |  20 kB     00:00
-   (48/71): perl-Pod-Perldoc-3.28-396.el8.noarch.r 1.7 MB/s |  86 kB     00:00
-   (49/71): perl-Pod-Simple-3.35-395.el8.noarch.rp 3.9 MB/s | 213 kB     00:00
-   (50/71): perl-Pod-Usage-1.69-395.el8.noarch.rpm 712 kB/s |  34 kB     00:00
-   (51/71): perl-Scalar-List-Utils-1.49-2.el8.x86_ 1.6 MB/s |  68 kB     00:00
-   (52/71): perl-Socket-2.027-3.el8.x86_64.rpm     1.4 MB/s |  59 kB     00:00
-   (53/71): perl-Storable-3.11-3.el8.x86_64.rpm    2.4 MB/s |  98 kB     00:00
-   (54/71): perl-Term-ANSIColor-4.06-396.el8.noarc 1.1 MB/s |  46 kB     00:00
-   (55/71): perl-Term-Cap-1.17-395.el8.noarch.rpm  462 kB/s |  23 kB     00:00
-   (56/71): perl-Text-ParseWords-3.30-395.el8.noar 429 kB/s |  18 kB     00:00
-   (57/71): perl-Text-Tabs+Wrap-2013.0523-395.el8. 494 kB/s |  24 kB     00:00
-   (58/71): perl-Time-Local-1.280-1.el8.noarch.rpm 836 kB/s |  34 kB     00:00
-   (59/71): perl-Unicode-Normalize-1.25-396.el8.x8 2.0 MB/s |  82 kB     00:00
-   (60/71): perl-constant-1.33-396.el8.noarch.rpm  608 kB/s |  25 kB     00:00
-   (61/71): perl-macros-5.26.3-419.el8.x86_64.rpm  1.5 MB/s |  72 kB     00:00
-   (62/71): perl-libs-5.26.3-419.el8.x86_64.rpm     15 MB/s | 1.6 MB     00:00
-   (63/71): perl-parent-0.237-1.el8.noarch.rpm     471 kB/s |  20 kB     00:00
-   (64/71): perl-podlators-4.11-1.el8.noarch.rpm   2.8 MB/s | 118 kB     00:00
-   (65/71): perl-threads-2.21-2.el8.x86_64.rpm     1.2 MB/s |  61 kB     00:00
-   (66/71): perl-interpreter-5.26.3-419.el8.x86_64  31 MB/s | 6.3 MB     00:00
-   (67/71): perl-threads-shared-1.58-2.el8.x86_64. 903 kB/s |  48 kB     00:00
-   (68/71): pkgconf-1.4.2-1.el8.x86_64.rpm         757 kB/s |  38 kB     00:00
-   (69/71): pkgconf-m4-1.4.2-1.el8.noarch.rpm      411 kB/s |  17 kB     00:00
-   (70/71): pkgconf-pkg-config-1.4.2-1.el8.x86_64. 333 kB/s |  15 kB     00:00
-   (71/71): python3-setuptools-39.2.0-6.el8.noarch 3.7 MB/s | 163 kB     00:00
+   done.
+   (1/74): git-2.31.1-2.el8.x86_64.rpm             832 kB/s | 161 kB     00:00
+   (2/74): isl-0.16.1-6.el8.x86_64.rpm             6.4 MB/s | 841 kB     00:00
+   (3/74): git-core-doc-2.31.1-2.el8.noarch.rpm    7.7 MB/s | 2.6 MB     00:00
+   (4/74): libmpc-1.1.0-9.1.el8.x86_64.rpm         1.5 MB/s |  61 kB     00:00
+   (5/74): git-core-2.31.1-2.el8.x86_64.rpm         12 MB/s | 4.7 MB     00:00
+   (6/74): libvirt-devel-8.0.0-10.module_el8.7.0+1 4.1 MB/s | 248 kB     00:00
+   (7/74): perl-Digest-1.17-395.el8.noarch.rpm     686 kB/s |  27 kB     00:00
+   (8/74): perl-Digest-MD5-2.55-396.el8.x86_64.rpm 985 kB/s |  37 kB     00:00
+   (9/74): perl-Error-0.17025-2.el8.noarch.rpm     1.1 MB/s |  46 kB     00:00
+   (10/74): perl-Git-2.31.1-2.el8.noarch.rpm       1.9 MB/s |  78 kB     00:00
+   (11/74): libvirt-libs-8.0.0-10.module_el8.7.0+1  30 MB/s | 4.7 MB     00:00
+   (12/74): perl-IO-Socket-IP-0.39-5.el8.noarch.rp 940 kB/s |  47 kB     00:00
+   (13/74): perl-IO-Socket-SSL-2.066-4.module_el8. 5.8 MB/s | 298 kB     00:00
+   (14/74): perl-Mozilla-CA-20160104-7.module_el8. 403 kB/s |  15 kB     00:00
+   (15/74): perl-TermReadKey-2.37-7.el8.x86_64.rpm 1.0 MB/s |  40 kB     00:00
+   (16/74): perl-Net-SSLeay-1.88-1.module_el8.4.0+ 7.4 MB/s | 379 kB     00:00
+   (17/74): perl-URI-1.73-3.el8.noarch.rpm         2.6 MB/s | 116 kB     00:00
+   (18/74): perl-libnet-3.11-3.el8.noarch.rpm      3.0 MB/s | 121 kB     00:00
+   (19/74): python3-libvirt-8.0.0-2.module_el8.7.0 7.1 MB/s | 332 kB     00:00
+   (20/74): python3-netifaces-0.10.6-4.el8.x86_64. 644 kB/s |  25 kB     00:00
+   (21/74): python3-pip-9.0.3-19.el8.noarch.rpm    530 kB/s |  20 kB     00:00
+   (22/74): python36-3.6.8-38.module_el8.5.0+895+a 514 kB/s |  19 kB     00:00
+   (23/74): yajl-2.1.0-11.el8.x86_64.rpm           1.0 MB/s |  41 kB     00:00
+   (24/74): cyrus-sasl-2.1.27-5.el8.x86_64.rpm     2.2 MB/s |  96 kB     00:00
+   (25/74): binutils-2.30-119.el8.x86_64.rpm        39 MB/s | 5.8 MB     00:00
+   (26/74): cyrus-sasl-gssapi-2.1.27-5.el8.x86_64. 677 kB/s |  50 kB     00:00
+   (27/74): emacs-filesystem-26.1-7.el8.noarch.rpm 1.7 MB/s |  70 kB     00:00
+   (28/74): cpp-8.5.0-17.el8.x86_64.rpm             40 MB/s |  10 MB     00:00
+   (29/74): glibc-devel-2.28-158.el8.x86_64.rpm     11 MB/s | 1.0 MB     00:00
+   (30/74): glibc-headers-2.28-158.el8.x86_64.rpm  9.7 MB/s | 479 kB     00:00
+   (31/74): libpkgconf-1.4.2-1.el8.x86_64.rpm      846 kB/s |  35 kB     00:00
+   (32/74): libxcrypt-devel-4.1.1-6.el8.x86_64.rpm 646 kB/s |  25 kB     00:00
+   (33/74): perl-Carp-1.42-396.el8.noarch.rpm      744 kB/s |  30 kB     00:00
+   (34/74): kernel-headers-4.18.0-408.el8.x86_64.r  45 MB/s | 9.8 MB     00:00
+   (35/74): perl-Data-Dumper-2.167-399.el8.x86_64. 952 kB/s |  58 kB     00:00
+   (36/74): perl-Errno-1.28-421.el8.x86_64.rpm     1.8 MB/s |  76 kB     00:00
+   (37/74): perl-Encode-2.97-3.el8.x86_64.rpm       23 MB/s | 1.5 MB     00:00
+   (38/74): perl-Exporter-5.72-396.el8.noarch.rpm  836 kB/s |  34 kB     00:00
+   (39/74): gcc-8.5.0-17.el8.x86_64.rpm             41 MB/s |  23 MB     00:00
+   (40/74): perl-File-Path-2.15-2.el8.noarch.rpm   236 kB/s |  38 kB     00:00
+   (41/74): perl-File-Temp-0.230.600-1.el8.noarch. 435 kB/s |  63 kB     00:00
+   (42/74): perl-Getopt-Long-2.50-4.el8.noarch.rpm 1.5 MB/s |  63 kB     00:00
+   (43/74): perl-HTTP-Tiny-0.074-1.el8.noarch.rpm  1.3 MB/s |  58 kB     00:00
+   (44/74): perl-IO-1.38-421.el8.x86_64.rpm        3.2 MB/s | 142 kB     00:00
+   (45/74): perl-MIME-Base64-3.15-396.el8.x86_64.r 782 kB/s |  31 kB     00:00
+   (46/74): perl-PathTools-3.74-1.el8.x86_64.rpm   2.1 MB/s |  90 kB     00:00
+   (47/74): perl-Pod-Escapes-1.07-395.el8.noarch.r 533 kB/s |  20 kB     00:00
+   (48/74): perl-Pod-Perldoc-3.28-396.el8.noarch.r 2.0 MB/s |  86 kB     00:00
+   (49/74): perl-Pod-Usage-1.69-395.el8.noarch.rpm 888 kB/s |  34 kB     00:00
+   (50/74): perl-Pod-Simple-3.35-395.el8.noarch.rp 4.7 MB/s | 213 kB     00:00
+   (51/74): perl-Scalar-List-Utils-1.49-2.el8.x86_ 1.6 MB/s |  68 kB     00:00
+   (52/74): perl-Socket-2.027-3.el8.x86_64.rpm     1.4 MB/s |  59 kB     00:00
+   (53/74): perl-Storable-3.11-3.el8.x86_64.rpm    2.4 MB/s |  98 kB     00:00
+   (54/74): perl-Term-ANSIColor-4.06-396.el8.noarc 1.0 MB/s |  46 kB     00:00
+   (55/74): perl-Term-Cap-1.17-395.el8.noarch.rpm  560 kB/s |  23 kB     00:00
+   (56/74): perl-Text-ParseWords-3.30-395.el8.noar 454 kB/s |  18 kB     00:00
+   (57/74): perl-Time-Local-1.280-1.el8.noarch.rpm 868 kB/s |  34 kB     00:00
+   (58/74): perl-Text-Tabs+Wrap-2013.0523-395.el8. 602 kB/s |  24 kB     00:00
+   (59/74): perl-Unicode-Normalize-1.25-396.el8.x8 1.9 MB/s |  82 kB     00:00
+   (60/74): perl-constant-1.33-396.el8.noarch.rpm  663 kB/s |  25 kB     00:00
+   (61/74): perl-libs-5.26.3-421.el8.x86_64.rpm     24 MB/s | 1.6 MB     00:00
+   (62/74): perl-macros-5.26.3-421.el8.x86_64.rpm  1.7 MB/s |  72 kB     00:00
+   (63/74): perl-parent-0.237-1.el8.noarch.rpm     521 kB/s |  20 kB     00:00
+   (64/74): perl-podlators-4.11-1.el8.noarch.rpm   2.8 MB/s | 118 kB     00:00
+   (65/74): perl-interpreter-5.26.3-421.el8.x86_64  40 MB/s | 6.3 MB     00:00
+   (66/74): perl-threads-shared-1.58-2.el8.x86_64. 1.1 MB/s |  48 kB     00:00
+   (67/74): perl-threads-2.21-2.el8.x86_64.rpm     1.1 MB/s |  61 kB     00:00
+   (68/74): pkgconf-1.4.2-1.el8.x86_64.rpm         1.0 MB/s |  38 kB     00:00
+   (69/74): pkgconf-m4-1.4.2-1.el8.noarch.rpm      435 kB/s |  17 kB     00:00
+   (70/74): pkgconf-pkg-config-1.4.2-1.el8.x86_64. 407 kB/s |  15 kB     00:00
+   (71/74): python3-setuptools-39.2.0-6.el8.noarch 3.7 MB/s | 163 kB     00:00
+   (72/74): libgcc-8.5.0-17.el8.x86_64.rpm         1.9 MB/s |  81 kB     00:00
+   (73/74): chkconfig-1.19.1-1.el8.x86_64.rpm      3.9 MB/s | 198 kB     00:00
+   (74/74): libgomp-8.5.0-17.el8.x86_64.rpm        4.4 MB/s | 207 kB     00:00
    --------------------------------------------------------------------------------
-   Total                                            19 MB/s |  75 MB     00:03
-   warning: /var/cache/dnf/appstream-a3ce6348fe6cbd6c/packages/cpp-8.4.1-1.el8.x86_64.rpm: Header V3 RSA/SHA256 Signature, key ID 8483c65d: NOKEY
-   CentOS Linux 8 - AppStream                      1.6 MB/s | 1.6 kB     00:00
+   Total                                            34 MB/s |  78 MB     00:02
+   warning: /var/cache/dnf/appstream-670736f27949a722/packages/git-2.31.1-2.el8.x86_64.rpm: Header V3 RSA/SHA256 Signature, key ID 8483c65d: NOKEY
+   CentOS Stream 8 - AppStream                     1.6 MB/s | 1.6 kB     00:00
    Importing GPG key 0x8483C65D:
     Userid     : "CentOS (CentOS Official Signing Key) <security@centos.org>"
     Fingerprint: 99DB 70FA E1D7 CE22 7FB6 4882 05B5 55B3 8483 C65D
@@ -344,198 +354,217 @@ Expected Output
    Transaction test succeeded.
    Running transaction
      Preparing        :                                                        1/1
-     Installing       : libmpc-1.1.0-9.1.el8.x86_64                           1/71
-     Installing       : git-core-2.27.0-1.el8.x86_64                          2/71
-     Installing       : git-core-doc-2.27.0-1.el8.noarch                      3/71
-     Installing       : cpp-8.4.1-1.el8.x86_64                                4/71
-     Running scriptlet: cpp-8.4.1-1.el8.x86_64                                4/71
-     Installing       : perl-Digest-1.17-395.el8.noarch                       5/71
-     Installing       : perl-Digest-MD5-2.55-396.el8.x86_64                   6/71
-     Installing       : perl-Data-Dumper-2.167-399.el8.x86_64                 7/71
-     Installing       : perl-libnet-3.11-3.el8.noarch                         8/71
-     Installing       : perl-Net-SSLeay-1.88-1.module_el8.3.0+410+ff426aa3    9/71
-     Installing       : perl-URI-1.73-3.el8.noarch                           10/71
-     Installing       : perl-Pod-Escapes-1:1.07-395.el8.noarch               11/71
-     Installing       : perl-Mozilla-CA-20160104-7.module_el8.3.0+416+dee7   12/71
-     Installing       : perl-IO-Socket-IP-0.39-5.el8.noarch                  13/71
-     Installing       : perl-Time-Local-1:1.280-1.el8.noarch                 14/71
-     Installing       : perl-IO-Socket-SSL-2.066-4.module_el8.3.0+410+ff42   15/71
-     Installing       : perl-Term-ANSIColor-4.06-396.el8.noarch              16/71
-     Installing       : perl-Term-Cap-1.17-395.el8.noarch                    17/71
-     Installing       : perl-File-Temp-0.230.600-1.el8.noarch                18/71
-     Installing       : perl-Pod-Simple-1:3.35-395.el8.noarch                19/71
-     Installing       : perl-HTTP-Tiny-0.074-1.el8.noarch                    20/71
-     Installing       : perl-podlators-4.11-1.el8.noarch                     21/71
-     Installing       : perl-Pod-Perldoc-3.28-396.el8.noarch                 22/71
-     Installing       : perl-Text-ParseWords-3.30-395.el8.noarch             23/71
-     Installing       : perl-Pod-Usage-4:1.69-395.el8.noarch                 24/71
-     Installing       : perl-MIME-Base64-3.15-396.el8.x86_64                 25/71
-     Installing       : perl-Storable-1:3.11-3.el8.x86_64                    26/71
-     Installing       : perl-Getopt-Long-1:2.50-4.el8.noarch                 27/71
-     Installing       : perl-Errno-1.28-419.el8.x86_64                       28/71
-     Installing       : perl-Socket-4:2.027-3.el8.x86_64                     29/71
-     Installing       : perl-Encode-4:2.97-3.el8.x86_64                      30/71
-     Installing       : perl-Carp-1.42-396.el8.noarch                        31/71
-     Installing       : perl-Exporter-5.72-396.el8.noarch                    32/71
-     Installing       : perl-libs-4:5.26.3-419.el8.x86_64                    33/71
-     Installing       : perl-Scalar-List-Utils-3:1.49-2.el8.x86_64           34/71
-     Installing       : perl-parent-1:0.237-1.el8.noarch                     35/71
-     Installing       : perl-macros-4:5.26.3-419.el8.x86_64                  36/71
-     Installing       : perl-Text-Tabs+Wrap-2013.0523-395.el8.noarch         37/71
-     Installing       : perl-Unicode-Normalize-1.25-396.el8.x86_64           38/71
-     Installing       : perl-File-Path-2.15-2.el8.noarch                     39/71
-     Installing       : perl-IO-1.38-419.el8.x86_64                          40/71
-     Installing       : perl-PathTools-3.74-1.el8.x86_64                     41/71
-     Installing       : perl-constant-1.33-396.el8.noarch                    42/71
-     Installing       : perl-threads-1:2.21-2.el8.x86_64                     43/71
-     Installing       : perl-threads-shared-1.58-2.el8.x86_64                44/71
-     Installing       : perl-interpreter-4:5.26.3-419.el8.x86_64             45/71
-     Installing       : perl-Error-1:0.17025-2.el8.noarch                    46/71
-     Installing       : perl-TermReadKey-2.37-7.el8.x86_64                   47/71
-     Installing       : python3-setuptools-39.2.0-6.el8.noarch               48/71
-     Installing       : python36-3.6.8-2.module_el8.4.0+790+083e3d81.x86_6   49/71
-     Running scriptlet: python36-3.6.8-2.module_el8.4.0+790+083e3d81.x86_6   49/71
-     Installing       : python3-pip-9.0.3-19.el8.noarch                      50/71
-     Installing       : pkgconf-m4-1.4.2-1.el8.noarch                        51/71
-     Installing       : libpkgconf-1.4.2-1.el8.x86_64                        52/71
-     Installing       : pkgconf-1.4.2-1.el8.x86_64                           53/71
-     Installing       : pkgconf-pkg-config-1.4.2-1.el8.x86_64                54/71
-     Installing       : kernel-headers-4.18.0-305.10.2.el8_4.x86_64          55/71
-     Running scriptlet: glibc-headers-2.28-151.el8.x86_64                    56/71
-     Installing       : glibc-headers-2.28-151.el8.x86_64                    56/71
-     Installing       : libxcrypt-devel-4.1.1-4.el8.x86_64                   57/71
-     Installing       : glibc-devel-2.28-151.el8.x86_64                      58/71
-     Running scriptlet: glibc-devel-2.28-151.el8.x86_64                      58/71
-     Installing       : emacs-filesystem-1:26.1-5.el8.noarch                 59/71
-     Installing       : perl-Git-2.27.0-1.el8.noarch                         60/71
-     Installing       : git-2.27.0-1.el8.x86_64                              61/71
-     Installing       : cyrus-sasl-gssapi-2.1.27-5.el8.x86_64                62/71
-     Running scriptlet: cyrus-sasl-2.1.27-5.el8.x86_64                       63/71
-     Installing       : cyrus-sasl-2.1.27-5.el8.x86_64                       63/71
-     Running scriptlet: cyrus-sasl-2.1.27-5.el8.x86_64                       63/71
-     Installing       : binutils-2.30-93.el8.x86_64                          64/71
-     Running scriptlet: binutils-2.30-93.el8.x86_64                          64/71
-     Installing       : yajl-2.1.0-10.el8.x86_64                             65/71
-     Installing       : libvirt-libs-6.0.0-35.module_el8.4.0+783+f8734d30.   66/71
-     Running scriptlet: libvirt-libs-6.0.0-35.module_el8.4.0+783+f8734d30.   66/71
-     Installing       : isl-0.16.1-6.el8.x86_64                              67/71
-     Running scriptlet: isl-0.16.1-6.el8.x86_64                              67/71
-     Installing       : gcc-8.4.1-1.el8.x86_64                               68/71
-     Running scriptlet: gcc-8.4.1-1.el8.x86_64                               68/71
-     Installing       : libvirt-devel-6.0.0-35.module_el8.4.0+783+f8734d30   69/71
-     Installing       : python3-libvirt-6.0.0-1.module_el8.4.0+547+a85d02b   70/71
-     Installing       : python3-netifaces-0.10.6-4.el8.x86_64                71/71
-     Running scriptlet: python3-netifaces-0.10.6-4.el8.x86_64                71/71
-     Verifying        : cpp-8.4.1-1.el8.x86_64                                1/71
-     Verifying        : gcc-8.4.1-1.el8.x86_64                                2/71
-     Verifying        : git-2.27.0-1.el8.x86_64                               3/71
-     Verifying        : git-core-2.27.0-1.el8.x86_64                          4/71
-     Verifying        : git-core-doc-2.27.0-1.el8.noarch                      5/71
-     Verifying        : isl-0.16.1-6.el8.x86_64                               6/71
-     Verifying        : libmpc-1.1.0-9.1.el8.x86_64                           7/71
-     Verifying        : libvirt-devel-6.0.0-35.module_el8.4.0+783+f8734d30    8/71
-     Verifying        : libvirt-libs-6.0.0-35.module_el8.4.0+783+f8734d30.    9/71
-     Verifying        : perl-Digest-1.17-395.el8.noarch                      10/71
-     Verifying        : perl-Digest-MD5-2.55-396.el8.x86_64                  11/71
-     Verifying        : perl-Error-1:0.17025-2.el8.noarch                    12/71
-     Verifying        : perl-Git-2.27.0-1.el8.noarch                         13/71
-     Verifying        : perl-IO-Socket-IP-0.39-5.el8.noarch                  14/71
-     Verifying        : perl-IO-Socket-SSL-2.066-4.module_el8.3.0+410+ff42   15/71
-     Verifying        : perl-Mozilla-CA-20160104-7.module_el8.3.0+416+dee7   16/71
-     Verifying        : perl-Net-SSLeay-1.88-1.module_el8.3.0+410+ff426aa3   17/71
-     Verifying        : perl-TermReadKey-2.37-7.el8.x86_64                   18/71
-     Verifying        : perl-URI-1.73-3.el8.noarch                           19/71
-     Verifying        : perl-libnet-3.11-3.el8.noarch                        20/71
-     Verifying        : python3-libvirt-6.0.0-1.module_el8.4.0+547+a85d02b   21/71
-     Verifying        : python3-netifaces-0.10.6-4.el8.x86_64                22/71
-     Verifying        : python3-pip-9.0.3-19.el8.noarch                      23/71
-     Verifying        : python36-3.6.8-2.module_el8.4.0+790+083e3d81.x86_6   24/71
-     Verifying        : yajl-2.1.0-10.el8.x86_64                             25/71
-     Verifying        : binutils-2.30-93.el8.x86_64                          26/71
-     Verifying        : cyrus-sasl-2.1.27-5.el8.x86_64                       27/71
-     Verifying        : cyrus-sasl-gssapi-2.1.27-5.el8.x86_64                28/71
-     Verifying        : emacs-filesystem-1:26.1-5.el8.noarch                 29/71
-     Verifying        : glibc-devel-2.28-151.el8.x86_64                      30/71
-     Verifying        : glibc-headers-2.28-151.el8.x86_64                    31/71
-     Verifying        : kernel-headers-4.18.0-305.10.2.el8_4.x86_64          32/71
-     Verifying        : libpkgconf-1.4.2-1.el8.x86_64                        33/71
-     Verifying        : libxcrypt-devel-4.1.1-4.el8.x86_64                   34/71
-     Verifying        : perl-Carp-1.42-396.el8.noarch                        35/71
-     Verifying        : perl-Data-Dumper-2.167-399.el8.x86_64                36/71
-     Verifying        : perl-Encode-4:2.97-3.el8.x86_64                      37/71
-     Verifying        : perl-Errno-1.28-419.el8.x86_64                       38/71
-     Verifying        : perl-Exporter-5.72-396.el8.noarch                    39/71
-     Verifying        : perl-File-Path-2.15-2.el8.noarch                     40/71
-     Verifying        : perl-File-Temp-0.230.600-1.el8.noarch                41/71
-     Verifying        : perl-Getopt-Long-1:2.50-4.el8.noarch                 42/71
-     Verifying        : perl-HTTP-Tiny-0.074-1.el8.noarch                    43/71
-     Verifying        : perl-IO-1.38-419.el8.x86_64                          44/71
-     Verifying        : perl-MIME-Base64-3.15-396.el8.x86_64                 45/71
-     Verifying        : perl-PathTools-3.74-1.el8.x86_64                     46/71
-     Verifying        : perl-Pod-Escapes-1:1.07-395.el8.noarch               47/71
-     Verifying        : perl-Pod-Perldoc-3.28-396.el8.noarch                 48/71
-     Verifying        : perl-Pod-Simple-1:3.35-395.el8.noarch                49/71
-     Verifying        : perl-Pod-Usage-4:1.69-395.el8.noarch                 50/71
-     Verifying        : perl-Scalar-List-Utils-3:1.49-2.el8.x86_64           51/71
-     Verifying        : perl-Socket-4:2.027-3.el8.x86_64                     52/71
-     Verifying        : perl-Storable-1:3.11-3.el8.x86_64                    53/71
-     Verifying        : perl-Term-ANSIColor-4.06-396.el8.noarch              54/71
-     Verifying        : perl-Term-Cap-1.17-395.el8.noarch                    55/71
-     Verifying        : perl-Text-ParseWords-3.30-395.el8.noarch             56/71
-     Verifying        : perl-Text-Tabs+Wrap-2013.0523-395.el8.noarch         57/71
-     Verifying        : perl-Time-Local-1:1.280-1.el8.noarch                 58/71
-     Verifying        : perl-Unicode-Normalize-1.25-396.el8.x86_64           59/71
-     Verifying        : perl-constant-1.33-396.el8.noarch                    60/71
-     Verifying        : perl-interpreter-4:5.26.3-419.el8.x86_64             61/71
-     Verifying        : perl-libs-4:5.26.3-419.el8.x86_64                    62/71
-     Verifying        : perl-macros-4:5.26.3-419.el8.x86_64                  63/71
-     Verifying        : perl-parent-1:0.237-1.el8.noarch                     64/71
-     Verifying        : perl-podlators-4.11-1.el8.noarch                     65/71
-     Verifying        : perl-threads-1:2.21-2.el8.x86_64                     66/71
-     Verifying        : perl-threads-shared-1.58-2.el8.x86_64                67/71
-     Verifying        : pkgconf-1.4.2-1.el8.x86_64                           68/71
-     Verifying        : pkgconf-m4-1.4.2-1.el8.noarch                        69/71
-     Verifying        : pkgconf-pkg-config-1.4.2-1.el8.x86_64                70/71
-     Verifying        : python3-setuptools-39.2.0-6.el8.noarch               71/71
+     Upgrading        : libgcc-8.5.0-17.el8.x86_64                            1/77
+     Running scriptlet: libgcc-8.5.0-17.el8.x86_64                            1/77
+     Upgrading        : chkconfig-1.19.1-1.el8.x86_64                         2/77
+     Installing       : libmpc-1.1.0-9.1.el8.x86_64                           3/77
+     Installing       : git-core-2.31.1-2.el8.x86_64                          4/77
+     Installing       : git-core-doc-2.31.1-2.el8.noarch                      5/77
+     Installing       : cpp-8.5.0-17.el8.x86_64                               6/77
+     Running scriptlet: cpp-8.5.0-17.el8.x86_64                               6/77
+     Installing       : binutils-2.30-119.el8.x86_64                          7/77
+     Running scriptlet: binutils-2.30-119.el8.x86_64                          7/77
+     Running scriptlet: cyrus-sasl-2.1.27-5.el8.x86_64                        8/77
+     Installing       : cyrus-sasl-2.1.27-5.el8.x86_64                        8/77
+     Running scriptlet: cyrus-sasl-2.1.27-5.el8.x86_64                        8/77
+     Installing       : perl-Digest-1.17-395.el8.noarch                       9/77
+     Installing       : perl-Digest-MD5-2.55-396.el8.x86_64                  10/77
+     Installing       : perl-Data-Dumper-2.167-399.el8.x86_64                11/77
+     Installing       : perl-libnet-3.11-3.el8.noarch                        12/77
+     Installing       : perl-Net-SSLeay-1.88-1.module_el8.4.0+517+be1595ff   13/77
+     Installing       : perl-URI-1.73-3.el8.noarch                           14/77
+     Installing       : perl-Pod-Escapes-1:1.07-395.el8.noarch               15/77
+     Installing       : perl-Mozilla-CA-20160104-7.module_el8.3.0+416+dee7   16/77
+     Installing       : perl-IO-Socket-IP-0.39-5.el8.noarch                  17/77
+     Installing       : perl-Time-Local-1:1.280-1.el8.noarch                 18/77
+     Installing       : perl-IO-Socket-SSL-2.066-4.module_el8.4.0+517+be15   19/77
+     Installing       : perl-Term-ANSIColor-4.06-396.el8.noarch              20/77
+     Installing       : perl-Term-Cap-1.17-395.el8.noarch                    21/77
+     Installing       : perl-File-Temp-0.230.600-1.el8.noarch                22/77
+     Installing       : perl-Pod-Simple-1:3.35-395.el8.noarch                23/77
+     Installing       : perl-HTTP-Tiny-0.074-1.el8.noarch                    24/77
+     Installing       : perl-podlators-4.11-1.el8.noarch                     25/77
+     Installing       : perl-Pod-Perldoc-3.28-396.el8.noarch                 26/77
+     Installing       : perl-Text-ParseWords-3.30-395.el8.noarch             27/77
+     Installing       : perl-Pod-Usage-4:1.69-395.el8.noarch                 28/77
+     Installing       : perl-MIME-Base64-3.15-396.el8.x86_64                 29/77
+     Installing       : perl-Storable-1:3.11-3.el8.x86_64                    30/77
+     Installing       : perl-Getopt-Long-1:2.50-4.el8.noarch                 31/77
+     Installing       : perl-Errno-1.28-421.el8.x86_64                       32/77
+     Installing       : perl-Socket-4:2.027-3.el8.x86_64                     33/77
+     Installing       : perl-Encode-4:2.97-3.el8.x86_64                      34/77
+     Installing       : perl-Carp-1.42-396.el8.noarch                        35/77
+     Installing       : perl-Exporter-5.72-396.el8.noarch                    36/77
+     Installing       : perl-libs-4:5.26.3-421.el8.x86_64                    37/77
+     Installing       : perl-Scalar-List-Utils-3:1.49-2.el8.x86_64           38/77
+     Installing       : perl-parent-1:0.237-1.el8.noarch                     39/77
+     Installing       : perl-macros-4:5.26.3-421.el8.x86_64                  40/77
+     Installing       : perl-Text-Tabs+Wrap-2013.0523-395.el8.noarch         41/77
+     Installing       : perl-Unicode-Normalize-1.25-396.el8.x86_64           42/77
+     Installing       : perl-File-Path-2.15-2.el8.noarch                     43/77
+     Installing       : perl-IO-1.38-421.el8.x86_64                          44/77
+     Installing       : perl-PathTools-3.74-1.el8.x86_64                     45/77
+     Installing       : perl-constant-1.33-396.el8.noarch                    46/77
+     Installing       : perl-threads-1:2.21-2.el8.x86_64                     47/77
+     Installing       : perl-threads-shared-1.58-2.el8.x86_64                48/77
+     Installing       : perl-interpreter-4:5.26.3-421.el8.x86_64             49/77
+     Installing       : perl-Error-1:0.17025-2.el8.noarch                    50/77
+     Installing       : perl-TermReadKey-2.37-7.el8.x86_64                   51/77
+     Upgrading        : libgomp-8.5.0-17.el8.x86_64                          52/77
+     Running scriptlet: libgomp-8.5.0-17.el8.x86_64                          52/77
+     Installing       : python3-setuptools-39.2.0-6.el8.noarch               53/77
+     Installing       : python36-3.6.8-38.module_el8.5.0+895+a459eca8.x86_   54/77
+     Running scriptlet: python36-3.6.8-38.module_el8.5.0+895+a459eca8.x86_   54/77
+     Installing       : python3-pip-9.0.3-19.el8.noarch                      55/77
+     Installing       : pkgconf-m4-1.4.2-1.el8.noarch                        56/77
+     Installing       : libpkgconf-1.4.2-1.el8.x86_64                        57/77
+     Installing       : pkgconf-1.4.2-1.el8.x86_64                           58/77
+     Installing       : pkgconf-pkg-config-1.4.2-1.el8.x86_64                59/77
+     Installing       : kernel-headers-4.18.0-408.el8.x86_64                 60/77
+     Running scriptlet: glibc-headers-2.28-158.el8.x86_64                    61/77
+     Installing       : glibc-headers-2.28-158.el8.x86_64                    61/77
+     Installing       : libxcrypt-devel-4.1.1-6.el8.x86_64                   62/77
+     Installing       : glibc-devel-2.28-158.el8.x86_64                      63/77
+     Running scriptlet: glibc-devel-2.28-158.el8.x86_64                      63/77
+     Installing       : emacs-filesystem-1:26.1-7.el8.noarch                 64/77
+     Installing       : perl-Git-2.31.1-2.el8.noarch                         65/77
+     Installing       : git-2.31.1-2.el8.x86_64                              66/77
+     Installing       : cyrus-sasl-gssapi-2.1.27-5.el8.x86_64                67/77
+     Installing       : yajl-2.1.0-11.el8.x86_64                             68/77
+     Installing       : libvirt-libs-8.0.0-10.module_el8.7.0+1218+f626c2ff   69/77
+     Installing       : isl-0.16.1-6.el8.x86_64                              70/77
+     Running scriptlet: isl-0.16.1-6.el8.x86_64                              70/77
+     Installing       : gcc-8.5.0-17.el8.x86_64                              71/77
+     Running scriptlet: gcc-8.5.0-17.el8.x86_64                              71/77
+     Installing       : libvirt-devel-8.0.0-10.module_el8.7.0+1218+f626c2f   72/77
+     Installing       : python3-libvirt-8.0.0-2.module_el8.7.0+1218+f626c2   73/77
+     Installing       : python3-netifaces-0.10.6-4.el8.x86_64                74/77
+     Running scriptlet: libgomp-8.5.0-1.el8.x86_64                           75/77
+     Cleanup          : libgomp-8.5.0-1.el8.x86_64                           75/77
+     Running scriptlet: libgomp-8.5.0-1.el8.x86_64                           75/77
+     Cleanup          : libgcc-8.5.0-1.el8.x86_64                            76/77
+     Running scriptlet: libgcc-8.5.0-1.el8.x86_64                            76/77
+     Cleanup          : chkconfig-1.13-2.el8.x86_64                          77/77
+     Running scriptlet: chkconfig-1.13-2.el8.x86_64                          77/77
+     Verifying        : git-2.31.1-2.el8.x86_64                               1/77
+     Verifying        : git-core-2.31.1-2.el8.x86_64                          2/77
+     Verifying        : git-core-doc-2.31.1-2.el8.noarch                      3/77
+     Verifying        : isl-0.16.1-6.el8.x86_64                               4/77
+     Verifying        : libmpc-1.1.0-9.1.el8.x86_64                           5/77
+     Verifying        : libvirt-devel-8.0.0-10.module_el8.7.0+1218+f626c2f    6/77
+     Verifying        : libvirt-libs-8.0.0-10.module_el8.7.0+1218+f626c2ff    7/77
+     Verifying        : perl-Digest-1.17-395.el8.noarch                       8/77
+     Verifying        : perl-Digest-MD5-2.55-396.el8.x86_64                   9/77
+     Verifying        : perl-Error-1:0.17025-2.el8.noarch                    10/77
+     Verifying        : perl-Git-2.31.1-2.el8.noarch                         11/77
+     Verifying        : perl-IO-Socket-IP-0.39-5.el8.noarch                  12/77
+     Verifying        : perl-IO-Socket-SSL-2.066-4.module_el8.4.0+517+be15   13/77
+     Verifying        : perl-Mozilla-CA-20160104-7.module_el8.3.0+416+dee7   14/77
+     Verifying        : perl-Net-SSLeay-1.88-1.module_el8.4.0+517+be1595ff   15/77
+     Verifying        : perl-TermReadKey-2.37-7.el8.x86_64                   16/77
+     Verifying        : perl-URI-1.73-3.el8.noarch                           17/77
+     Verifying        : perl-libnet-3.11-3.el8.noarch                        18/77
+     Verifying        : python3-libvirt-8.0.0-2.module_el8.7.0+1218+f626c2   19/77
+     Verifying        : python3-netifaces-0.10.6-4.el8.x86_64                20/77
+     Verifying        : python3-pip-9.0.3-19.el8.noarch                      21/77
+     Verifying        : python36-3.6.8-38.module_el8.5.0+895+a459eca8.x86_   22/77
+     Verifying        : yajl-2.1.0-11.el8.x86_64                             23/77
+     Verifying        : binutils-2.30-119.el8.x86_64                         24/77
+     Verifying        : cpp-8.5.0-17.el8.x86_64                              25/77
+     Verifying        : cyrus-sasl-2.1.27-5.el8.x86_64                       26/77
+     Verifying        : cyrus-sasl-gssapi-2.1.27-5.el8.x86_64                27/77
+     Verifying        : emacs-filesystem-1:26.1-7.el8.noarch                 28/77
+     Verifying        : gcc-8.5.0-17.el8.x86_64                              29/77
+     Verifying        : glibc-devel-2.28-158.el8.x86_64                      30/77
+     Verifying        : glibc-headers-2.28-158.el8.x86_64                    31/77
+     Verifying        : kernel-headers-4.18.0-408.el8.x86_64                 32/77
+     Verifying        : libpkgconf-1.4.2-1.el8.x86_64                        33/77
+     Verifying        : libxcrypt-devel-4.1.1-6.el8.x86_64                   34/77
+     Verifying        : perl-Carp-1.42-396.el8.noarch                        35/77
+     Verifying        : perl-Data-Dumper-2.167-399.el8.x86_64                36/77
+     Verifying        : perl-Encode-4:2.97-3.el8.x86_64                      37/77
+     Verifying        : perl-Errno-1.28-421.el8.x86_64                       38/77
+     Verifying        : perl-Exporter-5.72-396.el8.noarch                    39/77
+     Verifying        : perl-File-Path-2.15-2.el8.noarch                     40/77
+     Verifying        : perl-File-Temp-0.230.600-1.el8.noarch                41/77
+     Verifying        : perl-Getopt-Long-1:2.50-4.el8.noarch                 42/77
+     Verifying        : perl-HTTP-Tiny-0.074-1.el8.noarch                    43/77
+     Verifying        : perl-IO-1.38-421.el8.x86_64                          44/77
+     Verifying        : perl-MIME-Base64-3.15-396.el8.x86_64                 45/77
+     Verifying        : perl-PathTools-3.74-1.el8.x86_64                     46/77
+     Verifying        : perl-Pod-Escapes-1:1.07-395.el8.noarch               47/77
+     Verifying        : perl-Pod-Perldoc-3.28-396.el8.noarch                 48/77
+     Verifying        : perl-Pod-Simple-1:3.35-395.el8.noarch                49/77
+     Verifying        : perl-Pod-Usage-4:1.69-395.el8.noarch                 50/77
+     Verifying        : perl-Scalar-List-Utils-3:1.49-2.el8.x86_64           51/77
+     Verifying        : perl-Socket-4:2.027-3.el8.x86_64                     52/77
+     Verifying        : perl-Storable-1:3.11-3.el8.x86_64                    53/77
+     Verifying        : perl-Term-ANSIColor-4.06-396.el8.noarch              54/77
+     Verifying        : perl-Term-Cap-1.17-395.el8.noarch                    55/77
+     Verifying        : perl-Text-ParseWords-3.30-395.el8.noarch             56/77
+     Verifying        : perl-Text-Tabs+Wrap-2013.0523-395.el8.noarch         57/77
+     Verifying        : perl-Time-Local-1:1.280-1.el8.noarch                 58/77
+     Verifying        : perl-Unicode-Normalize-1.25-396.el8.x86_64           59/77
+     Verifying        : perl-constant-1.33-396.el8.noarch                    60/77
+     Verifying        : perl-interpreter-4:5.26.3-421.el8.x86_64             61/77
+     Verifying        : perl-libs-4:5.26.3-421.el8.x86_64                    62/77
+     Verifying        : perl-macros-4:5.26.3-421.el8.x86_64                  63/77
+     Verifying        : perl-parent-1:0.237-1.el8.noarch                     64/77
+     Verifying        : perl-podlators-4.11-1.el8.noarch                     65/77
+     Verifying        : perl-threads-1:2.21-2.el8.x86_64                     66/77
+     Verifying        : perl-threads-shared-1.58-2.el8.x86_64                67/77
+     Verifying        : pkgconf-1.4.2-1.el8.x86_64                           68/77
+     Verifying        : pkgconf-m4-1.4.2-1.el8.noarch                        69/77
+     Verifying        : pkgconf-pkg-config-1.4.2-1.el8.x86_64                70/77
+     Verifying        : python3-setuptools-39.2.0-6.el8.noarch               71/77
+     Verifying        : chkconfig-1.19.1-1.el8.x86_64                        72/77
+     Verifying        : chkconfig-1.13-2.el8.x86_64                          73/77
+     Verifying        : libgcc-8.5.0-17.el8.x86_64                           74/77
+     Verifying        : libgcc-8.5.0-1.el8.x86_64                            75/77
+     Verifying        : libgomp-8.5.0-17.el8.x86_64                          76/77
+     Verifying        : libgomp-8.5.0-1.el8.x86_64                           77/77
 
+   Upgraded:
+     chkconfig-1.19.1-1.el8.x86_64            libgcc-8.5.0-17.el8.x86_64
+     libgomp-8.5.0-17.el8.x86_64
    Installed:
-     binutils-2.30-93.el8.x86_64
-     cpp-8.4.1-1.el8.x86_64
+     binutils-2.30-119.el8.x86_64
+     cpp-8.5.0-17.el8.x86_64
      cyrus-sasl-2.1.27-5.el8.x86_64
      cyrus-sasl-gssapi-2.1.27-5.el8.x86_64
-     emacs-filesystem-1:26.1-5.el8.noarch
-     gcc-8.4.1-1.el8.x86_64
-     git-2.27.0-1.el8.x86_64
-     git-core-2.27.0-1.el8.x86_64
-     git-core-doc-2.27.0-1.el8.noarch
-     glibc-devel-2.28-151.el8.x86_64
-     glibc-headers-2.28-151.el8.x86_64
+     emacs-filesystem-1:26.1-7.el8.noarch
+     gcc-8.5.0-17.el8.x86_64
+     git-2.31.1-2.el8.x86_64
+     git-core-2.31.1-2.el8.x86_64
+     git-core-doc-2.31.1-2.el8.noarch
+     glibc-devel-2.28-158.el8.x86_64
+     glibc-headers-2.28-158.el8.x86_64
      isl-0.16.1-6.el8.x86_64
-     kernel-headers-4.18.0-305.10.2.el8_4.x86_64
+     kernel-headers-4.18.0-408.el8.x86_64
      libmpc-1.1.0-9.1.el8.x86_64
      libpkgconf-1.4.2-1.el8.x86_64
-     libvirt-devel-6.0.0-35.module_el8.4.0+783+f8734d30.x86_64
-     libvirt-libs-6.0.0-35.module_el8.4.0+783+f8734d30.x86_64
-     libxcrypt-devel-4.1.1-4.el8.x86_64
+     libvirt-devel-8.0.0-10.module_el8.7.0+1218+f626c2ff.x86_64
+     libvirt-libs-8.0.0-10.module_el8.7.0+1218+f626c2ff.x86_64
+     libxcrypt-devel-4.1.1-6.el8.x86_64
      perl-Carp-1.42-396.el8.noarch
      perl-Data-Dumper-2.167-399.el8.x86_64
      perl-Digest-1.17-395.el8.noarch
      perl-Digest-MD5-2.55-396.el8.x86_64
      perl-Encode-4:2.97-3.el8.x86_64
-     perl-Errno-1.28-419.el8.x86_64
+     perl-Errno-1.28-421.el8.x86_64
      perl-Error-1:0.17025-2.el8.noarch
      perl-Exporter-5.72-396.el8.noarch
      perl-File-Path-2.15-2.el8.noarch
      perl-File-Temp-0.230.600-1.el8.noarch
      perl-Getopt-Long-1:2.50-4.el8.noarch
-     perl-Git-2.27.0-1.el8.noarch
+     perl-Git-2.31.1-2.el8.noarch
      perl-HTTP-Tiny-0.074-1.el8.noarch
-     perl-IO-1.38-419.el8.x86_64
+     perl-IO-1.38-421.el8.x86_64
      perl-IO-Socket-IP-0.39-5.el8.noarch
-     perl-IO-Socket-SSL-2.066-4.module_el8.3.0+410+ff426aa3.noarch
+     perl-IO-Socket-SSL-2.066-4.module_el8.4.0+517+be1595ff.noarch
      perl-MIME-Base64-3.15-396.el8.x86_64
      perl-Mozilla-CA-20160104-7.module_el8.3.0+416+dee7bcef.noarch
-     perl-Net-SSLeay-1.88-1.module_el8.3.0+410+ff426aa3.x86_64
+     perl-Net-SSLeay-1.88-1.module_el8.4.0+517+be1595ff.x86_64
      perl-PathTools-3.74-1.el8.x86_64
      perl-Pod-Escapes-1:1.07-395.el8.noarch
      perl-Pod-Perldoc-3.28-396.el8.noarch
@@ -553,10 +582,10 @@ Expected Output
      perl-URI-1.73-3.el8.noarch
      perl-Unicode-Normalize-1.25-396.el8.x86_64
      perl-constant-1.33-396.el8.noarch
-     perl-interpreter-4:5.26.3-419.el8.x86_64
+     perl-interpreter-4:5.26.3-421.el8.x86_64
      perl-libnet-3.11-3.el8.noarch
-     perl-libs-4:5.26.3-419.el8.x86_64
-     perl-macros-4:5.26.3-419.el8.x86_64
+     perl-libs-4:5.26.3-421.el8.x86_64
+     perl-macros-4:5.26.3-421.el8.x86_64
      perl-parent-1:0.237-1.el8.noarch
      perl-podlators-4.11-1.el8.noarch
      perl-threads-1:2.21-2.el8.x86_64
@@ -564,47 +593,88 @@ Expected Output
      pkgconf-1.4.2-1.el8.x86_64
      pkgconf-m4-1.4.2-1.el8.noarch
      pkgconf-pkg-config-1.4.2-1.el8.x86_64
-     python3-libvirt-6.0.0-1.module_el8.4.0+547+a85d02ba.x86_64
+     python3-libvirt-8.0.0-2.module_el8.7.0+1218+f626c2ff.x86_64
      python3-netifaces-0.10.6-4.el8.x86_64
      python3-pip-9.0.3-19.el8.noarch
      python3-setuptools-39.2.0-6.el8.noarch
-     python36-3.6.8-2.module_el8.4.0+790+083e3d81.x86_64
-     yajl-2.1.0-10.el8.x86_64
+     python36-3.6.8-38.module_el8.5.0+895+a459eca8.x86_64
+     yajl-2.1.0-11.el8.x86_64
 
    Complete!
-   WARNING: Running pip install with root privileges is generally not a good idea. Try `pip3 install --user` instead.
-   Collecting sushy-tools
-     Downloading https://files.pythonhosted.org/packages/78/43/4e9727a76c9133d448b66018e3aad60c5c241bf370f7e7827bd82f8f7b5c/sushy_tools-0.17.0-py3-none-any.whl (96kB)
-   Collecting tenacity>=6.2.0 (from sushy-tools)
-     Downloading https://files.pythonhosted.org/packages/f2/a5/f86bc8d67c979020438c8559cc70cfe3a1643fd160d35e09c9cca6a09189/tenacity-8.0.1-py3-none-any.whl
-   Collecting Flask>=1.0.2 (from sushy-tools)
-     Downloading https://files.pythonhosted.org/packages/54/4f/1b294c1a4ab7b2ad5ca5fc4a9a65a22ef1ac48be126289d97668852d4ab3/Flask-2.0.1-py3-none-any.whl (94kB)
-   Collecting pbr!=2.1.0,>=2.0.0 (from sushy-tools)
-     Downloading https://files.pythonhosted.org/packages/18/e0/1d4702dd81121d04a477c272d47ee5b6bc970d1a0990b11befa275c55cf2/pbr-5.6.0-py2.py3-none-any.whl (111kB)
-   Requirement already satisfied: requests>=2.14.2 in /usr/lib/python3.6/site-packages (from sushy-tools)
-   Collecting Werkzeug>=2.0 (from Flask>=1.0.2->sushy-tools)
-     Downloading https://files.pythonhosted.org/packages/bd/24/11c3ea5a7e866bf2d97f0501d0b4b1c9bbeade102bb4b588f0d2919a5212/Werkzeug-2.0.1-py3-none-any.whl (288kB)
-   Collecting click>=7.1.2 (from Flask>=1.0.2->sushy-tools)
-     Downloading https://files.pythonhosted.org/packages/76/0a/b6c5f311e32aeb3b406e03c079ade51e905ea630fc19d1262a46249c1c86/click-8.0.1-py3-none-any.whl (97kB)
-   Collecting Jinja2>=3.0 (from Flask>=1.0.2->sushy-tools)
-     Downloading https://files.pythonhosted.org/packages/80/21/ae597efc7ed8caaa43fb35062288baaf99a7d43ff0cf66452ddf47604ee6/Jinja2-3.0.1-py3-none-any.whl (133kB)
-   Collecting itsdangerous>=2.0 (from Flask>=1.0.2->sushy-tools)
-     Downloading https://files.pythonhosted.org/packages/9c/96/26f935afba9cd6140216da5add223a0c465b99d0f112b68a4ca426441019/itsdangerous-2.0.1-py3-none-any.whl
-   Requirement already satisfied: chardet<3.1.0,>=3.0.2 in /usr/lib/python3.6/site-packages (from requests>=2.14.2->sushy-tools)
-   Requirement already satisfied: idna<2.8,>=2.5 in /usr/lib/python3.6/site-packages (from requests>=2.14.2->sushy-tools)
-   Requirement already satisfied: urllib3<1.25,>=1.21.1 in /usr/lib/python3.6/site-packages (from requests>=2.14.2->sushy-tools)
-   Collecting dataclasses; python_version < "3.7" (from Werkzeug>=2.0->Flask>=1.0.2->sushy-tools)
-     Downloading https://files.pythonhosted.org/packages/fe/ca/75fac5856ab5cfa51bbbcefa250182e50441074fdc3f803f6e76451fab43/dataclasses-0.8-py3-none-any.whl
-   Collecting importlib-metadata; python_version < "3.8" (from click>=7.1.2->Flask>=1.0.2->sushy-tools)
-     Downloading https://files.pythonhosted.org/packages/07/76/c4674c460f5ff4b5f7a962214e46295e20504dfde9fcba78fd728dfe2ac9/importlib_metadata-4.6.3-py3-none-any.whl
-   Collecting MarkupSafe>=2.0 (from Jinja2>=3.0->Flask>=1.0.2->sushy-tools)
-     Downloading https://files.pythonhosted.org/packages/fc/d6/57f9a97e56447a1e340f8574836d3b636e2c14de304943836bd645fa9c7e/MarkupSafe-2.0.1-cp36-cp36m-manylinux1_x86_64.whl
-   Collecting typing-extensions>=3.6.4; python_version < "3.8" (from importlib-metadata; python_version < "3.8"->click>=7.1.2->Flask>=1.0.2->sushy-tools)
-     Downloading https://files.pythonhosted.org/packages/2e/35/6c4fff5ab443b57116cb1aad46421fb719bed2825664e8fe77d66d99bcbc/typing_extensions-3.10.0.0-py3-none-any.whl
-   Collecting zipp>=0.5 (from importlib-metadata; python_version < "3.8"->click>=7.1.2->Flask>=1.0.2->sushy-tools)
-     Downloading https://files.pythonhosted.org/packages/92/d9/89f433969fb8dc5b9cbdd4b4deb587720ec1aeb59a020cf15002b9593eef/zipp-3.5.0-py3-none-any.whl
-   Installing collected packages: tenacity, dataclasses, Werkzeug, typing-extensions, zipp, importlib-metadata, click, MarkupSafe, Jinja2, itsdangerous, Flask, pbr, sushy-tools
-   Successfully installed Flask-2.0.1 Jinja2-3.0.1 MarkupSafe-2.0.1 Werkzeug-2.0.1 click-8.0.1 dataclasses-0.8 importlib-metadata-4.6.3 itsdangerous-2.0.1 pbr-5.6.0 sushy-tools-0.17.0 tenacity-8.0.1 typing-extensions-3.10.0.0 zipp-3.5.0
+   Repository successfully enabled.
+   Enabling a Copr repository. Please note that this repository is not part
+   of the main distribution, and quality may vary.
+
+   The Fedora Project does not exercise any power over the contents of
+   this repository beyond the rules outlined in the Copr FAQ at
+   <https://docs.pagure.org/copr.copr/user_documentation.html#what-i-can-build-in-copr>,
+   and packages are not held to any quality or security level.
+
+   Please do not file bug reports about these packages in Fedora
+   Bugzilla. In case of problems, contact the owner of this repository.
+   Copr repo for kcli owned by karmab              650 kB/s | 460 kB     00:00
+   Dependencies resolved.
+   ======================================================================================================================
+    Package               Arch    Version                               Repository                                   Size
+   ======================================================================================================================
+   Installing:
+    kcli                  x86_64  99.0.0.git.202212221141.5db1259-0.el8 copr:copr.fedorainfracloud.org:karmab:kcli  1.5 M
+   Installing dependencies:
+    genisoimage           x86_64  1.1.11-39.el8                         appstream                                   316 k
+    libusal               x86_64  1.1.11-39.el8                         appstream                                   145 k
+    nmap-ncat             x86_64  2:7.70-8.el8                          appstream                                   237 k
+    python3-argcomplete   noarch  1.9.3-6.el8                           appstream                                    60 k
+
+   Transaction Summary
+   ======================================================================================================================
+   Install  5 Packages
+
+   Total download size: 2.2 M
+   Installed size: 7.9 M
+   Downloading Packages:
+   (1/5): libusal-1.1.11-39.el8.x86_64.rpm         719 kB/s | 145 kB     00:00
+   (2/5): nmap-ncat-7.70-8.el8.x86_64.rpm          1.1 MB/s | 237 kB     00:00
+   (3/5): genisoimage-1.1.11-39.el8.x86_64.rpm     1.4 MB/s | 316 kB     00:00
+   (4/5): python3-argcomplete-1.9.3-6.el8.noarch.r 1.3 MB/s |  60 kB     00:00
+   (5/5): kcli-99.0.0.git.202212221141.5db1259-0.e 3.1 MB/s | 1.5 MB     00:00
+   --------------------------------------------------------------------------------
+   Total                                           2.3 MB/s | 2.2 MB     00:00
+   warning: /var/cache/dnf/copr:copr.fedorainfracloud.org:karmab:kcli-6ab16b9905451db5/packages/kcli-99.0.0.git.202212221141.5db1259-0.el8.x86_64.rpm: Header V4 RSA/SHA256 Signature, key ID b99058cd: NOKEY
+   Copr repo for kcli owned by karmab              3.3 kB/s | 989  B     00:00
+   Importing GPG key 0xB99058CD:
+    Userid     : "karmab_kcli (None) <karmab#kcli@copr.fedorahosted.org>"
+    Fingerprint: E6AD 39AD 8660 3916 68EB 0AC2 D8C8 4386 B990 58CD
+    From       : https://download.copr.fedorainfracloud.org/results/karmab/kcli/pubkey.gpg
+   Key imported successfully
+   Running transaction check
+   Transaction check succeeded.
+   Running transaction test
+   Transaction test succeeded.
+   Running transaction
+     Preparing        :                                                        1/1
+     Installing       : python3-argcomplete-1.9.3-6.el8.noarch                 1/5
+     Installing       : nmap-ncat-2:7.70-8.el8.x86_64                          2/5
+     Running scriptlet: nmap-ncat-2:7.70-8.el8.x86_64                          2/5
+     Installing       : libusal-1.1.11-39.el8.x86_64                           3/5
+     Running scriptlet: libusal-1.1.11-39.el8.x86_64                           3/5
+     Installing       : genisoimage-1.1.11-39.el8.x86_64                       4/5
+     Running scriptlet: genisoimage-1.1.11-39.el8.x86_64                       4/5
+     Installing       : kcli-99.0.0.git.202212221141.5db1259-0.el8.x86_64      5/5
+     Running scriptlet: kcli-99.0.0.git.202212221141.5db1259-0.el8.x86_64      5/5
+     Verifying        : genisoimage-1.1.11-39.el8.x86_64                       1/5
+     Verifying        : libusal-1.1.11-39.el8.x86_64                           2/5
+     Verifying        : nmap-ncat-2:7.70-8.el8.x86_64                          3/5
+     Verifying        : python3-argcomplete-1.9.3-6.el8.noarch                 4/5
+     Verifying        : kcli-99.0.0.git.202212221141.5db1259-0.el8.x86_64      5/5
+
+   Installed:
+     genisoimage-1.1.11-39.el8.x86_64
+     kcli-99.0.0.git.202212221141.5db1259-0.el8.x86_64
+     libusal-1.1.11-39.el8.x86_64
+     nmap-ncat-2:7.70-8.el8.x86_64
+     python3-argcomplete-1.9.3-6.el8.noarch
+
+   Complete!
    The unit files have no installation config (WantedBy, RequiredBy, Also, Alias
    settings in the [Install] section, and DefaultInstance for template units).
    This means they are not meant to be enabled using systemctl.
@@ -617,24 +687,23 @@ Expected Output
       D-Bus, udev, scripted systemctl call, ...).
    4) In case of template units, the unit is meant to be enabled with some
       instance name specified.
-   # 192.168.1.6:22 SSH-2.0-OpenSSH_8.0
-   # 192.168.1.6:22 SSH-2.0-OpenSSH_8.0
-   # 192.168.1.6:22 SSH-2.0-OpenSSH_8.0
+   # 2620:52:0:1302::1:22 SSH-2.0-OpenSSH_8.0
+   # 2620:52:0:1302::1:22 SSH-2.0-OpenSSH_8.0
+   # 2620:52:0:1302::1:22 SSH-2.0-OpenSSH_8.0
 
 This script performs the following tasks:
 
 -  Install libvirt requirements as needed by the installer.
--  Installl sushy-tools and enable the corresponding service
--  Launch an helper script which gathers the uuids of the master vms as it’s what’s needed to create their redfish addresses
--  Patch accordingly install-config.yaml.
+-  Installl kcli so that ksushy gets installed and enable the corresponding service
+-  Patch the install-config.yaml so that the ip of the installer is used to reach said service
 
-Sushy Emulator allows us to manage those virtual masters as if they were physical nodes through Redfish protocol.
+Ksushy allows us to manage those virtual nodes as if they were physical through Redfish protocol.
 
 For instance, we can check all the redfish information of our first master:
 
 ::
 
-   REDFISH_ADDRESS=$(grep -m 1 redfish-virtualmedia /root/install-config.yaml | sed 's/        address: redfish-virtualmedia+//')
+   REDFISH_ADDRESS=$(grep -m 1 redfish-virtualmedia /root/install-config.yaml | sed 's/address: redfish-virtualmedia/http/')
    curl $REDFISH_ADDRESS
 
 Expected Output

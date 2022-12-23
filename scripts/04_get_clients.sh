@@ -17,7 +17,6 @@ chmod +x /usr/bin/oc
 curl -L https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl > /usr/bin/kubectl
 chmod u+x /usr/bin/kubectl
 
-{% if not build %}
 export PULL_SECRET="/root/openshift_pull.json"
 {% if version in ['nightly', 'stable'] %}
 {% set tag = tag|string %}
@@ -36,7 +35,6 @@ export OPENSHIFT_RELEASE_IMAGE={{ openshift_image or "registry.ci.openshift.org/
 oc adm release extract --registry-config $PULL_SECRET --command=oc --to /tmp $OPENSHIFT_RELEASE_IMAGE
 mv /tmp/oc /root/bin
 oc adm release extract --registry-config $PULL_SECRET --command=openshift-baremetal-install --to /root/bin $OPENSHIFT_RELEASE_IMAGE
-{% endif %}
 echo $OPENSHIFT_RELEASE_IMAGE > /root/version.txt
 
 curl -s -L https://github.com/itaysk/kubectl-neat/releases/download/v2.0.3/kubectl-neat_linux_amd64.tar.gz | tar xvz -C /usr/bin/

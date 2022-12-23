@@ -15,15 +15,9 @@ memory: 32768
 disk_size: 30
 disk_interface: scsi
 extra_disks: []
-provisioning_enable: false
 baremetal_bootstrap_mac:
-provisioning_bootstrap_mac:
-provisioning_interface: eno1
-provisioning_net: provisioning
-provisioning_macs: []
 baremetal_net: baremetal
 baremetal_cidr:
-provisioning_cidr: 172.22.0.0/24
 baremetal_macs: []
 baremetal_ips: []
 virtual_protocol: ipmi
