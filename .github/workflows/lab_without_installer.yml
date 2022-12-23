@@ -61,28 +61,13 @@ jobs:
        - name: Deploy infra
          run: kcli create plan --force -f kcli_plan_infra.yml --paramfile $INFRAPARAMFILE $PLAN
 
-    install-redfish:
+    install-sushy:
       needs: deploy-infra-plan
       runs-on: ${{github.event.inputs.RUNNER}}
       steps:
-       - name: Render sushy
-         run: kcli render -f helpers/sushy.conf --paramfile $INFRAPARAMFILE > /etc/sushy.conf
-       - name: Install redfish
+       - name: Install sushy service
          run: |
-           pip3 install sushy-tools
-           cp -f helpers/sushy.service /usr/lib/systemd/system
-           ### temp hack ###
-           sed -i 's@8000@80@' /etc/sushy.conf
-           systemctl restart sushy
-           #################
-           # systemctl enable --now sushy
-
-    render-redfish-in-parameter-file:
-      needs: install-redfish
-      runs-on: ${{github.event.inputs.RUNNER}}
-      steps:
-       - name: Render redfish in parameter file
-         run: kcli render -f virtual_platform_hosts.yml --paramfile $INFRAPARAMFILE --paramfile $PARAMFILE >> $PARAMFILE
+           kcli create sushy-service
 
     deploy-cluster:
       needs: render-redfish-in-parameter-file
@@ -90,7 +75,4 @@ jobs:
       steps:
        - name: Deploy cluster
          run: |
-           ### temp hack ###
-           sed -i 's@:8000@:80@' $PARAMFILE
-           #################
            kcli --debug create cluster openshift --paramfile $PARAMFILE -P pull_secret="$PULLSECRET" $PLAN-cluster $EXTRAPARAMS --force
