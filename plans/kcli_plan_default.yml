@@ -99,6 +99,7 @@ users_adminpassword: admin
 users_dev: dev
 users_devpassword: dev
 wait_for_workers: true
-wait_for_workers_number: 
+wait_for_workers_number:
 wait_for_workers_timeout: 3600
 manifests_dir: manifests
+wait_for_workers_exit_if_error: false
