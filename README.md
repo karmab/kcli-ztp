@@ -130,6 +130,7 @@ Note that you can use the baseplan `kcli_plan_infra.yml` to deploy the infrastru
 |workers                             |[]              |
 |wait_for_workers                    |True            |
 |wait_for_workers_number             |True            |
+|wait_for_workers_exit_if_error      |False           |
 
 ### additional parameters
 
