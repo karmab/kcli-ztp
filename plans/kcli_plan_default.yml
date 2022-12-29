@@ -3,17 +3,17 @@ info: |
     - openshift-baremetal-install is downloaded or compiled
     - caches the rhcos images up until ocp 4.9
     - stop the nodes to deploy through ipmi
-    - launch the install against a set of baremetal nodes (and optionally virtual masters)
+    - launch the install against a set of baremetal nodes (and optionally virtual ctlplanes)
     It can be used with a centos8stream or rhel8 vm (in which case you will need to set your rhn credentials in your kcli config)
     default location for your pull secret is openshift_pull.json but you can choose another with the pullsecret variable
-    You will need to define api_ip and ingress_ip and use the masters and workers array to specify your nodes.
+    You will need to define api_ip and ingress_ip and use the ctlplanes and workers array to specify your nodes.
     Nfs can be set to true to deploy nfs provisioner using a share on the installer vm
     default network type is OVNKubernetes but you can also specify OpenShiftSDN
     You can also use ca and imagecontentsources to customize your environments or drop specific manifests in the manifests directory
-    If using virtual masters, the masters array can be omitted.
-    For virtual masters, You can
-    - force the baremetal macs of your masters using baremetal_macs variable. If you put more entries than your masters number, they will be used for virtual workers.
-    - set a pattern for their provisioning macs when you plan to host several cluster with virtual masters on the same hypervisor
+    If using virtual ctlplanes, the ctlplanes array can be omitted.
+    For virtual ctlplanes, You can
+    - force the baremetal macs of your ctlplanes using baremetal_macs variable. If you put more entries than your ctlplanes number, they will be used for virtual workers.
+    - set a pattern for their provisioning macs when you plan to host several cluster with virtual ctlplanes on the same hypervisor
     The ci registry is targetted, with the openshift_image variable.
     version can instead be set to stable, nightly, dev-preview or latest, along with tag, to gather the binary from public sources.
 baseplan: kcli_plan_infra.yml
@@ -88,9 +88,9 @@ model: dell
 patch_rhcos_image: false
 apps: []
 localhost_fix: false
-virtual_masters_static_network: False
+virtual_ctlplanes_static_network: False
 virtual_workers_static_network: False
-schedulable_masters: False
+schedulable_ctlplanes: False
 static_baremetal_gateway:
 static_baremetal_dns:
 monitoring_retention:

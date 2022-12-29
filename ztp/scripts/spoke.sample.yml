@@ -4,7 +4,7 @@
 {% set spoke_network_type = spoke.get('network_type', ztp_spoke_network_type) %}
 {% set spoke_api_ip = spoke.get('api_ip') %}
 {% set spoke_ingress_ip= spoke.get('ingress_ip') %}
-{% set spoke_masters_number = spoke.get('masters_number', 1) %}
+{% set spoke_ctlplanes_number = spoke.get('ctlplanes_number', 1) %}
 {% set spoke_workers_number = spoke.get('workers_number', 0) %}
 {% set virtual_nodes_number = spoke["virtual_nodes_number"]|default(0) %}
 {% if spoke_api_ip != None and ':' in spoke_api_ip %}
@@ -73,7 +73,7 @@ spec:
 {% endif %}
 {% endfor %}
 {% endif %}
-{% if spoke_masters_number > 1 and spoke_api_ip != None and spoke_ingress_ip != None %}
+{% if spoke_ctlplanes_number > 1 and spoke_api_ip != None and spoke_ingress_ip != None %}
   apiVIP: {{ spoke_api_ip }}
   ingressVIP: {{ spoke_ingress_ip }}
 {% endif %}
@@ -96,7 +96,7 @@ spec:
   {% for network in service_networks %}
     - {{ network }}
   {% endfor %}
-{% if (spoke_masters_number > 1 or spoke_workers_number > 0) and spoke_api_ip == None and spoke_ingress_ip == None %}
+{% if (spoke_ctlplanes_number > 1 or spoke_workers_number > 0) and spoke_api_ip == None and spoke_ingress_ip == None %}
     userManagedNetworking: True
 {% endif %}
   provisionRequirements:
