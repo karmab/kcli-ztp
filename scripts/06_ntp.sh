@@ -13,4 +13,4 @@ EOF
 export ROLE=worker
 envsubst < /root/machineconfigs/99-openshift-chrony.sample.yaml > /root/manifests/99-openshift-worker-chrony.yaml
 export ROLE=master
-envsubst < /root/machineconfigs/99-openshift-chrony.sample.yaml > /root/manifests/99-openshift-master-chrony.yaml
+envsubst < /root/machineconfigs/99-openshift-chrony.sample.yaml > /root/manifests/99-openshift-ctlplane-chrony.yaml

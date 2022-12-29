@@ -23,5 +23,5 @@ export ROLE=worker
 envsubst < /root/machineconfigs/99-openshift-tang-encryption-clevis.sample.yaml > /root/manifests/99-openshift-worker-tang-encryption-clevis.yaml
 envsubst < /root/machineconfigs/99-openshift-tang-encryption-ka.sample.yaml > /root/manifests/99-openshift-worker-tang-encryption-ka.yaml
 export ROLE=master
-envsubst < /root/machineconfigs/99-openshift-tang-encryption-clevis.sample.yaml > /root/manifests/99-openshift-master-tang-encryption-clevis.yaml
-envsubst < /root/machineonfigs/99-openshift-tang-encryption-ka.sample.yaml > /root/manifests/99-openshift-master-tang-encryption-ka.yaml
+envsubst < /root/machineconfigs/99-openshift-tang-encryption-clevis.sample.yaml > /root/manifests/99-openshift-ctlplane-tang-encryption-clevis.yaml
+envsubst < /root/machineonfigs/99-openshift-tang-encryption-ka.sample.yaml > /root/manifests/99-openshift-ctlplane-tang-encryption-ka.yaml

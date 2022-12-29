@@ -18,7 +18,7 @@ spec:
 {% set spoke_network_type = spoke.get('network_type', ztp_spoke_network_type) %}
 {% set spoke_api_ip = spoke.get('api_ip') %}
 {% set spoke_ingress_ip= spoke.get('ingress_ip') %}
-{% set spoke_masters_number = spoke.get('masters_number', 1) %}
+{% set spoke_ctlplanes_number = spoke.get('ctlplanes_number', 1) %}
 {% set spoke_workers_number = spoke.get('workers_number', 0) %}
 {% set virtual_nodes_number = spoke["virtual_nodes_number"]|default(0) %}
 {% if spoke_api_ip != None and ':' in spoke_api_ip %}
@@ -74,7 +74,7 @@ spec:
       # ../policygentemplates/example-multinode-site.yaml will apply to all clusters with 'sites: "example-multinode"'
       # Normally this should match or contain the cluster name so it only applies to a single cluster
       sites : "example-multinode"
-{% if spoke_masters_number > 1 and spoke_api_ip != None and spoke_ingress_ip != None %}
+{% if spoke_ctlplanes_number > 1 and spoke_api_ip != None and spoke_ingress_ip != None %}
     apiVIP: {{ spoke_api_ip }}
     ingressVIP: {{ spoke_ingress_ip }}
 {% endif %}
@@ -89,7 +89,7 @@ spec:
   {% for network in service_networks %}
       - {{ network }}
   {% endfor %}
-{% if (spoke_masters_number > 1 or spoke_workers_number > 0) and spoke_api_ip == None and spoke_ingress_ip == None %}
+{% if (spoke_ctlplanes_number > 1 or spoke_workers_number > 0) and spoke_api_ip == None and spoke_ingress_ip == None %}
     userManagedNetworking: True
 {% endif %}
     nodes:
@@ -98,8 +98,8 @@ spec:
 {% set num = loop.index0 %}
 {% if 'provisioning_mac' in node %}
 {% set mac = node['provisioning_mac'] %}
-{% elif baremetal_macs and baremetal_macs|length > virtual_masters_number + virtual_workers_number + total_number.value + num %}
-{% set mac = baremetal_macs[virtual_masters_number + virtual_workers_number + total_number.value + num] %}
+{% elif baremetal_macs and baremetal_macs|length > virtual_ctlplanes_number + virtual_workers_number + total_number.value + num %}
+{% set mac = baremetal_macs[virtual_ctlplanes_number + virtual_workers_number + total_number.value + num] %}
 {% else %}
 {% set mac = ztp_virtual_nodes_baremetal_mac_prefix + ":" + "%02.d" | format(total_number.value + num + 1)| string %}
 {% endif %}

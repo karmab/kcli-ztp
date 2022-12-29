@@ -3,7 +3,7 @@ Introduction and Prerequisites
 
 This hands on lab will provide you instructions so you can deploy Openshift using Baremetal IPI. The goal is to make you understand Baremetal IPI internals and workflow so that you can easily make use of it with real Baremetal and troubleshoot issues.
 
-We emulate baremetal by using 3 empty virtual machines used as master nodes.
+We emulate baremetal by using 3 empty virtual machines used as ctlplane nodes.
 
 An additional vm is used to drive the installation, using dedicated bash scripts for each part of the workflow.
 
@@ -74,11 +74,11 @@ Expected Output
    Skipping existing entry for ip 192.168.129.252 and name apps
    Deploying Vms...
    Adding a reserved ip entry for ip 192.168.129.20 and mac aa:aa:aa:aa:bb:01
-   lab-master-0 deployed on local
+   lab-ctlplane-0 deployed on local
    Adding a reserved ip entry for ip 192.168.129.21 and mac aa:aa:aa:aa:bb:02
-   lab-master-1 deployed on local
+   lab-ctlplane-1 deployed on local
    Adding a reserved ip entry for ip 192.168.129.22 and mac aa:aa:aa:aa:bb:03
-   lab-master-2 deployed on local
+   lab-ctlplane-2 deployed on local
    Injecting private key for lab-installer
    Creating dns entry for lab-installer.karmalabs.corp in network lab-baremetal
    Waiting 5 seconds to grab ip...
@@ -86,7 +86,7 @@ Expected Output
    Waiting 5 seconds to grab ip...
    lab-installer deployed on local
 
-This will deploy 3 empty masters to emulate baremetal along with a Centos8stream installer vm where the lab will be run.
+This will deploy 3 empty ctlplanes to emulate baremetal along with a Centos8stream installer vm where the lab will be run.
 
 -  Check the created vms
 
@@ -98,14 +98,14 @@ Expected Output
 
 ::
 
-   +---------------+--------+-----------------+--------------------------------------------------------+------------------+---------------+
-   |      Name     | Status |       Ips       |                         Source                         |       Plan       |   Profile     |
-   +---------------+--------+-----------------+--------------------------------------------------------+------------------+---------------+
-   | lab-installer |   up   |  192.168.129.46 | CentOS-8-GenericCloud-8.4.2105-20210603.0.x86_64.qcow2 |       lab        | local_centos8 |
-   |  lab-master-0 |  down  |  192.168.129.20 |                                                        |       lab        |    kvirt      |
-   |  lab-master-1 |  down  |  192.168.129.21 |                                                        |       lab        |    kvirt      |
-   |  lab-master-2 |  down  |  192.168.129.22 |                                                        |       lab        |    kvirt      |
-   +---------------+--------+-----------------+--------------------------------------------------------+------------------+---------------+
+   +----------------+--------+-----------------+--------------------------------------------------------+------------------+---------------+
+   |      Name      | Status |       Ips       |                         Source                         |       Plan       |   Profile     |
+   +----------------+--------+-----------------+--------------------------------------------------------+------------------+---------------+
+   | lab-installer  |   up   |  192.168.129.46 | CentOS-8-GenericCloud-8.4.2105-20210603.0.x86_64.qcow2 |       lab        | local_centos8 |
+   |  lab-ctlplane-0 |  down  |  192.168.129.20 |                                                        |       lab        |    kvirt      |
+   |  lab-ctlplane-1 |  down  |  192.168.129.21 |                                                        |       lab        |    kvirt      |
+   |  lab-ctlplane-2 |  down  |  192.168.129.22 |                                                        |       lab        |    kvirt      |
+   +----------------+--------+-----------------+--------------------------------------------------------+------------------+---------------+
 
 -  Check the created networks
 
@@ -144,7 +144,7 @@ In the installer vm, Let’s look at the following elements:
 -  Check */root/install-config.yaml* which is the main asset to be used when deploying Openshift:
 
    -  It contains initial information but we will make it evolve with each section until deploying.
-   -  Check the section containing credential information for your masters and the replicas attribute. We would define information from workers using the same pattern( and specifying worker as *role*)
+   -  Check the section containing credential information for your ctlplanes and the replicas attribute. We would define information from workers using the same pattern( and specifying worker as *role*)
    -  Revisit this file at the end of each section to see the modifications done.
 
 Virtual Masters preparation
@@ -699,7 +699,7 @@ This script performs the following tasks:
 
 Ksushy allows us to manage those virtual nodes as if they were physical through Redfish protocol.
 
-For instance, we can check all the redfish information of our first master:
+For instance, we can check all the redfish information of our first ctlplane:
 
 ::
 
@@ -713,7 +713,7 @@ Expected Output
    {
        "@odata.type": "#ComputerSystem.v1_1_0.ComputerSystem",
        "Id": "408b219c-7d47-4f60-9b8e-eba65e68d716",
-       "Name": "lab-master-0",
+       "Name": "lab-ctlplane-0",
        "UUID": "408b219c-7d47-4f60-9b8e-eba65e68d716",
        "Manufacturer": "Sushy Emulator",
        "Status": {
@@ -808,14 +808,14 @@ Expected Output
 ::
 
    http://192.168.129.126:8000/redfish/v1/Systems/408b219c-7d47-4f60-9b8e-eba65e68d716
-   running status for lab-master-0
-   lab-master-0: Off
+   running status for lab-ctlplane-0
+   lab-ctlplane-0: Off
    http://192.168.129.126:8000/redfish/v1/Systems/155310ac-de96-49be-85da-f8379f5010e0
-   running status for lab-master-1
-   lab-master-1: Off
+   running status for lab-ctlplane-1
+   lab-ctlplane-1: Off
    http://192.168.129.126:8000/redfish/v1/Systems/a02c2e44-5075-45c8-ae0b-95ade879738c
-   running status for lab-master-2
-   lab-master-2: Off
+   running status for lab-ctlplane-2
+   lab-ctlplane-2: Off
 
 We will use this same script prior to deploying Openshift to make sure all the nodes are powered off prior to launching deployment.
 
@@ -1240,7 +1240,7 @@ Expected Output
 
 Beyond typical packages, we also install openstack ironic client.
 
-openstack client is not strictly needed, since ironic is to be seen as an implementation detail for the installer, but this is still helpful to troubleshoot progress of the masters or workers deployment.
+openstack client is not strictly needed, since ironic is to be seen as an implementation detail for the installer, but this is still helpful to troubleshoot progress of the ctlplanes or workers deployment.
 
 Binaries retrieval
 ==================

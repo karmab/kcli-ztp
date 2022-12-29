@@ -8,23 +8,23 @@
 {% else %}
 {% set ipv6 = False %}
 {% endif %}
-{% if virtual_masters %}
-{% set extra_masters = [] %}
-{% for num in range(0, virtual_masters_number) %}
-{% if virtual_masters_static_network and baremetal_ips|length > num %}
-{% set new_master = {'ip': baremetal_ips[num]} %}
+{% if virtual_ctlplanes %}
+{% set extra_ctlplanes = [] %}
+{% for num in range(0, virtual_ctlplanes_number) %}
+{% if virtual_ctlplanes_static_network and baremetal_ips|length > num %}
+{% set new_ctlplane = {'ip': baremetal_ips[num]} %}
 {% else %}
-{% set new_master = {} %}
+{% set new_ctlplane = {} %}
 {% endif %}
-{% do extra_masters.append(new_master) %}
+{% do extra_ctlplanes.append(new_ctlplane) %}
 {% endfor %}
-{% set masters = extra_masters + masters %}
+{% set ctlplanes = extra_ctlplanes + ctlplanes %}
 {% endif %}
 {% if virtual_workers and virtual_workers_deploy %}
 {% set extra_workers = [] %}
 {% for num in range(0, virtual_workers_number) %}
-{% if virtual_workers_static_network and baremetal_ips|length > virtual_masters_number + num %}
-{% set new_worker = {'ip': baremetal_ips[virtual_masters_number + num]} %}
+{% if virtual_workers_static_network and baremetal_ips|length > virtual_ctlplanes_number + num %}
+{% set new_worker = {'ip': baremetal_ips[virtual_ctlplanes_number + num]} %}
 {% else %}
 {% set new_worker = {} %}
 {% endif %}
@@ -32,7 +32,7 @@
 {% endfor %}
 {% set workers = extra_workers + workers %}
 {% endif %}
-{% set virtual_masters_bootmac_prefix = virtual_masters_baremetal_mac_prefix %}
+{% set virtual_ctlplanes_bootmac_prefix = virtual_ctlplanes_baremetal_mac_prefix %}
 {% set virtual_workers_bootmac_prefix = virtual_workers_baremetal_mac_prefix %}
 {% set cluster_network_ipv6 = {"cidr": "fd01::/48", "hostPrefix": 64} %}
 {% set cluster_network_ipv4 = {"cidr": "10.132.0.0/14", "hostPrefix": 23} %}
@@ -91,7 +91,7 @@ compute:
   replicas: {{ workers|length }}
 controlPlane:
   name: master
-  replicas: {{ masters|length }}
+  replicas: {{ ctlplanes|length }}
 platform:
   baremetal:
     apiVIP: {{ api_ip }}
@@ -115,54 +115,54 @@ platform:
     externalMACAddress: {{ baremetal_bootstrap_mac }}
 {% endif %}
     hosts:
-{% for master in masters %}
+{% for ctlplane in ctlplanes %}
 {% set num = loop.index0|string %}
-    - name: {{ cluster }}-master-{{ num }}
+    - name: {{ cluster }}-ctlplane-{{ num }}
       role: master
       bmc:
-        {% if 'redfish_address' in master %}
+        {% if 'redfish_address' in ctlplane %}
         disableCertificateVerification: True
-        {% if 'redfish' in master['redfish_address'] or 'idrac' in master['redfish_address'] %}
-        address: {{ master['redfish_address'] }}
-        {% elif master['model']|default(model) in ['hp', 'hpe', 'supermicro'] %}
-        address: redfish-virtualmedia://{{ master['redfish_address'] }}/redfish/v1/Systems/1
+        {% if 'redfish' in ctlplane['redfish_address'] or 'idrac' in ctlplane['redfish_address'] %}
+        address: {{ ctlplane['redfish_address'] }}
+        {% elif ctlplane['model']|default(model) in ['hp', 'hpe', 'supermicro'] %}
+        address: redfish-virtualmedia://{{ ctlplane['redfish_address'] }}/redfish/v1/Systems/1
         {% else %}
-        address: idrac-virtualmedia://{{ master['redfish_address'] }}/redfish/v1/Systems/System.Embedded.1
+        address: idrac-virtualmedia://{{ ctlplane['redfish_address'] }}/redfish/v1/Systems/System.Embedded.1
         {% endif %}
         {% else %}
-        address: redfish-virtualmedia+http://CHANGEME:9000/redfish/v1/Systems/kcli/{{ cluster }}-master-{{ num }}
+        address: redfish-virtualmedia+http://CHANGEME:9000/redfish/v1/Systems/kcli/{{ cluster }}-ctlplane-{{ num }}
         {% endif %}
-        username: {{ master['bmc_user']|default(bmc_user) }}
-        password: {{ master['bmc_password']|default(bmc_password) }}
-{% if 'boot_mode' in master %}
-      bootMode: {{ master['boot_mode'] }}
+        username: {{ ctlplane['bmc_user']|default(bmc_user) }}
+        password: {{ ctlplane['bmc_password']|default(bmc_password) }}
+{% if 'boot_mode' in ctlplane %}
+      bootMode: {{ ctlplane['boot_mode'] }}
 {% endif %}
-{% if 'provisioning_mac' in master %}
-      bootMACAddress: {{ master['provisioning_mac'] }}
+{% if 'provisioning_mac' in ctlplane %}
+      bootMACAddress: {{ ctlplane['provisioning_mac'] }}
 {% elif baremetal_macs and baremetal_macs|length > num|int %}
       bootMACAddress: {{ baremetal_macs[num|int] }}
 {% else %}
-      bootMACAddress: {{ virtual_masters_bootmac_prefix + ":" + "%02.d" | format(num|int + 1)| string }}
+      bootMACAddress: {{ virtual_ctlplanes_bootmac_prefix + ":" + "%02.d" | format(num|int + 1)| string }}
 {% endif %}
-      {% if 'disk' in master %}
+      {% if 'disk' in ctlplane %}
       rootDeviceHints:
-        deviceName: "/dev/{{ master['disk'] | basename }}"
-      {% elif 'hctl' in master %}
+        deviceName: "/dev/{{ ctlplane['disk'] | basename }}"
+      {% elif 'hctl' in ctlplane %}
       rootDeviceHints:
-        hctl: "{{ master['hctl'] }}"
-      {% elif 'serial' in master %}
+        hctl: "{{ ctlplane['hctl'] }}"
+      {% elif 'serial' in ctlplane %}
       rootDeviceHints:
-        serialNumber: "{{ master['serial'] }}"
-      {% elif 'wwn' in master %}
+        serialNumber: "{{ ctlplane['serial'] }}"
+      {% elif 'wwn' in ctlplane %}
       rootDeviceHints:
-        wwn: "{{ master['wwn'] }}"
+        wwn: "{{ ctlplane['wwn'] }}"
       {% endif %}
-      {% if 'ip' in master %}
+      {% if 'ip' in ctlplane %}
       networkConfig:
-        {{ static_network.config(master['ip'], baremetal_prefix, master['gateway']|default(baremetal_gateway), master['dns']|default(baremetal_dns), cluster, domain, master['nic']|default(nic)) }}
-      {% elif 'network_config' in master %}
+        {{ static_network.config(ctlplane['ip'], baremetal_prefix, ctlplane['gateway']|default(baremetal_gateway), ctlplane['dns']|default(baremetal_dns), cluster, domain, ctlplane['nic']|default(nic)) }}
+      {% elif 'network_config' in ctlplane %}
       networkConfig:
-        {{ master['network_config']|replace('\n', '\n        ') }}
+        {{ ctlplane['network_config']|replace('\n', '\n        ') }}
       {% endif %}
 {% endfor %}
 {% for worker in workers %}
@@ -189,8 +189,8 @@ platform:
 {% endif %}
 {% if 'provisioning_mac' in worker %}
       bootMACAddress: {{ worker ['provisioning_mac'] }}
-{% elif baremetal_macs and baremetal_macs|length > virtual_masters_number + num|int %}
-      bootMACAddress: {{ baremetal_macs[virtual_masters_number + num|int] }}
+{% elif baremetal_macs and baremetal_macs|length > virtual_ctlplanes_number + num|int %}
+      bootMACAddress: {{ baremetal_macs[virtual_ctlplanes_number + num|int] }}
 {% else %}
       bootMACAddress: {{ virtual_workers_bootmac_prefix + ":" + "%02.d" | format(num|int + 1)| string }}
 {% endif %}

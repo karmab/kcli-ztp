@@ -69,7 +69,7 @@ cat /root/ocp/bootstrap.ign.ori | jq ".storage.files |= . + [{\"filesystem\": \"
 {% endif %}
 openshift-baremetal-install --dir ocp --log-level debug create cluster || true
 openshift-baremetal-install --dir ocp --log-level debug wait-for install-complete || openshift-baremetal-install --dir ocp --log-level debug wait-for install-complete
-{% if virtual_masters %}
+{% if virtual_ctlplanes %}
 for node in $(oc get nodes --selector='node-role.kubernetes.io/master' -o name) ; do
   oc label $node node-role.kubernetes.io/virtual=""
 done
@@ -80,7 +80,7 @@ TOTAL_WORKERS={{ wait_for_workers_number }}
 TOTAL_WORKERS=$(grep 'role: worker' /root/install-config.yaml | wc -l)
 {% endif %}
 if [ "$TOTAL_WORKERS" -gt "0" ] ; then
-CURRENT_WORKERS=$(oc get nodes --selector='node-role.kubernetes.io/worker' | grep -v master | grep -c " Ready")
+CURRENT_WORKERS=$(oc get nodes --selector='node-role.kubernetes.io/worker' | grep -v ctlplane | grep -c " Ready")
 {% if wait_for_workers or wait_for_workers_number != None %}
  TIMEOUT=0
  WAIT_TIMEOUT={{ wait_for_workers_timeout }}
@@ -89,7 +89,7 @@ CURRENT_WORKERS=$(oc get nodes --selector='node-role.kubernetes.io/worker' | gre
     echo "Timeout waiting for Current workers number $CURRENT_WORKERS to match expected worker number $TOTAL_WORKERS"
     {% if wait_for_workers_exit_if_error %}exit 1{% else %}break{% endif %}
   fi
-  CURRENT_WORKERS=$(oc get nodes --selector='node-role.kubernetes.io/worker' | grep -v master | grep -c " Ready")
+  CURRENT_WORKERS=$(oc get nodes --selector='node-role.kubernetes.io/worker' | grep -v ctlplane | grep -c " Ready")
   echo "Waiting for all workers to show up..."
   sleep 5
   TIMEOUT=$(($TIMEOUT + 5))
