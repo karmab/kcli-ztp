@@ -4,7 +4,7 @@ This repository provides a plan which deploys a vm where:
 
 - openshift-baremetal-install is downloaded or compiled from source (with an additional list of PR numbers to apply)
 - stop the nodes to deploy through redfish or ipmi
-- launch the install against a set of baremetal nodes. Virtual masters and workers can also be deployed.
+- launch the install against a set of baremetal nodes. Virtual ctlplanes and workers can also be deployed.
 
 The automation can be used for additional scenarios:
 
@@ -48,8 +48,8 @@ Prepare a valid parameter file with the information needed. At least, you need t
 - ingress_ip
 - bmc_user (for real baremetal)
 - bmc_password (for real baremetal)
-- an array of your masters (if thet are not virtual). Each entry in this array needs at least the provisioning_mac and redfish_address. Optionally you can indicate for each entry a specific bmc_user, bmc_password and disk (to be used as rootdevice hint) either as /dev/XXX or simply XXX
-- an array of your workers (can be left empty if you only want to deploy masters). The format of those entries follow the one indicated for masters.
+- an array of your ctlplanes (if thet are not virtual). Each entry in this array needs at least the provisioning_mac and redfish_address. Optionally you can indicate for each entry a specific bmc_user, bmc_password and disk (to be used as rootdevice hint) either as /dev/XXX or simply XXX
+- an array of your workers (can be left empty if you only want to deploy ctlplanes). The format of those entries follow the one indicated for ctlplanes.
 
 Here's a snippet what the workers variable might look like:
 
@@ -65,7 +65,7 @@ workers:
 You can have a look at:
 
 - [parameters.yml](samples/parameters.yml) for a parameter file targetting baremetal nodes only
-- [parameters_virtual.yml](samples/parameters_virtual.yml) for one combining virtual masters and physical workers.
+- [parameters_virtual.yml](samples/parameters_virtual.yml) for one combining virtual ctlplanes and physical workers.
 
 Call the resulting file `kcli_parameters.yml` to avoid having to specify it in the creation command.
 
@@ -107,18 +107,18 @@ Note that you can use the baseplan `kcli_plan_infra.yml` to deploy the infrastru
 |ingress_ip                          |None            |
 |keys                                |[]              |
 |lab                                 |False           |
-|masters                             |[]              |
+|ctlplanes                            |[]              |
 |memory                              |32768           |
 |model                               |dell            |
 |no_proxy                            |None            |
 |numcpus                             |16              |
 |pool                                |default         |
-|virtual_masters                     |True            |
-|virtual\_masters\_baremetal\_mac\_prefix|aa:aa:aa:cc:cc|
-|virtual\_masters\_mac\_prefix       |aa:aa:aa:aa:aa  |
-|virtual\_masters\_memory            |32768           |
-|virtual\_masters\_number            |3               |
-|virtual\_masters\_numcpus           |8               |
+|virtual_ctlplanes                    |True            |
+|virtual\_ctlplanes\_baremetal\_mac\_prefix|aa:aa:aa:cc:cc|
+|virtual\_ctlplanes\_mac\_prefix       |aa:aa:aa:aa:aa  |
+|virtual\_ctlplanes\_memory            |32768           |
+|virtual\_ctlplanes\_number            |3               |
+|virtual\_ctlplanes\_numcpus           |8               |
 |virtual_protocol                    |ipmi            |
 |virtual_workers                     |False           |
 |virtual\_workers\_baremetal\_mac\_prefix|aa:aa:aa:dd:dd|
@@ -184,7 +184,7 @@ The following parameters are available when deploying the default plan
 
 ### Node parameters
 
-when specifying *masters* or *workers* as an array (for baremetal nodes), the specification can be created with something like this
+when specifying *ctlplanes* or *workers* as an array (for baremetal nodes), the specification can be created with something like this
 
 ```
 - redfish_address: 192.168.123.45
@@ -246,7 +246,7 @@ You can use the plan `kcli_plan_ztp.yml` for this purpose, along with the follow
 |ztp\_spoke\_api\_ip                      |None                   |
 |ztp\_spoke\_deploy                      |True                   |
 |ztp\_spoke\_ingress\_ip                  |None                   |
-|ztp\_spoke\_masters\_number              |1                      |
+|ztp\_spoke\_ctlplanes\_number              |1                      |
 |ztp\_spoke\_name                        |mgmt-spoke1            |
 |ztp\_spoke\_wait                        |False                  |
 |ztp\_spoke\_wait_time                   |3600                   |
@@ -262,8 +262,8 @@ You can use the plan `kcli_plan_ztp.yml` for this purpose, along with the follow
 
 The following sample parameter files are available for you to deploy (on libvirt):
 
-- [lab.yml](lab.yml) This deploys 3 masters in a dedicated ipv4 network
-- [lab_ipv6.yml](lab_ipv6.yml) This deploys 3 masters in a dedicated ipv6 network (hence in a disconnected manner)
+- [lab.yml](lab.yml) This deploys 3 ctlplanes in a dedicated ipv4 network
+- [lab_ipv6.yml](lab_ipv6.yml) This deploys 3 ctlplanes in a dedicated ipv6 network (hence in a disconnected manner)
 - [lab_ipv6_ztp.yml](lab_ipv6_ztp.yml) This deploys the ipv6 lab, and released acm on top, and then a SNO spoke
 - [lab_ipv6_ztp_downstream.yml](lab_ipv6_ztp_downstream.yml) This is is the same as the ipv6 ztp lab, but the ACM bits are downstream one (this requires a dedicated pull secret)
 

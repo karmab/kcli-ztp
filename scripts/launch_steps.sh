@@ -6,7 +6,7 @@ echo -e "${blue}************ RUNNING .proxy.sh ************${clear}"
 source /etc/profile.d/proxy.sh
 {% endif %}
 
-{% if virtual_masters or virtual_workers %}
+{% if virtual_ctlplanes or virtual_workers %}
 echo -e "${blue}************ RUNNING 00_virtual.sh ************${clear}"
 /root/scripts/00_virtual.sh || exit 1
 {% endif %}

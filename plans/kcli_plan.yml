@@ -54,7 +54,7 @@
 {% endif %}
  - path: /root/.bashrc
    origin: envfiles/bashrc
-{% if virtual_masters or virtual_workers %}
+{% if virtual_ctlplanes or virtual_workers %}
  - path: /root/.kcli/config.yml
    origin: bin/kcli_config.yml
 {% endif %}

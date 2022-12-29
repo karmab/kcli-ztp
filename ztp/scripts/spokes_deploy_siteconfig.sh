@@ -3,7 +3,7 @@ bash /root/ztp/scripts/bmc_siteconfig.sh
 oc apply -f /root/spokes.yml
 {% for spoke in ztp_spokes %}
 {% set spoke_deploy = spoke.get('deploy', ztp_spoke_deploy) %}
-{% set spoke_masters_number = spoke.get('masters_number', 1) %}
+{% set spoke_ctlplanes_number = spoke.get('ctlplanes_number', 1) %}
 {% set spoke_workers_number = spoke.get('workers_number', 0) %}
 {% if spoke_deploy and spoke.get('wait', ztp_spoke_wait) %}
 {% set spoke_wait_time = spoke.get('wait_time', ztp_spoke_wait_time) %}
@@ -23,7 +23,7 @@ done
 if [ "$installed" == "true" ] ; then
  echo "Cluster $SPOKE deployed"
  oc get secret -n $SPOKE $SPOKE-admin-kubeconfig -o jsonpath='{.data.kubeconfig}' | base64 -d > /root/kubeconfig.$SPOKE
- {% if spoke_masters_number == 1 and spoke_workers_number == 0 %}
+ {% if spoke_ctlplanes_number == 1 and spoke_workers_number == 0 %}
  {% if ':' in baremetal_cidr %}
  SNO_IP=$(oc get -n $SPOKE $(oc get agent -n $SPOKE -o name) -o jsonpath={'.status.inventory.interfaces[0].ipV6Addresses[0]'} | cut -d/ -f1)
  {% else %}

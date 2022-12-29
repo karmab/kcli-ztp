@@ -57,8 +57,8 @@ spec:
     credentialsName: {{ cluster }}-ztp-{{ spoke_name }}-bmc-secret-{{ num }}
 {% if 'provisioning_mac' in node %}
   bootMACAddress: {{ node['provisioning_mac'] }}
-{% elif baremetal_macs and baremetal_macs|length > virtual_masters_number + virtual_workers_number + total_number.value + num %}
-  bootMACAddress: {{ baremetal_macs[virtual_masters_number + virtual_workers_number + total_number.value + num] }}
+{% elif baremetal_macs and baremetal_macs|length > virtual_ctlplanes_number + virtual_workers_number + total_number.value + num %}
+  bootMACAddress: {{ baremetal_macs[virtual_ctlplanes_number + virtual_workers_number + total_number.value + num] }}
 {% else %}
   bootMACAddress: {{ ztp_virtual_nodes_baremetal_mac_prefix + ":" + "%02.d" | format(num + total_number.value + 1)| string }}
 {% endif %}
