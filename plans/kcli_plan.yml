@@ -92,6 +92,6 @@
    path: /root/manifests
 {% endif %}
 {% if launch_steps %}
- scripts:
- - scripts/launch_steps.sh
+ cmds:
+ - bash /root/scripts/launch_steps.sh
 {% endif %}

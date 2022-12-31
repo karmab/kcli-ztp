@@ -52,16 +52,19 @@ ip a l {{ baremetal_bridge }} >/dev/null 2>&1 || { echo Issue with network {{ ba
 
 # VERSION CHECK
 {% if version is defined %}
-{% if version in ['nightly', 'stable'] %}
+{% if version not in ['dev-preview', 'stable', 'nightly', 'ci', 'latest'] %}
+  echo "Incorrect version {{ version }}. Should be stable, dev-preview, ci, latest or nightly" && exit 1
+{% endif %}
+{% if version in ['dev-preview', 'stable'] %}
 {% set tag = tag|string %}
 {% if tag.split('.')|length > 2 %}
 TAG={{ tag }}
-{% elif version == 'nightly' %}
+{% elif version == 'dev-preview' %}
 TAG={{"latest-" + tag }}
 {% else %}
 TAG={{"stable-" + tag }}
 {% endif %}
-OCP_REPO={{ 'ocp-dev-preview' if version == 'nightly' else 'ocp' }}
+OCP_REPO={{ 'ocp-dev-preview' if version == 'dev-preview' else 'ocp' }}
 curl -Ns https://mirror.openshift.com/pub/openshift-v4/clients/$OCP_REPO/$TAG/release.txt | grep -q 'Pull From: quay.io'
 if  [ "$?" != "0" ] ; then
   echo couldnt gather release associated to {{ version }} and {{ tag }}

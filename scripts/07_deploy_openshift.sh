@@ -74,6 +74,8 @@ for node in $(oc get nodes --selector='node-role.kubernetes.io/master' -o name) 
   oc label $node node-role.kubernetes.io/virtual=""
 done
 {% endif %}
+
+set +e
 {% if wait_for_workers_number != None %}
 TOTAL_WORKERS={{ wait_for_workers_number }}
 {% else %}
@@ -87,7 +89,11 @@ CURRENT_WORKERS=$(oc get nodes --selector='node-role.kubernetes.io/worker' | gre
  until [ "$CURRENT_WORKERS" == "$TOTAL_WORKERS" ] ; do
   if [ "$TIMEOUT" -gt "$WAIT_TIMEOUT" ] ; then
     echo "Timeout waiting for Current workers number $CURRENT_WORKERS to match expected worker number $TOTAL_WORKERS"
-    {% if wait_for_workers_exit_if_error %}exit 1{% else %}break{% endif %}
+    {% if wait_for_workers_exit_if_error %}
+    exit 1
+    {% else %}
+    break
+    {% endif %}
   fi
   CURRENT_WORKERS=$(oc get nodes --selector='node-role.kubernetes.io/worker' | grep -v master | grep -c " Ready")
   echo "Waiting for all workers to show up..."
@@ -101,3 +107,4 @@ CURRENT_WORKERS=$(oc get nodes --selector='node-role.kubernetes.io/worker' | gre
  fi
 {% endif %}
 fi
+set +e

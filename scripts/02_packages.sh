@@ -21,19 +21,21 @@ curl -L https://storage.googleapis.com/kubernetes-release/release/$(curl -s http
 chmod u+x /usr/bin/kubectl
 
 export PULL_SECRET="/root/openshift_pull.json"
-{% if version in ['nightly', 'stable'] %}
+{% if version in ['dev-preview', 'stable'] %}
 {% set tag = tag|string %}
 {% if tag.split('.')|length > 2 %}
 TAG={{ tag }}
 {% else %}
 TAG={{"latest-" + tag }}
 {% endif %}
-OCP_REPO={{ 'ocp-dev-preview' if version == 'nightly' else 'ocp' }}
+OCP_REPO={{ 'ocp-dev-preview' if version == 'dev-preview' else 'ocp' }}
 export OPENSHIFT_RELEASE_IMAGE=$(curl -s https://mirror.openshift.com/pub/openshift-v4/clients/$OCP_REPO/$TAG/release.txt | grep 'Pull From: quay.io' | awk -F ' ' '{print $3}')
 {% elif version == 'latest' %}
 export OPENSHIFT_RELEASE_IMAGE=$(curl -s https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ version }}-{{ tag }}/release.txt | grep 'Pull From: quay.io' | awk -F ' ' '{print $3}')
 {% elif version == 'ci' %}
 export OPENSHIFT_RELEASE_IMAGE={{ openshift_image or "registry.ci.openshift.org/ocp/release:" + tag|string }}
+{% elif version == 'nightly' %}
+export OPENSHIFT_RELEASE_IMAGE=$(curl -s https://amd64.ocp.releases.ci.openshift.org/api/v1/releasestream/{{ tag|string }}.0-0.nightly/latest | jq -r .pullSpec)
 {% endif %}
 oc adm release extract --registry-config $PULL_SECRET --command=oc --to /tmp $OPENSHIFT_RELEASE_IMAGE
 mv /tmp/oc /root/bin
