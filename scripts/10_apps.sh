@@ -1,3 +1,7 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
 {% for app in apps %}
 {% if app != 'users' %}
 tasty install {{ app }} -w
