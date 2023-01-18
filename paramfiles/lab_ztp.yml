@@ -5,7 +5,7 @@ virtual_ctlplanes: true
 virtual_workers: false
 virtual_workers_number: 0
 version: stable
-tag: "4.11"
+tag: "4.12"
 cluster: lab
 domain: karmalabs.corp
 baremetal_cidr: 192.168.129.0/24

@@ -9,7 +9,7 @@ virtual_workers: false
 launch_steps: true
 deploy_openshift: false
 version: stable
-tag: "4.11"
+tag: "4.12"
 cluster: lab
 domain: karmalabs.corp
 baremetal_cidr: 2620:52:0:1302::/64
