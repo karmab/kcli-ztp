@@ -47,6 +47,8 @@ curl -s -L https://github.com/itaysk/kubectl-neat/releases/download/v2.0.3/kubec
 dnf copr enable zaneb/autopage -y
 dnf install podman skopeo python3-bmo-log-parse -y
 
+[ ! -f /etc/centos-release ] || cp /etc/containers/policy.json /etc/containers/policy.json.old && jq 'del(.transports.docker["registry.redhat.io"][0].keyPaths[1],.transports.docker["registry.access.redhat.com"][0].keyPaths[1] )' /etc/containers/policy.json.old > /etc/containers/policy.json
+
 curl -s -L https://github.com/karmab/tasty/releases/download/v0.7.0/tasty-linux-amd64 > /usr/bin/tasty
 chmod u+x /usr/bin/tasty
 tasty config --enable-as-plugin
