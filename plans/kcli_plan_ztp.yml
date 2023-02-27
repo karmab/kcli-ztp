@@ -1,3 +1,7 @@
+{% if disconnected_operators and acm and 'advanced-cluster-management' not in disconnected_operators %}
+{{ disconnected_operators.append("advanced-cluster-management") or "" }}
+{% endif %}
+
 {% for spoke in ztp_spokes %}
 {% set spoke_name = spoke.name %}
 {% set spoke_api_ip = spoke.get('api_ip') %}
