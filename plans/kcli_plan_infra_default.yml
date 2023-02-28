@@ -28,7 +28,7 @@ virtual_ctlplanes_memory: 32768
 virtual_ctlplanes_mac_prefix: aa:aa:aa:aa:aa
 virtual_ctlplanes_baremetal_mac_prefix: aa:aa:aa:cc:cc
 virtual_workers: false
-virtual_workers_number: 1
+virtual_workers_number: 2
 virtual_workers_numcpus: 8
 virtual_workers_memory: 16384
 virtual_workers_mac_prefix: aa:aa:aa:bb:bb

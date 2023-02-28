@@ -3,7 +3,6 @@ version: stable
 tag: "4.12"
 virtual_protocol: redfish
 virtual_ctlplanes: true
-virtual_workers: false
 launch_steps: true
 deploy_openshift: true
 cluster: lab
@@ -12,7 +11,6 @@ baremetal_cidr: 192.168.129.0/24
 baremetal_net: lab-baremetal
 virtual_ctlplanes_memory: 16384
 virtual_ctlplanes_numcpus: 8
-virtual_workers_deploy: false
 api_ip: 192.168.129.253
 ingress_ip: 192.168.129.252
 baremetal_ips:

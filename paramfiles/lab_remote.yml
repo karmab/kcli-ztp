@@ -2,9 +2,6 @@ lab: true
 pool: default
 disconnected: false
 virtual_ctlplanes: true
-virtual_workers: true
-virtual_workers_number: 3
-virtual_workers_deploy: true
 launch_steps: true
 deploy_openshift: true
 version: stable

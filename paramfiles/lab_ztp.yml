@@ -2,8 +2,6 @@ lab: true
 pool: default
 disconnected: false
 virtual_ctlplanes: true
-virtual_workers: false
-virtual_workers_number: 0
 version: stable
 tag: "4.12"
 cluster: lab
