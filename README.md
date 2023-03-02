@@ -263,10 +263,10 @@ You can use the plan `kcli_plan_ztp.yml` for this purpose, along with the follow
 
 The following sample parameter files are available for you to deploy (on libvirt):
 
-- [lab.yml](lab.yml) This deploys 3 ctlplanes in a dedicated ipv4 network
-- [lab_ipv6.yml](lab_ipv6.yml) This deploys 3 ctlplanes in a dedicated ipv6 network (hence in a disconnected manner)
-- [lab_ipv6_ztp.yml](lab_ipv6_ztp.yml) This deploys the ipv6 lab, and released acm on top, and then a SNO spoke
-- [lab_ipv6_ztp_downstream.yml](lab_ipv6_ztp_downstream.yml) This is is the same as the ipv6 ztp lab, but the ACM bits are downstream one (this requires a dedicated pull secret)
+- [lab.yml](paramfiles/lab.yml) This deploys 3 ctlplanes in a dedicated ipv4 network
+- [lab_ipv6.yml](paramfiles/lab_ipv6.yml) This deploys 3 ctlplanes in a dedicated ipv6 network (hence in a disconnected manner)
+- [lab_ipv6_ztp.yml](paramfiles/lab_ipv6_ztp.yml) This deploys the ipv6 lab, and released acm on top, and then a SNO spoke
+- [lab_ipv6_ztp_downstream.yml](paramfiles/lab_ipv6_ztp_downstream.yml) This is is the same as the ipv6 ztp lab, but the ACM bits are downstream one (this requires a dedicated pull secret)
 
 ## Running through github actions
 
