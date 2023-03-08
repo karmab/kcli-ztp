@@ -98,14 +98,14 @@ Expected Output
 
 ::
 
-   +----------------+--------+-----------------+--------------------------------------------------------+------------------+---------------+
-   |      Name      | Status |       Ips       |                         Source                         |       Plan       |   Profile     |
-   +----------------+--------+-----------------+--------------------------------------------------------+------------------+---------------+
-   | lab-installer  |   up   |  192.168.129.46 | CentOS-8-GenericCloud-8.4.2105-20210603.0.x86_64.qcow2 |       lab        | local_centos8 |
+   +-----------------+--------+-----------------+--------------------------------------------------------+------------------+---------------+
+   |      Name       | Status |       Ips       |                         Source                         |       Plan       |   Profile     |
+   +-----------------+--------+-----------------+--------------------------------------------------------+------------------+---------------+
+   |  lab-installer  |   up   |  192.168.129.46 | CentOS-8-GenericCloud-8.4.2105-20210603.0.x86_64.qcow2 |       lab        | local_centos8 |
    |  lab-ctlplane-0 |  down  |  192.168.129.20 |                                                        |       lab        |    kvirt      |
    |  lab-ctlplane-1 |  down  |  192.168.129.21 |                                                        |       lab        |    kvirt      |
    |  lab-ctlplane-2 |  down  |  192.168.129.22 |                                                        |       lab        |    kvirt      |
-   +----------------+--------+-----------------+--------------------------------------------------------+------------------+---------------+
+   +-----------------+--------+-----------------+--------------------------------------------------------+------------------+---------------+
 
 -  Check the created networks
 
@@ -130,9 +130,9 @@ Expected Output
 
    kcli ssh root@lab-installer
 
-**NOTE:** In the remainder of the lab, we assume the user is connected (through ssh) to the installer vm in /root directory
+**NOTE:** In the remainder of the lab, the user is assumed to be connected (through ssh) to the installer vm and located in the /root directory.
 
-**NOTE:** In each of the sections, the user is encouraged to read the corresponding script to get a better understanding of what’s achieved.
+**NOTE:** In each section, we recommend to read the corresponding script to get a better understanding of what’s beeing achieved.
 
 Explore the environment
 =======================
@@ -687,9 +687,9 @@ Expected Output
       D-Bus, udev, scripted systemctl call, ...).
    4) In case of template units, the unit is meant to be enabled with some
       instance name specified.
-   # 2620:52:0:1302::1:22 SSH-2.0-OpenSSH_8.0
-   # 2620:52:0:1302::1:22 SSH-2.0-OpenSSH_8.0
-   # 2620:52:0:1302::1:22 SSH-2.0-OpenSSH_8.0
+   # 192.168.129.20:22 SSH-2.0-OpenSSH_8.0
+   # 192.168.129.21:22 SSH-2.0-OpenSSH_8.0
+   # 192.168.129.22:22 SSH-2.0-OpenSSH_8.0
 
 This script performs the following tasks:
 
@@ -699,11 +699,14 @@ This script performs the following tasks:
 
 Ksushy allows us to manage those virtual nodes as if they were physical through Redfish protocol.
 
+It’s similar to sushy-emulator but uses more user friendly URLS and have support for additional hypervisors (Vsphere and Kubevirt in particular)
+
 For instance, we can check all the redfish information of our first ctlplane:
 
 ::
 
-   REDFISH_ADDRESS=$(grep -m 1 redfish-virtualmedia /root/install-config.yaml | sed 's/address: redfish-virtualmedia/http/')
+   REDFISH_ADDRESS=$(grep -m 1 redfish-virtualmedia /root/install-config.yaml | sed 's/address: redfish-virtualmedia+//')
+   echo $REDFISH_ADDRESS
    curl $REDFISH_ADDRESS
 
 Expected Output
@@ -712,16 +715,16 @@ Expected Output
 
    {
        "@odata.type": "#ComputerSystem.v1_1_0.ComputerSystem",
-       "Id": "408b219c-7d47-4f60-9b8e-eba65e68d716",
+       "Id": "1",
        "Name": "lab-ctlplane-0",
-       "UUID": "408b219c-7d47-4f60-9b8e-eba65e68d716",
-       "Manufacturer": "Sushy Emulator",
+       "UUID": "1",
+       "Manufacturer": "kvm",
        "Status": {
            "State": "Enabled",
            "Health": "OK",
            "HealthRollUp": "OK"
        },
-       "PowerState": "Off",
+       "PowerState": "On",
        "Boot": {
            "BootSourceOverrideEnabled": "Continuous",
            "BootSourceOverrideTarget": "Hdd",
@@ -729,7 +732,9 @@ Expected Output
                "Pxe",
                "Cd",
                "Hdd"
-           ]
+           ],
+           "BootSourceOverrideMode": "UEFI",
+           "UefiTargetBootSourceOverride": "/0x31/0x33/0x01/0x01"
        },
        "ProcessorSummary": {
            "Count": 8,
@@ -740,7 +745,7 @@ Expected Output
            }
        },
        "MemorySummary": {
-           "TotalSystemMemoryGiB": 16,
+           "TotalSystemMemoryGiB": 16384,
            "Status": {
                "State": "Enabled",
                "Health": "OK",
@@ -748,39 +753,39 @@ Expected Output
            }
        },
        "Bios": {
-           "@odata.id": "/redfish/v1/Systems/408b219c-7d47-4f60-9b8e-eba65e68d716/BIOS"
+           "@odata.id": "/redfish/v1/Systems/kcli/lab-ctlplane-0/BIOS"
        },
        "Processors": {
-           "@odata.id": "/redfish/v1/Systems/408b219c-7d47-4f60-9b8e-eba65e68d716/Processors"
+           "@odata.id": "/redfish/v1/Systems/kcli/lab-ctlplane-0/Processors"
        },
        "Memory": {
-           "@odata.id": "/redfish/v1/Systems/408b219c-7d47-4f60-9b8e-eba65e68d716/Memory"
+           "@odata.id": "/redfish/v1/Systems/kcli/lab-ctlplane-0/Memory"
        },
        "EthernetInterfaces": {
-           "@odata.id": "/redfish/v1/Systems/408b219c-7d47-4f60-9b8e-eba65e68d716/EthernetInterfaces"
+           "@odata.id": "/redfish/v1/Systems/kcli/lab-ctlplane-0/EthernetInterfaces"
        },
        "SimpleStorage": {
-           "@odata.id": "/redfish/v1/Systems/408b219c-7d47-4f60-9b8e-eba65e68d716/SimpleStorage"
+           "@odata.id": "/redfish/v1/Systems/kcli/lab-ctlplane-0/SimpleStorage"
        },
        "Storage": {
-           "@odata.id": "/redfish/v1/Systems/408b219c-7d47-4f60-9b8e-eba65e68d716/Storage"
+           "@odata.id": "/redfish/v1/Systems/kcli/lab-ctlplane-0/Storage"
        },
        "IndicatorLED": "Lit",
        "Links": {
            "Chassis": [
                {
-                   "@odata.id": "/redfish/v1/Chassis/15693887-7984-9484-3272-842188918912"
+                   "@odata.id": "/redfish/v1/Chassis/fake-chassis"
                }
                ],
            "ManagedBy": [
                {
-                   "@odata.id": "/redfish/v1/Managers/408b219c-7d47-4f60-9b8e-eba65e68d716"
+                   "@odata.id": "/redfish/v1/Managers/kcli/lab-ctlplane-0"
                }
                ]
        },
        "Actions": {
            "#ComputerSystem.Reset": {
-               "target": "/redfish/v1/Systems/408b219c-7d47-4f60-9b8e-eba65e68d716/Actions/ComputerSystem.Reset",
+               "target": "/redfish/v1/Systems/kcli/lab-ctlplane-0/Actions/ComputerSystem.Reset",
                "ResetType@Redfish.AllowableValues": [
                    "On",
                    "ForceOff",
@@ -793,7 +798,7 @@ Expected Output
            }
        },
        "@odata.context": "/redfish/v1/$metadata#ComputerSystem.ComputerSystem",
-       "@odata.id": "/redfish/v1/Systems/408b219c-7d47-4f60-9b8e-eba65e68d716",
+       "@odata.id": "/redfish/v1/Systems/kcli/lab-ctlplane-0",
        "@Redfish.Copyright": "Copyright 2014-2016 Distributed Management Task Force, Inc. (DMTF). For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
    }
 
@@ -807,19 +812,13 @@ Expected Output
 
 ::
 
-   http://192.168.129.126:8000/redfish/v1/Systems/408b219c-7d47-4f60-9b8e-eba65e68d716
-   running status for lab-ctlplane-0
    lab-ctlplane-0: Off
-   http://192.168.129.126:8000/redfish/v1/Systems/155310ac-de96-49be-85da-f8379f5010e0
-   running status for lab-ctlplane-1
    lab-ctlplane-1: Off
-   http://192.168.129.126:8000/redfish/v1/Systems/a02c2e44-5075-45c8-ae0b-95ade879738c
-   running status for lab-ctlplane-2
    lab-ctlplane-2: Off
 
-We will use this same script prior to deploying Openshift to make sure all the nodes are powered off prior to launching deployment.
+We will use this same script when deploying Openshift to make sure all the nodes are powered off prior to launching deployment.
 
-In a full baremetal setup, sushy-tools wouldn’t be used but only access through Redfish to the nodes of the install. The helper script is still usable in this context.
+In a full baremetal setup, ksushy wouldn’t be used but only access through Redfish to the nodes of the install. The helper script is still usable in this context.
 
 Initial installconfig modifications
 ===================================
@@ -834,9 +833,9 @@ Expected Output
 
 ::
 
-   # 192.168.1.6:22 SSH-2.0-OpenSSH_8.0
-   # 192.168.1.6:22 SSH-2.0-OpenSSH_8.0
-   # 192.168.1.6:22 SSH-2.0-OpenSSH_8.0
+   # 192.168.129.20:22 SSH-2.0-OpenSSH_8.0
+   # 192.168.129:21:22 SSH-2.0-OpenSSH_8.0
+   # 192.168.129.22:22 SSH-2.0-OpenSSH_8.0
 
 This script adds pull secret and public key to *install-config.yaml*.
 
@@ -1249,7 +1248,7 @@ In this section, we fetch binaries required for the install:
 
 ::
 
-   /root/scripts/04_get_clients.sh
+   /root/scripts/02_packages.sh
 
 Expected Output
 
@@ -1280,7 +1279,7 @@ In this section, we gather rhcos images needed for the install to speed up deplo
 
 ::
 
-   /root/scripts/05_cache.sh
+   /root/scripts/03_cache.sh
 
 Expected Output
 
@@ -1419,9 +1418,9 @@ Expected Output
 This script does the following things:
 
 -  Installs and enables httpd.
--  Evaluates rhcos openstack and qemu urls by leveraging ``openshift-baremetal-install coreos print-stream-json``
--  Fetches those images.
--  Patches *install-config.yaml* to point to those local images.
+-  Evaluates rhcos qemu url by leveraging ``openshift-baremetal-install coreos print-stream-json``
+-  Fetches this image
+-  Patches *install-config.yaml* to point to local image.
 
 Disconnected environment (Optional)
 ===================================
@@ -1432,8 +1431,8 @@ In this section, we enable a registry and sync content so we can deploy Openshif
 
 ::
 
-   /root/scripts/06_disconnected_registry.sh
-   /root/scripts/06_disconnected_mirror.sh
+   /root/scripts/04_disconnected_registry.sh
+   /root/scripts/04_disconnected_mirror.sh
 
 Expected Output
 
@@ -2434,7 +2433,7 @@ In this section, we sync some olm operator. Open the file 06_disconnected_olm.sh
 
 ::
 
-   /root/06_disconnected_olm.sh
+   /root/04_disconnected_olm.sh
 
 Expected Output
 
@@ -2851,7 +2850,7 @@ Expected Output
 
 The script does the following:
 
--  Gathers opm binary
+-  Gathers oc-mirror binary
 -  Leverages it to create a catalog where to sync images of the choosen operators
 -  Syncs the corresponding operators
 -  Applies the generated catalogsource and imagecontentsource policy so that the nodes use the disconnected source for those operators. When run prior to deploying, those assets are rather added as extra manifests for the install.
@@ -2863,7 +2862,7 @@ Now, we can finally launch the deployment!!!
 
 ::
 
-   /root/scripts/09_deploy_openshift.sh
+   /root/scripts/07_deploy_openshift.sh
 
 Expected Output
 
@@ -4190,8 +4189,8 @@ Troubleshooting the deployment
 
 During the deployment, you can use typical openshift troubleshooting:
 
-1. Connect to the bootstrap vm with ``virsh list`` and ``virsh console $BOOTSTRAP_VM``
-2. Connect to it using ssh
+1. Connect to the bootstrap vm with ``kcli list vm`` and ``kcli console -s $BOOTSTRAP_VM``
+2. Connect to it using ``kcli ssh core@$BOOTSTRAP_VM``
 3. Review bootstrap logs using the command showed upon connecting to the bootstrap vm.
 
 Review
