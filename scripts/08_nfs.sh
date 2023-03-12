@@ -25,18 +25,19 @@ sed -i "s/namespace:.*/namespace: $NAMESPACE/g" $BASEDIR/deploy/rbac.yaml $BASED
 oc create -f $BASEDIR/deploy/rbac.yaml
 oc adm policy add-scc-to-user hostmount-anyuid system:serviceaccount:$NAMESPACE:nfs-client-provisioner
 if [ "$(podman ps | grep registry)" != "" ] ; then
- /root/bin/sync_image.sh k8s.gcr.io/sig-storage/nfs-subdir-external-provisioner:v4.0.2
+ /root/bin/sync_image.sh registry.k8s.io/sig-storage/nfs-subdir-external-provisioner:v4.0.2
  REGISTRY_NAME=$(echo $PRIMARY_IP | sed 's/\./-/g' | sed 's/:/-/g').sslip.io
- sed -i "s@k8s.gcr.io@$REGISTRY_NAME:5000@" $BASEDIR/deploy/deployment.yaml
+ sed -i "s@registry.k8s.io@$REGISTRY_NAME:5000@" $BASEDIR/deploy/deployment.yaml
 fi
-sed -i -e "s@k8s-sigs.io/nfs-subdir-external-provisioner@storage.io/nfs@" -e "s@10.3.243.101@$PRIMARY_IP@" -e "s@/ifs/kubernetes@/var/nfsshare@" $BASEDIR/deploy/deployment.yaml
+sed -i -e "s@registry.k8s.io/nfs-subdir-external-provisioner@storage.io/nfs@" -e "s@10.3.243.101@$PRIMARY_IP@" -e "s@/ifs/kubernetes@/var/nfsshare@" $BASEDIR/deploy/deployment.yaml
 echo 'apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-   name: nfs
-provisioner: storage.io/nfs
+  annotations:
+    storageclass.kubernetes.io/is-default-class: "true"
+  name: nfs
+provisioner: k8s-sigs.io/nfs-subdir-external-provisioner
 parameters:
   pathPattern: "${.PVC.namespace}/${.PVC.name}"
   onDelete: delete' > $BASEDIR/deploy/class.yaml
 oc create -f $BASEDIR/deploy/deployment.yaml -f $BASEDIR/deploy/class.yaml
-oc patch storageclass nfs -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
