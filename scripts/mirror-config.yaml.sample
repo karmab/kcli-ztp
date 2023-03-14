@@ -15,9 +15,9 @@ mirror:
   - catalog: registry.redhat.io/redhat/redhat-operator-index:v${OCP_RELEASE}
     packages:
 {% for package in disconnected_operators %}
-{% if package.name is defined %} {# Comment: Support new syntax allowing to further filtering #}
+{% if package.name is defined %}{# Comment: Support new syntax allowing to further filtering #}
     - name: {{ package.name }}
-{% else %} {# Comment: Support old syntax #}
+{% else %}{# Comment: Support old syntax #}
     - name: {{ package }}
 {% endif %}
 {% if package.channels is defined and package.channels|length > 0 %}
