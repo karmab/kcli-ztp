@@ -22,3 +22,4 @@ ztp_disable_validations: false
 ztp_uefi: true
 ztp_spokes: []
 ztp_pxe: false
+mce_hypershift: false
