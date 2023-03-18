@@ -40,15 +40,12 @@ export OPENSHIFT_RELEASE_IMAGE=$(curl -s https://amd64.ocp.releases.ci.openshift
 oc adm release extract --registry-config $PULL_SECRET --command=oc --to /tmp $OPENSHIFT_RELEASE_IMAGE
 mv /tmp/oc /root/bin
 oc adm release extract --registry-config $PULL_SECRET --command=openshift-baremetal-install --to /root/bin $OPENSHIFT_RELEASE_IMAGE
+ln -s /root/bin/openshift-baremetal-install /root/bin/openshift-install
 echo $OPENSHIFT_RELEASE_IMAGE > /root/version.txt
 
 curl -s -L https://github.com/itaysk/kubectl-neat/releases/download/v2.0.3/kubectl-neat_linux_amd64.tar.gz | tar xvz -C /usr/bin/
 
 dnf copr enable zaneb/autopage -y
 dnf install podman skopeo python3-bmo-log-parse -y
-
-curl -s -L https://github.com/karmab/tasty/releases/download/v0.7.0/tasty-linux-amd64 > /usr/bin/tasty
-chmod u+x /usr/bin/tasty
-tasty config --enable-as-plugin
 
 oc completion bash >>/etc/bash_completion.d/oc_completion

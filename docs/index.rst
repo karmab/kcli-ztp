@@ -1267,10 +1267,9 @@ The script downloads the following objects:
 
 -  oc
 -  kubectl.
--  openshift-baremetal-install using oc and by specifying which OPENSHIFT_RELEASE_IMAGE to use.
+-  openshift-install using oc and by specifying which OPENSHIFT_RELEASE_IMAGE to use.
 -  neat which is a k8s plugin to clear managedfields from output
 -  bmo-log-parser which is a tool for parsing metal3 baremetal-operator logs
--  tasty which is a binary designed to ease installing olm operators once cluster is deployed.
 
 Images caching
 ==============
@@ -1418,7 +1417,7 @@ Expected Output
 This script does the following things:
 
 -  Installs and enables httpd.
--  Evaluates rhcos qemu url by leveraging ``openshift-baremetal-install coreos print-stream-json``
+-  Evaluates rhcos qemu url by leveraging ``openshift-install coreos print-stream-json``
 -  Fetches this image
 -  Patches *install-config.yaml* to point to local image.
 
@@ -3698,19 +3697,19 @@ Expected Output
    time="2020-05-12T09:56:35Z" level=debug msg="  Reusing previously-fetched Kubeadmin Password"
    time="2020-05-12T09:56:35Z" level=debug msg="Generating Cluster..."
    time="2020-05-12T09:56:35Z" level=info msg="Creating infrastructure resources..."
-   time="2020-05-12T09:56:35Z" level=debug msg="Symlinking plugin terraform-provider-random src: \"/root/bin/openshift-baremetal-install\" dst: \"/tmp/openshift-install-407594662/plugins/terraform-provider-random\""
-   time="2020-05-12T09:56:35Z" level=debug msg="Symlinking plugin terraform-provider-vsphereprivate src: \"/root/bin/openshift-baremetal-install\" dst: \"/tmp/openshift-install-407594662/plugins/terraform-provider-vsphereprivate\""
-   time="2020-05-12T09:56:35Z" level=debug msg="Symlinking plugin terraform-provider-ignition src: \"/root/bin/openshift-baremetal-install\" dst: \"/tmp/openshift-install-407594662/plugins/terraform-provider-ignition\""
-   time="2020-05-12T09:56:35Z" level=debug msg="Symlinking plugin terraform-provider-local src: \"/root/bin/openshift-baremetal-install\" dst: \"/tmp/openshift-install-407594662/plugins/terraform-provider-local\""
-   time="2020-05-12T09:56:35Z" level=debug msg="Symlinking plugin terraform-provider-ovirt src: \"/root/bin/openshift-baremetal-install\" dst: \"/tmp/openshift-install-407594662/plugins/terraform-provider-ovirt\""
-   time="2020-05-12T09:56:35Z" level=debug msg="Symlinking plugin terraform-provider-google src: \"/root/bin/openshift-baremetal-install\" dst: \"/tmp/openshift-install-407594662/plugins/terraform-provider-google\""
-   time="2020-05-12T09:56:35Z" level=debug msg="Symlinking plugin terraform-provider-ironic src: \"/root/bin/openshift-baremetal-install\" dst: \"/tmp/openshift-install-407594662/plugins/terraform-provider-ironic\""
-   time="2020-05-12T09:56:35Z" level=debug msg="Symlinking plugin terraform-provider-libvirt src: \"/root/bin/openshift-baremetal-install\" dst: \"/tmp/openshift-install-407594662/plugins/terraform-provider-libvirt\""
-   time="2020-05-12T09:56:35Z" level=debug msg="Symlinking plugin terraform-provider-openstack src: \"/root/bin/openshift-baremetal-install\" dst: \"/tmp/openshift-install-407594662/plugins/terraform-provider-openstack\""
-   time="2020-05-12T09:56:35Z" level=debug msg="Symlinking plugin terraform-provider-vsphere src: \"/root/bin/openshift-baremetal-install\" dst: \"/tmp/openshift-install-407594662/plugins/terraform-provider-vsphere\""
-   time="2020-05-12T09:56:35Z" level=debug msg="Symlinking plugin terraform-provider-aws src: \"/root/bin/openshift-baremetal-install\" dst: \"/tmp/openshift-install-407594662/plugins/terraform-provider-aws\""
-   time="2020-05-12T09:56:35Z" level=debug msg="Symlinking plugin terraform-provider-azurerm src: \"/root/bin/openshift-baremetal-install\" dst: \"/tmp/openshift-install-407594662/plugins/terraform-provider-azurerm\""
-   time="2020-05-12T09:56:35Z" level=debug msg="Symlinking plugin terraform-provider-azureprivatedns src: \"/root/bin/openshift-baremetal-install\" dst: \"/tmp/openshift-install-407594662/plugins/terraform-provider-azureprivatedns\""
+   time="2020-05-12T09:56:35Z" level=debug msg="Symlinking plugin terraform-provider-random src: \"/root/bin/openshift-install\" dst: \"/tmp/openshift-install-407594662/plugins/terraform-provider-random\""
+   time="2020-05-12T09:56:35Z" level=debug msg="Symlinking plugin terraform-provider-vsphereprivate src: \"/root/bin/openshift-install\" dst: \"/tmp/openshift-install-407594662/plugins/terraform-provider-vsphereprivate\""
+   time="2020-05-12T09:56:35Z" level=debug msg="Symlinking plugin terraform-provider-ignition src: \"/root/bin/openshift-install\" dst: \"/tmp/openshift-install-407594662/plugins/terraform-provider-ignition\""
+   time="2020-05-12T09:56:35Z" level=debug msg="Symlinking plugin terraform-provider-local src: \"/root/bin/openshift-install\" dst: \"/tmp/openshift-install-407594662/plugins/terraform-provider-local\""
+   time="2020-05-12T09:56:35Z" level=debug msg="Symlinking plugin terraform-provider-ovirt src: \"/root/bin/openshift-install\" dst: \"/tmp/openshift-install-407594662/plugins/terraform-provider-ovirt\""
+   time="2020-05-12T09:56:35Z" level=debug msg="Symlinking plugin terraform-provider-google src: \"/root/bin/openshift-install\" dst: \"/tmp/openshift-install-407594662/plugins/terraform-provider-google\""
+   time="2020-05-12T09:56:35Z" level=debug msg="Symlinking plugin terraform-provider-ironic src: \"/root/bin/openshift-install\" dst: \"/tmp/openshift-install-407594662/plugins/terraform-provider-ironic\""
+   time="2020-05-12T09:56:35Z" level=debug msg="Symlinking plugin terraform-provider-libvirt src: \"/root/bin/openshift-install\" dst: \"/tmp/openshift-install-407594662/plugins/terraform-provider-libvirt\""
+   time="2020-05-12T09:56:35Z" level=debug msg="Symlinking plugin terraform-provider-openstack src: \"/root/bin/openshift-install\" dst: \"/tmp/openshift-install-407594662/plugins/terraform-provider-openstack\""
+   time="2020-05-12T09:56:35Z" level=debug msg="Symlinking plugin terraform-provider-vsphere src: \"/root/bin/openshift-install\" dst: \"/tmp/openshift-install-407594662/plugins/terraform-provider-vsphere\""
+   time="2020-05-12T09:56:35Z" level=debug msg="Symlinking plugin terraform-provider-aws src: \"/root/bin/openshift-install\" dst: \"/tmp/openshift-install-407594662/plugins/terraform-provider-aws\""
+   time="2020-05-12T09:56:35Z" level=debug msg="Symlinking plugin terraform-provider-azurerm src: \"/root/bin/openshift-install\" dst: \"/tmp/openshift-install-407594662/plugins/terraform-provider-azurerm\""
+   time="2020-05-12T09:56:35Z" level=debug msg="Symlinking plugin terraform-provider-azureprivatedns src: \"/root/bin/openshift-install\" dst: \"/tmp/openshift-install-407594662/plugins/terraform-provider-azureprivatedns\""
    time="2020-05-12T09:56:35Z" level=debug msg="Initializing modules..."
    time="2020-05-12T09:56:35Z" level=debug msg="- bootstrap in ../tmp/openshift-install-407594662/bootstrap"
    time="2020-05-12T09:56:35Z" level=debug msg="- masters in ../tmp/openshift-install-407594662/masters"
@@ -4022,19 +4021,19 @@ Expected Output
    time="2020-05-12T10:10:10Z" level=info msg="Waiting up to 40m0s for bootstrapping to complete..."
    time="2020-05-12T10:17:24Z" level=debug msg="Bootstrap status: complete"
    time="2020-05-12T10:17:24Z" level=info msg="Destroying the bootstrap resources..."
-   time="2020-05-12T10:17:24Z" level=debug msg="Symlinking plugin terraform-provider-libvirt src: \"/root/bin/openshift-baremetal-install\" dst: \"/tmp/openshift-install-678758349/plugins/terraform-provider-libvirt\""
-   time="2020-05-12T10:17:24Z" level=debug msg="Symlinking plugin terraform-provider-openstack src: \"/root/bin/openshift-baremetal-install\" dst: \"/tmp/openshift-install-678758349/plugins/terraform-provider-openstack\""
-   time="2020-05-12T10:17:24Z" level=debug msg="Symlinking plugin terraform-provider-vsphere src: \"/root/bin/openshift-baremetal-install\" dst: \"/tmp/openshift-install-678758349/plugins/terraform-provider-vsphere\""
-   time="2020-05-12T10:17:24Z" level=debug msg="Symlinking plugin terraform-provider-aws src: \"/root/bin/openshift-baremetal-install\" dst: \"/tmp/openshift-install-678758349/plugins/terraform-provider-aws\""
-   time="2020-05-12T10:17:24Z" level=debug msg="Symlinking plugin terraform-provider-azurerm src: \"/root/bin/openshift-baremetal-install\" dst: \"/tmp/openshift-install-678758349/plugins/terraform-provider-azurerm\""
-   time="2020-05-12T10:17:24Z" level=debug msg="Symlinking plugin terraform-provider-azureprivatedns src: \"/root/bin/openshift-baremetal-install\" dst: \"/tmp/openshift-install-678758349/plugins/terraform-provider-azureprivatedns\""
-   time="2020-05-12T10:17:24Z" level=debug msg="Symlinking plugin terraform-provider-google src: \"/root/bin/openshift-baremetal-install\" dst: \"/tmp/openshift-install-678758349/plugins/terraform-provider-google\""
-   time="2020-05-12T10:17:24Z" level=debug msg="Symlinking plugin terraform-provider-ironic src: \"/root/bin/openshift-baremetal-install\" dst: \"/tmp/openshift-install-678758349/plugins/terraform-provider-ironic\""
-   time="2020-05-12T10:17:24Z" level=debug msg="Symlinking plugin terraform-provider-ignition src: \"/root/bin/openshift-baremetal-install\" dst: \"/tmp/openshift-install-678758349/plugins/terraform-provider-ignition\""
-   time="2020-05-12T10:17:24Z" level=debug msg="Symlinking plugin terraform-provider-local src: \"/root/bin/openshift-baremetal-install\" dst: \"/tmp/openshift-install-678758349/plugins/terraform-provider-local\""
-   time="2020-05-12T10:17:24Z" level=debug msg="Symlinking plugin terraform-provider-ovirt src: \"/root/bin/openshift-baremetal-install\" dst: \"/tmp/openshift-install-678758349/plugins/terraform-provider-ovirt\""
-   time="2020-05-12T10:17:24Z" level=debug msg="Symlinking plugin terraform-provider-random src: \"/root/bin/openshift-baremetal-install\" dst: \"/tmp/openshift-install-678758349/plugins/terraform-provider-random\""
-   time="2020-05-12T10:17:24Z" level=debug msg="Symlinking plugin terraform-provider-vsphereprivate src: \"/root/bin/openshift-baremetal-install\" dst: \"/tmp/openshift-install-678758349/plugins/terraform-provider-vsphereprivate\""
+   time="2020-05-12T10:17:24Z" level=debug msg="Symlinking plugin terraform-provider-libvirt src: \"/root/bin/openshift-install\" dst: \"/tmp/openshift-install-678758349/plugins/terraform-provider-libvirt\""
+   time="2020-05-12T10:17:24Z" level=debug msg="Symlinking plugin terraform-provider-openstack src: \"/root/bin/openshift-install\" dst: \"/tmp/openshift-install-678758349/plugins/terraform-provider-openstack\""
+   time="2020-05-12T10:17:24Z" level=debug msg="Symlinking plugin terraform-provider-vsphere src: \"/root/bin/openshift-install\" dst: \"/tmp/openshift-install-678758349/plugins/terraform-provider-vsphere\""
+   time="2020-05-12T10:17:24Z" level=debug msg="Symlinking plugin terraform-provider-aws src: \"/root/bin/openshift-install\" dst: \"/tmp/openshift-install-678758349/plugins/terraform-provider-aws\""
+   time="2020-05-12T10:17:24Z" level=debug msg="Symlinking plugin terraform-provider-azurerm src: \"/root/bin/openshift-install\" dst: \"/tmp/openshift-install-678758349/plugins/terraform-provider-azurerm\""
+   time="2020-05-12T10:17:24Z" level=debug msg="Symlinking plugin terraform-provider-azureprivatedns src: \"/root/bin/openshift-install\" dst: \"/tmp/openshift-install-678758349/plugins/terraform-provider-azureprivatedns\""
+   time="2020-05-12T10:17:24Z" level=debug msg="Symlinking plugin terraform-provider-google src: \"/root/bin/openshift-install\" dst: \"/tmp/openshift-install-678758349/plugins/terraform-provider-google\""
+   time="2020-05-12T10:17:24Z" level=debug msg="Symlinking plugin terraform-provider-ironic src: \"/root/bin/openshift-install\" dst: \"/tmp/openshift-install-678758349/plugins/terraform-provider-ironic\""
+   time="2020-05-12T10:17:24Z" level=debug msg="Symlinking plugin terraform-provider-ignition src: \"/root/bin/openshift-install\" dst: \"/tmp/openshift-install-678758349/plugins/terraform-provider-ignition\""
+   time="2020-05-12T10:17:24Z" level=debug msg="Symlinking plugin terraform-provider-local src: \"/root/bin/openshift-install\" dst: \"/tmp/openshift-install-678758349/plugins/terraform-provider-local\""
+   time="2020-05-12T10:17:24Z" level=debug msg="Symlinking plugin terraform-provider-ovirt src: \"/root/bin/openshift-install\" dst: \"/tmp/openshift-install-678758349/plugins/terraform-provider-ovirt\""
+   time="2020-05-12T10:17:24Z" level=debug msg="Symlinking plugin terraform-provider-random src: \"/root/bin/openshift-install\" dst: \"/tmp/openshift-install-678758349/plugins/terraform-provider-random\""
+   time="2020-05-12T10:17:24Z" level=debug msg="Symlinking plugin terraform-provider-vsphereprivate src: \"/root/bin/openshift-install\" dst: \"/tmp/openshift-install-678758349/plugins/terraform-provider-vsphereprivate\""
    time="2020-05-12T10:17:24Z" level=debug msg="Initializing modules..."
    time="2020-05-12T10:17:24Z" level=debug msg="- bootstrap in ../tmp/openshift-install-678758349/bootstrap"
    time="2020-05-12T10:17:24Z" level=debug msg="- masters in ../tmp/openshift-install-678758349/masters"

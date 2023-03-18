@@ -22,3 +22,5 @@ export REGISTRY_PASSWORD={{ disconnected_password }}
 export REGISTRY_USER={{ disconnected_user }}
 
 alias hypershift='podman run -it --rm --security-opt label=disable --entrypoint=/usr/bin/hypershift -e KUBECONFIG=/k/kubeconfig -v /root/ocp/auth:/k quay.io/hypershift/hypershift-operator:latest'
+
+export PYTHONUNBUFFERED=true

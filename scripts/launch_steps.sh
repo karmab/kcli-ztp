@@ -87,8 +87,8 @@ echo -e "${blue}************ RUNNING 10_apps.sh ************${clear}"
 touch /root/cluster_ready.txt
 
 {% if ztp_spokes is defined %}
-echo -e "${blue}************ RUNNING ztp/acm/assisted-service.sh ************${clear}"
-/root/ztp/acm/assisted-service.sh
+echo -e "${blue}************ RUNNING ztp/assisted/assisted-service.sh ************${clear}"
+/root/ztp/assisted/assisted-service.sh
 {% if ztp_siteconfig %}
 echo -e "${blue}************ RUNNING ztp/scripts/spokes_deploy_siteconfig.sh ************${clear}"
 /root/ztp/scripts/spokes_deploy_siteconfig.sh
