@@ -115,7 +115,7 @@ apps-{{ spoke_name }}:
  - ztp/scripts/spokes_deploy_siteconfig.sh
  - ztp/scripts/bmc_siteconfig.sh
 {% endif %}
- - ztp/acm
+ - ztp/assisted
 {% if argocd %}
  - ztp/argocd
  - ztp/scripts/argocd.sh

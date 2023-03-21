@@ -4,7 +4,6 @@
 
 {{ cluster }}-installer: 
  image: {{ image }} 
- playbook: {{ playbook }}
  pool: {{ pool }} 
  wait: {{ installer_wait }}
  numcpus: {{ installer_numcpus or numcpus }}
@@ -22,7 +21,7 @@
 {% if deploy_openshift %}
  notifyscript: {{ notifyscript }}
 {% elif launch_steps %}
- notifycmd: ls /root/bin/openshift-baremetal-install
+ notifycmd: /root/bin/openshift-install version
 {% else %}
  notifycmd: echo machine $(hostname) ready at $(hostname -I)
 {% endif %}

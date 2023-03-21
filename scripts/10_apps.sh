@@ -3,25 +3,5 @@
 set -euo pipefail
 
 {% for app in apps %}
-{% if app != 'users' %}
-tasty install {{ app }} -w
-{% endif %}
+kcli create app openshift $app -P install_cr=false
 {% endfor %}
-
-{% if 'users' in apps %}
-DEV_USER={{ users_dev }}
-DEV_PASSWORD={{ users_devpassword }}
-ADMIN_USER={{ users_admin }}
-ADMIN_PASSWORD={{ users_adminpassword }}
-echo "Adding dev user $DEV_USER with password $DEV_PASSWORD"
-echo "Adding admin user $ADMIN_USER with password $ADMIN_PASSWORD"
-printf "$ADMIN_USER:$(openssl passwd -apr1 $ADMIN_PASSWORD )\n$DEV_USER:$(openssl passwd -apr1 $DEV_PASSWORD )\n" > htpasswd
-oc create secret generic htpass-secret --from-file=htpasswd=htpasswd -n openshift-config
-oc apply -f /root/scripts/oauth.yml
-echo "Granting cluster-admin role to $ADMIN_USER"
-oc adm policy add-cluster-role-to-user cluster-admin $ADMIN_USER
-echo "Creating cluster-admins group"
-oc adm groups new cluster-admins
-echo "Adding admin user $ADMIN_USER to cluster-admins group"
-oc adm groups add-users cluster-admins $ADMIN_USER
-{% endif %}
