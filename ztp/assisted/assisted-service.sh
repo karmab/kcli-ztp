@@ -21,4 +21,4 @@ DISCONNECTED_ARGS="-P disconnected_url=${REGISTRY_NAME}:$LOCAL_PORT"
 DISCONNECTED_ARGS=""
 {% endif %}
 
-kcli create app openshift $APP $DISCONNECTED_ARGS $SOURCE_ARGS
+kcli create app openshift $APP $DISCONNECTED_ARGS $SOURCE_ARGS -P timeout=600
