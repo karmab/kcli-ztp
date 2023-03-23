@@ -3,3 +3,4 @@
 kcli:
  host: {{ ip }}
  user: {{ user }}
+ pool: {{ pool }}
