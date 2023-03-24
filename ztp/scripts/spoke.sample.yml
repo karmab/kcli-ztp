@@ -170,9 +170,8 @@ spec:
     name: ${SPOKE}
     namespace: ${SPOKE}
   sshAuthorizedKey: "${SSH_PUB_KEY}"
-  agentLabelSelector:
-    matchLabels:
-      cluster-name: "${SPOKE}"
+  agentLabels:
+    cluster-name: "${SPOKE}"
   pullSecretRef:
     name: assisted-deployment-pull-secret
   nmStateConfigLabelSelector:
