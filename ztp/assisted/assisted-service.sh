@@ -22,3 +22,4 @@ DISCONNECTED_ARGS=""
 {% endif %}
 
 kcli create app openshift $APP $DISCONNECTED_ARGS $SOURCE_ARGS
+sleep 120
