@@ -2,10 +2,12 @@
 {{ disconnected_operators.append("advanced-cluster-management") or "" }}
 {% endif %}
 
+{% set contrail = [] %}
+
 {% for spoke in ztp_spokes %}
 {% set spoke_name = spoke.name %}
 {% set spoke_api_ip = spoke.get('api_ip') %}
-{% set spoke_ingress_ip= spoke.get('ingress_ip') %}
+{% set spoke_ingress_ip = spoke.get('ingress_ip') %}
 {% if lab and spoke_api_ip != None and spoke_ingress_ip != None %}
 api-{{ spoke_name }}:
  type: dns
@@ -28,7 +30,18 @@ apps-{{ spoke_name }}:
  - assisted-service-assisted-installer.apps.{{ spoke_name }}.{{ domain }}
  - assisted-image-service-open-cluster-management.apps.{{ spoke_name }}.{{ domain }}
 {% endif %}
+
+{% if lab and spoke.get('network_type', ztp_spoke_network_type) == 'Contrail' %}
+{% do contrail.append(True) %}
+{% endif %}
+
 {% endfor %}
+
+{% if contrail %}
+contrail-ctl:
+  type: network
+  cidr: 10.40.1.0/24
+{% endif %}
 
 {% set total_number = namespace(value=0) %}
 {% for spoke in ztp_spokes %}
@@ -72,10 +85,12 @@ apps-{{ spoke_name }}:
     - api-int.{{ spoke_name }}.{{ domain }}
 {% endif %}
 {% endif %}
+{% if contrail %}
+  - contrail-ctl
+{% endif %}
  disks:
  - size: {{ ztp_virtual_nodes_disk_size }}
    interface: {{ ztp_virtual_nodes_disk_interface }}
-
 {% endfor %}
 {% set total_number.value = total_number.value + ztp_virtual_nodes_number %}
 {% endif %}
@@ -99,12 +114,19 @@ apps-{{ spoke_name }}:
  - path: /root/spoke_{{ spoke.name }}/bmc.sh
    origin: ztp/scripts/bmc.sh
    index: {{ loop.index0 }}
-{% if spoke_manifests|find_manifests %}
+{% if spoke_manifests|find_manifests or contrail %}
  - path: /root/spoke_{{ spoke.name }}/manifests.sh
    origin: ztp/scripts/manifests.sh
    index: {{ loop.index0 }}
+{% endif %}
+{% if spoke_manifests|find_manifests %}
  - path: /root/spoke_{{ spoke.name }}/manifests
    origin: {{ spoke_manifests }}
+{% endif %}
+{% if contrail %}
+ - path: /root/spoke_{{ spoke.name }}/contrail.sh
+   origin: ztp/scripts/contrail.sh
+   spoke: {{ spoke.name }}
 {% endif %}
 {% endfor %}
  - ztp/scripts/spokes_deploy.sh
