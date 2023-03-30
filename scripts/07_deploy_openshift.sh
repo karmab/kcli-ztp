@@ -67,6 +67,7 @@ NICDATA="$(cat /root/static_network/ifcfg-bootstrap | base64 -w0)"
 cp /root/ocp/bootstrap.ign /root/ocp/bootstrap.ign.ori
 cat /root/ocp/bootstrap.ign.ori | jq ".storage.files |= . + [{\"filesystem\": \"root\", \"mode\": 420, \"path\": \"/etc/sysconfig/network-scripts/ifcfg-$NIC\", \"contents\": {\"source\": \"data:text/plain;charset=utf-8;base64,$NICDATA\", \"verification\": {}}}]" > /root/ocp/bootstrap.ign
 {% endif %}
+
 openshift-baremetal-install --dir ocp --log-level debug create cluster
 openshift-baremetal-install --dir ocp --log-level debug wait-for install-complete || openshift-baremetal-install --dir ocp --log-level debug wait-for install-complete
 {% if virtual_ctlplanes %}

@@ -9,17 +9,17 @@ version: stable
 tag: "4.12"
 cluster: lab
 domain: karmalabs.corp
-baremetal_cidr: 192.168.129.0/24
+baremetal_cidr: 192.168.130.0/24
 baremetal_net: lab-baremetal
 virtual_ctlplanes_memory: 16384
 virtual_ctlplanes_numcpus: 8
 virtual_ctlplanes_numcpus: 8
-api_ip: 192.168.129.253
-ingress_ip: 192.168.129.252
+api_ip: 192.168.130.253
+ingress_ip: 192.168.130.252
 baremetal_ips:
-- 192.168.129.20
-- 192.168.129.21
-- 192.168.129.22
+- 192.168.130.20
+- 192.168.130.21
+- 192.168.130.22
 baremetal_macs:
 - aa:aa:aa:aa:bb:01
 - aa:aa:aa:aa:bb:02
@@ -27,8 +27,8 @@ baremetal_macs:
 ztp_disable_validations: true
 ztp_spokes:
 - name: mgmt-spoke1
-  api_ip: 192.168.129.251
-  ingress_ip: 192.168.129.250
+  api_ip: 192.168.130.251
+  ingress_ip: 192.168.130.250
   ctlplanes_number: 3
   workers_number: 0
   virtual_nodes_number: 5

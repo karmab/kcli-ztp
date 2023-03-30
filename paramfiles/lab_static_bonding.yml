@@ -7,19 +7,19 @@ launch_steps: true
 deploy_openshift: true
 cluster: lab
 domain: karmalabs.corp
-baremetal_cidr: 192.168.129.0/24
+baremetal_cidr: 192.168.130.0/24
 baremetal_net: lab-baremetal
 virtual_ctlplanes_memory: 16384
 virtual_ctlplanes_numcpus: 8
-api_ip: 192.168.129.253
-ingress_ip: 192.168.129.252
+api_ip: 192.168.130.253
+ingress_ip: 192.168.130.252
 baremetal_ips:
-- 192.168.129.20
-- 192.168.129.21
-- 192.168.129.22
-- 192.168.129.23
-- 192.168.129.24
-- 192.168.129.25
+- 192.168.130.20
+- 192.168.130.21
+- 192.168.130.22
+- 192.168.130.23
+- 192.168.130.24
+- 192.168.130.25
 baremetal_macs:
 - aa:aa:aa:aa:bb:01
 - aa:aa:aa:aa:bb:02
@@ -29,8 +29,8 @@ baremetal_macs:
 - aa:aa:aa:aa:bb:06
 localhost_fix: true
 lab_dhcp: false
-installer_ip: 192.168.129.250
-baremetal_bootstrap_ip: 192.168.129.251
+installer_ip: 192.168.130.250
+baremetal_bootstrap_ip: 192.168.130.251
 notify: true
 nfs: true
 vmrules:
@@ -56,27 +56,27 @@ vmrules:
       - name: lab-baremetal
         mac: aa:aa:aa:aa:cc:03
 ctlplanes:
-  - redfish_address: "redfish-virtualmedia+http://192.168.129.1:8000/redfish/v1/Systems/11111111-1111-1111-1111-111111111181"
+  - redfish_address: "redfish-virtualmedia+http://192.168.130.1:8000/redfish/v1/Systems/11111111-1111-1111-1111-111111111181"
     provisioning_mac: aa:aa:aa:aa:bb:01
     network_config: |
       routes:
         config:
         - destination: 0.0.0.0/0
-          next-hop-address: 192.168.129.1
+          next-hop-address: 192.168.130.1
           next-hop-interface: bond0
       dns-resolver:
         config:
           search:
           - lab.karmalabs.corp
           server:
-          - 192.168.129.1
+          - 192.168.130.1
       interfaces:
       - name: bond0
         type: bond0
         state: up
         ipv4:
           address:
-          - ip: "192.168.129.20"
+          - ip: "192.168.130.20"
             prefix-length: 24
           enabled: true
         link-aggregation:
@@ -90,27 +90,27 @@ ctlplanes:
         macAddress: aa:aa:aa:aa:bb:01
       - name: ens4
         macAddress: aa:aa:aa:aa:cc:01
-  - redfish_address: "redfish-virtualmedia+http://192.168.129.1:8000/redfish/v1/Systems/11111111-1111-1111-1111-111111111182"
+  - redfish_address: "redfish-virtualmedia+http://192.168.130.1:8000/redfish/v1/Systems/11111111-1111-1111-1111-111111111182"
     provisioning_mac: aa:aa:aa:aa:bb:02
     network_config: |
       routes:
         config:
         - destination: 0.0.0.0/0
-          next-hop-address: 192.168.129.1
+          next-hop-address: 192.168.130.1
           next-hop-interface: bond0
       dns-resolver:
         config:
           search:
           - lab.karmalabs.corp
           server:
-          - 192.168.129.1
+          - 192.168.130.1
       interfaces:
       - name: bond0
         type: bond0
         state: up
         ipv4:
           address:
-          - ip: "192.168.129.21"
+          - ip: "192.168.130.21"
             prefix-length: 24
           enabled: true
         link-aggregation:
@@ -124,27 +124,27 @@ ctlplanes:
         macAddress: aa:aa:aa:aa:bb:02
       - name: ens4
         macAddress: aa:aa:aa:aa:cc:02
-  - redfish_address: "redfish-virtualmedia+http://192.168.129.1:8000/redfish/v1/Systems/11111111-1111-1111-1111-111111111183"
+  - redfish_address: "redfish-virtualmedia+http://192.168.130.1:8000/redfish/v1/Systems/11111111-1111-1111-1111-111111111183"
     provisioning_mac: aa:aa:aa:aa:bb:03
     network_config: |
       routes:
         config:
         - destination: 0.0.0.0/0
-          next-hop-address: 192.168.129.1
+          next-hop-address: 192.168.130.1
           next-hop-interface: bond0
       dns-resolver:
         config:
           search:
           - lab.karmalabs.corp
           server:
-          - 192.168.129.1
+          - 192.168.130.1
       interfaces:
       - name: bond0
         type: bond0
         state: up
         ipv4:
           address:
-          - ip: "192.168.129.22"
+          - ip: "192.168.130.22"
             prefix-length: 24
           enabled: true
         link-aggregation:
