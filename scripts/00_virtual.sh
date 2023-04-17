@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-PRIMARY_NIC=$(ls -1 /sys/class/net | head -1)
+PRIMARY_NIC=$(ls -1 /sys/class/net | grep -v podman | head -1)
 {% if not 'rhel' in image %}
 dnf clean all
 sleep 30

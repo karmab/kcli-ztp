@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-PRIMARY_NIC=$(ls -1 /sys/class/net | head -1)
+PRIMARY_NIC=$(ls -1 /sys/class/net | grep -v podman | head -1)
 export PATH=/root/bin:$PATH
 export PULL_SECRET="/root/openshift_pull.json"
 dnf -y install podman httpd httpd-tools jq skopeo libseccomp-devel

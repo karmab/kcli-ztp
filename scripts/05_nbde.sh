@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-PRIMARY_NIC=$(ls -1 /sys/class/net | head -1)
+PRIMARY_NIC=$(ls -1 /sys/class/net | grep -v podman | head -1)
 yum -y install clevis tang
 semanage port -a -t tangd_port_t -p tcp 7500
 # firewall-cmd --add-port=7500/tcp
