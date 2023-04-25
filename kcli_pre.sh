@@ -52,31 +52,31 @@ ip a l {{ baremetal_bridge }} >/dev/null 2>&1 || { echo Issue with network {{ ba
 
 # VERSION CHECK
 {% if version is defined %}
+
 {% if version not in ['dev-preview', 'stable', 'nightly', 'ci', 'latest'] %}
   echo "Incorrect version {{ version }}. Should be stable, dev-preview, ci, latest or nightly" && exit 1
 {% endif %}
+
 {% if version in ['dev-preview', 'stable'] %}
 {% set tag = tag|string %}
 {% if tag.split('.')|length > 2 %}
 TAG={{ tag }}
-{% elif version == 'dev-preview' %}
-TAG={{"latest-" + tag }}
 {% else %}
-TAG={{"stable-" + tag }}
+TAG={{"latest-" + tag }}
 {% endif %}
 OCP_REPO={{ 'ocp-dev-preview' if version == 'dev-preview' else 'ocp' }}
-curl -Ns https://mirror.openshift.com/pub/openshift-v4/clients/$OCP_REPO/$TAG/release.txt | grep -q 'Pull From: quay.io'
-if  [ "$?" != "0" ] ; then
-  echo couldnt gather release associated to {{ version }} and {{ tag }}
-  exit 1
-fi
+export OPENSHIFT_RELEASE_IMAGE=$(curl -s https://mirror.openshift.com/pub/openshift-v4/clients/$OCP_REPO/$TAG/release.txt | grep 'Pull From: quay.io' | awk -F ' ' '{print $3}')
 {% elif version == 'latest' %}
-curl -Ns https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ version }}-{{ tag }}/release.txt | grep -q 'Pull From: quay.io'
-if  [ "$?" != "0" ] ; then
-  echo couldnt gather release associated to {{ version }} and {{ tag }}
+export OPENSHIFT_RELEASE_IMAGE=$(curl -s https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ version }}-{{ tag }}/release.txt | grep 'Pull From: quay.io' | awk -F ' ' '{print $3}')
+{% elif version == 'ci' %}
+export OPENSHIFT_RELEASE_IMAGE={{ openshift_image or "registry.ci.openshift.org/ocp/release:" + tag|string }}
+{% elif version == 'nightly' %}
+export OPENSHIFT_RELEASE_IMAGE=$(curl -s https://amd64.ocp.releases.ci.openshift.org/api/v1/releasestream/{{ tag|string }}.0-0.nightly/latest | jq -r .pullSpec)
+{% endif %}
+if [ -z "$OPENSHIFT_RELEASE_IMAGE" ] ; then
+  echo Couldnt gather release image associated to {{ version }} and {{ tag }}
   exit 1
 fi
-{% endif %}
 {% endif %}
 
 # DISCONNECTED_URL CHECK
