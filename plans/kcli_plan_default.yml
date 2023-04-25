@@ -70,6 +70,9 @@ disconnected_community_operators: []
 disconnected_marketplace_operators: []
 disconnected_operators_deploy_after_openshift: False
 disconnected_operators_version:
+disconnected_community_operators_version:
+disconnected_marketplace_operators_version:
+disconnected_certified_operators_version:
 disconnected_extra_images: []
 disconnected_extra_catalogs: []
 disconnected_extra_releases: []
