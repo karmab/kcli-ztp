@@ -2,7 +2,8 @@
 
 set -euo pipefail
 
-dnf -y install libvirt-libs libvirt-client ipmitool mkisofs tmux make git bash-completion vim-enhanced
+dnf -y copr enable karmab/kcli
+dnf -y install libvirt-libs libvirt-client ipmitool mkisofs tmux make git bash-completion vim-enhanced kcli
 dnf -y install python3
 
 update-ca-trust extract

@@ -10,9 +10,6 @@ sleep 30
 echo "fastestmirror=1" >> /etc/dnf/dnf.conf
 dnf -y install pkgconf-pkg-config libvirt-devel gcc python3-libvirt python3 git python3-netifaces
 
-dnf -y copr enable karmab/kcli
-dnf -y install kcli
-
 SUSHYFLAGS={{ "--ipv6" if ':' in baremetal_cidr else "" }}
 kcli create sushy-service $SUSHYFLAGS
 
