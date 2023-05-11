@@ -114,8 +114,8 @@ contrail-ctl:
  - path: /root/spoke_{{ spoke.name }}/bmc.sh
    origin: ztp/scripts/bmc.sh
    index: {{ loop.index0 }}
- - path: /root/spoke_{{ spoke.name }}/spoke_kubeconfig.sh
-   origin: ztp/scripts/spoke_kubeconfig.sh
+ - path: /root/spoke_{{ spoke.name }}/kubeconfig.sh
+   origin: ztp/scripts/kubeconfig.sh
    spoke: {{ spoke.name }}
 {% if spoke_manifests|find_manifests or contrail %}
  - path: /root/spoke_{{ spoke.name }}/manifests.sh
