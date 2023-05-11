@@ -130,6 +130,9 @@ contrail-ctl:
  - path: /root/spoke_{{ spoke.name }}/contrail.sh
    origin: ztp/scripts/contrail.sh
    spoke: {{ spoke.name }}
+ - path: /root/spoke_{{ spoke.name }}/contrail.auth
+   origin: ztp/scripts/contrail.auth
+   spoke: {{ spoke.name }}
 {% endif %}
 {% endfor %}
  - ztp/scripts/spokes_deploy.sh
