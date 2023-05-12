@@ -17,6 +17,7 @@ SECOND_NIC={{ ztp_contrail_ctl_nic }}
 sed -i "s@ens3@$FIRST_NIC@" *99-disable-offload-master.yaml *99-disable-offload-worker.yaml
 sed -i "s@ens4@$SECOND_NIC@" vrrp/*99-disable-offload-master-ens4.yaml vrrp/*99-disable-offload-worker-ens4.yaml
 
+rm -rf auth-registry/103-contrail-analytics-imagepullsecret.yaml
 sed -i "s@<base64-encoded-credential>@$PULLSECRET_ENCODED@" auth-registry/*pullsecret.yaml
 
 [ -d /root/spoke_$SPOKE/manifests ] || mkdir /root/spoke_$SPOKE/manifests
