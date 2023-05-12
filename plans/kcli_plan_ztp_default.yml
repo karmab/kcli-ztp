@@ -25,6 +25,6 @@ ztp_pxe: false
 mce_hypershift: false
 ztp_contrail_ctl_cidr: 10.40.1.0/24
 ztp_contrail_ctl_gateway: 10.40.1.1
-ztp_contrail_version: 22.4
+ztp_contrail_version: 23.1
 ztp_contrail_data_nic: enp1s0
 ztp_contrail_ctl_nic: enp2s0
