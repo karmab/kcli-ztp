@@ -4,8 +4,7 @@ SPOKE={{ spoke }}
 VERSION={{ ztp_contrail_version }}
 CTL_CIDR={{ ztp_contrail_ctl_cidr }}
 CTL_GATEWAY={{ ztp_contrail_ctl_gateway }}
-export AUTH=$(cat /root/openshift_pull.json | jq '.auths["enterprise-hub.juniper.net"].auth')
-PULLSECRET_ENCODED=$(envsubst < /root/spoke_$SPOKE/contrail.auth | base64 -w0)
+PULLSECRET_ENCODED=$(cat /root/openshift_pull.json | tr -d [:space:] | base64 -w0)
 cd /root
 git clone https://github.com/Juniper/contrail-networking
 cd contrail-networking/releases/$VERSION/ocp
