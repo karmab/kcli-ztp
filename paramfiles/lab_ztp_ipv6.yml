@@ -3,7 +3,7 @@ pool: default
 disconnected: true
 virtual_ctlplanes: true
 version: stable
-tag: "4.12"
+tag: "4.13"
 cluster: lab
 domain: karmalabs.corp
 baremetal_cidr: 2620:52:0:1302::/64

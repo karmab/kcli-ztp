@@ -171,7 +171,7 @@ The following parameters are available when deploying the default plan
 |ntp                                          |False                                     |
 |ntp_server                                   |0.rhel.pool.ntp.org                       |
 |numcpus                                      |16                                        |
-|openshift_image                              |registry.ci.openshift.org/ocp/release:4.12|
+|openshift_image                              |registry.ci.openshift.org/ocp/release:4.13|
 |pullsecret                                   |openshift_pull.json                       |
 |registry_image                               |quay.io/karmab/registry:amd64             |
 |rhnregister                                  |True                                      |
