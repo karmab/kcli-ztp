@@ -53,10 +53,8 @@
 {% endif %}
  - path: /root/.bashrc
    origin: envfiles/bashrc
-{% if virtual_ctlplanes or virtual_workers %}
  - path: /root/.kcli/config.yml
    origin: bin/kcli_config.yml
-{% endif %}
 {% if disconnected_quay and ':' in baremetal_cidr %}
  - path: /usr/lib/systemd/system/quay-haproxy.service
    origin: mirror-registry/quay_haproxy.service
