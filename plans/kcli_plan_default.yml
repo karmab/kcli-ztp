@@ -31,6 +31,7 @@ openshift_image:
 network_type: OVNKubernetes
 dualstack: false
 dualstack_cidr:
+dualstack_isolated: false
 http_proxy:
 no_proxy:
 keys: []
