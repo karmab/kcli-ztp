@@ -14,7 +14,13 @@ baremetal_net: lab-baremetal
 virtual_ctlplanes_memory: 16384
 virtual_ctlplanes_numcpus: 8
 api_ip: 192.168.130.253
+# dual_api_ip is optional, you don't need to set it
+# if you don't want a VIP on the IPv6 network
+dual_api_ip: 2620:52:0:1302::253
 ingress_ip: 192.168.130.252
+# dual_ingress_ip is optional, you don't need to set it
+# if you don't want a VIP on the IPv6 network
+dual_ingress_ip: 2620:52:0:1302::252
 baremetal_ips:
 - 192.168.130.20
 - 192.168.130.21

@@ -7,6 +7,8 @@ no_proxy:
 keys: []
 api_ip:
 ingress_ip:
+dual_api_ip:
+dual_ingress_ip:
 pool: default                                                                                                                                 
 numcpus: 16   
 ctlplanes: []

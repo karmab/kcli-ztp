@@ -8,6 +8,16 @@
 {% else %}
 {% set ipv6 = False %}
 {% endif %}
+{% if dual_api_ip != None and ':' in dual_api_ip %}
+{% set dualstack_api = True %}
+{% else %}
+{% set dualstack_api = False %}
+{% endif %}
+{% if dual_ingress_ip != None and ':' in dual_ingress_ip %}
+{% set dualstack_ingress = True %}
+{% else %}
+{% set dualstack_ingress = False %}
+{% endif %}
 {% if virtual_ctlplanes %}
 {% set extra_ctlplanes = [] %}
 {% for num in range(0, virtual_ctlplanes_number) %}
@@ -49,6 +59,16 @@
 {% else %}
 {% set cluster_networks = [cluster_network_ipv4] %}
 {% set service_networks = service_network_ipv4 %}
+{% endif %}
+{% if dualstack_api %}
+{% set api_vips = [api_ip] + [dual_api_ip] %}
+{% else %}
+{% set api_vips = [api_ip] %}
+{% endif %}
+{% if dualstack_ingress %}
+{% set ingress_vips = [ingress_ip] + [dual_ingress_ip] %}
+{% else %}
+{% set ingress_vips = [ingress_ip] %}
 {% endif %}
 {% set libvirt_user =  'root' if config_user == 'apache' else config_user %}
 {% set libvirt_ip = config_host if config_host not in ['127.0.0.1', 'localhost'] else baremetal_net|local_ip %}
@@ -94,8 +114,14 @@ controlPlane:
   replicas: {{ ctlplanes|length }}
 platform:
   baremetal:
-    apiVIP: {{ api_ip }}
-    ingressVIP: {{ ingress_ip }}
+    apiVIP:
+{% for api_vip in api_vips %}
+    - {{ api_vip }}
+{% endfor %}
+    ingressVIP:
+{% for ingress_vip in ingress_vips %}
+    - {{ ingress_vip }}
+{% endfor %}
 {% if baremetal_bootstrap_os_image != None %}
     bootstrapOSImage: {{ baremetal_bootstrap_os_image }}
 {% endif %}
