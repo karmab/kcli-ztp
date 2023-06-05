@@ -88,6 +88,10 @@
  - origin: {{ manifests_dir }}
    path: /root/manifests
 {% endif %}
+{% if installer_mac != None and ':' in api_ip|default('') %}
+ - path: /etc/NetworkManager/conf.d/kcli-ipv6.conf
+   origin: envfiles/kcli-ipv6.conf
+{% endif %}
 {% if launch_steps %}
  cmds:
  - bash /root/scripts/launch_steps.sh

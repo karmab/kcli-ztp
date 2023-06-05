@@ -40,3 +40,4 @@ lab_extra_dns:
 - assisted-image-service-multicluster-engine
 notify: true
 nfs: true
+installer_mac: aa:bb:aa:aa:bb:01

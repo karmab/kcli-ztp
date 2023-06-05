@@ -30,3 +30,4 @@ nfs: true
 # This is a dope vm
 # be careful and wach your steps
 # you ve been warned
+installer_mac: aa:bb:aa:aa:bb:01
