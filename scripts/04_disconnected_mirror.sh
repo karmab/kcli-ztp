@@ -26,27 +26,24 @@ REGISTRY_NAME=$(echo $IP | sed 's/\./-/g' | sed 's/:/-/g').sslip.io
 REGISTRY_PORT={{ 8443 if disconnected_quay else 5000 }}
 {% endif %}
 
-DISCONNECTED_PREFIX=openshift/release
-DISCONNECTED_PREFIX_IMAGES=openshift/release-images
-
 export OPENSHIFT_RELEASE_IMAGE=$( openshift-baremetal-install version | grep 'release image' | awk -F ' ' '{print $3}')
 export LOCAL_REG="$REGISTRY_NAME:$REGISTRY_PORT"
 export OCP_RELEASE=$(/root/bin/openshift-baremetal-install version | head -1 | cut -d' ' -f2)-x86_64
-oc adm release mirror -a $PULL_SECRET --from=$OPENSHIFT_RELEASE_IMAGE --to-release-image=${LOCAL_REG}/$DISCONNECTED_PREFIX_IMAGES:${OCP_RELEASE} --to=${LOCAL_REG}/$DISCONNECTED_PREFIX
+oc adm release mirror -a $PULL_SECRET --from=$OPENSHIFT_RELEASE_IMAGE --to-release-image=${LOCAL_REG}/openshift/release-images:${OCP_RELEASE} --to=${LOCAL_REG}/openshift/release
 
 {% for release in disconnected_extra_releases %}
 EXTRA_OCP_RELEASE={{ release.split(':')[1] }}
-oc adm release mirror -a $PULL_SECRET --from={{ release }} --to-release-image=${LOCAL_REG}/$DISCONNECTED_PREFIX_IMAGES:${EXTRA_OCP_RELEASE} --to=${LOCAL_REG}/$DISCONNECTED_PREFIX
+oc adm release mirror -a $PULL_SECRET --from={{ release }} --to-release-image=${LOCAL_REG}/openshift/release-images:${EXTRA_OCP_RELEASE} --to=${LOCAL_REG}/openshift/release
 {% endfor %}
 
 if [ "$(grep imageContentSources /root/install-config.yaml)" == "" ] ; then
 cat << EOF >> /root/install-config.yaml
 imageContentSources:
 - mirrors:
-  - $REGISTRY_NAME:$REGISTRY_PORT/$DISCONNECTED_PREFIX
+  - $REGISTRY_NAME:$REGISTRY_PORT/openshift/release
   source: quay.io/openshift-release-dev/ocp-v4.0-art-dev
 - mirrors:
-  - $REGISTRY_NAME:$REGISTRY_PORT/$DISCONNECTED_PREFIX_IMAGES
+  - $REGISTRY_NAME:$REGISTRY_PORT/openshift/release-images
 {% if version == 'ci' %}
   source: registry.ci.openshift.org/ocp/release
 {% elif version == 'nightly' %}
@@ -56,7 +53,7 @@ imageContentSources:
 {% endif %}
 EOF
 else
-  IMAGECONTENTSOURCES="- mirrors:\n  - $REGISTRY_NAME:$REGISTRY_PORT/$DISCONNECTED_PREFIX\n  source: quay.io/openshift-release-dev/ocp-v4.0-art-dev\n- mirrors:\n  - $REGISTRY_NAME:$REGISTRY_PORT/$DISCONNECTED_PREFIX_IMAGES\n  source: registry.ci.openshift.org/ocp/release"
+  IMAGECONTENTSOURCES="- mirrors:\n  - $REGISTRY_NAME:$REGISTRY_PORT/openshift/release\n  source: quay.io/openshift-release-dev/ocp-v4.0-art-dev\n- mirrors:\n  - $REGISTRY_NAME:$REGISTRY_PORT/openshift/release-images\n  source: registry.ci.openshift.org/ocp/release"
   sed -i "/imageContentSources/a${IMAGECONTENTSOURCES}" /root/install-config.yaml
 fi
 
@@ -68,7 +65,7 @@ else
   sed -i "/additionalTrustBundle/a${LOCALCERT}" /root/install-config.yaml
   sed -i 's/^-----BEGIN/ -----BEGIN/' /root/install-config.yaml
 fi
-echo $REGISTRY_NAME:$REGISTRY_PORT/$DISCONNECTED_PREFIX_IMAGES:$OCP_RELEASE > /root/version.txt
+echo $REGISTRY_NAME:$REGISTRY_PORT/openshift/release-images:$OCP_RELEASE > /root/version.txt
 
 if [ "$(grep pullSecret /root/install-config.yaml)" == "" ] ; then
 DISCONNECTED_PULLSECRET=$(cat /root/disconnected_pull.json | tr -d [:space:])

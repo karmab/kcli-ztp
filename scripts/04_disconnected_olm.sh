@@ -45,7 +45,6 @@ fi
 mkdir -p /root/.docker
 cp -f /root/openshift_pull.json /root/.docker/config.json
 
-export DISCONNECTED_PREFIX=openshift/release
 envsubst < /root/scripts/mirror-config.yaml.sample > /root/mirror-config.yaml
 
 rm -rf /root/oc-mirror-workspace || true
