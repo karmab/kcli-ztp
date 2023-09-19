@@ -8,7 +8,7 @@ envsubst < /root/ztp/scripts/siteconfig.sample.yml >> /root/siteconfig.yml
 
 bash /root/ztp/scripts/bmc_siteconfig.sh
 
-podman pull quay.io/openshift-kni/ztp-site-generator:latest
-podman create -ti --name ztp-site-gen ztp-site-generator:latest bash
-podman cp ztp-site-gen:/home/ztp /root/out
-podman run --security-opt label=disable -v /root:/workdir quay.io/karmab/siteconfig-generator -manifestPath /workdir/out/extra-manifest /workdir/siteconfig.yml >> /root/spokes.yml
+mkdir -p /root/.config/kustomize/plugin
+podman cp $(podman create --name policgentool --rm registry.redhat.io/openshift4/ztp-site-generate-rhel8:v$MINOR):/kustomize/plugin/ran.openshift.io /root/.config/kustomize/plugin/
+
+oc kustomize /root --enable-alpha-plugins > /root/spokes.yml

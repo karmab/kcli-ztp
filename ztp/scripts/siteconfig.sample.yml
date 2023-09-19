@@ -115,7 +115,7 @@ spec:
         bmcAddress: idrac-virtualmedia://{{ node['redfish_address'] }}/redfish/v1/Systems/System.Embedded.1
         {% endif %}
         {% else %}
-        bmcAddress: redfish-virtualmedia+http://IP:8000/redfish/v1/Systems/UUID-{{ spoke_name }}-{{ num }}
+        bmcAddress: redfish-virtualmedia+http://CHANGEME:8000/redfish/v1/Systems/UUID-{{ spoke_name }}-{{ num }}
         {% endif %}
         bmcCredentialsName:
           name: {{ cluster }}-ztp-{{ spoke_name }}-bmc-secret-{{ num }}
