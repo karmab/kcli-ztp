@@ -1,4 +1,3 @@
-bash /root/ztp/scripts/bmc_siteconfig.sh
 bash /root/ztp/scripts/siteconfig.sh
 oc apply -f /root/spokes.yml
 {% for spoke in ztp_spokes %}
