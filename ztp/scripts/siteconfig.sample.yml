@@ -133,7 +133,6 @@ spec:
                 state: up
                 {{ protocol }}:
                   enabled: true
-                  autoconf: true
                   dhcp: true
                   auto-dns: true
                   auto-gateway: true

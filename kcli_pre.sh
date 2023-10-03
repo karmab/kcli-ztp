@@ -120,10 +120,10 @@ echo Incorrect spoke_name {{ spoke_name }}: cant contain an underscore && exit 1
 {% endif %}
 {% if spoke_ctlplanes_number > 1 %}
 {% if spoke_api_ip == None %}
-echo no spoke_api_ip. You will have to handle this by yourself
+echo no spoke_api_ip. This is mandatory for an HA spoke && exit 1
 {% endif %}
 {% if spoke_ingress_ip == None %}
-echo no spoke_ingress_ip. You will have to handle this by yourself
+echo no spoke_ingress_ip. This is mandatory for an HA spoke && exit 1
 {% endif %}
 {% endif %}
 {% endfor %}
