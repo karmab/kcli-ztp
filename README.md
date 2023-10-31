@@ -171,13 +171,13 @@ The following parameters are available when deploying the default plan
 |ntp                                          |False                                     |
 |ntp_server                                   |0.rhel.pool.ntp.org                       |
 |numcpus                                      |16                                        |
-|openshift_image                              |registry.ci.openshift.org/ocp/release:4.13|
+|openshift_image                              |                                          |
 |pullsecret                                   |openshift_pull.json                       |
 |registry_image                               |quay.io/karmab/registry:amd64             |
 |rhnregister                                  |True                                      |
 |rhnwait                                      |30                                        |
-|tag                                          |4.1                                       |
-|version                                      |ci                                        |
+|tag                                          |4.14                                      |
+|version                                      |stable                                    |
 
 ### Node parameters
 

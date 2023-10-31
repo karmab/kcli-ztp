@@ -1,6 +1,6 @@
 lab: true
 version: stable
-tag: "4.13"
+tag: "4.14"
 virtual_protocol: redfish
 virtual_ctlplanes: false
 launch_steps: true
