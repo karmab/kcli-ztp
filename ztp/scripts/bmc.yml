@@ -6,6 +6,7 @@
 {% set spoke = ztp_spokes[index] %}
 {% set spoke_name = spoke.name %}
 {% set virtual_nodes_number = spoke["virtual_nodes_number"]|default(0) %}
+{% set ocp_nodes_number = spoke["ctlplanes_number"]|default(0) + spoke["workers_number"]|default(0)%}
 {% set nodes = spoke["nodes"]|default([]) %}
 
 {% if virtual_nodes_number > 0 %}
@@ -19,6 +20,7 @@
 ---
 {% for node in nodes %}
 {% set num = loop.index0 %}
+{% if num < ocp_nodes_number %}
 apiVersion: v1
 data:
   password: {{ bmc_password|string|base64 }}
@@ -80,4 +82,5 @@ spec:
     wwn: "{{ node['wwn'] }}"
 {% endif %}
 ---
+{% endif %}
 {% endfor %}
