@@ -5,7 +5,7 @@ on:
       RUNNER:
         description: 'Runner Name'
         required: true
-        default: 'u08'
+        default: 'libvirt'
       CLIENT:
         description: 'Client name'
         required: true
