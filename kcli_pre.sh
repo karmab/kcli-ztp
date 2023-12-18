@@ -151,7 +151,7 @@ export LIBVIRT_DEFAULT_URI=$(kcli -C $CLIENT info host | grep Connection | sed '
 TWODAYSAGO=$(date -d '2 days ago' +%s)
 for volume in $(virsh vol-list $POOL | grep boot-* | awk '{print $2}') ; do
   VOLXML=$(virsh vol-dumpxml $volume)
-  [ -z $VOLXML ] && continue
+  [ -z "$VOLXML" ] && continue
   VOLDATE=$(echo $VOLXML | sed 's@.*<ctime>\(.*\)</ctime>.*@\1@')
   VOLDATE=$(date -d @$VOLDATE +%s)
   (($VOLDATE < $TWODAYSAGO)) && virsh vol-delete $volume

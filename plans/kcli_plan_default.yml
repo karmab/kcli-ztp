@@ -6,7 +6,7 @@ info: |
     - launch the install against a set of baremetal nodes (and optionally virtual ctlplanes)
     It can be used with a centos8stream or rhel8 vm (which required to set rhn credentials in your kcli config)
     default location for pull secret is openshift_pull.json unless overriding with pullsecret variable
-    api_ip and ingress_ip need to bse set along with ctlplanes and workers array to specify your nodes.
+    api_ip and ingress_ip need to be set along with ctlplanes and workers array to specify your nodes.
     Nfs can be set to true to deploy nfs provisioner using a share on the installer vm
     default network type is OVNKubernetes but you can also specify OpenShiftSDN
     You can also use ca and imagecontentsources to customize your environments or drop specific manifests in the manifests directory

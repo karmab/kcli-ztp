@@ -3,11 +3,7 @@
 {% set baremetal_gateway = static_baremetal_gateway or baremetal_cidr|network_ip(1 if lab else -2) %}
 {% set baremetal_dns = static_baremetal_dns or baremetal_gateway %}
 {% set nic = 'enp1s0' %}
-{% if api_ip != None and ':' in api_ip %}
-{% set ipv6 = True %}
-{% else %}
-{% set ipv6 = False %}
-{% endif %}
+{% set ipv6 =  api_ip != None and ':' in api_ip %}
 {% if virtual_ctlplanes %}
 {% set extra_ctlplanes = [] %}
 {% for num in range(0, virtual_ctlplanes_number) %}
@@ -39,6 +35,15 @@
 {% set service_network_ipv6 = ["fd02::/112"] %}
 {% set service_network_ipv4 = ["172.30.0.0/16"] %}
 {% set machine_networks = [baremetal_cidr] %}
+{% set api_vips = [api_ip] %}
+{% if dual_api_ip != None and ':' in dual_api_ip %}
+{% set dualstack = True %}
+{{ api_vips.append(dual_api_ip)|default("", True) }}
+{% endif %}
+{% set ingress_vips = [ingress_ip] %}
+{% if dual_ingress_ip != None and ':' in dual_ingress_ip %}
+{{ ingress_vips.append(dual_ingress_ip)|default("", True) }}
+{% endif %}
 {% if dualstack|default(False) %}
 {% set machine_networks = [baremetal_cidr] + [dualstack_cidr] %}
 {% set cluster_networks = [cluster_network_ipv4] + [cluster_network_ipv6] %}
@@ -94,8 +99,14 @@ controlPlane:
   replicas: {{ ctlplanes|length }}
 platform:
   baremetal:
-    apiVIP: {{ api_ip }}
-    ingressVIP: {{ ingress_ip }}
+    apiVIPs:
+{% for api_vip in api_vips %}
+    - {{ api_vip }}
+{% endfor %}
+    ingressVIPs:
+{% for ingress_vip in ingress_vips %}
+    - {{ ingress_vip }}
+{% endfor %}
 {% if baremetal_bootstrap_os_image != None %}
     bootstrapOSImage: {{ baremetal_bootstrap_os_image }}
 {% endif %}
