@@ -32,6 +32,34 @@ if [ ! -d /Users ] && [ -n "$(which ipcalc)" ] ; then
 fi
 {% endif %}
 
+{% if dual_api_ip != None and dual_ingress_ip == None %}
+echo dual_api_ip set but not dual_ingress_ip. No network, no party!
+exit 1
+{% elif dual_ingress_ip != None and dual_api_ip == None %}
+echo dual_ingress_ip set but not dual_api_ip. No network, no party!
+exit 1
+{% elif dual_api_ip != None and dual_api_ip == dual_ingress_ip %}
+echo dual_api_ip and dual_ingress_ip cant be set to the same value
+exit 1
+{% elif dual_api_ip != None and dualstack_cidr == None %}
+echo dualstack_cidr needs to be set along with dual_api_ip
+exit 1
+{% elif dual_api_ip != None and dual_ingress_ip != None %}
+if [ ! -d /Users ] && [ -n "$(which ipcalc)" ] ; then
+  {% set dual_prefix = dualstack_cidr.split('/')[1] %}
+  dual_api_cidr=$(ipcalc {{ dual_api_ip }}/{{ dual_prefix }} | grep ^Network: | sed 's/Network://' | xargs)
+  if [ "$dual_api_cidr" != "{{ dualstack_cidr }}" ] ; then
+   echo {{ dual_api_ip }} doesnt belong to to {{ dualstack_cidr }}
+   exit 1
+  fi
+  dual_ingress_cidr=$(ipcalc {{ dual_ingress_ip }}/{{ dual_prefix }} | grep ^Network: | sed 's/Network://' | xargs)
+  if [ "$dual_ingress_cidr" != "{{ dualstack_cidr }}" ] ; then
+    echo {{ dual_ingress_ip }} doesnt belong to to {{ dualstack_cidr }}
+    exit 1
+  fi
+fi
+{% endif %}
+
 {% if dualstack %}
 {% if ':' in baremetal_cidr %}
 echo baremetal_cidr needs to be ipv4 for dual stack
