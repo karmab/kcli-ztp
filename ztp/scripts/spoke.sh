@@ -23,8 +23,6 @@ export MASTERS_NUMBER={{ spoke_ctlplanes_number }}
 export WORKERS_NUMBER={{ spoke_workers_number }}
 export SSH_PUB_KEY=$(cat /root/.ssh/id_rsa.pub)
 
-[ -f /root/spoke_$SPOKE/contrail.sh ] && /root/spoke_$SPOKE/contrail.sh
-
 [ -d /root/spoke_$SPOKE/manifests ] && /root/spoke_$SPOKE/manifests.sh
 envsubst < /root/spoke_$SPOKE/spoke.sample.yml >> /root/spoke_$SPOKE/spoke.yml
 
