@@ -29,7 +29,7 @@ fi
 
 {% if disconnected %}
 {% if disconnected_url == None %}
-echo -e "${blue}************ RUNNING 04_disconnected_{{ 'quay.sh' if disconnected_quay else 'registry.sh' }}.sh ************${clear}"
+echo -e "${blue}************ RUNNING 04_disconnected_{{ 'quay.sh' if disconnected_quay else 'registry.sh' }} ************${clear}"
 /root/scripts/04_disconnected_{{ 'quay.sh' if disconnected_quay else 'registry.sh' }} || exit 1
 {% endif %}
 echo -e "${blue}************ RUNNING 04_disconnected_mirror.sh ************${clear}"
