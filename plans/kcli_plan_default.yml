@@ -94,6 +94,7 @@ localhost_fix: false
 virtual_ctlplanes_static_network: False
 virtual_workers_static_network: False
 schedulable_ctlplanes: False
+cpu_partitioning: false
 static_baremetal_gateway:
 static_baremetal_dns:
 monitoring_retention:
