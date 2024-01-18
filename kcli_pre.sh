@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+
+# CLEANING
+kcli delete iso --yes $CLUSTER.iso || true
+
 # NETWORK CHECK
 {% if baremetal_cidr == None %}
 echo baremetal_cidr not set. No network, no party!
@@ -8,17 +12,29 @@ exit 1
 {% set baremetal_prefix = baremetal_cidr.split('/')[1] %}
 {% endif %}
 
-{% if api_ip == None %}
+{% set virtual_ctlplanes_nodes = [] %}
+{% set virtual_workers_nodes = [] %}
+{% if virtual_ctlplanes %}
+{% for num in range(0, virtual_ctlplanes_number) %}
+{% do virtual_ctlplanes_nodes.append({}) %}
+{% endfor %}
+{% endif %}
+{% set ctlplanes_hosts = ctlplanes + virtual_ctlplanes_nodes %}
+
+{% if ctlplanes_hosts|length > 1 and api_ip == None %}
 echo api_ip not set. No network, no party!
 exit 1
-{% elif ingress_ip == None %}
+{% endif %}
+{% if ctlplanes_hosts|length > 1 and ingress_ip == None %}
 echo ingress_ip not set. No network, no party!
 exit 1
-{% elif  api_ip == ingress_ip %}
+{% endif %}
+{% if api_ip != None and ingress_ip != None and api_ip == ingress_ip %}
 echo api_ip and ingress_ip cant be set to the same value
 exit 1
-{% else %}
-if [ ! -d /Users ] && [ -n "$(which ipcalc)" ] ; then
+{% endif %}
+{% if ctlplanes_hosts|length > 1 %}
+if [ -n "$(which ipcalc)" ] ; then
   api_cidr=$(ipcalc {{ api_ip }}/{{ baremetal_prefix }} | grep ^Network: | sed 's/Network://' | xargs)
   if [ "$api_cidr" != "{{ baremetal_cidr }}" ] ; then
    echo {{ api_ip }} doesnt belong to to {{ baremetal_cidr }}
@@ -29,6 +45,8 @@ if [ ! -d /Users ] && [ -n "$(which ipcalc)" ] ; then
     echo {{ ingress_ip }} doesnt belong to to {{ baremetal_cidr }}
     exit 1
   fi
+else
+  echo Couldnt check whether api_ip and ingress ip belong to baremetal cidr because ipcalc is not present
 fi
 {% endif %}
 
@@ -45,7 +63,7 @@ exit 1
 echo dualstack_cidr needs to be set along with dual_api_ip
 exit 1
 {% elif dual_api_ip != None and dual_ingress_ip != None %}
-if [ ! -d /Users ] && [ -n "$(which ipcalc)" ] ; then
+if [ -n "$(which ipcalc)" ] ; then
   {% set dual_prefix = dualstack_cidr.split('/')[1] %}
   dual_api_cidr=$(ipcalc {{ dual_api_ip }}/{{ dual_prefix }} | grep ^Network: | sed 's/Network://' | xargs)
   if [ "$dual_api_cidr" != "{{ dualstack_cidr }}" ] ; then
@@ -57,6 +75,8 @@ if [ ! -d /Users ] && [ -n "$(which ipcalc)" ] ; then
     echo {{ dual_ingress_ip }} doesnt belong to to {{ dualstack_cidr }}
     exit 1
   fi
+else
+  echo Couldnt check whether api_ip and ingress ip belong to baremetal cidr because ipcalc is not present
 fi
 {% endif %}
 
@@ -147,6 +167,7 @@ echo spoke_name needs to be on each entry of ztp_spokes && exit 1
 {% elif '_' in spoke_name %}
 echo Incorrect spoke_name {{ spoke_name }}: cant contain an underscore && exit 1
 {% endif %}
+kcli delete iso --yes {{ spoke_name }}.iso || true
 {% if spoke_ctlplanes_number <= 0 %}
 echo Incorrect spoke_ctlplanes_number {{ spoke_ctlplanes_number }} in {{ spoke_name }}: must be higher than 0 && exit 1
 {% endif %}
@@ -175,27 +196,3 @@ echo argocd_clusters_app_path needs to be set for argocd && exit 1
 echo argocd_policies_app_path needs to be set for argocd && exit 1
 {% endif %}
 {% endif %}
-
-## Cleaning
-CLIENT={{ client|default("$(kcli list client | grep ' X ' | cut -d'|' -f2 | xargs)") }}
-CLUSTER={{ cluster }}
-POOL={{ pool }}
-POOLPATH=$(kcli -C $CLIENT list pool | grep $POOL | cut -d"|" -f 3 | xargs)
-export LC_ALL="en_US.UTF-8"
-export LIBVIRT_DEFAULT_URI=$(kcli -C $CLIENT info host | grep onnection | awk '{print $2}')
-TWODAYSAGO=$(date -d '2 days ago' +%s)
-for volume in $(virsh vol-list $POOL | grep boot-* | awk '{print $2}') ; do
-  VOLXML=$(virsh vol-dumpxml $volume)
-  [ -z "$VOLXML" ] && continue
-  VOLDATE=$(echo $VOLXML | sed 's@.*<ctime>\(.*\)</ctime>.*@\1@')
-  VOLDATE=$(date -d @$VOLDATE +%s)
-  (($VOLDATE < $TWODAYSAGO)) && virsh vol-delete $volume
-done
-VMS=$(kcli -C $CLIENT list vm | grep ${CLUSTER}-.*-bootstrap | cut -d"|" -f 2 | xargs)
-[ -z "$VMS" ] || kcli -C $CLIENT delete vm --yes $VMS
-POOLS=$(kcli -C $CLIENT list pool --short | grep $CLUSTER-.*-bootstrap | cut -d"|" -f2 | xargs)
-if [ ! -z "$POOLS" ] ; then
-  for POOL in $POOLS ; do
-    kcli -C $CLIENT delete pool --yes $POOL
-  done
-fi

@@ -7,7 +7,7 @@ argocd_repo_url:
 argocd_clusters_app_path:
 argocd_policies_app_path:
 mce: true
-ztp_siteconfig: false
+ztp_siteconfig: true
 ztp_virtual_nodes_number: 1
 ztp_virtual_nodes_numcpus: 8
 ztp_virtual_nodes_memory: 38912
