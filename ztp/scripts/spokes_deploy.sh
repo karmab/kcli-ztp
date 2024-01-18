@@ -1,7 +1,10 @@
+export HOME=/root
+export PYTHONUNBUFFERED=true
 {% for spoke in ztp_spokes %}
 {% set spoke_deploy = spoke.get('deploy', ztp_spoke_deploy) %}
 {% if spoke_deploy %}
 SPOKE={{ spoke.name }}
+kcli delete iso -y $SPOKE.iso || true
 test -f /root/kubeconfig.$SPOKE || bash /root/spoke_$SPOKE/spoke.sh
 {% endif %}
 {% endfor %}

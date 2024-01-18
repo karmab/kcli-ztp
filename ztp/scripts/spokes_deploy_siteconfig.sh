@@ -1,3 +1,5 @@
+export HOME=/root
+export PYTHONUNBUFFERED=true
 bash /root/ztp/scripts/siteconfig.sh
 oc apply -f /root/spokes.yml
 {% for spoke in ztp_spokes %}
@@ -7,6 +9,7 @@ oc apply -f /root/spokes.yml
 {% if spoke_deploy and spoke.get('wait', ztp_spoke_wait) %}
 {% set spoke_wait_time = spoke.get('wait_time', ztp_spoke_wait_time) %}
 SPOKE={{ spoke.name }}
+kcli delete iso -y $SPOKE.iso || true
 timeout=0
 installed=false
 failed=false
