@@ -21,7 +21,7 @@ echo -e "${blue}************ RUNNING 01_patch_installconfig.sh ************${cle
 echo -e "${blue}************ RUNNING 02_packages.sh ************${clear}"
 /root/scripts/02_packages.sh
 
-MINOR=$(/root/bin/openshift-baremetal-install version | grep openshift-baremetal-install | cut -d' ' -f2 | cut -d. -f2)
+MINOR=$(openshift-install version | grep openshift-install | cut -d' ' -f2 | cut -d. -f2)
 if [ "$MINOR" -lt "10" ] ; then
 echo -e "${blue}************ RUNNING 03_cache.sh ************${clear}"
 /root/scripts/03_cache.sh
