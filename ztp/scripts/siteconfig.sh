@@ -1,4 +1,4 @@
-OCP_RELEASE=$(/root/bin/openshift-baremetal-install version | head -1 | cut -d' ' -f2)-x86_64
+OCP_RELEASE=$(openshift-install version | head -1 | cut -d' ' -f2)-x86_64
 export MINOR=$(echo $OCP_RELEASE | cut -d. -f1,2)
 export PULLSECRET=$(cat /root/openshift_pull.json | tr -d [:space:])
 export DOMAIN={{ domain }}

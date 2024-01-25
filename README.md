@@ -2,8 +2,8 @@
 
 This repository provides a plan which deploys a vm where:
 
-- openshift-baremetal-install is downloaded or compiled from source (with an additional list of PR numbers to apply)
-- stop the nodes to deploy through redfish or ipmi
+- openshift-baremetal-install is downloaded with the specific version and tag specified (and renamed openshift-install)
+- stop the nodes to deploy through redfish
 - launch the install against a set of baremetal nodes. Virtual ctlplanes and workers can also be deployed.
 
 The automation can be used for additional scenarios:

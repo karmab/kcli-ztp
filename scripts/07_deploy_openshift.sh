@@ -50,7 +50,7 @@ echo "BMC of worker is up! (${worker_ip})"
 {% endif %}
 {% endfor %}
 cp install-config.yaml ocp
-openshift-baremetal-install --dir ocp --log-level debug create manifests
+openshift-install --dir ocp --log-level debug create manifests
 {% if localhost_fix %}
 cp /root/machineconfigs/99-localhost-fix*.yaml /root/manifests
 {% endif %}
@@ -61,15 +61,15 @@ find manifests -type f -empty -print -delete
 cp manifests/*y*ml >/dev/null 2>&1 ocp/openshift || true
 grep -q "{{ api_ip }} api.{{ cluster }}.{{ domain }}" /etc/hosts || echo {{ api_ip }} api.{{ cluster }}.{{ domain }} >> /etc/hosts
 {% if baremetal_bootstrap_ip != None %}
-openshift-baremetal-install --dir ocp --log-level debug create ignition-configs
+openshift-install --dir ocp --log-level debug create ignition-configs
 NIC=ens3
 NICDATA="$(cat /root/static_network/ifcfg-bootstrap | base64 -w0)"
 cp /root/ocp/bootstrap.ign /root/ocp/bootstrap.ign.ori
 cat /root/ocp/bootstrap.ign.ori | jq ".storage.files |= . + [{\"filesystem\": \"root\", \"mode\": 420, \"path\": \"/etc/sysconfig/network-scripts/ifcfg-$NIC\", \"contents\": {\"source\": \"data:text/plain;charset=utf-8;base64,$NICDATA\", \"verification\": {}}}]" > /root/ocp/bootstrap.ign
 {% endif %}
 
-openshift-baremetal-install --dir ocp --log-level debug create cluster
-openshift-baremetal-install --dir ocp --log-level debug wait-for install-complete || openshift-baremetal-install --dir ocp --log-level debug wait-for install-complete
+openshift-install --dir ocp --log-level debug create cluster
+openshift-install --dir ocp --log-level debug wait-for install-complete || openshift-install --dir ocp --log-level debug wait-for install-complete
 {% if virtual_ctlplanes %}
 for node in $(oc get nodes --selector='node-role.kubernetes.io/master' -o name) ; do
   oc label $node node-role.kubernetes.io/virtual=""

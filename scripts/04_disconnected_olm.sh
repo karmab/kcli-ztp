@@ -2,7 +2,7 @@
 
 cd /root
 export PATH=/root/bin:$PATH
-export OCP_RELEASE="$(/root/bin/openshift-baremetal-install version | head -1 | cut -d' ' -f2 | cut -d'.' -f 1,2)"
+export OCP_RELEASE="$(openshift-install version | head -1 | cut -d' ' -f2 | cut -d'.' -f 1,2)"
 {% if disconnected_operators_version != None %}
 export OCP_RELEASE="{{ disconnected_operators_version }}"
 {% endif %}

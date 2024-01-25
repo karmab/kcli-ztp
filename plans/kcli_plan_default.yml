@@ -1,6 +1,6 @@
 info: |
     This deploys a vm where
-    - openshift-baremetal-install is downloaded
+    - openshift-install is downloaded
     - caches rhcos bootstrap image
     - stop the nodes to deploy through redfish
     - launch the install against a set of baremetal nodes (and optionally virtual ctlplanes)
