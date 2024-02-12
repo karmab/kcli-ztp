@@ -175,7 +175,7 @@ CLUSTER={{ cluster }}
 POOL={{ pool }}
 POOLPATH=$(kcli -C $CLIENT list pool | grep $POOL | cut -d"|" -f 3 | xargs)
 export LC_ALL="en_US.UTF-8"
-export LIBVIRT_DEFAULT_URI=$(kcli -C $CLIENT info host | grep Connection | sed 's/Connection: //')
+export LIBVIRT_DEFAULT_URI=$(kcli -C $CLIENT info host | grep onnection | awk '{print $2}')
 TWODAYSAGO=$(date -d '2 days ago' +%s)
 for volume in $(virsh vol-list $POOL | grep boot-* | awk '{print $2}') ; do
   VOLXML=$(virsh vol-dumpxml $volume)
