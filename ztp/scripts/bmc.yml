@@ -67,7 +67,7 @@ spec:
   hardwareProfile: unknown
   online: true
   automatedCleaningMode: disabled
-  bootMode: {{ 'UEFI' if ztp_uefi else 'legacy' }}
+  bootMode: {{ node['boot_mode']|default('UEFI' if ztp_uefi else 'legacy') }}
 {% if 'disk' in node %}
   rootDeviceHints:
     deviceName: "/dev/{{ node['disk'] | basename }}"
