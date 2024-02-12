@@ -140,11 +140,18 @@ echo disconnected_password will be forced to super{{ disconnected_password }}
 {% set spoke_api_ip = spoke.get('api_ip') %}
 {% set spoke_ingress_ip= spoke.get('ingress_ip') %}
 {% set spoke_ctlplanes_number = spoke.get('ctlplanes_number', 1) %}
+{% set spoke_workers_number = spoke.get('workers_number', 0) %}
 {% set virtual_nodes_number = spoke["virtual_nodes_number"]|default(0) %}
 {% if spoke_name == None %}
 echo spoke_name needs to be on each entry of ztp_spokes && exit 1
 {% elif '_' in spoke_name %}
 echo Incorrect spoke_name {{ spoke_name }}: cant contain an underscore && exit 1
+{% endif %}
+{% if spoke_ctlplanes_number <= 0 %}
+echo Incorrect spoke_ctlplanes_number {{ spoke_ctlplanes_number }} in {{ spoke_name }}: must be higher than 0 && exit 1
+{% endif %}
+{% if spoke_workers_number < 0 %}
+echo Incorrect spoke_workers_number {{ spoke_workers_number }} in {{ spoke_name }}: cant be negative && exit 1
 {% endif %}
 {% if spoke_ctlplanes_number > 1 %}
 {% if spoke_api_ip == None %}
