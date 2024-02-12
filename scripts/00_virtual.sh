@@ -22,7 +22,7 @@ IP=$(ip -o addr show $PRIMARY_NIC | head -1 | awk '{print $4}' | cut -d "/" -f 1
 echo $IP | grep -q ':' && IP=[$IP]
 sed -i "s/CHANGEME/$IP/" /root/install-config.yaml
 
-api_vip=$(grep apiVIP /root/install-config.yaml | sed s/apiVIP:// | xargs)
+api_vip=$(grep -A 1 apiVIPs /root/install-config.yaml | tail -1 | awk '{print $NF}')
 cluster=$(grep -m 1 name /root/install-config.yaml | awk -F: '{print $2}' | xargs)
 domain=$(grep baseDomain /root/install-config.yaml | awk -F: '{print $2}' | xargs)
 echo $api_vip api.$cluster.$domain >> /etc/hosts
