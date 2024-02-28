@@ -2,7 +2,7 @@ lab: true
 version: stable
 dualstack: true
 dualstack_cidr: 2620:52:0:1302::/64
-tag: "4.14"
+tag: "4.15"
 virtual_protocol: redfish
 virtual_ctlplanes: true
 launch_steps: true

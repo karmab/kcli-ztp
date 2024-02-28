@@ -7,7 +7,7 @@ virtual_ctlplanes: true
 launch_steps: true
 deploy_openshift: false
 version: stable
-tag: "4.14"
+tag: "4.15"
 cluster: lab
 domain: karmalabs.corp
 baremetal_cidr: 2620:52:0:1302::/64

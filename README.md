@@ -176,7 +176,7 @@ The following parameters are available when deploying the default plan
 |registry_image                               |quay.io/karmab/registry:amd64             |
 |rhnregister                                  |True                                      |
 |rhnwait                                      |30                                        |
-|tag                                          |4.14                                      |
+|tag                                          |4.15                                      |
 |version                                      |stable                                    |
 
 ### Node parameters
