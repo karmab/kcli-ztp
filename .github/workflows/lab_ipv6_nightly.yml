@@ -1,0 +1,34 @@
+name: lab-ztp-nightly
+on:
+  schedule:
+    - cron: '31 19 * * *'
+
+env:
+ HOME: /root
+ PYTHONUNBUFFERED: true
+ PLAN: lab
+ INPUTFILE: kcli_plan.yml
+ PARAMFILE: paramfiles/lab_ipv6.yml
+ PULLSECRET: /root/openshift_pull.json
+
+jobs:
+    requirements:
+      runs-on: libvirt
+      steps:
+      - uses: actions/checkout@v3
+      - run: git pull origin ${GITHUB_REF##*/}
+      - name: Install kcli
+        run: |
+          curl https://raw.githubusercontent.com/karmab/kcli/master/install.sh | bash
+          # kcli create pool -p /var/lib/libvirt/images default
+          # sudo setfacl -m u:$(id -un):rwx /var/lib/libvirt/images
+
+    deploy-plan:
+      needs: requirements
+      runs-on: libvirt
+      steps:
+      - name: Deploy kcli plan
+        run: kcli -c local create plan --force -f $INPUTFILE --paramfile $PARAMFILE -P pullsecret=$PULLSECRET $PLAN
+      - name: Clean up
+        if: always()
+        run: kcli -c local delete plan --yes $PLAN
