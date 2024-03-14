@@ -38,7 +38,6 @@ lab_extra_dns:
 - assisted-service-multicluster-engine
 - assisted-service-assisted-installer
 - assisted-image-service-multicluster-engine
-installer_wait: true
 #notify: true
 nfs: true
 installer_mac: aa:bb:aa:aa:bb:01

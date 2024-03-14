@@ -5,7 +5,7 @@ dualstack_cidr: 192.168.130.0/24
 disconnected: true
 virtual_ctlplanes: true
 launch_steps: true
-deploy_openshift: false
+deploy_openshift: true
 version: stable
 tag: "4.15"
 cluster: lab

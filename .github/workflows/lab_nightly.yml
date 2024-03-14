@@ -1,4 +1,4 @@
-name: lab-ztp-nightly
+name: lab-nightly
 on:
   schedule:
     - cron: '31 18 * * *'
@@ -28,7 +28,7 @@ jobs:
       runs-on: libvirt
       steps:
       - name: Deploy kcli plan
-        run: kcli -c local create plan --force -f $INPUTFILE --paramfile $PARAMFILE -P pullsecret=$PULLSECRET $PLAN
+        run: kcli -c local create plan --force -f $INPUTFILE --paramfile $PARAMFILE -P pullsecret=$PULLSECRET -P installer_wait=true $PLAN
       - name: Clean up
         if: always()
         run: kcli -c local delete plan --yes $PLAN
