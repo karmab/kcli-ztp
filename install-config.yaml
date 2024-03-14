@@ -58,7 +58,7 @@
 {% set libvirt_user =  'root' if config_user == 'apache' else config_user %}
 {% set libvirt_ip = config_host if config_host not in ['127.0.0.1', 'localhost'] else baremetal_net|local_ip %}
 {% set libvirt_ip = libvirt_ip|replace(':', '-') + '.sslip.io' %}
-{% set libvirt_url = 'qemu+ssh://' + libvirt_user + '@' + libvirt_ip + '/system' %}
+{% set libvirt_url = 'qemu+ssh://' + libvirt_user + '@' + libvirt_ip + '/system?no_verify=1' %}
 apiVersion: v1
 {% if fips %}
 fips: True
