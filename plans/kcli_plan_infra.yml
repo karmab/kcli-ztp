@@ -30,6 +30,9 @@ apps:
  - oauth-openshift.apps.{{ cluster }}.{{ domain }}
  - prometheus-k8s-openshift-monitoring.apps.{{ cluster }}.{{ domain }}
  - canary-openshift-ingress-canary.apps.{{ cluster }}.{{ domain }}
+ - assisted-service-multicluster-engine.apps.{{ cluster }}.{{ domain }}
+ - assisted-service-assisted-installer.apps.{{ cluster }}.{{ domain }}
+ - assisted-image-service-multicluster-engine.apps.{{ cluster }}.{{ domain }}
 {% for entry in lab_extra_dns %}
  - {{ entry }}.apps.{{ cluster }}.{{ domain }}
 {% endfor %}

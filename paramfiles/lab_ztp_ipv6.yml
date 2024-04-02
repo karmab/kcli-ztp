@@ -34,10 +34,6 @@ ztp_spokes:
   virtual_nodes_number: 1
 disk_size: 60
 installer_disk_size: 200
-lab_extra_dns:
-- assisted-service-multicluster-engine
-- assisted-service-assisted-installer
-- assisted-image-service-multicluster-engine
 #notify: true
 nfs: true
 installer_mac: aa:bb:aa:aa:bb:01

@@ -23,10 +23,6 @@ baremetal_macs:
 - aa:aa:aa:aa:bb:04
 disk_size: 60
 installer_disk_size: 200
-lab_extra_dns:
-- assisted-service-multicluster-engine
-- assisted-service-assisted-installer
-- assisted-image-service-multicluster-engine
 notify: true
 nfs: true
 disconnected: true
