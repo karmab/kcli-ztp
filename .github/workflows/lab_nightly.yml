@@ -8,7 +8,7 @@ env:
  PYTHONUNBUFFERED: true
  PLAN: lab
  INPUTFILE: kcli_plan.yml
- PARAMFILE: paramfiles/lab_ipv6.yml
+ PARAMFILE: paramfiles/lab_ztp_ipv6.yml
  PULLSECRET: /root/openshift_pull.json
 
 jobs:
