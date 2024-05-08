@@ -24,7 +24,6 @@ mv openshift-baremetal-install /usr/bin/openshift-install
 chmod u+x /usr/bin/openshift-install
 openshift-install version | grep 'release image' | cut -d' ' -f3 > /root/version.txt
 
-dnf copr enable zaneb/autopage -y
-dnf install podman skopeo python3-bmo-log-parse -y
+dnf install podman skopeo -y
 
 oc completion bash >>/etc/bash_completion.d/oc_completion
