@@ -4,7 +4,7 @@ info: |
     - caches rhcos bootstrap image
     - stop the nodes to deploy through redfish
     - launch the install against a set of baremetal nodes (and optionally virtual ctlplanes)
-    It can be used with a centos8stream or rhel8 vm (which required to set rhn credentials in your kcli config)
+    It can be used with a centos stream or rhel vm (which required to set rhn credentials in your kcli config)
     default location for pull secret is openshift_pull.json unless overriding with pullsecret variable
     api_ip and ingress_ip need to be set along with ctlplanes and workers array to specify your nodes.
     Nfs can be set to true to deploy nfs provisioner using a share on the installer vm
@@ -17,7 +17,7 @@ info: |
     version can be set to stable, nightly, dev-preview or ci , along with tag, to gather the binary from public sources.
     The ci registry is targetted with the openshift_image variable.
 baseplan: kcli_plan_infra.yml
-image: centos8stream
+image: centos9stream
 image_url:
 installer_disk_size:
 installer_numcpus:
