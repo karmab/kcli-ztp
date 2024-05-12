@@ -34,6 +34,6 @@ ztp_spokes:
   virtual_nodes_number: 1
 disk_size: 60
 installer_disk_size: 200
-#notify: true
+notify: true
 nfs: true
 installer_mac: aa:bb:aa:aa:bb:01
