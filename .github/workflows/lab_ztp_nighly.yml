@@ -29,6 +29,6 @@ jobs:
       steps:
       - name: Deploy kcli plan
         run: kcli -c local create plan --force -f $INPUTFILE --paramfile $PARAMFILE -P pullsecret=$PULLSECRET $PLAN
-      - name: Clean up
-        if: always()
-        run: kcli -c local delete plan --yes $PLAN
+      #- name: Clean up
+      #  if: always()
+      #  run: kcli -c local delete plan --yes $PLAN
