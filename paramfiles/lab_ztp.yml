@@ -2,7 +2,7 @@ lab: true
 pool: default
 virtual_ctlplanes: true
 version: stable
-tag: "4.15"
+tag: "4.16"
 cluster: lab
 domain: karmalabs.corp
 baremetal_cidr: 192.168.130.0/24
