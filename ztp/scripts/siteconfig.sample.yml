@@ -56,6 +56,10 @@ spec:
 {% set virtual_nodes_number = spoke["virtual_nodes_number"]|default(0) %}
 {% set nodes = spoke["nodes"]|default([]) %}
 
+{% if not virtual_workers %}
+{% set virtual_workers_number = 0 %}
+{% endif %}
+
 {% if virtual_nodes_number > 0 %}
 {% set extra_nodes = [] %}
 {% for num in range(0, virtual_nodes_number) %}

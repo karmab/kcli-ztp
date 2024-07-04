@@ -30,6 +30,10 @@ apps-{{ spoke_name }}:
 {% endif %}
 {% endfor %}
 
+{% if not virtual_workers %}
+{% set virtual_workers_number = 0 %}
+{% endif %}
+
 {% set total_number = namespace(value=0) %}
 {% for spoke in ztp_spokes %}
 {% set spoke_name = spoke.name %}
