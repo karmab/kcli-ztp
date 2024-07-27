@@ -21,19 +21,17 @@ spec:
 {% set spoke_ctlplanes_number = spoke.get('ctlplanes_number', 1) %}
 {% set spoke_workers_number = spoke.get('workers_number', 0) %}
 {% set virtual_nodes_number = spoke["virtual_nodes_number"]|default(0) %}
-{% if spoke_api_ip != None and ':' in spoke_api_ip %}
-{% set ipv6 = True %}
-{% elif ':' in baremetal_cidr %}
-{% set ipv6 = True %}
-{% else %}
-{% set ipv6 = False %}
-{% endif %}
+{% set ipv6 = True if (spoke_api_ip != None and ':' in spoke_api_ip) or ':' in baremetal_cidr  else False %}
 {% set cluster_network_ipv6 = {"cidr": "fd01::/48", "hostPrefix": 64} %}
 {% set cluster_network_ipv4 = {"cidr": "10.132.0.0/14", "hostPrefix": 23} %}
 {% set service_network_ipv6 = ["fd02::/112"] %}
 {% set service_network_ipv4 = ["172.30.0.0/16"] %}
 {% set machine_cidr_ipv4 = ["10.0.0.0/16"] %}
 {% set machine_cidr_ipv6 = ["fc00::/48"] %}
+{% set protocol = 'ipv6' if ipv6 else 'ipv4' %}
+{% set dualprotocol = 'ipv4' if ipv6 else 'ipv6' %}
+{% set default_prefix = '64' if protocol == 'ipv6' else '24' %}
+{% set default_gateway = baremetal_cidr|network_ip(1 if lab else -2) %}
 {% if dualstack|default(False) %}
 {% set machine_cidrs = machine_cidr_ipv4 + machine_cidr_ipv6 %}
 {% set cluster_networks = [cluster_network_ipv4] + [cluster_network_ipv6] %}
@@ -55,11 +53,9 @@ spec:
 {% set spoke_name = spoke.name %}
 {% set virtual_nodes_number = spoke["virtual_nodes_number"]|default(0) %}
 {% set nodes = spoke["nodes"]|default([]) %}
-
 {% if not virtual_workers %}
 {% set virtual_workers_number = 0 %}
 {% endif %}
-
 {% if virtual_nodes_number > 0 %}
 {% set extra_nodes = [] %}
 {% for num in range(0, virtual_nodes_number) %}
@@ -83,7 +79,7 @@ spec:
     ingressVIP: {{ spoke_ingress_ip }}
 {% endif %}
     machineNetwork:
-      - cidr: {{ baremetal_cidr }}
+    - cidr: {{ baremetal_cidr }}
     clusterNetwork:
   {% for network in cluster_networks %}
     - cidr: {{ network['cidr'] }}
@@ -91,14 +87,13 @@ spec:
   {% endfor %}
     serviceNetwork:
   {% for network in service_networks %}
-      - {{ network }}
+    - {{ network }}
   {% endfor %}
 {% if (spoke_ctlplanes_number > 1 or spoke_workers_number > 0) and spoke_api_ip == None and spoke_ingress_ip == None %}
     userManagedNetworking: True
 {% endif %}
     nodes:
 {% for node in nodes %}
-{% set protocol = 'ipv6' if ipv6 else 'ipv4' %}
 {% set num = loop.index0 %}
 {% if 'provisioning_mac' in node %}
 {% set mac = node['provisioning_mac'] %}
@@ -107,43 +102,63 @@ spec:
 {% else %}
 {% set mac = ztp_virtual_nodes_baremetal_mac_prefix + ":" + "%02.d" | format(total_number.value + num + 1)| string %}
 {% endif %}
-      - hostName: {{ cluster }}-{{ spoke_name }}-node-{{ num }}
-        role: {{ "master" if num < 3 else "worker" }}
-        {% if 'redfish_address' in node %}
-        disableCertificateVerification: True
-        {% if 'redfish' in node['redfish_address'] or 'idrac' in node['redfish_address'] %}
-        bmcAddress: {{ node['redfish_address'] }}
-        {% elif node['model']|default(model) in ['hp', 'hpe', 'supermicro'] %}
-        bmcAddress: redfish-virtualmedia://{{ node['redfish_address'] }}/redfish/v1/Systems/1
-        {% else %}
-        bmcAddress: idrac-virtualmedia://{{ node['redfish_address'] }}/redfish/v1/Systems/System.Embedded.1
-        {% endif %}
-        {% else %}
-        bmcAddress: redfish-virtualmedia+http://${BAREMETAL_IP}:9000/redfish/v1/Systems/kcli/{{cluster }}-{{ spoke_name }}-node-{{ num }}
-        {% endif %}
-        bmcCredentialsName:
-          name: {{ cluster }}-ztp-{{ spoke_name }}-bmc-secret-{{ num }}
-        bootMACAddress: {{ mac }}
-        bootMode: {{ 'UEFI' if ztp_uefi else 'legacy' }}
-       {% if 'disk' in node %}
-        rootDeviceHints:
-         deviceName: "/dev/{{ node['disk'] | basename }}"
+    - hostName: {{ cluster }}-{{ spoke_name }}-node-{{ num }}
+      role: {{ "master" if num < 3 else "worker" }}
+      {% if 'redfish_address' in node %}
+      disableCertificateVerification: True
+      {% if 'redfish' in node['redfish_address'] or 'idrac' in node['redfish_address'] %}
+      bmcAddress: {{ node['redfish_address'] }}
+      {% elif node['model']|default(model) in ['hp', 'hpe', 'supermicro'] %}
+      bmcAddress: redfish-virtualmedia://{{ node['redfish_address'] }}/redfish/v1/Systems/1
+      {% else %}
+      bmcAddress: idrac-virtualmedia://{{ node['redfish_address'] }}/redfish/v1/Systems/System.Embedded.1
       {% endif %}
-        nodeNetwork:
-          config:
-            interfaces:
-              - name: eth0
-                type: ethernet
-                state: up
-                {{ protocol }}:
-                  enabled: true
-                  dhcp: true
-                  auto-dns: true
-                  auto-gateway: true
-                  auto-routes: true
+      {% else %}
+      bmcAddress: redfish-virtualmedia+http://${BAREMETAL_IP}:9000/redfish/v1/Systems/kcli/{{cluster }}-{{ spoke_name }}-node-{{ num }}
+      {% endif %}
+      bmcCredentialsName:
+        name: {{ cluster }}-ztp-{{ spoke_name }}-bmc-secret-{{ num }}
+      bootMACAddress: {{ mac }}
+      bootMode: {{ 'UEFI' if ztp_uefi else 'legacy' }}
+     {% if 'disk' in node %}
+      rootDeviceHints:
+       deviceName: "/dev/{{ node.disk | basename }}"
+     {% endif %}
+      nodeNetwork:
+        interfaces:
+        - name: eth0
+          macAddress: "{{ mac }}"
+        config:
           interfaces:
-            - name: eth0
-              macAddress: "{{ mac }}"
-  {% endfor %}
+          - name: eth0
+            type: ethernet
+            state: up
+            {{ dualprotocol }}:
+              enabled: {{ dualstack|default(False) }}
+            {{ protocol }}:
+              enabled: true
+          {% if 'ip' not in node %}
+              dhcp: true
+          {% if ipv6 %}
+              autoconf: false
+          {% endif %}
+          {% else %}
+             address:
+             - ip: {{ node.ip }}
+               prefix-length: {{ node.prefix|default(default_prefix) }}
+          dns-resolver:
+            config:
+              search:
+               - {{ node.domain|default(domain) }}
+              server:
+              - {{ node.dns|default(default_gateway) }}
+          routes:
+            config:
+            - destination: {{ '::/0' if ':' in node.ip else '0.0.0.0/0' }}
+              next-hop-interface: eth0
+              next-hop-address: {{ node.gateway|default(default_gateway) }}
+              table-id: 254
+          {% endif %}
+{% endfor %}
 {% set total_number.value = total_number.value + virtual_nodes_number %}
 {% endfor %}
