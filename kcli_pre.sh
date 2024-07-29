@@ -2,7 +2,7 @@
 
 
 # CLEANING
-kcli delete iso --yes $CLUSTER.iso || true
+kcli delete iso --yes {{ cluster }}.iso || true
 
 # NETWORK CHECK
 {% if baremetal_cidr == None %}

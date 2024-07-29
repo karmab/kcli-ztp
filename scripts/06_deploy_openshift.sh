@@ -73,14 +73,13 @@ echo $IP | grep -q ':' && IP=[$IP]
 kcli start baremetal-host -P url={{ url }} -P user={{ user }} -P password={{ password }} -P iso_url=http://$IP/{{ cluster }}.iso
 {% endfor %}
 
-openshift-install wait-for install-complete --dir ocp --log-level debug
-
 {% if hosts|length == 1 %}
-# SNO_IP=$(aicli list host | grep '|' | tail -1 | cut -d'|' -f8 | xargs)
-#sed -i /"{{ api_ip }} api.{{ cluster }}.{{ domain }}"/d /etc/hosts
-# echo $SNO_IP api.{{ cluster }}.{{ domain }} >> /etc/hosts
-echo DO SNO STUFF
+SNO_IP={{ rendezvous_ip|default(baremetal_ips[0]) }}
+sed -i /api.{{ cluster }}.{{ domain }}/d /etc/hosts
+echo $SNO_IP api.{{ cluster }}.{{ domain }} >> /etc/hosts
 {% endif %}
+
+openshift-install wait-for install-complete --dir ocp --log-level debug
 
 {% if virtual_ctlplanes %}
 for node in $(oc get nodes --selector='node-role.kubernetes.io/master' -o name) ; do
