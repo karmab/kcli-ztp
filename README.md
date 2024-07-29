@@ -2,19 +2,14 @@
 
 This repository provides a plan which deploys a vm where:
 
-- openshift-baremetal-install is downloaded with the specific version and tag specified (and renamed openshift-install)
-- stop the nodes to deploy through redfish
-- launch the install against a set of baremetal nodes. Virtual ctlplanes and workers can also be deployed.
+- openshift-install is downloaded with the specific version and tag specified.
+- stop the nodes to deploy through redfish.
+- launch the install against a set of baremetal nodes using Agent Based Install. Virtual ctlplanes and workers can also be deployed.
 
 The automation can be used for additional scenarios:
 
-- only deploying the virtual infrastructure needed for a baremetal ipi deployment
-- deploying a spoke cluster (either multinodes or SNO) through ZTP on top of the deployed Openshift
-
-## Why
-
-- To deploy baremetal using `bare minimum` on the provisioning node
-- To ease deployments by providing an automated mechanism
+- only deploying the virtual infrastructure needed to emulate a baremetal deployment.
+- deploying a spoke cluster (either multinode or SNO) through ZTP on top.
 
 ### Requirements
 
@@ -22,22 +17,18 @@ The automation can be used for additional scenarios:
 
 - kcli installed (for rhel8/cento8/fedora, look [here](https://kcli.readthedocs.io/en/latest/#package-install-method))
 - an openshift pull secret (stored by default in openshift_pull.json)
-- a valid openshift pull secret for ACM downstream if using ZTP this way.
 
 #### on the provisioning node
 
-- libvirt daemon (with fw_cfg support)
-- two physical bridges:
-    - baremetal with a nic from the external network
-- If you're not running as root, configure extra permissions with `sudo setfacl -m u:$(id -un):rwx /var/lib/libvirt/openshift-images/*`
+- a physical bridge typically named baremetal with a nic from the external network
 
-Here's a script you can run on the provisioning node for that (adjust the nics variable as per your environment)
+Here's a script you can run on the provisioning node for that (adjust the NIC variable as per your environment)
 
 ```
-export MAIN_CONN=eno2
+export NIC=eno2
 sudo nmcli connection add ifname baremetal type bridge con-name baremetal
-sudo nmcli con add type bridge-slave ifname $MAIN_CONN master baremetal
-sudo nmcli con down $MAIN_CONN; sudo pkill dhclient; sudo dhclient baremetal
+sudo nmcli con add type bridge-slave ifname $NIC master baremetal
+sudo nmcli con down $NIC; sudo pkill dhclient; sudo dhclient baremetal
 ```
 
 ## Launch
@@ -46,8 +37,7 @@ Prepare a valid parameter file with the information needed. At least, you need t
 
 - api_ip
 - ingress_ip
-- bmc_user (for real baremetal)
-- bmc_password (for real baremetal)
+- bmc_user/bmc_password (for real baremetal)
 - an array of your ctlplanes (if thet are not virtual). Each entry in this array needs at least the provisioning_mac and redfish_address. Optionally you can indicate for each entry a specific bmc_user, bmc_password and disk (to be used as rootdevice hint) either as /dev/XXX or simply XXX
 - an array of your workers (can be left empty if you only want to deploy ctlplanes). The format of those entries follow the one indicated for ctlplanes.
 
@@ -55,11 +45,8 @@ Here's a snippet what the workers variable might look like:
 
 ```
 workers:
-- ipmi_address: 192.168.1.5
-  provisioning_mac: 98:03:9b:62:ab:19
+- redfish_address: 192.168.1.5
 - redfish_address: 192.168.1.6
-  provisioning_mac: 98:03:9b:62:ab:17
-  disk: /dev/sde
 ```
 
 You can have a look at:
@@ -77,11 +64,9 @@ kcli create plan
 
 ## Interacting in the vm
 
-The deployed vm comes with a set of helpers for you:
-
-- scripts deploy.sh and clean.sh allow you to manually launch an install or clean a failed one
-- you can run *baremetal node list* during deployment to check the status of the provisioning of the nodes (Give some time after launching an install before ironic is accessible).
-- script *redfish.py* to check the power status of the baremetal node or to stop them (using `redfish.py off`
+```
+kcli ssh
+```
 
 ## Parameters
 
@@ -162,8 +147,6 @@ The following parameters are available when deploying the default plan
 |lab                                          |False                                     |
 |launch_steps                                 |True                                      |
 |model                                        |dell                                      |
-|nbde                                         |False                                     |
-|network_type                                 |OVNKubernetes                             |
 |nfs                                          |True                                      |
 |no_proxy                                     |None                                      |
 |notify                                       |True                                      |
@@ -190,9 +173,7 @@ when specifying *ctlplanes* or *workers* as an array (for baremetal nodes), the 
 
 The following parameters can be used in this case:
 
-- ipmi_address. Ipmi url
 - redfish_address. Redfish url
-- provisioning_mac. It needs to be set to the mac to use along with provisioning network or any of the macs of the node when provisioning is disabled
 - boot_mode (optional). Should either be set to Legacy, UEFI or UEFISecureBoot
 - bmc_user. If not specified, global bmc_password variable is used
 - bmc_password.  If not specified, global bmc_password variable is used
@@ -229,10 +210,6 @@ A valid network_config snippet would be
       macAddress: aa:aa:aa:aa:bb:03
 ```
 
-## Lab runthrough
-
-A lab available [here](https://ocp-baremetal-ipi-lab.readthedocs.io/en/latest) is provided to get people familiarized with Baremetal Ipi workflow.
-
 ## Deploying a cluster through ZTP on top of your cluster
 
 You can use the plan `kcli_plan_ztp.yml` for this purpose, along with the following parameters:
@@ -262,47 +239,3 @@ The following sample parameter files are available for you to deploy (on libvirt
 - [lab.yml](lab.yml) This deploys 3 ctlplanes in a dedicated ipv4 network
 - [lab_ipv6.yml](lab_ipv6.yml) This deploys 3 ctlplanes in a dedicated ipv6 network (hence in a disconnected manner)
 - [lab_ipv6_ztp.yml](lab_ipv6_ztp.yml) This deploys the ipv6 lab, and released acm on top, and then a SNO spoke
-- [lab_ipv6_ztp_downstream.yml](lab_ipv6_ztp_downstream.yml) This is is the same as the ipv6 ztp lab, but the ACM bits are downstream one (this requires a dedicated pull secret)
-
-## Running through github actions
-
-Workflow files are available to deploy pipelines as a github action by using a self hosted runner. Just clone the repo and make use of them
-
-- [lab.yml](.github/workflows/lab.yml)
-- [lab_ipv6.yml](.github/workflows/lab_ipv6.yml)
-- [lab_ipv6_ztp.yml](.github/workflows/lab_ipv6_ztp.yml)
-- [lab_ipv6_ztp_downstream.yml](.github/workflows/lab_ipv6_ztp_downstream.yml)
-- [lab_without_installer.yml](.github/workflows/lab_without_installer.yml) This deploys the infrastructure used in the lab plan (through the baseplan kcli_plan_infra.yml), it then deploys openshift without using an installer vm, but `kcli create cluster openshift` insteadusing `-P ipi=true -P ipi_platform=baremetal`
-
-Note that you will use to store you pull secret somewhere in your runner, (`/root/openshift_pull.json` is the default location used in the workflow, which can be changed when launching the pipeline)
-
-## Running on tekton
-
-A pipeline and its corresponding run yaml files are available to deploy pipeline through tekton
-
-- [pipeline.yml](extras/tekton/pipeline.yml)
-- [run_lab.yml](extras/tekton/run_lab.yml)
-- [run_lab_ipv6.yml](extras/tekton/run_lab_ipv6.yml)
-- [run_lab_ipv6_ztp.yml](extras/tekton/run_lab_ipv6_ztp.yml)
-
-You will need to create a configmap in target namespace to hold kcli configuration and make sure it points to a remote hypervisor
-
-First copy your pull secret and a valid priv/pub key in the corresponding directory
-
-Then make sure your config.yml contain something similar to the following
-
-```
-default:
-  client: mykvm
-mykvm:
-  type: kvm
-  host: 192.168.1.10
-```
-
-Create the relevant configmap
-
-```
-oc create configmap kcli-config --from-file=$HOME/.kcli
-```
-
-Then you can create the pipeline definition with `oc create -f pipeline.yml` and run a pipeline instance with `oc create -f run_lab.yml` for instance
