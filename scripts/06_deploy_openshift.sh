@@ -79,7 +79,7 @@ sed -i /api.{{ cluster }}.{{ domain }}/d /etc/hosts
 echo $SNO_IP api.{{ cluster }}.{{ domain }} >> /etc/hosts
 {% endif %}
 
-openshift-install wait-for install-complete --dir ocp --log-level debug
+openshift-install --dir ocp --log-level debug wait-for install-complete || openshift-install --dir ocp --log-level debug wait-for install-complete
 
 {% if virtual_ctlplanes %}
 for node in $(oc get nodes --selector='node-role.kubernetes.io/master' -o name) ; do
