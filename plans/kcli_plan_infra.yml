@@ -12,7 +12,9 @@
 {% endif %}
 {% endif %}
 
-{% if api_ip != None and ingress_ip != None and (lab or (baremetal_ips and baremetal_ips|length >0)) %}
+{% if lab and ((api_ip != None and ingress_ip != None) or (baremetal_ips and baremetal_ips|length > 0)) %}
+{% set api_ip = api_ip or baremetal_ips[0] %}
+{% set ingress_ip = ingress_ip or baremetal_ips[0] %}
 api:
  type: dns
  net: {{ baremetal_net }}

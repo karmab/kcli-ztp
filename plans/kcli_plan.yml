@@ -1,6 +1,8 @@
+{% if image_url != None %}
 {{ image }}:
  type: image
  url: {{ image_url }}
+{% endif %}
 
 {{ cluster }}-installer: 
  image: {{ image }} 
