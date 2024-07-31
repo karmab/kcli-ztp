@@ -129,3 +129,8 @@ apps-{{ spoke_name }}:
  - ztp/argocd
  - ztp/scripts/argocd.sh
 {% endif %}
+ - ztp/scripts/launch_steps.sh
+{% if launch_steps and workflow_installer %}
+ cmds:
+ - bash /root/ztp/scripts/launch_steps.sh
+{% endif %}

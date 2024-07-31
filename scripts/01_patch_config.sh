@@ -3,8 +3,11 @@
 set -euo pipefail
 
 [ -d /root/manifests ] || mkdir -p /root/manifests
-ssh-keyscan -H {{ config_host if config_host not in ['127.0.0.1', 'localhost'] else baremetal_net|local_ip }} >> ~/.ssh/known_hosts
+CONFIG_HOST={{ config_host if config_host not in ['127.0.0.1', 'localhost'] else baremetal_net|local_ip }}
+if [ -n "$CONFIG_HOST" ] ; then
+ssh-keyscan -H $CONFIG_HOST >> ~/.ssh/known_hosts
 echo -e "Host=*\nStrictHostKeyChecking=no\n" > ~/.ssh/config
+fi
 
 {% if not disconnected %}
 PULLSECRET=$(cat /root/openshift_pull.json | tr -d [:space:])

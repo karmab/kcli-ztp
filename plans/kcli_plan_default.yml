@@ -95,3 +95,4 @@ wait_for_workers: true
 wait_for_workers_number:
 wait_for_workers_timeout: 3600
 manifests_dir: manifests
+workflow_installer: false
