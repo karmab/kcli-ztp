@@ -88,42 +88,13 @@ apps-{{ spoke_name }}:
 {{ cluster }}-installer:
  baseplan: kcli_plan.yml
  files:
-{% if not ztp_siteconfig %}
-{% for spoke in ztp_spokes %}
-{% set spoke_manifests = 'spoke_' + spoke.name + '_manifests' %}
- - path: /root/spoke_{{ spoke.name }}/spoke.sample.yml
-   origin: ztp/scripts/spoke.sample.yml
-   index: {{ loop.index0 }}
- - path: /root/spoke_{{ spoke.name }}/spoke.sh
-   origin: ztp/scripts/spoke.sh
-   index: {{ loop.index0 }}
- - path: /root/spoke_{{ spoke.name }}/bmc.yml
-   origin: ztp/scripts/bmc.yml
-   index: {{ loop.index0 }}
- - path: /root/spoke_{{ spoke.name }}/bmc.sh
-   origin: ztp/scripts/bmc.sh
-   index: {{ loop.index0 }}
- - path: /root/spoke_{{ spoke.name }}/kubeconfig.sh
-   origin: ztp/scripts/kubeconfig.sh
-   spoke: {{ spoke.name }}
-{% if spoke_manifests|find_manifests %}
- - path: /root/spoke_{{ spoke.name }}/manifests.sh
-   origin: ztp/scripts/manifests.sh
-   index: {{ loop.index0 }}
-{% endif %}
-{% if spoke_manifests|find_manifests %}
- - path: /root/spoke_{{ spoke.name }}/manifests
-   origin: {{ spoke_manifests }}
-{% endif %}
-{% endfor %}
- - ztp/scripts/spokes_deploy.sh
-{% else %}
  - ztp/scripts/siteconfig_requirements.sample.yml
  - ztp/scripts/kustomization.yml
  - ztp/scripts/siteconfig.sample.yml
  - ztp/scripts/siteconfig.sh
- - ztp/scripts/spokes_deploy_siteconfig.sh
-{% endif %}
+ - ztp/scripts/spokes_deploy.sh
+ - path: /root/ztp/scripts/kubeconfig.sh
+   origin: ztp/scripts/kubeconfig.sh
  - ztp/assisted
 {% if argocd %}
  - ztp/argocd
