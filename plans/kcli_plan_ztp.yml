@@ -61,20 +61,20 @@ apps-{{ spoke_name }}:
  user: core
  memory: {{ ztp_virtual_nodes_memory }}
  nets:
-  - name: {{ baremetal_net }}
+ - name: {{ baremetal_net }}
 {% if baremetal_macs and baremetal_macs|length > virtual_ctlplanes_number + virtual_workers_number + total_number.value + num %}
-    mac: {{ baremetal_macs[virtual_ctlplanes_number + virtual_workers_number + total_number.value + num] }}
+   mac: {{ baremetal_macs[virtual_ctlplanes_number + virtual_workers_number + total_number.value + num] }}
 {% else %}
-    mac: {{ ztp_virtual_nodes_baremetal_mac_prefix + ":" + "%02.d" | format(total_number.value + num + 1)| string }}
+   mac: {{ ztp_virtual_nodes_baremetal_mac_prefix + ":" + "%02.d" | format(total_number.value + num + 1)| string }}
 {% endif %}
 {% if lab and baremetal_ips and baremetal_ips|length > virtual_ctlplanes_number + virtual_workers_number + total_number.value + num %}
-    ip: {{ baremetal_ips[virtual_ctlplanes_number + virtual_workers_number + total_number.value + num] }}
-    reserveip: true
+   ip: {{ baremetal_ips[virtual_ctlplanes_number + virtual_workers_number + total_number.value + num] }}
+   reserveip: true
 {% if virtual_nodes_number == 1 %}
-    reservedns: true
-    alias:
-    - api.{{ spoke_name }}.{{ domain }}
-    - api-int.{{ spoke_name }}.{{ domain }}
+   reservedns: true
+   alias:
+   - api.{{ spoke_name }}.{{ domain }}
+   - api-int.{{ spoke_name }}.{{ domain }}
 {% endif %}
 {% endif %}
  disks:
