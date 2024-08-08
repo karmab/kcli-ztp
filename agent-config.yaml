@@ -1,13 +1,20 @@
+{% import 'static_network/config.j2' as static_network %}
+{% set baremetal_prefix = baremetal_cidr.split('/')[1] %}
+{% set baremetal_gateway = static_baremetal_gateway or baremetal_cidr|network_ip(1 if lab else -2) %}
+{% set baremetal_dns = static_baremetal_dns or baremetal_gateway %}
+{% set nic = 'ens192' if config_type == 'vsphere' else 'enp1s0' %}
 {% set virtual_ctlplanes_nodes = [] %}
 {% set virtual_workers_nodes = [] %}
 {% if virtual_ctlplanes %}
 {% for num in range(0, virtual_ctlplanes_number) %}
-{% do virtual_ctlplanes_nodes.append({}) %}
+{% set new_ctlplane = {'ip': baremetal_ips[num]} if virtual_ctlplanes_static_network and baremetal_ips|length > num else {} %}
+{% do virtual_ctlplanes_nodes.append(new_ctlplane) %}
 {% endfor %}
 {% endif %}
 {% if virtual_workers and virtual_workers_deploy %}
 {% for num in range(0, virtual_workers_number) %}
-{% do virtual_workers_nodes.append({}) %}
+{% set new_worker = {'ip': baremetal_ips[num]} if virtual_workers_static_network and baremetal_ips|length > virtual_ctlplanes_numbe + num else {} %}
+{% do virtual_workers_nodes.append(new_worker) %}
 {% endfor %}
 {% endif %}
 {% set hosts = ctlplanes + virtual_ctlplanes_nodes + workers + virtual_workers_nodes %}

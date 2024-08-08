@@ -16,7 +16,7 @@
           state: up
           {{ 'ipv6' if ':' in ip else 'ipv4' }}:
             address:
-            - ip: "{{ ip }}"
+            - ip: {{ ip }}
               prefix-length: {{ prefix }}
             enabled: true
 {%- endmacro -%}
