@@ -3,7 +3,7 @@
 set -euo pipefail
 
 dnf -y copr enable karmab/kcli
-dnf -y install libvirt-libs libvirt-client mkisofs tmux make git bash-completion vim-enhanced kcli
+dnf -y install libvirt-libs libvirt-client mkisofs tmux make git bash-completion vim-enhanced kcli nmstate
 dnf -y install python3 podman skopeo httpd
 
 dnf -y copr enable karmab/aicli
