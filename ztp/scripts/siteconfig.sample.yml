@@ -3,14 +3,14 @@
 apiVersion: ran.openshift.io/v1
 kind: SiteConfig
 metadata:
-  name: "example-standard"
-  namespace: "example-standard"
+  name: example-standard
+  namespace: example-standard
 spec:
-  baseDomain: ${DOMAIN}
+  baseDomain: {{ ztp_domain or '${DOMAIN}' }}
   pullSecretRef:
-    name: "assisted-deployment-pull-secret"
+    name: assisted-deployment-pull-secret
   clusterImageSetNameRef: openshift-v${MINOR}
-  sshPublicKey: "${SSH_PUB_KEY}"
+  sshPublicKey: ${SSH_PUB_KEY}
   clusters:
 {% for spoke in ztp_spokes %}
 {% set new_value = spoke["virtual_nodes_number"]|default(0) %}
@@ -77,7 +77,7 @@ spec:
       group-du-standard: ""
       # ../policygentemplates/example-multinode-site.yaml will apply to all clusters with 'sites: "example-multinode"'
       # Normally this should match or contain the cluster name so it only applies to a single cluster
-      sites : "example-multinode"
+      sites : example-multinode
 {% if spoke_ctlplanes_number > 1 and spoke_api_ip != None and spoke_ingress_ip != None %}
     apiVIP: {{ spoke_api_ip }}
     ingressVIP: {{ spoke_ingress_ip }}
@@ -126,13 +126,13 @@ spec:
       bootMode: {{ 'UEFI' if ztp_uefi else 'legacy' }}
      {% if 'disk' in node %}
       rootDeviceHints:
-       deviceName: "/dev/{{ node.disk | basename }}"
+       deviceName: /dev/{{ node.disk | basename }}
      {% endif %}
 {% if 'ip' in node %}
       nodeNetwork:
         interfaces:
         - name: eth0
-          macAddress: "{{ mac }}"
+          macAddress: {{ mac }}
         config:
           interfaces:
           - name: eth0

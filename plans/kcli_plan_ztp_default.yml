@@ -24,3 +24,4 @@ ztp_uefi: true
 ztp_spokes: []
 ztp_pxe: false
 mce_hypershift: false
+ztp_domain:
