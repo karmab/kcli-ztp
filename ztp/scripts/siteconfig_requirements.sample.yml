@@ -1,6 +1,11 @@
 {% for spoke in ztp_spokes %}
 {% set spoke_name = spoke.name %}
 {% set virtual_nodes_number = spoke["virtual_nodes_number"]|default(0) %}
+
+{% set spoke_ctlplanes_number = spoke.get('ctlplanes_number', 1) %}
+{% set spoke_workers_number = spoke.get('workers_number', 0) %}
+
+{% set spoke_snoplus = True if spoke_ctlplanes_number == 1 and spoke_workers_number == 1 else False %}
 {% set nodes = spoke["nodes"]|default([]) %}
 
 {% if virtual_nodes_number > 0 %}
@@ -9,6 +14,9 @@
 {% do extra_nodes.append({}) %}
 {% endfor %}
 {% set nodes = extra_nodes + nodes %}
+{% if spoke_snoplus %}
+{% set nodes = [nodes[0]] %}
+{% endif %}
 {% endif %}
 
 ---

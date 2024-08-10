@@ -20,6 +20,7 @@ spec:
 {% set spoke_ingress_ip= spoke.get('ingress_ip') %}
 {% set spoke_ctlplanes_number = spoke.get('ctlplanes_number', 1) %}
 {% set spoke_workers_number = spoke.get('workers_number', 0) %}
+{% set spoke_snoplus = True if spoke_ctlplanes_number == 1 and spoke_workers_number == 1 else False %}
 {% set virtual_nodes_number = spoke["virtual_nodes_number"]|default(0) %}
 {% set ipv6 = True if (spoke_api_ip != None and ':' in spoke_api_ip) or ':' in baremetal_cidr  else False %}
 {% set cluster_network_ipv6 = {"cidr": "fd01::/48", "hostPrefix": 64} %}
@@ -62,6 +63,9 @@ spec:
 {% do extra_nodes.append({}) %}
 {% endfor %}
 {% set nodes = extra_nodes + nodes %}
+{% endif %}
+{% if spoke_snoplus %}
+{% set nodes = [nodes[0]] %}
 {% endif %}
   - clusterName: {{ spoke_name }}
     networkType: {{ spoke_network_type }}

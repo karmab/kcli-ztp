@@ -2,6 +2,8 @@
 {{ disconnected_operators.append("advanced-cluster-management") or "" }}
 {% endif %}
 
+{% set snoplus_bmcs = [] %}
+
 {% for spoke in ztp_spokes %}
 {% set spoke_name = spoke.name %}
 {% set spoke_api_ip = spoke.get('api_ip') %}
@@ -40,12 +42,18 @@ apps-{{ spoke_name }}:
 {% set spoke_api_ip = spoke.get('api_ip') %}
 {% set spoke_ingress_ip= spoke.get('ingress_ip') %}
 {% set spoke_ctlplanes_number = spoke.get('ctlplanes_number', 1) %}
+{% set spoke_workers_number = spoke.get('workers_number', 0) %}
+{% set spoke_snoplus = True if spoke_ctlplanes_number == 1 and spoke_workers_number == 1 else False %}
 {% set virtual_nodes_number = spoke.get('virtual_nodes_number', 0) %}
 {% set ztp_uefi = spoke.get('uefi', ztp_uefi) %}
 {% set ztp_virtual_nodes_numcpus = spoke.get('virtual_nodes_numcpus', ztp_virtual_nodes_numcpus) %}
 {% set ztp_virtual_nodes_memory = spoke.get('virtual_nodes_memory', ztp_virtual_nodes_memory) %}
 {% set ztp_virtual_nodes_disk_size = spoke.get('virtual_nodes_disk_size', ztp_virtual_nodes_disk_size) %}
 {% set ztp_virtual_nodes_disk_interface = spoke.get('virtual_nodes_disk_interface', ztp_virtual_nodes_disk_interface) %}
+
+{% if spoke_snoplus %}
+{% do snoplus_bmcs.append(spoke_name) %}
+{% endif %}
 
 {% if virtual_nodes_number > 0 %}
 {% for num in range(0, virtual_nodes_number) %}
@@ -70,7 +78,7 @@ apps-{{ spoke_name }}:
 {% if lab and baremetal_ips and baremetal_ips|length > virtual_ctlplanes_number + virtual_workers_number + total_number.value + num %}
    ip: {{ baremetal_ips[virtual_ctlplanes_number + virtual_workers_number + total_number.value + num] }}
    reserveip: true
-{% if virtual_nodes_number == 1 %}
+{% if virtual_nodes_number >= 1 and loop.index == 1 %}
    reservedns: true
    alias:
    - api.{{ spoke_name }}.{{ domain }}
@@ -101,6 +109,11 @@ apps-{{ spoke_name }}:
  - ztp/scripts/argocd.sh
 {% endif %}
  - ztp/scripts/launch_steps.sh
+{% for spoke in snoplus_bmcs %}
+ - path: /root/ztp/scripts/extra_bmc_{{ spoke }}.yml
+   origin: ztp/scripts/extra_bmc.yml
+   index: {{ loop.index0 }}
+{% endfor %}
 {% if launch_steps and workflow_installer %}
  cmds:
  - bash /root/ztp/scripts/launch_steps.sh
