@@ -1,4 +1,4 @@
-cd /root/ztp/argocd
+cd /root/ztp/scripts/argocd
 oc patch argocd openshift-gitops -n openshift-gitops --type=merge --patch-file argocd-openshift-gitops-patch.json
 
 # Patch the argocd route to use reencrypt because of a known issue

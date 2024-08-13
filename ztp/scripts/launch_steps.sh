@@ -7,13 +7,18 @@ clear='\033[0m'
 
 export KUBECONFIG=/root/ocp/auth/kubeconfig
 
-{% if ztp_spokes is defined %}
-echo -e "${blue}************ RUNNING ztp/assisted/assisted-service.sh ************${clear}"
-/root/ztp/assisted/assisted-service.sh
-echo -e "${blue}************ RUNNING ztp/scripts/spokes_deploy.sh ************${clear}"
-/root/ztp/scripts/spokes_deploy.sh
+echo -e "${blue}************ RUNNING ztp/scripts/01_assisted-service.sh ************${clear}"
+/root/ztp/scripts/01_assisted-service.sh
+
+{% if ztp_git %}
+echo -e "${blue}************ RUNNING ztp/scripts/02_git.sh ************${clear}"
+/root/ztp/scripts/02_git.sh
 {% endif %}
 
-{% if argocd is defined and argocd %}
-/root/ztp/scripts/argocd.sh
+{% if argocd %}
+echo -e "${blue}************ RUNNING ztp/scripts/03_argocd.sh ************${clear}"
+/root/ztp/scripts/03_argocd.sh
+{% else %}
+echo -e "${blue}************ RUNNING ztp/scripts/03_spokes_deploy.sh ************${clear}"
+/root/ztp/scripts/03_spokes_deploy.sh
 {% endif %}

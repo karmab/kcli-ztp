@@ -25,3 +25,6 @@ ztp_spokes: []
 ztp_pxe: false
 mce_hypershift: false
 ztp_domain:
+ztp_git: false
+ztp_git_user: dummy
+ztp_git_password: dummy

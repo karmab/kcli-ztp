@@ -96,19 +96,19 @@ apps-{{ spoke_name }}:
 {{ cluster }}-installer:
  baseplan: kcli_plan.yml
  files:
+ - ztp/scripts/launch_steps.sh
+ - ztp/scripts/01_assisted-service.sh
+ - ztp/scripts/02_git.sh
+ - ztp/scripts/03_spokes_deploy.sh
+ - ztp/scripts/03_argocd.sh
+ - ztp/scripts/argocd
  - ztp/scripts/siteconfig_requirements.sample.yml
- - ztp/scripts/kustomization.yml
  - ztp/scripts/siteconfig.sample.yml
+ - ztp/scripts/kustomization.yml
  - ztp/scripts/siteconfig.sh
- - ztp/scripts/spokes_deploy.sh
  - path: /root/ztp/scripts/kubeconfig.sh
    origin: ztp/scripts/kubeconfig.sh
- - ztp/assisted
-{% if argocd %}
- - ztp/argocd
- - ztp/scripts/argocd.sh
-{% endif %}
- - ztp/scripts/launch_steps.sh
+ - ztp/scripts/gitea.service
 {% for spoke in snoplus_bmcs %}
  - path: /root/ztp/scripts/extra_bmc_{{ spoke }}.yml
    origin: ztp/scripts/extra_bmc.yml

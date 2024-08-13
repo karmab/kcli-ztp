@@ -1,0 +1,18 @@
+[Unit]
+Description=Gitea Server
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/root
+TimeoutStartSec=300
+ExecStartPre=-/usr/bin/podman rm -f gitea
+ExecStart=podman run --name gitea --net host --hostname ${GIT_SERVER} -e USER_UID=1000 -e USER_GID=1000 -e GITEA__server__ROOT_URL=http://${GIT_SERVER}:3000 -e SSH_PORT=2222 -e SSH_LISTEN_PORT=2222 -e GITEA__service__DISABLE_REGISTRATION=true -e GITEA__security__SECRET_KEY=97Vy1tGr1Ds5X9GVgbEdYuVx7CkGdoWam6fIRVgeKptAcLVB4Dg3DSVdmXAKz7et -e GITEA__security__INTERNAL_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE2NjkzODk4MjB9.h-Pr9FEOUZTYEuZeH1oajUMw7dtwNopiiSfwtNB36vk -e GITEA__security__INSTALL_LOCK=true -v /opt/gitea/:/data:Z -v /etc/localtime:/etc/localtime:ro quay.io/mavazque/gitea:1.17.3
+ExecStop=-/usr/bin/podman rm -f gitea
+Restart=always
+RestartSec=30s
+StartLimitInterval=60s
+StartLimitBurst=99
+
+[Install]
+WantedBy=multi-user.target
