@@ -1,5 +1,21 @@
-{% if disconnected_operators and acm and 'advanced-cluster-management' not in disconnected_operators %}
+{% if ztp_acm and 'advanced-cluster-management' not in disconnected_operators %}
 {{ disconnected_operators.append("advanced-cluster-management") or "" }}
+{% endif %}
+
+{% if ztp_acm and 'multicluster-engine' not in disconnected_operators %}
+{{ disconnected_operators.append("multicluster-engine") or "" }}
+{% endif %}
+
+{% if not ztp_acm and 'multicluster-engine' not in disconnected_operators %}
+{{ disconnected_operators.append("multicluster-engine") or "" }}
+{% endif %}
+
+{% if ztp_gitops and 'openshift-gitops-operator' not in disconnected_operators %}
+{{ disconnected_operators.append("openshift-gitops-operator") or "" }}
+{% endif %}
+
+{% if ztp_gitops and 'topology-aware-lifecycle-manager' not in disconnected_operators %}
+{{ disconnected_operators.append("topology-aware-lifecycle-manager") or "" }}
 {% endif %}
 
 {% set snoplus_bmcs = [] %}
@@ -100,12 +116,14 @@ apps-{{ spoke_name }}:
  - ztp/scripts/01_assisted-service.sh
  - ztp/scripts/02_git.sh
  - ztp/scripts/03_spokes_deploy.sh
- - ztp/scripts/03_argocd.sh
- - ztp/scripts/argocd
- - ztp/scripts/siteconfig_requirements.sample.yml
+ - ztp/scripts/04_spokes_wait.sh
+ - ztp/scripts/05_snoplus.sh
+ - ztp/scripts/gitops
+ - ztp/scripts/generate_gitops.sh
+ - ztp/scripts/requirements.sample.yml
  - ztp/scripts/siteconfig.sample.yml
- - ztp/scripts/kustomization.yml
- - ztp/scripts/siteconfig.sh
+ - ztp/scripts/generate_siteconfig.sh
+ - ztp/scripts/kustomization.yaml
  - path: /root/ztp/scripts/kubeconfig.sh
    origin: ztp/scripts/kubeconfig.sh
  - ztp/scripts/gitea.service
@@ -114,6 +132,10 @@ apps-{{ spoke_name }}:
    origin: ztp/scripts/extra_bmc.yml
    index: {{ loop.index0 }}
 {% endfor %}
+{% if ztp_policies_dir|exists %}
+ - origin: {{ ztp_policies_dir }}
+   path: /root/ztp/scripts/policies
+{% endif %}
 {% if launch_steps and workflow_installer %}
  cmds:
  - bash /root/ztp/scripts/launch_steps.sh

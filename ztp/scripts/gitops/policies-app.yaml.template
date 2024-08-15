@@ -14,9 +14,9 @@ spec:
     namespace: policies-sub
   project: policy-app-project
   source:
-    path: {{ argocd_policies_app_path }}
-    repoURL: {{ argocd_repo_url }}
-    targetRevision: {{ argocd_repo_branch }}
+    path: $POLICIES_APP_PATH
+    repoURL: $REPO_URL
+    targetRevision: $REPO_BRANCH
     # uncomment the below plugin if you will be adding the plugin binaries in the same repo->dir where
     # the policyGenTemplate.yaml exist AND use the ../../hack/patch-argocd-dev.sh script to re-patch the deployment-repo-server
 #    plugin:

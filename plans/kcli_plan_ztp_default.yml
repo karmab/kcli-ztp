@@ -1,13 +1,13 @@
 baseplan: kcli_plan.yml
-acm: false
-argocd: false
-argocd_resourcegenerator_image: quay.io/mavazque/ztp-site-generator:4.10-202204010
-argocd_repo_branch: main
-argocd_repo_url:
-argocd_clusters_app_path:
-argocd_policies_app_path:
-mce: true
-ztp_siteconfig: true
+ztp_acm: true
+ztp_gitops: true
+ztp_gitops_user: dummy
+ztp_gitops_password: dummy
+ztp_gitops_repo_branch: main
+ztp_gitops_repo_url:
+ztp_gitops_clusters_app_path: site-configs
+ztp_gitops_policies_app_path: site-policies
+ztp_policies_dir: ztp_policies_dir
 ztp_virtual_nodes_number: 1
 ztp_virtual_nodes_numcpus: 8
 ztp_virtual_nodes_memory: 38912
@@ -23,8 +23,4 @@ ztp_disable_validations: true
 ztp_uefi: true
 ztp_spokes: []
 ztp_pxe: false
-mce_hypershift: false
 ztp_domain:
-ztp_git: false
-ztp_git_user: dummy
-ztp_git_password: dummy

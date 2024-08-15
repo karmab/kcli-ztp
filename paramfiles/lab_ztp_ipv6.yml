@@ -22,9 +22,6 @@ baremetal_macs:
 - aa:aa:aa:aa:bb:03
 - aa:aa:aa:aa:bb:04
 - aa:aa:aa:aa:bb:05
-ztp_spoke_wait: true
-disconnected_operators:
-- multicluster-engine
 ztp_spokes:
 - name: mgmt-spoke1
   ctlplanes_number: 1

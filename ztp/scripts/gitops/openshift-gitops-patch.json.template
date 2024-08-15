@@ -41,7 +41,7 @@
             }
           ],
           "terminationMessagePolicy": "File",
-          "image": "{{ argocd_resourcegenerator_image }}"
+          "image": "$REGISTRY/openshift4/ztp-site-generate-rhel8:v$MINOR"
         }
       ],
       "volumeMounts": [

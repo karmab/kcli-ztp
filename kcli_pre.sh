@@ -184,15 +184,3 @@ echo no spoke_ingress_ip. This is mandatory for an HA spoke && exit 1
 {% endif %}
 {% endfor %}
 {% endif %}
-
-{% if argocd is defined and argocd %}
-{% if argocd_repo_url == None %}
-echo argocd_repo_url needs to be set for argocd && exit 1
-{% endif %}
-{% if argocd_clusters_app_path == None %}
-echo argocd_clusters_app_path needs to be set for argocd && exit 1
-{% endif %}
-{% if argocd_policies_app_path == None %}
-echo argocd_policies_app_path needs to be set for argocd && exit 1
-{% endif %}
-{% endif %}

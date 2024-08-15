@@ -14,9 +14,9 @@ spec:
     namespace: clusters-sub
   project: ztp-app-project
   source:
-    path: {{ argocd_clusters_app_path }}
-    repoURL: {{ argocd_repo_url }}
-    targetRevision: {{ argocd_repo_branch }}
+    path: $CLUSTERS_APP_PATH
+    repoURL: $REPO_URL
+    targetRevision: $REPO_BRANCH
     # uncomment the below plugin if you will be adding the plugin binaries in the same repo->dir where
     # the sitconfig.yaml exist AND use the ../../hack/patch-argocd-dev.sh script to re-patch the deployment-repo-server
 #    plugin:

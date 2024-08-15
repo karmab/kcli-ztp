@@ -5,7 +5,7 @@ export PATH=/root/bin:$PATH
 dnf -y install httpd
 systemctl enable --now httpd
 
-{% if acm %}
+{% if ztp_acm %}
 APP=advanced-cluster-management
 SOURCE_ARGS="-P acm_mce_catalog=$(kcli info app openshift multicluster-engine | grep ^source: | cut -d: -f2 | xargs)"
 {% else %}
