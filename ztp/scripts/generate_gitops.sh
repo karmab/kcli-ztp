@@ -26,7 +26,7 @@ rm openshift-gitops-patch.json.template
 oc patch argocd openshift-gitops -n openshift-gitops --type=merge --patch-file openshift-gitops-patch.json
 envsubst < clusters-app.yaml.template > clusters-app.yaml
 rm clusters-app.yaml.template
-if [[ ! "$REPO_URL" =~ "$GIT_SERVER:3000" ]] || [ -d /root/ztp/scripts/policies ] ; then
+if [[ ! "$REPO_URL" =~ "$GIT_SERVER:3000" ]] || [ -d /root/ztp/scripts/site-policies ] ; then
   envsubst < policies-app.yaml.template > policies-app.yaml
   rm policies-app.yaml.template
 else
@@ -41,8 +41,8 @@ if [[ "$REPO_URL" =~ "$GIT_SERVER:3000" ]] ; then
   cp /root/ztp/scripts/kustomization.yaml site-configs
   mv /root/ztp/scripts/requirements.yml site-configs/$HUB
   mv /root/ztp/scripts/siteconfig.yml site-configs/$HUB
-  if [ -d /root/ztp/scripts/policies ] ; then
-    cp -r /root/ztp/scripts/policies .
+  if [ -d /root/ztp/scripts/site-policies ] ; then
+    cp -r /root/ztp/scripts/site-policies .
   fi
   git add --all
   git commit -m 'Initial spokes'

@@ -7,12 +7,16 @@ spec:
   clusterResourceWhitelist:
   - group: ''
     kind: Namespace
+  - group: ''
+    kind: ConfigMap
   destinations:
   - namespace: 'ztp*'
     server: '*'
   - namespace: 'policies-sub'
     server: '*'
   namespaceResourceWhitelist:
+  - group: ''
+    kind: ConfigMap
   - group: ''
     kind: Namespace
   - group: 'apps.open-cluster-management.io'

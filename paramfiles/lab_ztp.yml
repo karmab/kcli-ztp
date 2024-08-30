@@ -28,3 +28,18 @@ ztp_spokes:
 installer_disk_size: 200
 notify: true
 nfs: true
+
+ztp_policies_dir: extras/sample-site-policies
+vmrules:
+- lab-mgmt-spoke1-node-0:
+   nets:
+   - name: lab-baremetal
+     mac: aa:aa:aa:aa:bb:04
+     ip: 192.168.130.23
+     reserveip: true
+     reservedns: true
+     alias:
+     - api.mgmt-spoke1.karmalabs.corp
+     - api-int.mgmt-spoke1.karmalabs.corp
+   - name: sriov-network
+     sriov: true

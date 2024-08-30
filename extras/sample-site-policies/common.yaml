@@ -1,0 +1,50 @@
+---
+apiVersion: ran.openshift.io/v1
+kind: PolicyGenTemplate
+metadata:
+  name: "common"
+  namespace: "ztp-policies"
+spec:
+  bindingRules:
+    common: "true"
+    logicalGroup: "active"
+  mcp: master
+  remediationAction: inform
+  sourceFiles:
+#    - fileName: DefaultCatsrc.yaml
+#      metadata:
+#        name: redhat-operator-index
+#      spec:
+#        image: infra.5g-deployment.lab:8443/redhat/redhat-operator-index:v4.15-1711601986
+#      policyName: config-policy
+    - fileName: ReduceMonitoringFootprint.yaml
+      policyName: config-policy
+    - fileName: StorageLVMSubscriptionNS.yaml
+      metadata:
+        annotations:
+          workload.openshift.io/allowed: management
+      policyName: subscriptions-policy
+    - fileName: StorageLVMSubscriptionOperGroup.yaml
+      policyName: subscriptions-policy
+    - fileName: StorageLVMSubscription.yaml
+      spec:
+        channel: stable-4.16
+        source: redhat-operator-index
+      policyName: subscriptions-policy
+    - fileName: LVMOperatorStatus.yaml
+      policyName: subscriptions-policy
+    - fileName: SriovSubscriptionNS.yaml
+      policyName: "subscriptions-policy"
+    - fileName: SriovSubscriptionOperGroup.yaml
+      policyName: "subscriptions-policy"
+    - fileName: SriovSubscription.yaml
+      spec:
+        channel: stable
+        source: redhat-operator-index
+        config:
+          env:
+            - name: "DEV_MODE"
+              value: "TRUE"
+      policyName: "subscriptions-policy"
+    - fileName: SriovOperatorStatus.yaml
+      policyName: subscriptions-policy

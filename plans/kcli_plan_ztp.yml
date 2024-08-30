@@ -134,7 +134,8 @@ apps-{{ spoke_name }}:
 {% endfor %}
 {% if ztp_policies_dir|exists %}
  - origin: {{ ztp_policies_dir }}
-   path: /root/ztp/scripts/policies
+   path: /root/ztp/scripts/site-policies
+   render: false
 {% endif %}
 {% if launch_steps and workflow_installer %}
  cmds:

@@ -1,0 +1,17 @@
+---
+apiVersion: ran.openshift.io/v1
+kind: PolicyGenTemplate
+metadata:
+  name: "du-sno-validator"
+  namespace: "ztp-policies"
+spec:
+  bindingRules:
+    group-du-sno: ""
+    logicalGroup: "active"
+  bindingExcludedRules:
+    ztp-done: ""
+  mcp: "master"
+  sourceFiles:
+    - fileName: validatorCRs/informDuValidator.yaml
+      remediationAction: inform
+      policyName: "validation"

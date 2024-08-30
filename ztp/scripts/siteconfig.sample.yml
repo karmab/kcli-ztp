@@ -70,14 +70,12 @@ spec:
   - clusterName: {{ spoke_name }}
     networkType: {{ spoke_network_type }}
     clusterLabels:
-      # These example cluster labels correspond to the bindingRules in the PolicyGenTemplate examples in ../policygentemplates:
-      # ../policygentemplates/common-ranGen.yaml will apply to all clusters with 'common: true'
-      common: true
-      # ../policygentemplates/group-du-standard-ranGen.yaml will apply to all clusters with 'group-du-standard: ""'
+      common: "true"
+      logicalGroup: "active"
       group-du-standard: ""
-      # ../policygentemplates/example-multinode-site.yaml will apply to all clusters with 'sites: "example-multinode"'
-      # Normally this should match or contain the cluster name so it only applies to a single cluster
       sites : example-multinode
+      hardware-type: "hw-type-platform-1"
+      group-du-sno: ""
 {% if spoke_ctlplanes_number > 1 and spoke_api_ip != None and spoke_ingress_ip != None %}
     apiVIP: {{ spoke_api_ip }}
     ingressVIP: {{ spoke_ingress_ip }}

@@ -1,0 +1,9 @@
+kind: Kustomization
+resources:
+- policies-namespace.yaml
+- site-data-hw-1-configmap.yaml
+- group-hardware-types-configmap.yaml
+generators:
+- common.yaml
+- group-du-sno.yaml
+- sites-specific.yaml
