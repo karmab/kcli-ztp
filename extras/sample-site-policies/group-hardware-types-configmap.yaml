@@ -14,4 +14,4 @@ data:
   hw-type-platform-1-hugepages-count: "16"
   hw-type-platform-1-hugepages-size: "1G"
   hw-type-platform-1-supported-sriov-nic: "true"
-  hw-type-platform-1-storage-path: "/dev/vda"
+  hw-type-platform-1-storage-path: "/dev/sdb"

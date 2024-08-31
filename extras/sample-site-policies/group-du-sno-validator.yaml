@@ -12,6 +12,6 @@ spec:
     ztp-done: ""
   mcp: "master"
   sourceFiles:
-    - fileName: validatorCRs/informDuValidator.yaml
-      remediationAction: inform
-      policyName: "validation"
+  - fileName: validatorCRs/informDuValidator.yaml
+    remediationAction: inform
+    policyName: "validation"

@@ -35,10 +35,12 @@ nfs: true
 ztp_policies_dir: extras/sample-site-policies
 vmrules:
 - lab-mgmt-spoke1-node-0:
+   boot_order: true
    disks:
    - size: 120
      interface: scsi
-   - 50
+   - size: 100
+     interface: scsi
    nets:
    - name: lab-baremetal
      mac: aa:aa:aa:aa:bb:04

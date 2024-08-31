@@ -12,74 +12,74 @@ spec:
   mcp: master
   remediationAction: inform
   sourceFiles:
-    - fileName: DisableSnoNetworkDiag.yaml
-      policyName: "group-policy"
-    - fileName: DisableOLMPprof.yaml # wave 10
-      policyName: "group-policy"
-    - fileName: SriovOperatorConfig.yaml
-      policyName: "group-policy"
-      # Using hub templating to obtain if the SR-IOV card is supported for this hw type
-      spec:
-        disableDrain: true
-        enableOperatorWebhook: '{{hub fromConfigMap "" "group-hardware-types-configmap" (printf "%s-supported-sriov-nic" (index .ManagedClusterLabels "hardware-type")) | toBool hub}}'
-    - fileName: StorageLVMCluster.yaml
-      # Using hub templating to obtain the storage device name for this hw type
-      spec:
-        storage:
-          deviceClasses:
-            - name: vg1
-              thinPoolConfig:
-                name: thin-pool-1
-                sizePercent: 90
-                overprovisionRatio: 10
-              deviceSelector:
-                paths:
-                - '{{hub fromConfigMap "" "group-hardware-types-configmap" (printf "%s-storage-path" (index .ManagedClusterLabels "hardware-type")) hub}}'
-      policyName: "group-policy"
-    - fileName: PerformanceProfile.yaml
-      # Using hub templating to obtain if the tunning config for this hw type
-      policyName: "group-policy"
-      metadata:
-        annotations:
-          kubeletconfig.experimental: |
-            {"topologyManagerScope": "pod",
-             "systemReserved": {"memory": "3Gi"}
-            }
-      spec:
-        cpu:
-          isolated: '{{hub fromConfigMap "" "group-hardware-types-configmap" (printf "%s-cpu-isolated" (index .ManagedClusterLabels "hardware-type")) hub}}'
-          reserved: '{{hub fromConfigMap "" "group-hardware-types-configmap" (printf "%s-cpu-reserved" (index .ManagedClusterLabels "hardware-type")) hub}}'
-        hugepages:
-          defaultHugepagesSize: '{{hub fromConfigMap "" "group-hardware-types-configmap" (printf "%s-hugepages-default" (index .ManagedClusterLabels "hardware-type"))| hub}}'
-          pages:
-          - count: '{{hub fromConfigMap "" "group-hardware-types-configmap" (printf "%s-hugepages-count" (index .ManagedClusterLabels "hardware-type")) | toInt hub}}'
-            size: '{{hub fromConfigMap "" "group-hardware-types-configmap" (printf "%s-hugepages-size" (index .ManagedClusterLabels "hardware-type")) hub}}'
-        numa:
-          topologyPolicy: single-numa-node
-        realTimeKernel:
-          enabled: false
-        globallyDisableIrqLoadBalancing: false
-        # WorkloadHints defines the set of upper level flags for different type of workloads.
-        # The configuration below is set for a low latency, performance mode.
-        workloadHints:
-          realTime: true
-          highPowerConsumption: false
-          perPodPowerManagement: false
-    - fileName: TunedPerformancePatch.yaml
-      policyName: "group-policy"
-      spec:
-        profile:
-          - name: performance-patch
-            data: |
-              [main]
-              summary=Configuration changes profile inherited from performance created tuned
-              include=openshift-node-performance-openshift-node-performance-profile
-              [sysctl]
-              # When using the standard (non-realtime) kernel, remove the kernel.timer_migration override from the [sysctl] section
-              # kernel.timer_migration=0
-              [scheduler]
-              group.ice-ptp=0:f:10:*:ice-ptp.*
-              group.ice-gnss=0:f:10:*:ice-gnss.*
-              [service]
-              service.stalld=start,enable
-              service.chronyd=stop,disable
+  - fileName: DisableSnoNetworkDiag.yaml
+    policyName: "group-policy"
+  - fileName: DisableOLMPprof.yaml # wave 10
+    policyName: "group-policy"
+  - fileName: SriovOperatorConfig.yaml
+    policyName: "group-policy"
+    # Using hub templating to obtain if the SR-IOV card is supported for this hw type
+    spec:
+      disableDrain: true
+      enableOperatorWebhook: '{{hub fromConfigMap "" "group-hardware-types-configmap" (printf "%s-supported-sriov-nic" (index .ManagedClusterLabels "hardware-type")) | toBool hub}}'
+  - fileName: StorageLVMCluster.yaml
+    # Using hub templating to obtain the storage device name for this hw type
+    spec:
+      storage:
+        deviceClasses:
+        - name: vg1
+          thinPoolConfig:
+            name: thin-pool-1
+            sizePercent: 90
+            overprovisionRatio: 10
+          deviceSelector:
+            paths:
+            - '{{hub fromConfigMap "" "group-hardware-types-configmap" (printf "%s-storage-path" (index .ManagedClusterLabels "hardware-type")) hub}}'
+    policyName: "group-policy"
+  - fileName: PerformanceProfile.yaml
+    # Using hub templating to obtain if the tunning config for this hw type
+    policyName: "group-policy"
+    metadata:
+      annotations:
+        kubeletconfig.experimental: |
+          {"topologyManagerScope": "pod",
+           "systemReserved": {"memory": "3Gi"}
+          }
+    spec:
+      cpu:
+        isolated: '{{hub fromConfigMap "" "group-hardware-types-configmap" (printf "%s-cpu-isolated" (index .ManagedClusterLabels "hardware-type")) hub}}'
+        reserved: '{{hub fromConfigMap "" "group-hardware-types-configmap" (printf "%s-cpu-reserved" (index .ManagedClusterLabels "hardware-type")) hub}}'
+      hugepages:
+        defaultHugepagesSize: '{{hub fromConfigMap "" "group-hardware-types-configmap" (printf "%s-hugepages-default" (index .ManagedClusterLabels "hardware-type"))| hub}}'
+        pages:
+        - count: '{{hub fromConfigMap "" "group-hardware-types-configmap" (printf "%s-hugepages-count" (index .ManagedClusterLabels "hardware-type")) | toInt hub}}'
+          size: '{{hub fromConfigMap "" "group-hardware-types-configmap" (printf "%s-hugepages-size" (index .ManagedClusterLabels "hardware-type")) hub}}'
+      numa:
+        topologyPolicy: single-numa-node
+      realTimeKernel:
+        enabled: false
+      globallyDisableIrqLoadBalancing: false
+      # WorkloadHints defines the set of upper level flags for different type of workloads.
+      # The configuration below is set for a low latency, performance mode.
+      workloadHints:
+        realTime: true
+        highPowerConsumption: false
+        perPodPowerManagement: false
+  - fileName: TunedPerformancePatch.yaml
+    policyName: "group-policy"
+    spec:
+      profile:
+      - name: performance-patch
+        data: |
+          [main]
+          summary=Configuration changes profile inherited from performance created tuned
+          include=openshift-node-performance-openshift-node-performance-profile
+          [sysctl]
+          # When using the standard (non-realtime) kernel, remove the kernel.timer_migration override from the [sysctl] section
+          # kernel.timer_migration=0
+          [scheduler]
+          group.ice-ptp=0:f:10:*:ice-ptp.*
+          group.ice-gnss=0:f:10:*:ice-gnss.*
+          [service]
+          service.stalld=start,enable
+          service.chronyd=stop,disable
