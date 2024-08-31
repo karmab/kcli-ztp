@@ -16,7 +16,6 @@ info: |
     The ci registry is targetted with the openshift_image variable.
 baseplan: kcli_plan_infra.yml
 image: centos9stream
-image_url:
 installer_disk_size:
 installer_numcpus:
 installer_memory:
@@ -96,3 +95,21 @@ wait_for_workers_number:
 wait_for_workers_timeout: 3600
 manifests_dir: manifests
 workflow_installer: false
+
+ztp_acm: true
+ztp_gitops: true
+ztp_gitops_user: dummy
+ztp_gitops_password: dummy
+ztp_gitops_repo_branch: main
+ztp_gitops_repo_url:
+ztp_gitops_clusters_app_path: site-configs
+ztp_gitops_policies_app_path: site-policies
+ztp_policies_dir: ztp_policies_dir
+ztp_spoke_deploy: true
+ztp_spoke_network_type: OVNKubernetes
+ztp_spoke_wait: true
+ztp_spoke_wait_time: 3600
+ztp_converged_flow: false
+ztp_disable_validations: true
+ztp_spokes: []
+ztp_domain:

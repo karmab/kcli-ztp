@@ -93,3 +93,87 @@ apps:
  disks: {{ virtual_disks }}
 {% endfor %}
 {% endif %}
+
+{% for spoke in ztp_spokes %}
+{% set spoke_name = spoke.name %}
+{% set spoke_api_ip = spoke.get('api_ip') %}
+{% set spoke_ingress_ip = spoke.get('ingress_ip') %}
+{% if lab and spoke_api_ip != None and spoke_ingress_ip != None %}
+api-{{ spoke_name }}:
+ type: dns
+ net: {{ baremetal_net }}
+ ip: {{ spoke_api_ip }}
+ alias:
+ - api.{{ spoke_name }}.{{ domain }}
+ - api-int.{{ spoke_name }}.{{ domain }}
+
+apps-{{ spoke_name }}:
+ type: dns
+ net: {{ baremetal_net }}
+ ip: {{ spoke_ingress_ip }}
+ alias:
+ - console-openshift-console.apps.{{ spoke_name }}.{{ domain }}
+ - oauth-openshift.apps.{{ spoke_name }}.{{ domain }}
+ - prometheus-k8s-openshift-monitoring.apps.{{ spoke_name }}.{{ domain }}
+ - canary-openshift-ingress-canary.apps.{{ spoke_name }}.{{ domain }}
+ - assisted-service-open-cluster-management.apps.{{ spoke_name }}.{{ domain }}
+ - assisted-service-assisted-installer.apps.{{ spoke_name }}.{{ domain }}
+ - assisted-image-service-open-cluster-management.apps.{{ spoke_name }}.{{ domain }}
+{% endif %}
+{% endfor %}
+
+{% if not virtual_workers %}
+{% set virtual_workers_number = 0 %}
+{% endif %}
+
+{% set total_number = namespace(value=0) %}
+{% for spoke in ztp_spokes %}
+{% set spoke_name = spoke.name %}
+{% set spoke_api_ip = spoke.get('api_ip') %}
+{% set spoke_ingress_ip= spoke.get('ingress_ip') %}
+{% set spoke_ctlplanes_number = spoke.get('ctlplanes_number', 1) %}
+{% set spoke_workers_number = spoke.get('workers_number', 0) %}
+{% set virtual_nodes_number = spoke.get('virtual_nodes_number', 0) %}
+{% set ztp_uefi = spoke.get('uefi', ztp_uefi) %}
+{% set ztp_virtual_nodes_numcpus = spoke.get('virtual_nodes_numcpus', ztp_virtual_nodes_numcpus) %}
+{% set ztp_virtual_nodes_memory = spoke.get('virtual_nodes_memory', ztp_virtual_nodes_memory) %}
+{% set ztp_virtual_nodes_disk_size = spoke.get('virtual_nodes_disk_size', ztp_virtual_nodes_disk_size) %}
+{% set ztp_virtual_nodes_disk_interface = spoke.get('virtual_nodes_disk_interface', ztp_virtual_nodes_disk_interface) %}
+
+{% if virtual_nodes_number > 0 %}
+{% for num in range(0, virtual_nodes_number) %}
+
+{{ cluster }}-{{ spoke_name }}-node-{{ num }}:
+ pool: {{ pool }}
+ redfish_iso: {{ spoke_name }}.iso
+ image:
+ numcpus: {{ ztp_virtual_nodes_numcpus }}
+ start: false
+ cloudinit: false
+ uefi_legacy: {{ 'false' if uefi|default(False) else ztp_uefi }}
+ user: core
+ memory: {{ ztp_virtual_nodes_memory }}
+ nets:
+ - name: {{ baremetal_net }}
+{% if baremetal_macs and baremetal_macs|length > virtual_ctlplanes_number + virtual_workers_number + total_number.value + num %}
+   mac: {{ baremetal_macs[virtual_ctlplanes_number + virtual_workers_number + total_number.value + num] }}
+{% else %}
+   mac: {{ ztp_virtual_nodes_baremetal_mac_prefix + ":" + "%02.d" | format(total_number.value + num + 1)| string }}
+{% endif %}
+{% if lab and baremetal_ips and baremetal_ips|length > virtual_ctlplanes_number + virtual_workers_number + total_number.value + num %}
+   ip: {{ baremetal_ips[virtual_ctlplanes_number + virtual_workers_number + total_number.value + num] }}
+   reserveip: true
+{% if virtual_nodes_number >= 1 and loop.index == 1 %}
+   reservedns: true
+   alias:
+   - api.{{ spoke_name }}.{{ domain }}
+   - api-int.{{ spoke_name }}.{{ domain }}
+{% endif %}
+{% endif %}
+ disks:
+ - size: {{ ztp_virtual_nodes_disk_size }}
+   interface: {{ ztp_virtual_nodes_disk_interface }}
+{% endfor %}
+{% set total_number.value = total_number.value + ztp_virtual_nodes_number %}
+{% endif %}
+{% endfor %}

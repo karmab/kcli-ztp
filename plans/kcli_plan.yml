@@ -1,8 +1,66 @@
-{% if image_url != None %}
-{{ image }}:
- type: image
- url: {{ image_url }}
+{% if ztp_acm and 'advanced-cluster-management' not in disconnected_operators %}
+{{ disconnected_operators.append("advanced-cluster-management") or "" }}
 {% endif %}
+
+{% if ztp_acm and 'multicluster-engine' not in disconnected_operators %}
+{{ disconnected_operators.append("multicluster-engine") or "" }}
+{% endif %}
+
+{% if not ztp_acm and 'multicluster-engine' not in disconnected_operators %}
+{{ disconnected_operators.append("multicluster-engine") or "" }}
+{% endif %}
+
+{% if ztp_gitops and 'openshift-gitops-operator' not in disconnected_operators %}
+{{ disconnected_operators.append("openshift-gitops-operator") or "" }}
+{% endif %}
+
+{% if ztp_gitops and 'topology-aware-lifecycle-manager' not in disconnected_operators %}
+{{ disconnected_operators.append("topology-aware-lifecycle-manager") or "" }}
+{% endif %}
+
+{% set snoplus_bmcs = [] %}
+
+{% for spoke in ztp_spokes %}
+{% set spoke_name = spoke.name %}
+{% set spoke_api_ip = spoke.get('api_ip') %}
+{% set spoke_ingress_ip = spoke.get('ingress_ip') %}
+{% if lab and spoke_api_ip != None and spoke_ingress_ip != None %}
+api-{{ spoke_name }}:
+ type: dns
+ net: {{ baremetal_net }}
+ ip: {{ spoke_api_ip }}
+ alias:
+ - api.{{ spoke_name }}.{{ domain }}
+ - api-int.{{ spoke_name }}.{{ domain }}
+
+apps-{{ spoke_name }}:
+ type: dns
+ net: {{ baremetal_net }}
+ ip: {{ spoke_ingress_ip }}
+ alias:
+ - console-openshift-console.apps.{{ spoke_name }}.{{ domain }}
+ - oauth-openshift.apps.{{ spoke_name }}.{{ domain }}
+ - prometheus-k8s-openshift-monitoring.apps.{{ spoke_name }}.{{ domain }}
+ - canary-openshift-ingress-canary.apps.{{ spoke_name }}.{{ domain }}
+ - assisted-service-open-cluster-management.apps.{{ spoke_name }}.{{ domain }}
+ - assisted-service-assisted-installer.apps.{{ spoke_name }}.{{ domain }}
+ - assisted-image-service-open-cluster-management.apps.{{ spoke_name }}.{{ domain }}
+{% endif %}
+{% endfor %}
+
+{% if not virtual_workers %}
+{% set virtual_workers_number = 0 %}
+{% endif %}
+
+{% for spoke in ztp_spokes %}
+{% set spoke_name = spoke.name %}
+{% set spoke_ctlplanes_number = spoke.get('ctlplanes_number', 1) %}
+{% set spoke_workers_number = spoke.get('workers_number', 0) %}
+{% set spoke_snoplus = True if spoke_ctlplanes_number == 1 and spoke_workers_number == 1 else False %}
+{% if spoke_snoplus %}
+{% do snoplus_bmcs.append(spoke_name) %}
+{% endif %}
+{% endfor %}
 
 {{ cluster }}-installer: 
  image: {{ image }} 
@@ -90,6 +148,31 @@
 {% if installer_mac != None and ':' in api_ip|default('') %}
  - path: /etc/NetworkManager/conf.d/kcli-ipv6.conf
    origin: envfiles/kcli-ipv6.conf
+{% endif %}
+ - ztp/scripts/launch_steps.sh
+ - ztp/scripts/01_assisted-service.sh
+ - ztp/scripts/02_git.sh
+ - ztp/scripts/03_spokes_deploy.sh
+ - ztp/scripts/04_spokes_wait.sh
+ - ztp/scripts/05_snoplus.sh
+ - ztp/scripts/gitops
+ - ztp/scripts/generate_gitops.sh
+ - ztp/scripts/requirements.sample.yml
+ - ztp/scripts/siteconfig.sample.yml
+ - ztp/scripts/generate_siteconfig.sh
+ - ztp/scripts/kustomization.yaml
+ - path: /root/ztp/scripts/kubeconfig.sh
+   origin: ztp/scripts/kubeconfig.sh
+ - ztp/scripts/gitea.service
+{% for spoke in snoplus_bmcs %}
+ - path: /root/ztp/scripts/extra_bmc_{{ spoke }}.yml
+   origin: ztp/scripts/extra_bmc.yml
+   index: {{ loop.index0 }}
+{% endfor %}
+{% if ztp_policies_dir|exists %}
+ - origin: {{ ztp_policies_dir }}
+   path: /root/ztp/scripts/site-policies
+   render: false
 {% endif %}
 {% if launch_steps %}
  cmds:

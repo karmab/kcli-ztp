@@ -1,33 +1,50 @@
 lab: true
 pool: default
-dualstack: false
-dualstack_cidr: 192.168.130.0/24
 disconnected: true
 virtual_ctlplanes: true
-launch_steps: true
-deploy_openshift: true
 version: stable
 tag: "4.16"
 cluster: lab
 domain: karmalabs.corp
 baremetal_cidr: 2620:52:0:1302::/64
 baremetal_net: lab-baremetal
-virtual_ctlplanes_memory: 16384
-virtual_ctlplanes_numcpus: 8
 api_ip: 2620:52:0:1302::2
 ingress_ip: 2620:52:0:1302::3
 baremetal_ips:
 - 2620:52:0:1302::20
 - 2620:52:0:1302::21
 - 2620:52:0:1302::22
+- 2620:52:0:1302::23
 baremetal_macs:
 - aa:aa:aa:aa:bb:01
 - aa:aa:aa:aa:bb:02
 - aa:aa:aa:aa:bb:03
+- aa:aa:aa:aa:bb:04
+ztp_spokes:
+- name: mgmt-spoke1
+  ctlplanes_number: 1
+  workers_number: 0
+  virtual_nodes_number: 1
+installer_disk_size: 200
 notify: true
 nfs: true
-#motd: |
-# This is a dope vm
-# be careful and wach your steps
-# you ve been warned
 installer_mac: aa:bb:aa:aa:bb:01
+
+ztp_policies_dir: extras/sample-site-policies
+vmrules:
+- lab-mgmt-spoke1-node-0:
+   disks:
+   - size: 120
+     interface: scsi
+   - 50
+   nets:
+   - name: lab-baremetal
+     mac: aa:aa:aa:aa:bb:04
+     ip: 2620:52:0:1302::24
+     reserveip: true
+     reservedns: true
+     alias:
+     - api.mgmt-spoke1.karmalabs.corp
+     - api-int.mgmt-spoke1.karmalabs.corp
+   - name: sriov-network
+     sriov: true

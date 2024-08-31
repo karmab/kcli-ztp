@@ -154,7 +154,6 @@ echo disconnected_password will be forced to super{{ disconnected_password }}
 {% endif %}
 
 # ZTP CHECKS
-{% if ztp_spokes is defined %}
 {% for spoke in ztp_spokes %}
 {% set spoke_name = spoke.get('name') %}
 {% set spoke_api_ip = spoke.get('api_ip') %}
@@ -183,4 +182,3 @@ echo no spoke_ingress_ip. This is mandatory for an HA spoke && exit 1
 {% endif %}
 {% endif %}
 {% endfor %}
-{% endif %}

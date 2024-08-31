@@ -1,24 +1,37 @@
 ## Purpose
 
-This repository provides a plan which deploys a vm where:
+This repository provides automation for deploying the following components:
 
-- openshift-install is downloaded with the specific version and tag specified.
-- stop the nodes to deploy through redfish.
-- launch the install against a set of baremetal nodes using Agent Based Install. Virtual ctlplanes and workers can also be deployed.
+- a hub cluster using Agent Based Install
+- spokes using ZTP
 
-The automation can be used for additional scenarios:
+## Architecture 
 
-- only deploying the virtual infrastructure needed to emulate a baremetal deployment.
-- deploying a spoke cluster (either multinode or SNO) through ZTP on top.
+Kcli is leveraged to deploy a plan which creates an "installer vm" to drive deployment via the following steps:
+
+- Virtual nodes for both the hub and spokes are created (or combined with baremetal nodes). Note this is optional
+- Client packages such as openshift-install are downloaded with any specified version and tag.
+- Stop the nodes to deploy through redfish.
+- Launch hub install against them
+- Install ZTP requirements such as assisted service, openshift-gitops, a git server, ... 
+- Launch spoke deployments
+
+Parameters allow to customize the installation
+
+The installer vm (and additional virtual nodes) can run on any platform supported by kcli with support for iso deployment.
+So far it was tested on:
+
+- kvm
+- vsphere and esx
 
 ### Requirements
 
 #### for kcli
 
 - kcli installed (for rhel8/cento8/fedora, look [here](https://kcli.readthedocs.io/en/latest/#package-install-method))
-- an openshift pull secret (stored by default in openshift_pull.json)
+- An openshift pull secret (stored by default in openshift_pull.json)
 
-#### on the provisioning node
+#### on the provisioning node (KVM Only)
 
 - a physical bridge typically named baremetal with a nic from the external network
 
@@ -161,6 +174,21 @@ The following parameters are available when deploying the default plan
 |rhnwait                                      |30                                        |
 |tag                                          |4.15                                      |
 |version                                      |stable                                    |
+|ztp_nodes                                    |[]                                        |
+|ztp\_spoke\_api\_ip                          |None                                      |
+|ztp\_spoke\_deploy                           |True                                      |
+|ztp\_spoke\_ingress\_ip                      |None                                      |
+|ztp\_spoke\_ctlplanes\_number                |1                                         |
+|ztp\_spoke\_name                             |mgmt-spoke1                               |
+|ztp\_spoke\_wait                             |False                                     |
+|ztp\_spoke\_wait_time                        |3600                                      |
+|ztp\_spoke\_workers_number                   |0                                         |
+|ztp\_virtual\_nodes                          |False                                     |
+|ztp\_virtual\_nodes\_baremetal\_mac\_prefix  |aa:aa:aa:cc:cc                            |
+|ztp\_virtual\_nodes\_disk\_size              |120                                       |
+|ztp\_virtual_nodes\_memory                   |38912                                     |
+|ztp\_virtual\_nodes\_number                  |1                                         |
+|ztp\_virtual\_nodes\_numcpus                 |8                                         |
 
 ### Node parameters
 
@@ -210,32 +238,9 @@ A valid network_config snippet would be
       macAddress: aa:aa:aa:aa:bb:03
 ```
 
-## Deploying a cluster through ZTP on top of your cluster
-
-You can use the plan `kcli_plan_ztp.yml` for this purpose, along with the following parameters:
-
-|Parameter                            |Default Value           |
-|-------------------------------------|------------------------|
-|ztp_nodes                             |[]                     |
-|ztp\_spoke\_api\_ip                      |None                   |
-|ztp\_spoke\_deploy                      |True                   |
-|ztp\_spoke\_ingress\_ip                  |None                   |
-|ztp\_spoke\_ctlplanes\_number              |1                      |
-|ztp\_spoke\_name                        |mgmt-spoke1            |
-|ztp\_spoke\_wait                        |False                  |
-|ztp\_spoke\_wait_time                   |3600                   |
-|ztp\_spoke\_workers_number              |0                      |
-|ztp\_virtual\_nodes                     |False                  |
-|ztp\_virtual\_nodes\_baremetal\_mac\_prefix|aa:aa:aa:cc:cc         |
-|ztp\_virtual\_nodes\_disk\_size           |120                    |
-|ztp\_virtual_nodes\_memory              |38912                  |
-|ztp\_virtual\_nodes\_number              |1                      |
-|ztp\_virtual\_nodes\_numcpus             |8                      |
-
 ## Sample parameter files
 
-The following sample parameter files are available for you to deploy (on libvirt):
+The following sample parameter files are available for you to deploy:
 
 - [lab.yml](lab.yml) This deploys 3 ctlplanes in a dedicated ipv4 network
-- [lab_ipv6.yml](lab_ipv6.yml) This deploys 3 ctlplanes in a dedicated ipv6 network (hence in a disconnected manner)
-- [lab_ipv6_ztp.yml](lab_ipv6_ztp.yml) This deploys the ipv6 lab, and released acm on top, and then a SNO spoke
+- [lab_ipv6.yml](lab_ipv6.yml) This deploys 3 ctlplanes in a dedicated ipv6 network (hence in a disconnected manner) and a SNO spoke on top

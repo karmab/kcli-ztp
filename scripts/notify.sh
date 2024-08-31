@@ -9,7 +9,6 @@ echo "Cluster info:"
 oc get clusterversion
 echo "Nodes info:"
 oc get nodes
-{% if ztp_spokes is defined %}
 echo -e "\nSpokes:\n"
 {% for spoke in ztp_spokes %}
 export SPOKE={{ spoke.name }}
@@ -21,4 +20,3 @@ oc get agentclusterinstall -n $SPOKE $SPOKE -o jsonpath={'.status.debugInfo.stat
 echo "Cluster Info:"
 oc get agentclusterinstall -n $SPOKE $SPOKE -o jsonpath={'.status.debugInfo.stateInfo'}
 {% endfor%}
-{% endif %}

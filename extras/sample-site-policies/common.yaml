@@ -11,12 +11,12 @@ spec:
   mcp: master
   remediationAction: inform
   sourceFiles:
-#    - fileName: DefaultCatsrc.yaml
-#      metadata:
-#        name: redhat-operator-index
-#      spec:
-#        image: infra.5g-deployment.lab:8443/redhat/redhat-operator-index:v4.15-1711601986
-#      policyName: config-policy
+    - fileName: DefaultCatsrc.yaml
+      metadata:
+        name: redhat-operator-index
+      spec:
+        image: registry.redhat.io/redhat/redhat-operator-index:v4.16
+      policyName: config-policy
     - fileName: ReduceMonitoringFootprint.yaml
       policyName: config-policy
     - fileName: StorageLVMSubscriptionNS.yaml

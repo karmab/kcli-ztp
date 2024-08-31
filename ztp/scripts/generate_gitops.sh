@@ -42,6 +42,9 @@ if [[ "$REPO_URL" =~ "$GIT_SERVER:3000" ]] ; then
   mv /root/ztp/scripts/requirements.yml site-configs/$HUB
   mv /root/ztp/scripts/siteconfig.yml site-configs/$HUB
   if [ -d /root/ztp/scripts/site-policies ] ; then
+    if [ "$REGISTRY" != "registry.redhat.io" ] ; then
+      sed -i "/image: registry.redhat.io/image: $REGISTRY/" /root/ztp/scripts/site-policies/*
+    fi
     cp -r /root/ztp/scripts/site-policies .
   fi
   git add --all

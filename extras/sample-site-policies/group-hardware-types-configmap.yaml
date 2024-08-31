@@ -8,17 +8,10 @@ metadata:
     argocd.argoproj.io/sync-options: Replace=true
 data:
   # PerformanceProfile.yaml
-  hw-type-platform-1-cpu-isolated: "4-11"
+  hw-type-platform-1-cpu-isolated: "4-15"
   hw-type-platform-1-cpu-reserved: "0-3"
-  hw-type-platform-1-hugepages-default: "1G"
-  hw-type-platform-1-hugepages-count: "4"
+  hw-type-platform-1-hugepages-default: "256M"
+  hw-type-platform-1-hugepages-count: "16"
   hw-type-platform-1-hugepages-size: "1G"
-  hw-type-platform-1-supported-sriov-nic: "false"
-  hw-type-platform-1-storage-path: "/dev/vdb"
-  hw-type-platform-2-cpu-isolated: "2-39,42-79"
-  hw-type-platform-2-cpu-reserved: "0-1,40-41"
-  hw-type-platform-2-hugepages-default: "256M"
-  hw-type-platform-2-hugepages-count: "16"
-  hw-type-platform-2-hugepages-size: "1G"
-  hw-type-platform-2-supported-sriov-nic: "true"
-  hw-type-platform-2-storage-path: "/dev/nvme0n1"
+  hw-type-platform-1-supported-sriov-nic: "true"
+  hw-type-platform-1-storage-path: "/dev/vda"

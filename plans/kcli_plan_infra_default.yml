@@ -39,3 +39,11 @@ lab: false
 lab_dhcp: true
 lab_extra_dns: []
 model: dell
+
+ztp_virtual_nodes_number: 1
+ztp_virtual_nodes_numcpus: 8
+ztp_virtual_nodes_memory: 38912
+ztp_virtual_nodes_disk_size: 120
+ztp_virtual_nodes_disk_interface: scsi
+ztp_virtual_nodes_baremetal_mac_prefix: aa:aa:aa:cc:cc
+ztp_uefi: true
