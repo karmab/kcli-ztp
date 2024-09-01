@@ -47,6 +47,7 @@ if [[ "$REPO_URL" =~ "$GIT_SERVER:3000" ]] ; then
     fi
     cp -r /root/ztp/scripts/site-policies .
   fi
+  git config --global user.name "Jimi Hendrix"
   git add --all
   git commit -m 'Initial spokes'
   git push origin main

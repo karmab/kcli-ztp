@@ -7,5 +7,5 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-options: Replace=true
 data:
-  sno1-resourcename1: "igb-enp2s0"
-  sno1-sriovnic1: "enp2s0"
+  mgmt-spoke1-resourcename1: "enp2s0"
+  mgmt-spoke1-sriovnic1: "enp2s0"

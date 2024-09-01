@@ -38,6 +38,6 @@ spec:
         vendor: "8086"
         deviceID: "10c9"
         pfNames:
-        - '{{hub fromConfigMap "" "site-data-configmap" (printf "%s-sriovnic1" .ManagedClusterName) hub}}'
+          - '{{hub fromConfigMap "" "site-data-configmap" (printf "%s-sriovnic1" .ManagedClusterName) hub}}'
       numVfs: 2
       resourceName: '{{hub fromConfigMap "" "site-data-configmap" (printf "%s-resourcename1" .ManagedClusterName) hub}}'

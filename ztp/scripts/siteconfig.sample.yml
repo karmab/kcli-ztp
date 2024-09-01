@@ -72,7 +72,6 @@ spec:
     clusterLabels:
       common: "true"
       logicalGroup: "active"
-      group-du-standard: ""
       sites : example-multinode
       hardware-type: "hw-type-platform-1"
       group-du-sno: ""
