@@ -1,0 +1,145 @@
+parts:
+- name: DU-Reference
+  components:
+  - name: Accelerator
+    type: Optional
+    requiredTemplates:
+    - path: AcceleratorsNS.yaml
+    - path: AcceleratorsOperatorStatus.yaml
+    - path: AcceleratorsOperGroup.yaml
+    - path: AcceleratorsSubscription.yaml
+    - path: SriovFecClusterConfig.yaml
+#  - name: BareMetalEventRelay
+#    type: Optional
+#    requiredTemplates:
+#    - path: BareMetalEventRelaySubscriptionNS.yaml
+#    - path: BareMetalEventRelaySubscriptionOperGroup.yaml
+#    - path: BareMetalEventRelaySubscription.yaml
+  - name: ClusterLog
+    type: Required
+    requiredTemplates:
+    - path: ClusterLogForwarder.yaml
+    - path: ClusterLogging.yaml
+    - path: ClusterLogNS.yaml
+    - path: ClusterLogOperatorStatus.yaml
+    - path: ClusterLogOperGroup.yaml
+    - path: ClusterLogSubscription.yaml
+#  - name: Ptp
+#    type: Required
+#    requiredTemplates:
+#    - path: PtpOperatorConfig.yaml
+#    - path: PtpOperatorStatus.yaml
+#    - path: PtpSubscriptionNS.yaml
+#    - path: PtpSubscriptionOperGroup.yaml
+#    - path: PtpSubscription.yaml
+#    optionalTemplates:
+#    - path: PtpConfigBoundary.yaml
+#    - path: PtpConfigGmWpc.yaml
+#    - path: PtpConfigMaster.yaml
+#    - path: PtpConfigSlaveCvl.yaml
+#    - path: PtpConfigSlave.yaml
+#    - path: PtpOperatorConfigForEvent.yaml
+  - name: Sriov
+    type: Required
+    requiredTemplates:
+    - path: SriovNetworkNodePolicy.yaml
+    - path: SriovNetwork.yaml
+    - path: SriovOperatorConfig.yaml
+    - path: SriovOperatorStatus.yaml
+    - path: SriovSubscriptionNS.yaml
+    - path: SriovSubscriptionOperGroup.yaml
+    - path: SriovSubscription.yaml
+  - name: StorageLVM
+    type: Optional
+    requiredTemplates:
+    - path: StorageClass.yaml
+    - path: StorageLVMCluster.yaml
+    - path: StorageLVMSubscriptionNS.yaml
+    - path: StorageLVMSubscriptionOperGroup.yaml
+    - path: StorageLVMSubscription.yaml
+    - path: LVMOperatorStatus.yaml
+  - name: Tuning
+    type: Required
+    requiredTemplates:
+    - path: ConsoleOperatorDisable.yaml
+    - path: DefaultCatsrc.yaml
+    - path: DisableOLMPprof.yaml
+    - path: DisableSnoNetworkDiag.yaml
+    - path: DisconnectedICSP.yaml
+    - path: OperatorHub.yaml
+    - path: PerformanceProfile.yaml
+    - path: ReduceMonitoringFootprint.yaml
+    - path: TunedPerformancePatch.yaml
+    - path: extra-manifest/01-container-mount-ns-and-kubelet-conf-worker.yaml
+    - path: extra-manifest/03-sctp-machine-config-worker.yaml
+#    - path: extra-manifest/05-kdump-config-worker.yaml
+    - path: extra-manifest/06-kdump-worker.yaml
+    - path: extra-manifest/07-sriov-related-kernel-args-worker.yaml
+    - path: extra-manifest/08-set-rcu-normal-worker.yaml
+    - path: extra-manifest/99-crio-disable-wipe-worker.yaml
+    - path: extra-manifest/99-sync-time-once-worker.yaml
+    - path: optional-extra-manifest/enable-crun-worker.yaml
+    - path: validatorCRs/informDuValidator.yaml
+    optionalTemplates:
+    - path: ClusterVersion.yaml
+#    - path: HardwareEvent.yaml
+    - path: ImageRegistryConfig.yaml
+    - path: ImageRegistryPV.yaml
+    - path: ImageSignature.yaml
+    - path: MachineConfigGeneric.yaml
+    - path: MachineConfigPool.yaml
+    - path: extra-manifest/01-container-mount-ns-and-kubelet-conf-master.yaml
+    - path: extra-manifest/03-sctp-machine-config-master.yaml
+#    - path: extra-manifest/05-kdump-config-master.yaml
+    - path: extra-manifest/06-kdump-master.yaml
+    - path: extra-manifest/07-sriov-related-kernel-args-master.yaml
+    - path: extra-manifest/08-set-rcu-normal-master.yaml
+    - path: extra-manifest/99-crio-disable-wipe-master.yaml
+    - path: extra-manifest/99-sync-time-once-master.yaml
+    - path: optional-extra-manifest/enable-crun-master.yaml
+
+# templateFunctionFiles:
+#  - validate_node_selector.tmpl
+
+fieldsToOmit:
+  defaultOmitRef: all
+  items:
+    all:
+      - pathToKey: metadata.annotations."kubernetes.io/metadata.name"
+      - pathToKey: metadata.annotations."openshift.io/sa.scc.uid-range"
+      - pathToKey: metadata.annotations."kubernetes.io/metadata.name"
+      - pathToKey: metadata.annotations."openshift.io/sa.scc.mcs"
+      - pathToKey: metadata.annotations."openshift.io/sa.scc.supplemental-groups"
+      - pathToKey: metadata.annotations."kubectl.kubernetes.io/last-applied-configuration"
+      - pathToKey: metadata.annotations."ran.openshift.io/ztp-deploy-wave"
+      - pathToKey: metadata.annotations."machineconfiguration.openshift.io/mc-name-suffix"
+      - pathToKey: metadata.labels."kubernetes.io/metadata.name"
+      - pathToKey: metadata.labels."olm.operatorgroup.uid"
+      - pathToKey: metadata.labels."pod-security.kubernetes.io"
+      - pathToKey: metadata.labels."security.openshift.io/scc.podSecurityLabelSync"
+      - pathToKey: metadata.resourceVersion
+      - pathToKey: metadata.uid
+      - pathToKey: spec.finalizers
+      - pathToKey: metadata.creationTimestamp
+      - pathToKey: metadata."pod-security.kubernetes.io"
+      - pathToKey: metadata.generation
+      - pathToKey: status # TODO:  We need to check status in Subscription and CatalogSource. CNF-13521
+      - pathToKey: metadata.finalizers
+      - pathToKey: metadata.annotations."ran.openshift.io/ztp-gitops-generated"
+      - pathToKey: spec.ownerReferences
+      - pathToKey: metadata.ownerReferences
+      - pathToKey: metadata.annotations."include.release.openshift.io/ibm-cloud-managed"
+      - pathToKey: metadata.annotations."include.release.openshift.io/self-managed-high-availability"
+      - pathToKey: metadata.annotations."include.release.openshift.io/single-node-developer"
+      - pathToKey: metadata.annotations."release.openshift.io/create-only"
+      - pathToKey: metadata.labels."lca.openshift.io/target-ocp-version"
+      - pathToKey: metadata.labels."pod-security.kubernetes.io/audit"
+      - pathToKey: metadata.labels."pod-security.kubernetes.io/audit-version"
+      - pathToKey: metadata.labels."pod-security.kubernetes.io/warn"
+      - pathToKey: metadata.labels."pod-security.kubernetes.io/warn-version"
+      - pathToKey: metadata.annotations."capability.openshift.io/name"
+      - pathToKey: metadata.annotations."olm.providedAPIs"
+      - pathToKey: metadata.annotations."operator.sriovnetwork.openshift.io/last-network-namespace"
+      - pathToKey: metadata.annotations."include.release.openshift.io/hypershift"
+      - pathToKey: metadata.labels."olm.operatorgroup.uid/"
+        isPrefix: true
