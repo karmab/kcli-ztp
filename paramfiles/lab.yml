@@ -20,6 +20,7 @@ baremetal_macs:
 - aa:aa:aa:aa:bb:03
 - aa:aa:aa:aa:bb:04
 
+disconnected: true
 ztp_spoke_wait: true
 ztp_spokes:
 - name: mgmt-spoke1

@@ -20,3 +20,8 @@ oc get agentclusterinstall -n $SPOKE $SPOKE -o jsonpath={'.status.debugInfo.stat
 echo "Cluster Info:"
 oc get agentclusterinstall -n $SPOKE $SPOKE -o jsonpath={'.status.debugInfo.stateInfo'}
 {% endfor%}
+
+echo -e "\nPolicies:\n"
+if [ -d /root/ztp/scripts/site-policies ] ; then
+oc get policies -A
+fi

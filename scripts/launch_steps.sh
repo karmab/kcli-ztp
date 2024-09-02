@@ -4,6 +4,7 @@ set -euo pipefail
 
 blue='\033[0;36m'
 clear='\033[0m'
+echo -e "${blue}************ RUNNING HUB steps ************${clear}"
 {% if http_proxy != None %}
 echo -e "${blue}************ RUNNING .proxy.sh ************${clear}"
 /root/scripts/proxy.sh

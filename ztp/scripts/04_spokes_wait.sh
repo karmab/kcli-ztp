@@ -18,7 +18,7 @@ while [ "$timeout" -lt "{{ spoke_wait_time }}" ] ; do
   echo $MSG | grep -q failed && failed=true && break;
   echo "Waiting for spoke cluster $SPOKE to be deployed"
   sleep 60
-  timeout=$(($timeout + 5))
+  timeout=$(($timeout + 60))
 done
 if [ "$installed" == "true" ] ; then
   echo "Cluster $SPOKE deployed"

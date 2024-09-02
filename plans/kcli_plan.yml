@@ -159,12 +159,15 @@ apps-{{ spoke_name }}:
  - ztp/scripts/03_spokes_deploy.sh
  - ztp/scripts/04_spokes_wait.sh
  - ztp/scripts/05_snoplus.sh
+ - ztp/scripts/06_compliance.sh
  - ztp/scripts/gitops
  - ztp/scripts/generate_gitops.sh
  - ztp/scripts/requirements.sample.yml
  - ztp/scripts/siteconfig.sample.yml
  - ztp/scripts/generate_siteconfig.sh
  - ztp/scripts/kustomization.yaml
+ - ztp/scripts/kube_compare.sh
+ - ztp/scripts/kube_compare_metadata.yaml
  - path: /root/ztp/scripts/kubeconfig.sh
    origin: ztp/scripts/kubeconfig.sh
  - ztp/scripts/gitea.service

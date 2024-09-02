@@ -21,7 +21,7 @@ if [ -f /root/ztp/scripts/extra_bmc_$SPOKE.yml ] ; then
     [ "$AGENTS" == "2" ] && installed=true && break;
     echo "Waiting for extra worker to be deployed in spoke $SPOKE"
     sleep 60
-    timeout=$(($timeout + 5))
+    timeout=$(($timeout + 60))
   done
   if [ "$installed" == "true" ] ; then
     echo "Extra worker deployed in spoke $SPOKE"

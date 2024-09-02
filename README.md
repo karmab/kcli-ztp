@@ -207,36 +207,6 @@ The following parameters can be used in this case:
 - bmc_password.  If not specified, global bmc_password variable is used
 - disk. Optional rootDeviceHint disk device
 - ip, nic, gateway. Those attributes can be provided to set static networking using nmstate. Nic can be omitted. If gateway isn't provided, the static_gateway is used or gateway is guessed from baremetal_cidr
-- network_config. Specific network config for the corresponding node, in nmstate format. (Requires 4.10+)
-
-A valid network_config snippet would be
-
-```
-  network_config: |-
-    routes:
-      config:
-      - destination: 0.0.0.0/0
-        next-hop-address: 192.168.129.1
-        next-hop-interface: ens3
-    dns-resolver:
-      config:
-        search:
-        - lab.karmalabs.corp
-        server:
-        - 192.168.129.1
-    interfaces:
-    - name: ens3
-      type: ethernet
-      state: up
-      ipv4:
-        address:
-        - ip: "192.168.129.20"
-          prefix-length: 24
-        enabled: true
-    interfaces:
-    - name: ens3
-      macAddress: aa:aa:aa:aa:bb:03
-```
 
 ## Sample parameter files
 
