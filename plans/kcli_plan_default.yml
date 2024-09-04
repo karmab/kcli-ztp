@@ -111,6 +111,5 @@ ztp_spoke_wait: true
 ztp_spoke_wait_time: 3600
 ztp_converged_flow: false
 ztp_disable_validations: true
-ztp_spokes: []
 ztp_domain:
 ztp_virtual_nodes_static_network: false

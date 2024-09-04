@@ -47,3 +47,4 @@ ztp_virtual_nodes_disk_size: 120
 ztp_virtual_nodes_disk_interface: scsi
 ztp_virtual_nodes_baremetal_mac_prefix: aa:aa:aa:cc:cc
 ztp_uefi: true
+ztp_spokes: []
