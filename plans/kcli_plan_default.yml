@@ -21,7 +21,7 @@ installer_numcpus:
 installer_memory:
 installer_ip:
 installer_mac:
-installer_wait: False
+installer_wait: false
 version: stable
 tag: "4.16"
 openshift_image:
@@ -59,7 +59,7 @@ disconnected_operators: []
 disconnected_certified_operators: []
 disconnected_community_operators: []
 disconnected_marketplace_operators: []
-disconnected_operators_deploy_after_openshift: False
+disconnected_operators_deploy_after_openshift: false
 disconnected_operators_version:
 disconnected_community_operators_version:
 disconnected_marketplace_operators_version:
@@ -79,9 +79,9 @@ ntp: false
 ntp_server: 0.rhel.pool.ntp.org
 apps: []
 localhost_fix: false
-virtual_ctlplanes_static_network: False
-virtual_workers_static_network: False
-schedulable_ctlplanes: False
+virtual_ctlplanes_static_network: false
+virtual_workers_static_network: false
+schedulable_ctlplanes: false
 cpu_partitioning: false
 static_baremetal_gateway:
 static_baremetal_dns:
@@ -113,3 +113,4 @@ ztp_converged_flow: false
 ztp_disable_validations: true
 ztp_spokes: []
 ztp_domain:
+ztp_virtual_nodes_static_network: false

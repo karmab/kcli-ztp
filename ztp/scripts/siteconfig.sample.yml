@@ -33,6 +33,8 @@ spec:
 {% set dualprotocol = 'ipv4' if ipv6 else 'ipv6' %}
 {% set default_prefix = '64' if protocol == 'ipv6' else '24' %}
 {% set default_gateway = baremetal_cidr|network_ip(1 if lab else -2) %}
+{% set baremetal_gateway = static_baremetal_gateway or default_gateway %}
+{% set baremetal_dns = static_baremetal_dns or baremetal_gateway %}
 {% if dualstack|default(False) %}
 {% set machine_cidrs = machine_cidr_ipv4 + machine_cidr_ipv6 %}
 {% set cluster_networks = [cluster_network_ipv4] + [cluster_network_ipv6] %}
@@ -60,7 +62,8 @@ spec:
 {% if virtual_nodes_number > 0 %}
 {% set extra_nodes = [] %}
 {% for num in range(0, virtual_nodes_number) %}
-{% do extra_nodes.append({}) %}
+{% set new_node = {'ip': baremetal_ips[virtual_ctlplanes_number + virtual_workers_number + total_number.value + num]} if ztp_virtual_nodes_static_network and baremetal_ips|length > virtual_ctlplanes_number + virtual_workers_number + total_number.value + num else {} %}
+{% do extra_nodes.append(new_node) %}
 {% endfor %}
 {% set nodes = extra_nodes + nodes %}
 {% endif %}
@@ -135,20 +138,24 @@ spec:
           - name: eth0
             type: ethernet
             state: up
-             address:
-             - ip: {{ node.ip }}
-               prefix-length: {{ node.prefix|default(default_prefix) }}
+            {{ 'ipv4' if ':' in node.ip else 'ipv6' }}:
+              enabled: false
+            {{ 'ipv6' if ':' in node.ip else 'ipv4' }}:
+              enabled: true
+              address:
+              - ip: {{ node.ip }}
+                prefix-length: {{ node.prefix|default(default_prefix) }}
           dns-resolver:
             config:
               search:
                - {{ node.domain|default(domain) }}
               server:
-              - {{ node.dns|default(default_gateway) }}
+              - {{ node.dns|default(baremetal_dns) }}
           routes:
             config:
             - destination: {{ '::/0' if ':' in node.ip else '0.0.0.0/0' }}
               next-hop-interface: eth0
-              next-hop-address: {{ node.gateway|default(default_gateway) }}
+              next-hop-address: {{ node.gateway|default(baremetal_gateway) }}
               table-id: 254
 {% endif %}
 {% endfor %}

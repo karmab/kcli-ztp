@@ -13,7 +13,7 @@
 {% endif %}
 {% if virtual_workers and virtual_workers_deploy %}
 {% for num in range(0, virtual_workers_number) %}
-{% set new_worker = {'ip': baremetal_ips[num]} if virtual_workers_static_network and baremetal_ips|length > virtual_ctlplanes_numbe + num else {} %}
+{% set new_worker = {'ip': baremetal_ips[num]} if virtual_workers_static_network and baremetal_ips|length > virtual_ctlplanes_number + num else {} %}
 {% do virtual_workers_nodes.append(new_worker) %}
 {% endfor %}
 {% endif %}
