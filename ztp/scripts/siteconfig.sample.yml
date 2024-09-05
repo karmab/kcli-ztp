@@ -124,10 +124,8 @@ spec:
         name: {{ cluster }}-ztp-{{ spoke_name }}-bmc-secret-{{ num }}
       bootMACAddress: {{ mac }}
       bootMode: {{ 'UEFI' if ztp_uefi else 'legacy' }}
-     {% if 'disk' in node %}
       rootDeviceHints:
-       deviceName: /dev/{{ node.disk | basename }}
-     {% endif %}
+       deviceName: /dev/{{ node.disk|default('sda')|string|basename }}
 {% if 'ip' in node %}
       nodeNetwork:
         interfaces:
