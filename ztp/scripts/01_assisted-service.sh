@@ -13,7 +13,9 @@ APP=multicluster-engine
 SOURCE_ARGS=""
 {% endif %}
 
-{% if disconnected %}
+{% if disconnected_url != None %}
+DISCONNECTED_ARGS="-P disconnected_url={{ disconnected_url }}"
+{% elif disconnected %}
 BAREMETAL_IP=$(ip -o addr show eth0 | head -1 | awk '{print $4}' | cut -d'/' -f1)
 REGISTRY_NAME=$(echo $BAREMETAL_IP | sed 's/\./-/g' | sed 's/:/-/g').sslip.io
 LOCAL_PORT={{ 8443 if disconnected_quay else 5000 }}
