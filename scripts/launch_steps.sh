@@ -4,6 +4,7 @@ set -euo pipefail
 
 blue='\033[0;36m'
 clear='\033[0m'
+
 echo -e "${blue}************ RUNNING HUB steps ************${clear}"
 {% if http_proxy != None %}
 echo -e "${blue}************ RUNNING .proxy.sh ************${clear}"
@@ -21,6 +22,11 @@ echo -e "${blue}************ RUNNING 01_patch_config.sh ************${clear}"
 
 echo -e "${blue}************ RUNNING 02_packages.sh ************${clear}"
 /root/scripts/02_packages.sh
+
+if [ -f /root/ocp/auth/kubeconfig ] ; then
+echo -e "${blue}************ RUNNING ZTP steps ************${clear}"
+/root/ztp/scripts/launch_steps.sh
+fi
 
 {% if disconnected %}
 {% if disconnected_url == None %}
@@ -79,9 +85,7 @@ echo -e "${blue}************ RUNNING 09_apps.sh ************${clear}"
 
 touch /root/cluster_ready.txt
 
-if [ -d /root/ztp ] ; then
 echo -e "${blue}************ RUNNING ZTP steps ************${clear}"
 /root/ztp/scripts/launch_steps.sh
-fi
 
 {% endif %}

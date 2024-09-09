@@ -14,6 +14,7 @@ info: |
     - set a pattern for their provisioning macs when you plan to host several cluster with virtual ctlplanes on the same hypervisor
     version can be set to stable, nightly, dev-preview or ci , along with tag, to gather the binary from public sources.
     The ci registry is targetted with the openshift_image variable.
+    To skip the hub installation, KUBECONFIG variable can be pointed to an existing kubeconfig file
 baseplan: kcli_plan_infra.yml
 image: centos9stream
 installer_disk_size:
@@ -113,3 +114,4 @@ ztp_converged_flow: false
 ztp_disable_validations: true
 ztp_domain:
 ztp_virtual_nodes_static_network: false
+KUBECONFIG:

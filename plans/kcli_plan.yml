@@ -107,6 +107,10 @@ apps-{{ spoke_name }}:
  disks:
  - {{ installer_disk_size or disk_size }}
  files:
+{% if KUBECONFIG != None %}
+ - origin: {{ KUBECONFIG }}
+   path: /root/ocp/auth/kubeconfig
+{% endif %}
  - agent-config.yaml 
  - install-config.yaml 
 {% if motd != None %}
