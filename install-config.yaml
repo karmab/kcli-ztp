@@ -95,6 +95,6 @@ imageContentSources:
   - REGISTRY:PORT/openshift-release-dev
   source: quay.io/openshift-release-dev
 - mirrors:
-  - REGISTRY:PORT/openshift-release-dev
-  source: registry.ci.openshift.org/ocp/release
+  - REGISTRY:PORT/{{ 'origin' if okd else 'openshift-release-dev' }}
+  source: registry.ci.openshift.org/{{ 'origin' if okd else 'ocp/release' }}
 {% endif %}

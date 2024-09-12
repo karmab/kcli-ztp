@@ -34,7 +34,7 @@ jq ".transports.docker += {\"registry.redhat.io/redhat/certified-operator-index\
 mv /etc/containers/policy.json.new /etc/containers/policy.json
 
 {% if version == 'ci' %}
-export OCP_RELEASE={{ tag }}
+export OCP_RELEASE={{ 'scos-%s' % tag if okd else tag }}
 
 {% elif version in ['nightly', 'stable'] %}
 
@@ -53,7 +53,7 @@ curl -Ls https://mirror.openshift.com/pub/openshift-v4/clients/ocp-dev-preview/{
 OCP_RELEASE=$(grep 'Name:' /tmp/release.txt | awk -F ' ' '{print $2}')-x86_64
 {% endif %}
 
-{% if version == 'ci' %}
+{% if version == 'ci' and not okd %}
 {% set namespace = 'ocp/release' %}
 {% else %}
 {% set namespace = 'openshift/release-images' %}
