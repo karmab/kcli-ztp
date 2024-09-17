@@ -26,6 +26,7 @@ echo -e "${blue}************ RUNNING 02_packages.sh ************${clear}"
 if [ -f /root/ocp/auth/kubeconfig ] ; then
 echo -e "${blue}************ RUNNING ZTP steps ************${clear}"
 /root/ztp/scripts/launch_steps.sh
+exit 0
 fi
 
 {% if disconnected %}
