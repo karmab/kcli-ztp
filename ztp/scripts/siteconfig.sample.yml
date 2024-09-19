@@ -110,7 +110,7 @@ spec:
       role: {{ "master" if num < 3 else "worker" }}
       {% if 'redfish_address' in node %}
       disableCertificateVerification: True
-      {% if 'redfish' in node['redfish_address'] or 'idrac' in node['redfish_address'] %}
+      {% if node['redfish_address'].startswith('redfish-') or node['redfish_address'].startswith('idrac-') %}
       bmcAddress: {{ node['redfish_address'] }}
       {% elif node['model']|default(model) in ['hp', 'hpe', 'supermicro'] %}
       bmcAddress: redfish-virtualmedia://{{ node['redfish_address'] }}/redfish/v1/Systems/1
