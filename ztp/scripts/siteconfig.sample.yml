@@ -31,7 +31,7 @@ spec:
 {% set machine_cidr_ipv6 = ["fc00::/48"] %}
 {% set protocol = 'ipv6' if ipv6 else 'ipv4' %}
 {% set dualprotocol = 'ipv4' if ipv6 else 'ipv6' %}
-{% set default_prefix = '64' if protocol == 'ipv6' else '24' %}
+{% set default_prefix = baremetal_cidr.split('/')[1] %}
 {% set default_gateway = baremetal_cidr|network_ip(1 if lab else -2) %}
 {% set baremetal_gateway = static_baremetal_gateway or default_gateway %}
 {% set baremetal_dns = static_baremetal_dns or baremetal_gateway %}
