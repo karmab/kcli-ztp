@@ -12,6 +12,12 @@ export BAREMETAL_IP
 envsubst < /root/ztp/scripts/requirements.sample.yml > /root/ztp/scripts/requirements.yml
 envsubst < /root/ztp/scripts/siteconfig.sample.yml > /root/ztp/scripts/siteconfig.yml
 
+if [ -f /root/ztp/scripts/snoplus.txt ] ; then
+  for SPOKE in $(cat /root/ztp/scripts/snoplus.txt) ; do
+    sed -i "/$SPOKE-node-1/,$ s/^/##/" /root/ztp/scripts/siteconfig.yml
+  done
+fi
+
 {% if ztp_gitops %}
 bash /root/ztp/scripts/generate_gitops.sh
 oc apply -k /root/ztp/scripts/gitops

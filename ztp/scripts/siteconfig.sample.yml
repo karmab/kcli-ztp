@@ -67,9 +67,6 @@ spec:
 {% endfor %}
 {% set nodes = extra_nodes + nodes %}
 {% endif %}
-{% if spoke_snoplus %}
-{% set nodes = [nodes[0]] %}
-{% endif %}
   - clusterName: {{ spoke_name }}
     networkType: {{ spoke_network_type }}
     clusterLabels:

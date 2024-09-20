@@ -1,22 +1,20 @@
 export HOME=/root
 export PYTHONUNBUFFERED=true
-{% for spoke in ztp_spokes %}
-{% set spoke_deploy = spoke.get('deploy', ztp_spoke_deploy) %}
-{% set spoke_ctlplanes_number = spoke.get('ctlplanes_number', 1) %}
-{% set spoke_workers_number = spoke.get('workers_number', 0) %}
-{% if spoke_deploy and spoke.get('wait', ztp_spoke_wait) %}
-{% set spoke_wait_time = spoke.get('wait_time', ztp_spoke_wait_time) %}
-SPOKE={{ spoke.name }}
+export HUB={{ cluster }}
+SPOKE_WAIT_TIME={{ ztp_spoke_wait_time }}
 
-# SNOPLUS HANDLING
-if [ -f /root/ztp/scripts/extra_bmc_$SPOKE.yml ] ; then
-  BAREMETAL_IP=$(ip -o addr show eth0 | head -1 | awk '{print $4}' | cut -d'/' -f1)
-  echo $BAREMETAL_IP | grep -q ':' && BAREMETAL_IP=[$BAREMETAL_IP]
-  sed -i s/CHANGEME/$BAREMETAL_IP/ /root/ztp/scripts/extra_bmc_$SPOKE.yml
-  oc create -f /root/ztp/scripts/extra_bmc_$SPOKE.yml
+for SPOKE in $(cat /root/ztp/scripts/snoplus.txt) ; do
+  sed -i "/$SPOKE-node-1/,$ s/^/##/" /root/git/site-configs/$HUB/siteconfig.yml
+done
+
+cd /root/git
+git commit -m 'Snoplus handling'
+git push origin main
+
+for SPOKE in $(cat /root/ztp/scripts/snoplus.txt) ; do
   timeout=0
   installed=false
-  while [ "$timeout" -lt "{{ spoke_wait_time }}" ] ; do
+  while [ "$timeout" -lt "$SPOKE_WAIT_TIME" ] ; do
     AGENTS=$(oc get agent -n $SPOKE -o jsonpath="{range .items[?(@.status.progress.currentStage==\"Done\")]}{.metadata.name}{'\n'}{end}" | wc -l)
     [ "$AGENTS" == "2" ] && installed=true && break;
     echo "Waiting for extra worker to be deployed in spoke $SPOKE"
@@ -28,7 +26,4 @@ if [ -f /root/ztp/scripts/extra_bmc_$SPOKE.yml ] ; then
   else
     echo Timeout waiting for extra worker in $SPOKE to be deployed
   fi
-fi
-
-{% endif %}
-{% endfor %}
+done

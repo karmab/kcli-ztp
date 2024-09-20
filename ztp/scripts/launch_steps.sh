@@ -22,7 +22,7 @@ echo -e "${blue}************ RUNNING ztp/scripts/03_spokes_deploy.sh ***********
 echo -e "${blue}************ RUNNING ztp/scripts/04_spokes_wait.sh ************${clear}"
 /root/ztp/scripts/04_spokes_wait.sh
 
-if [ -f /root/ztp/scripts/extra_bmc_* ] ; then
+if [ -f /root/ztp/scripts/snoplus.txt ] ; then
   echo -e "${blue}************ RUNNING ztp/scripts/05_snoplus.sh ************${clear}"
   /root/ztp/scripts/05_snoplus.sh
 fi
