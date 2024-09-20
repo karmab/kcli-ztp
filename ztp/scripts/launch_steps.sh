@@ -10,7 +10,7 @@ export KUBECONFIG=/root/ocp/auth/kubeconfig
 echo -e "${blue}************ RUNNING ztp/scripts/01_assisted-service.sh ************${clear}"
 /root/ztp/scripts/01_assisted-service.sh
 
-{% if ztp_gitops and ztp_gitops_repo_url == None %}
+{% if ztp_gitops_repo_url == None %}
 echo -e "${blue}************ RUNNING ztp/scripts/02_git.sh ************${clear}"
 /root/ztp/scripts/02_git.sh
 {% endif %}

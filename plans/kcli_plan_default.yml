@@ -98,7 +98,6 @@ manifests_dir: manifests
 workflow_installer: false
 
 ztp_acm: true
-ztp_gitops: true
 ztp_gitops_user: dummy
 ztp_gitops_password: dummy
 ztp_gitops_repo_branch: main

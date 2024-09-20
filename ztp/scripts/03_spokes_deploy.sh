@@ -18,11 +18,5 @@ if [ -f /root/ztp/scripts/snoplus.txt ] ; then
   done
 fi
 
-{% if ztp_gitops %}
 bash /root/ztp/scripts/generate_gitops.sh
 oc apply -k /root/ztp/scripts/gitops
-{% else %}
-sed -i "s@$HUB/@@" /root/ztp/scripts/kustomization.yaml
-bash /root/ztp/scripts/generate_siteconfig.sh
-oc apply -f /root/spokes.yml
-{% endif %}

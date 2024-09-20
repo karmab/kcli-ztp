@@ -6,19 +6,19 @@
 {{ disconnected_operators.append("multicluster-engine") or "" }}
 {% endif %}
 
-{% if ztp_gitops and 'openshift-gitops-operator' not in disconnected_operators %}
+{% if 'openshift-gitops-operator' not in disconnected_operators %}
 {{ disconnected_operators.append("openshift-gitops-operator") or "" }}
 {% endif %}
 
-{% if ztp_gitops and 'topology-aware-lifecycle-manager' not in disconnected_operators %}
+{% if 'topology-aware-lifecycle-manager' not in disconnected_operators %}
 {{ disconnected_operators.append("topology-aware-lifecycle-manager") or "" }}
 {% endif %}
 
-{% if ztp_gitops and ztp_spokes|length > 0 and 'sriov-network-operator' not in disconnected_operators %}
+{% if ztp_spokes|length > 0 and 'sriov-network-operator' not in disconnected_operators %}
 {{ disconnected_operators.append("sriov-network-operator") or "" }}
 {% endif %}
 
-{% if ztp_gitops and ztp_spokes|length > 0 and 'lvms-operator' not in disconnected_operators %}
+{% if ztp_spokes|length > 0 and 'lvms-operator' not in disconnected_operators %}
 {{ disconnected_operators.append("lvms-operator") or "" }}
 {% endif %}
 
@@ -168,7 +168,6 @@ apps-{{ spoke_name }}:
  - ztp/scripts/generate_gitops.sh
  - ztp/scripts/requirements.sample.yml
  - ztp/scripts/siteconfig.sample.yml
- - ztp/scripts/generate_siteconfig.sh
  - ztp/scripts/kustomization.yaml
  - ztp/scripts/kube_compare.sh
  - ztp/scripts/kube_compare_metadata.yaml

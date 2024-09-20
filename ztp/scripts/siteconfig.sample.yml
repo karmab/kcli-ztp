@@ -96,6 +96,7 @@ spec:
     nodes:
 {% for node in nodes %}
 {% set num = loop.index0 %}
+{% set max_ctlplanes = 1 if spoke_snoplus else 3 %}
 {% if 'provisioning_mac' in node %}
 {% set mac = node['provisioning_mac'] %}
 {% elif baremetal_macs and baremetal_macs|length > virtual_ctlplanes_number + virtual_workers_number + total_number.value + num %}
@@ -104,7 +105,7 @@ spec:
 {% set mac = ztp_virtual_nodes_baremetal_mac_prefix + ":" + "%02.d" | format(total_number.value + num + 1)| string %}
 {% endif %}
     - hostName: {{ cluster }}-{{ spoke_name }}-node-{{ num }}
-      role: {{ "master" if num < 3 else "worker" }}
+      role: {{ "master" if num < max_ctlplanes else "worker" }}
       {% if 'redfish_address' in node %}
       disableCertificateVerification: True
       {% if node['redfish_address'].startswith('redfish-') or node['redfish_address'].startswith('idrac-') %}
