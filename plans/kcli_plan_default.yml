@@ -33,7 +33,6 @@ dualstack_isolated: false
 http_proxy:
 no_proxy:
 keys: []
-image_url:
 numcpus: 16   
 rhnregister: true
 rhnwait: 30

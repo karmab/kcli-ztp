@@ -151,7 +151,6 @@ The following parameters are available when deploying the default plan
 |go_version                                   |1.13.8                                    |
 |http_proxy                                   |None                                      |
 |image                                        |centos8stream                             |
-|image_url                                    |None                                      |
 |imagecontentsources                          |[]                                        |
 |imageregistry                                |False                                     |
 |installer_mac                                |None                                      |
