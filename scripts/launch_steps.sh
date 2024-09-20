@@ -56,14 +56,19 @@ echo -e "${blue}************ RUNNING 05_ntp.sh ************${clear}"
 /root/scripts/05_ntp.sh
 {% endif %}
 
+{% if dns %}
+echo -e "${blue}************ RUNNING 06_dns.sh ************${clear}"
+/root/scripts/06_dns.sh
+{% endif %}
+
 {% if deploy_openshift %}
-echo -e "${blue}************ RUNNING 06_deploy_openshift.sh ************${clear}"
+echo -e "${blue}************ RUNNING 07_deploy_openshift.sh ************${clear}"
 export KUBECONFIG=/root/ocp/auth/kubeconfig
-/root/scripts/06_deploy_openshift.sh
+/root/scripts/07_deploy_openshift.sh
 
 {% if nfs %}
-echo -e "${blue}************ RUNNING 07_nfs.sh ************${clear}"
-/root/scripts/07_nfs.sh
+echo -e "${blue}************ RUNNING 08_nfs.sh ************${clear}"
+/root/scripts/08_nfs.sh
 {% endif %}
 
 {% if imageregistry %}
@@ -76,12 +81,12 @@ echo -e "${blue}************ RUNNING 03_disconnected_olm.sh ************${clear}
 /root/scripts/03_disconnected_olm.sh
 {% endif %}
 
-echo -e "${blue}************ RUNNING 08_post_install.sh ************${clear}"
-/root/scripts/08_post_install.sh
+echo -e "${blue}************ RUNNING 09_post_install.sh ************${clear}"
+/root/scripts/09_post_install.sh
 
 {% if apps %}
-echo -e "${blue}************ RUNNING 09_apps.sh ************${clear}"
-/root/scripts/09_apps.sh
+echo -e "${blue}************ RUNNING 10_apps.sh ************${clear}"
+/root/scripts/10_apps.sh
 {% endif %}
 
 touch /root/cluster_ready.txt

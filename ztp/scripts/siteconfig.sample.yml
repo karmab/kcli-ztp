@@ -34,7 +34,11 @@ spec:
 {% set default_prefix = baremetal_cidr.split('/')[1] %}
 {% set default_gateway = baremetal_cidr|network_ip(1 if lab else -2) %}
 {% set baremetal_gateway = static_baremetal_gateway or default_gateway %}
+{% if dns %}
+{% set baremetal_dns = installer_ip %}
+{% else %}
 {% set baremetal_dns = static_baremetal_dns or baremetal_gateway %}
+{% endif %}
 {% if dualstack|default(False) %}
 {% set machine_cidrs = machine_cidr_ipv4 + machine_cidr_ipv6 %}
 {% set cluster_networks = [cluster_network_ipv4] + [cluster_network_ipv6] %}

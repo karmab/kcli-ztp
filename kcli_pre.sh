@@ -12,6 +12,11 @@ exit 1
 {% set baremetal_prefix = baremetal_cidr.split('/')[1] %}
 {% endif %}
 
+{% if dns and installer_ip == None %}
+echo Deploying dns requires to set installer_ip
+exit 1
+{% endif %}
+
 {% set virtual_ctlplanes_nodes = [] %}
 {% set virtual_workers_nodes = [] %}
 {% if virtual_ctlplanes %}

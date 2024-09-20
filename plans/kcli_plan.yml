@@ -157,6 +157,9 @@ apps-{{ spoke_name }}:
  - path: /etc/NetworkManager/conf.d/kcli-ipv6.conf
    origin: envfiles/kcli-ipv6.conf
 {% endif %}
+{% if dns %}
+ - dnsmasq.conf
+{% endif %}
  - ztp/scripts/launch_steps.sh
  - ztp/scripts/01_assisted-service.sh
  - ztp/scripts/02_git.sh

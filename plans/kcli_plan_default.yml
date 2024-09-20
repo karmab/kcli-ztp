@@ -74,6 +74,7 @@ prs: []
 imagecontentsources: []
 fips: false
 cas: []
+dns: false
 nbde: false
 ntp: false
 ntp_server: 0.rhel.pool.ntp.org
