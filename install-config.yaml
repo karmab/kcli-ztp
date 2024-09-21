@@ -1,16 +1,14 @@
-{% set cluster_network_ipv6 = {"cidr": "fd01::/48", "hostPrefix": 64} %}
-{% set cluster_network_ipv4 = {"cidr": "10.132.0.0/14", "hostPrefix": 23} %}
-{% set service_network_ipv6 = ["fd02::/112"] %}
-{% set service_network_ipv4 = ["172.30.0.0/16"] %}
+{% set cluster_network_ipv6 = {"cidr": cluster_network_ipv6, "hostPrefix": 64} %}
+{% set cluster_network_ipv4 = {"cidr": cluster_network_ipv4, "hostPrefix": 23} %}
 {% if dualstack|default(False) %}
 {% set cluster_networks = [cluster_network_ipv4] + [cluster_network_ipv6] %}
-{% set service_networks = service_network_ipv4 + service_network_ipv6 %}
+{% set service_networks = [service_network_ipv4] + [service_network_ipv6] %}
 {% elif ipv6|default(False) or (api_ip is defined and ':' in api_ip) %}
 {% set cluster_networks = [cluster_network_ipv6] %}
-{% set service_networks = service_network_ipv6 %}
+{% set service_networks = [service_network_ipv6] %}
 {% else %}
 {% set cluster_networks = [cluster_network_ipv4] %}
-{% set service_networks = service_network_ipv4 %}
+{% set service_networks = [service_network_ipv4] %}
 {% endif %}
 
 {% set virtual_ctlplanes_nodes = [] %}
