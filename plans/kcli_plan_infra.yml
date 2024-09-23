@@ -1,4 +1,8 @@
-{% set virtual_disks = [{'size': disk_size, 'interface': disk_interface}] + extra_disks %}
+{% set virtual_disks = [{'size': disk_size, 'interface': disk_interface}] %}
+{% for extra_disk in extra_disks %}
+{% do virtual_disks.append({'size': extra_disk, 'interface': disk_interface}) %}
+{% endfor %}
+
 {% if lab %}
 {{ baremetal_net }}:
  type: network
@@ -50,6 +54,7 @@ apps:
  cloudinit: false
  start: false
  uefi_legacy: {{ 'true' if not uefi|default(False) else 'false' }}
+ boot_order: {{ extra_disks|length > 0 }}
  user: core
  memory: {{ virtual_ctlplanes_memory }}
  nets:
@@ -77,6 +82,7 @@ apps:
  start: false
  cloudinit: false
  uefi_legacy: true
+ boot_order: {{ extra_disks|length > 0 }}
  user: core
  memory: {{ virtual_workers_memory }}
  nets:
