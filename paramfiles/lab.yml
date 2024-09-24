@@ -5,6 +5,8 @@ version: stable
 tag: "4.16"
 cluster: lab
 domain: karmalabs.corp
+dns: true
+installer_ip: 192.168.130.251
 baremetal_cidr: 192.168.130.0/24
 baremetal_net: lab-baremetal
 api_ip: 192.168.130.253

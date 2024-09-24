@@ -12,6 +12,9 @@ export OCP_PULLSECRET_AUTHFILE='/root/openshift_pull.json'
 {% set registry_name = disconnected_url|replace(":" + registry_port, '') %}
 REGISTRY_NAME={{ registry_name }}
 REGISTRY_PORT={{ registry_port }}
+{% elif dns %}
+REGISTRY_NAME=registry.{{ cluster }}.{{ domain }}
+REGISTRY_PORT={{ 8443 if disconnected_quay else 5000 }}
 {% else %}
 PRIMARY_NIC=$(ls -1 /sys/class/net | grep 'eth\|en' | head -1)
 IP=$(ip -o addr show $PRIMARY_NIC | head -1 | awk '{print $4}' | cut -d'/' -f1)

@@ -16,8 +16,12 @@ SOURCE_ARGS=""
 {% if disconnected_url != None %}
 DISCONNECTED_ARGS="-P disconnected_url={{ disconnected_url }}"
 {% elif disconnected %}
+{% if dns %}
+REGISTRY_NAME=registry.{{ cluster }}.{{ domain }}
+{% else %}
 BAREMETAL_IP=$(ip -o addr show eth0 | head -1 | awk '{print $4}' | cut -d'/' -f1)
 REGISTRY_NAME=$(echo $BAREMETAL_IP | sed 's/\./-/g' | sed 's/:/-/g').sslip.io
+{% endif %}
 LOCAL_PORT={{ 8443 if disconnected_quay else 5000 }}
 DISCONNECTED_ARGS="-P disconnected_url=${REGISTRY_NAME}:$LOCAL_PORT"
 {% else %}

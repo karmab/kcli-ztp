@@ -29,36 +29,37 @@ echo -e "${blue}************ RUNNING ZTP steps ************${clear}"
 exit 0
 fi
 
+{% if dns %}
+echo -e "${blue}************ RUNNING 03_dns.sh ************${clear}"
+/root/scripts/03_dns.sh
+{% endif %}
+
+
 {% if disconnected %}
 {% if disconnected_url == None %}
-echo -e "${blue}************ RUNNING 03_disconnected_{{ 'quay.sh' if disconnected_quay else 'registry.sh' }} ************${clear}"
-/root/scripts/03_disconnected_{{ 'quay.sh' if disconnected_quay else 'registry.sh' }} || exit 1
+echo -e "${blue}************ RUNNING 04_disconnected_{{ 'quay.sh' if disconnected_quay else 'registry.sh' }} ************${clear}"
+/root/scripts/04_disconnected_{{ 'quay.sh' if disconnected_quay else 'registry.sh' }} || exit 1
 {% endif %}
-echo -e "${blue}************ RUNNING 03_disconnected_mirror.sh ************${clear}"
-/root/scripts/03_disconnected_mirror.sh || exit 1
+echo -e "${blue}************ RUNNING 04_disconnected_mirror.sh ************${clear}"
+/root/scripts/04_disconnected_mirror.sh || exit 1
 {% if (disconnected_operators or disconnected_certified_operators or disconnected_community_operators or disconnected_marketplace_operators or disconnected_extra_catalogs) and not disconnected_operators_deploy_after_openshift %}
-echo -e "${blue}************ RUNNING 03_disconnected_olm.sh ************${clear}"
-/root/scripts/03_disconnected_olm.sh
+echo -e "${blue}************ RUNNING 04_disconnected_olm.sh ************${clear}"
+/root/scripts/04_disconnected_olm.sh
 {% if disconnected_url == None and disconnected_quay %}
 rm -rf /root/manifests-redhat-operator-index-*
-/root/scripts/03_disconnected_olm.sh
+/root/scripts/04_disconnected_olm.sh
 {% endif %}
 {% endif %}
 {% endif %}
 
 {% if nbde %}
-echo -e "${blue}************ RUNNING 04_nbde.sh ************${clear}"
-/root/scripts/04_nbde.sh
+echo -e "${blue}************ RUNNING 05_nbde.sh ************${clear}"
+/root/scripts/05_nbde.sh
 {% endif %}
 
 {% if ntp %}
-echo -e "${blue}************ RUNNING 05_ntp.sh ************${clear}"
-/root/scripts/05_ntp.sh
-{% endif %}
-
-{% if dns %}
-echo -e "${blue}************ RUNNING 06_dns.sh ************${clear}"
-/root/scripts/06_dns.sh
+echo -e "${blue}************ RUNNING 06_ntp.sh ************${clear}"
+/root/scripts/06_ntp.sh
 {% endif %}
 
 {% if deploy_openshift %}
@@ -77,8 +78,8 @@ oc patch configs.imageregistry.operator.openshift.io cluster --type merge -p '{"
 {% endif %}
 
 {% if disconnected and (disconnected_operators or disconnected_certified_operators or disconnected_community_operators or disconnected_marketplace_operators or disconnected_extra_catalogs) and disconnected_operators_deploy_after_openshift %}
-echo -e "${blue}************ RUNNING 03_disconnected_olm.sh ************${clear}"
-/root/scripts/03_disconnected_olm.sh
+echo -e "${blue}************ RUNNING 04_disconnected_olm.sh ************${clear}"
+/root/scripts/04_disconnected_olm.sh
 {% endif %}
 
 echo -e "${blue}************ RUNNING 09_post_install.sh ************${clear}"

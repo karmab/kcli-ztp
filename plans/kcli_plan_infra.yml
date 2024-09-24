@@ -16,34 +16,6 @@
 {% endif %}
 {% endif %}
 
-{% if lab and ((api_ip != None and ingress_ip != None) or (baremetal_ips and baremetal_ips|length > 0)) %}
-{% set api_ip = api_ip or baremetal_ips[0] %}
-{% set ingress_ip = ingress_ip or baremetal_ips[0] %}
-api:
- type: dns
- net: {{ baremetal_net }}
- ip: {{ api_ip }}
- alias:
- - api.{{ cluster }}.{{ domain }}
- - api-int.{{ cluster }}.{{ domain }}
-
-apps:
- type: dns
- net: {{ baremetal_net }}
- ip: {{ ingress_ip }}
- alias:
- - console-openshift-console.apps.{{ cluster }}.{{ domain }}
- - oauth-openshift.apps.{{ cluster }}.{{ domain }}
- - prometheus-k8s-openshift-monitoring.apps.{{ cluster }}.{{ domain }}
- - canary-openshift-ingress-canary.apps.{{ cluster }}.{{ domain }}
- - assisted-service-multicluster-engine.apps.{{ cluster }}.{{ domain }}
- - assisted-service-assisted-installer.apps.{{ cluster }}.{{ domain }}
- - assisted-image-service-multicluster-engine.apps.{{ cluster }}.{{ domain }}
-{% for entry in lab_extra_dns %}
- - {{ entry }}.apps.{{ cluster }}.{{ domain }}
-{% endfor %}
-{% endif %}
-
 {% if virtual_ctlplanes %}
 {% for num in range(0, virtual_ctlplanes_number) %}
 {{ cluster }}-ctlplane-{{ num }}:
@@ -63,10 +35,6 @@ apps:
    mac: {{ baremetal_macs[num] }}
 {% else %}
    mac: {{ virtual_ctlplanes_baremetal_mac_prefix + ":" + "%02.d" | format(num + 1)| string }}
-{% endif %}
-{% if lab and baremetal_ips and baremetal_ips|length > num %}
-   ip: {{ baremetal_ips[num] }}
-   reserveip: true
 {% endif %}
  disks: {{ virtual_disks }}
 {% endfor %}
@@ -92,41 +60,9 @@ apps:
 {% else %}
    mac: {{ virtual_workers_baremetal_mac_prefix + ":" + "%02.d" | format(num + 1)| string }}
 {% endif %}
-{% if lab and baremetal_ips and baremetal_ips|length > virtual_ctlplanes_number + num %}
-   ip: {{ baremetal_ips[virtual_ctlplanes_number + num] }}
-   reserveip: true
-{% endif %}
  disks: {{ virtual_disks }}
 {% endfor %}
 {% endif %}
-
-{% for spoke in ztp_spokes %}
-{% set spoke_name = spoke.name %}
-{% set spoke_api_ip = spoke.get('api_ip') %}
-{% set spoke_ingress_ip = spoke.get('ingress_ip') %}
-{% if lab and spoke_api_ip != None and spoke_ingress_ip != None %}
-api-{{ spoke_name }}:
- type: dns
- net: {{ baremetal_net }}
- ip: {{ spoke_api_ip }}
- alias:
- - api.{{ spoke_name }}.{{ domain }}
- - api-int.{{ spoke_name }}.{{ domain }}
-
-apps-{{ spoke_name }}:
- type: dns
- net: {{ baremetal_net }}
- ip: {{ spoke_ingress_ip }}
- alias:
- - console-openshift-console.apps.{{ spoke_name }}.{{ domain }}
- - oauth-openshift.apps.{{ spoke_name }}.{{ domain }}
- - prometheus-k8s-openshift-monitoring.apps.{{ spoke_name }}.{{ domain }}
- - canary-openshift-ingress-canary.apps.{{ spoke_name }}.{{ domain }}
- - assisted-service-open-cluster-management.apps.{{ spoke_name }}.{{ domain }}
- - assisted-service-assisted-installer.apps.{{ spoke_name }}.{{ domain }}
- - assisted-image-service-open-cluster-management.apps.{{ spoke_name }}.{{ domain }}
-{% endif %}
-{% endfor %}
 
 {% if not virtual_workers %}
 {% set virtual_workers_number = 0 %}
@@ -165,16 +101,6 @@ apps-{{ spoke_name }}:
    mac: {{ baremetal_macs[virtual_ctlplanes_number + virtual_workers_number + total_number.value + num] }}
 {% else %}
    mac: {{ ztp_virtual_nodes_baremetal_mac_prefix + ":" + "%02.d" | format(total_number.value + num + 1)| string }}
-{% endif %}
-{% if lab and baremetal_ips and baremetal_ips|length > virtual_ctlplanes_number + virtual_workers_number + total_number.value + num %}
-   ip: {{ baremetal_ips[virtual_ctlplanes_number + virtual_workers_number + total_number.value + num] }}
-   reserveip: true
-{% if virtual_nodes_number >= 1 and loop.index == 1 %}
-   reservedns: true
-   alias:
-   - api.{{ spoke_name }}.{{ domain }}
-   - api-int.{{ spoke_name }}.{{ domain }}
-{% endif %}
 {% endif %}
  disks:
  - size: {{ ztp_virtual_nodes_disk_size }}

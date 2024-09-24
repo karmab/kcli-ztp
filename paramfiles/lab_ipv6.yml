@@ -2,12 +2,17 @@ lab: true
 pool: default
 disconnected: true
 virtual_ctlplanes: true
+virtual_ctlplanes_static_network: true
 version: stable
 tag: "4.16"
+dns: true
+installer_ip: 2620:52:0:1302::4
 cluster: lab
 domain: karmalabs.corp
 baremetal_cidr: 2620:52:0:1302::/64
 baremetal_net: lab-baremetal
+# static_baremetal_dns: 2620:52:0:1302::1
+# static_baremetal_gateway: 2620:52:0:1302::1
 api_ip: 2620:52:0:1302::2
 ingress_ip: 2620:52:0:1302::3
 baremetal_ips:
@@ -20,6 +25,8 @@ baremetal_macs:
 - aa:aa:aa:aa:bb:02
 - aa:aa:aa:aa:bb:03
 - aa:aa:aa:aa:bb:04
+
+ztp_virtual_nodes_static_network: true
 ztp_spokes:
 - name: mgmt-spoke1
   ctlplanes_number: 1
@@ -42,11 +49,5 @@ vmrules:
    nets:
    - name: lab-baremetal
      mac: aa:aa:aa:aa:bb:04
-     ip: 2620:52:0:1302::24
-     reserveip: true
-     reservedns: true
-     alias:
-     - api.mgmt-spoke1.karmalabs.corp
-     - api-int.mgmt-spoke1.karmalabs.corp
    - name: sriov-network
      sriov: true

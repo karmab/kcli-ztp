@@ -2,7 +2,6 @@
 
 set -euo pipefail
 
-PRIMARY_NIC=$(ls -1 /sys/class/net | grep -v podman | head -1)
 {% if not 'rhel' in image %}
 dnf clean all
 sleep 30
@@ -19,10 +18,3 @@ kcli install provider {{ config_type }}
 
 SUSHYFLAGS={{ "--ipv6" if ':' in baremetal_cidr else "" }}
 kcli create sushy-service $SUSHYFLAGS
-
-ssh-keyscan -H {{ config_host if config_host not in ['127.0.0.1', 'localhost'] else baremetal_net|local_ip }} >> /root/.ssh/known_hosts
-echo -e "Host=*\nStrictHostKeyChecking=no\n" > /root/.ssh/config
-IP=$(ip -o addr show $PRIMARY_NIC | head -1 | awk '{print $4}' | cut -d "/" -f 1 | head -1)
-echo $IP | grep -q ':' && IP=[$IP]
-
-echo {{ api_ip }} api.{{ cluster }}.{{ domain }} >> /etc/hosts

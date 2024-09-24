@@ -2,8 +2,7 @@
 
 set -euo pipefail
 
-PRIMARY_NIC=$(ls -1 /sys/class/net | grep -v podman | head -1)
-yum -y install clevis tang
+dnf -y install clevis tang
 semanage port -a -t tangd_port_t -p tcp 7500
 # firewall-cmd --add-port=7500/tcp
 systemctl enable tangd.socket
@@ -16,6 +15,7 @@ jose jwk gen -i '{"alg":"ES512"}' -o /var/db/tang/newsig.jwk
 jose jwk gen -i '{"alg":"ECMR"}' -o /var/db/tang/newexc.jwk
 systemctl start tangd.socket
 
+PRIMARY_NIC=$(ls -1 /sys/class/net | grep -v podman | head -1)
 export IP=$(ip -o addr show $PRIMARY_NIC | head -1 | awk '{print $4}' | cut -d'/' -f1)
 export TANG_URL=http://"$IP:7500"
 export THP="$(tang-show-keys 7500)"

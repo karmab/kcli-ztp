@@ -8,8 +8,12 @@ PRIMARY_NIC=$(ls -1 /sys/class/net | grep -v podman | head -1)
 export PATH=/root/bin:$PATH
 export PULL_SECRET="/root/openshift_pull.json"
 dnf -y install podman httpd jq libseccomp-devel
+{% if dns %}
+REGISTRY_NAME=registry.{{ cluster }}.{{ domain }}
+{% else %}
 export IP=$(ip -o addr show $PRIMARY_NIC | head -1 | awk '{print $4}' | cut -d'/' -f1)
 REGISTRY_NAME=$(echo $IP | sed 's/\./-/g' | sed 's/:/-/g').sslip.io
+{% endif %}
 REGISTRY_USER=init
 REGISTRY_PASSWORD={{ "super" + disconnected_password if disconnected_password|length < 8 else disconnected_password }}
 KEY=$(echo -n $REGISTRY_USER:$REGISTRY_PASSWORD | base64)

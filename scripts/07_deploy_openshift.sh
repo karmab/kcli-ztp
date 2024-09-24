@@ -42,7 +42,10 @@ cp /root/machineconfigs/99-localhost-fix*.yaml /root/manifests
 cp /root/machineconfigs/99-monitoring.yaml /root/manifests
 {% endif %}
 find manifests -type f -empty -print -delete
-grep -q "{{ api_ip }} api.{{ cluster }}.{{ domain }}" /etc/hosts || echo {{ api_ip }} api.{{ cluster }}.{{ domain }} >> /etc/hosts
+
+{% if api_ip != None %}
+echo {{ api_ip }} api.{{ cluster }}.{{ domain }} >> /etc/hosts
+{% endif %}
 
 kcli delete iso --yes {{ cluster }}.iso || true
 

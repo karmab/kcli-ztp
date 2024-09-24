@@ -24,34 +24,6 @@
 
 {% set snoplus_spokes = [] %}
 
-{% for spoke in ztp_spokes %}
-{% set spoke_name = spoke.name %}
-{% set spoke_api_ip = spoke.get('api_ip') %}
-{% set spoke_ingress_ip = spoke.get('ingress_ip') %}
-{% if lab and spoke_api_ip != None and spoke_ingress_ip != None %}
-api-{{ spoke_name }}:
- type: dns
- net: {{ baremetal_net }}
- ip: {{ spoke_api_ip }}
- alias:
- - api.{{ spoke_name }}.{{ domain }}
- - api-int.{{ spoke_name }}.{{ domain }}
-
-apps-{{ spoke_name }}:
- type: dns
- net: {{ baremetal_net }}
- ip: {{ spoke_ingress_ip }}
- alias:
- - console-openshift-console.apps.{{ spoke_name }}.{{ domain }}
- - oauth-openshift.apps.{{ spoke_name }}.{{ domain }}
- - prometheus-k8s-openshift-monitoring.apps.{{ spoke_name }}.{{ domain }}
- - canary-openshift-ingress-canary.apps.{{ spoke_name }}.{{ domain }}
- - assisted-service-open-cluster-management.apps.{{ spoke_name }}.{{ domain }}
- - assisted-service-assisted-installer.apps.{{ spoke_name }}.{{ domain }}
- - assisted-image-service-open-cluster-management.apps.{{ spoke_name }}.{{ domain }}
-{% endif %}
-{% endfor %}
-
 {% if not virtual_workers %}
 {% set virtual_workers_number = 0 %}
 {% endif %}

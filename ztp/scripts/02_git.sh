@@ -1,6 +1,13 @@
+#!/usr/bin/env bash
+
+{% if dns and disconnected %}
+GIT_SERVER=registry.{{ cluster }}.{{ domain }}
+{% else %}
 PRIMARY_NIC=$(ls -1 /sys/class/net | grep -v podman | head -1)
-export IP=$(ip -o addr show $PRIMARY_NIC | head -1 | awk '{print $4}' | cut -d'/' -f1)
-export GIT_SERVER=$(echo $IP | sed 's/\./-/g' | sed 's/:/-/g').sslip.io
+IP=$(ip -o addr show $PRIMARY_NIC | head -1 | awk '{print $4}' | cut -d'/' -f1)
+GIT_SERVER=$(echo $IP | sed 's/\./-/g' | sed 's/:/-/g').sslip.io
+{% endif %}
+export GIT_SERVER
 GIT_USER={{ ztp_gitops_user }}
 GIT_PASSWORD={{ ztp_gitops_password }}
 

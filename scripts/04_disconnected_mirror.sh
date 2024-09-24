@@ -21,9 +21,11 @@ mkdir -p /opt/registry/certs
 openssl s_client -showcerts -connect $REGISTRY_NAME:$REGISTRY_PORT </dev/null 2>/dev/null|openssl x509 -outform PEM > /opt/registry/certs/domain.crt
 cp /opt/registry/certs/domain.crt /etc/pki/ca-trust/source/anchors
 update-ca-trust extract
+{% elif dns %}
+REGISTRY_NAME=registry.{{ cluster }}.{{ domain }}
+REGISTRY_PORT={{ 8443 if disconnected_quay else 5000 }}
 {% else %}
 REGISTRY_NAME=$(echo $IP | sed 's/\./-/g' | sed 's/:/-/g').sslip.io
-REGISTRY_PORT={{ 8443 if disconnected_quay else 5000 }}
 {% endif %}
 
 export OPENSHIFT_RELEASE_IMAGE=$(openshift-install version | grep 'release image' | awk -F ' ' '{print $3}')

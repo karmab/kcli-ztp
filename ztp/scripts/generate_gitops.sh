@@ -4,9 +4,15 @@ sleep 120
 cd /root/ztp/scripts/gitops
 OCP_RELEASE=$(openshift-install version | head -1 | cut -d' ' -f2)-x86_64
 export MINOR=$(echo $OCP_RELEASE | cut -d. -f1,2)
+
+{% if dns and disconnected %}
+GIT_SERVER=registry.{{ cluster }}.{{ domain }}
+{% else %}
 PRIMARY_NIC=$(ls -1 /sys/class/net | grep -v podman | head -1)
-export IP=$(ip -o addr show $PRIMARY_NIC | head -1 | awk '{print $4}' | cut -d'/' -f1)
-export GIT_SERVER=$(echo $IP | sed 's/\./-/g' | sed 's/:/-/g').sslip.io
+IP=$(ip -o addr show $PRIMARY_NIC | head -1 | awk '{print $4}' | cut -d'/' -f1)
+GIT_SERVER=$(echo $IP | sed 's/\./-/g' | sed 's/:/-/g').sslip.io
+{% endif %}
+
 GIT_USER={{ ztp_gitops_user }}
 export REPO_URL={{ ztp_gitops_repo_url or 'http://$GIT_SERVER:3000/karmalabs/ztp' }}
 export REPO_BRANCH={{ ztp_gitops_repo_branch }}
