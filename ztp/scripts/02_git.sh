@@ -8,6 +8,8 @@ IP=$(ip -o addr show $PRIMARY_NIC | head -1 | awk '{print $4}' | cut -d'/' -f1)
 GIT_SERVER=$(echo $IP | sed 's/\./-/g' | sed 's/:/-/g').sslip.io
 {% endif %}
 export GIT_SERVER
+
+export GIT_IMAGE={{ "$GIT_SERVER/mavazque/gitea:1.17.3" if disconnected else "quay.io/mavazque/gitea:1.17.3" }}
 GIT_USER={{ gitops_user }}
 GIT_PASSWORD={{ gitops_password }}
 

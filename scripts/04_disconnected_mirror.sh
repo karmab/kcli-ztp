@@ -31,6 +31,7 @@ REGISTRY_NAME=$(echo $IP | sed 's/\./-/g' | sed 's/:/-/g').sslip.io
 export OPENSHIFT_RELEASE_IMAGE=$(openshift-install version | grep 'release image' | awk -F ' ' '{print $3}')
 export LOCAL_REG="$REGISTRY_NAME:$REGISTRY_PORT"
 export OCP_RELEASE=$(openshift-install version | head -1 | cut -d' ' -f2)-x86_64
+export MINOR=$(echo $OCP_RELEASE | cut -d. -f1,2)
 oc adm release mirror -a $PULL_SECRET --from=$OPENSHIFT_RELEASE_IMAGE --to-release-image=${LOCAL_REG}/openshift/release-images:${OCP_RELEASE} --to=${LOCAL_REG}/openshift/release
 
 {% for release in disconnected_extra_releases %}
@@ -76,10 +77,16 @@ fi
 
 cp /root/machineconfigs/99-operatorhub.yaml /root/manifests
 
-{% for image in disconnected_extra_images + ['quay.io/edge-infrastructure/assisted-installer-agent:latest', 'quay.io/edge-infrastructure/assisted-installer:latest', 'quay.io/edge-infrastructure/assisted-installer-controller:latest', 'registry.redhat.io/rhel9/support-tools'] %}
+{% for image in disconnected_extra_images + ['quay.io/edge-infrastructure/assisted-installer-agent:latest', 'quay.io/edge-infrastructure/assisted-installer:latest', 'quay.io/edge-infrastructure/assisted-installer-controller:latest', 'registry.redhat.io/rhel9/support-tools', 'quay.io/mavazque/gitea:1.17.3', 'registry.redhat.io/openshift4/ztp-site-generate-rhel8:v$MINOR' ] %}
 echo "Syncing image {{ image }}"
 /root/bin/sync_image.sh {{ image }}
 {% endfor %}
 
 oc adm release extract --registry-config /root/openshift_pull.json --command=openshift-install --to . $REGISTRY_NAME:$REGISTRY_PORT/openshift/release-images:$OCP_RELEASE --insecure
 mv -f openshift-install /bin
+
+## TEMP HACK
+export RHCOS_ISO=$(openshift-install coreos print-stream-json | jq -r '.["architectures"]["x86_64"]["artifacts"]["metal"]["formats"]["iso"]["disk"]["location"]')
+export RHCOS_ROOTFS=$(openshift-install coreos print-stream-json | jq -r '.["architectures"]["x86_64"]["artifacts"]["metal"]["formats"]["pxe"]["rootfs"]["location"]')
+curl -Lk $RHCOS_ISO > /var/www/html/rhcos-live.x86_64.iso
+curl -Lk $RHCOS_ROOTFS > /var/www/html/rhcos-live-rootfs.x86_64.img

@@ -22,7 +22,6 @@ export HUB={{ cluster }}
 
 {% if disconnected %}
 export REGISTRY=$GIT_SERVER:5000
-/root/bin/sync_image.sh registry.redhat.io/openshift4/ztp-site-generate-rhel8:v$MINOR
 {% else %}
 export REGISTRY=registry.redhat.io
 {% endif %}
