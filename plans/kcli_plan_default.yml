@@ -66,6 +66,7 @@ disconnected_certified_operators_version:
 disconnected_extra_images: []
 disconnected_extra_catalogs: []
 disconnected_extra_releases: []
+disconnected_clean_pull_secret: false
 nfs: false
 imageregistry: false
 go_version: 1.13.8

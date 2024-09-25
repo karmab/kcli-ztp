@@ -33,7 +33,6 @@ mv /etc/containers/policy.json.new /etc/containers/policy.json
 REGISTRY_USER={{ "init" if disconnected_quay else disconnected_user }}
 REGISTRY_PASSWORD={{ "super" + disconnected_password if disconnected_quay and disconnected_password|length < 8 else disconnected_password }}
 podman login -u $REGISTRY_USER -p $REGISTRY_PASSWORD $LOCAL_REGISTRY
-#podman login registry.redhat.io --authfile /root/openshift_pull.json
 REDHAT_CREDS=$(cat /root/openshift_pull.json | jq .auths.\"registry.redhat.io\".auth -r | base64 -d)
 RHN_USER=$(echo $REDHAT_CREDS | cut -d: -f1)
 RHN_PASSWORD=$(echo $REDHAT_CREDS | cut -d: -f2)
@@ -65,3 +64,8 @@ fi
 
 oc apply -f /root/oc-mirror-workspace/results-*/*imageContentSourcePolicy.yaml 2>/dev/null || cp /root/oc-mirror-workspace/results-*/*imageContentSourcePolicy.yaml /root/manifests
 oc apply -f /root/oc-mirror-workspace/results-*/*catalogSource* 2>/dev/null || cp /root/oc-mirror-workspace/results-*/*catalogSource* /root/manifests
+
+{% if disconnected_clean_pull_secret %}
+rm -rf /root/openshift_pull.json.old
+cp -f /root/disconnected_pull.json /root/openshift_pull.json
+{% endif %}
