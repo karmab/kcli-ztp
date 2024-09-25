@@ -9,7 +9,7 @@ GIT_SERVER=$(echo $IP | sed 's/\./-/g' | sed 's/:/-/g').sslip.io
 {% endif %}
 export GIT_SERVER
 
-export GIT_IMAGE={{ "$GIT_SERVER/mavazque/gitea:1.17.3" if disconnected else "quay.io/mavazque/gitea:1.17.3" }}
+export GIT_IMAGE={{ "$GIT_SERVER:5000/mavazque/gitea:1.17.3" if disconnected else "quay.io/mavazque/gitea:1.17.3" }}
 GIT_USER={{ gitops_user }}
 GIT_PASSWORD={{ gitops_password }}
 
