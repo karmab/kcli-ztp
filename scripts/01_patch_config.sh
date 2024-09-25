@@ -13,5 +13,9 @@ fi
 PULLSECRET=$(cat /root/openshift_pull.json | tr -d [:space:])
 echo -e "pullSecret: |\n  $PULLSECRET" >> /root/install-config.yaml
 {% endif %}
+
+if [ ! -f /root/.ssh/id_rsa.pub ] ; then
+  ssh-keygen -qt rsa -N '' -f /root/.ssh/id_rsa
+fi
 SSHKEY=$(cat /root/.ssh/id_rsa.pub)
 echo -e "sshKey: |\n  $SSHKEY" >> /root/install-config.yaml

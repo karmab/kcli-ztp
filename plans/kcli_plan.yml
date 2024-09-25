@@ -48,7 +48,7 @@
 {% endif %}
  networkwait: {{ rhnwait }}
  memory: {{ installer_memory or memory }}
- privatekey: true
+ privatekey: {{ virtual_hub and config_type == 'kvm' }}
  notify: {{ notify }}
 {% if deploy_hub %}
  notifyscript: {{ notifyscript }}
