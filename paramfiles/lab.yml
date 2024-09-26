@@ -35,7 +35,7 @@ installer_disk_size: 200
 notify: true
 nfs: true
 
-policies_dir: extras/sample-site-policies
+spoke_policies_dir: extras/sample-site-policies
 vmrules:
 - lab-mgmt-spoke1-node-0:
    boot_order: true

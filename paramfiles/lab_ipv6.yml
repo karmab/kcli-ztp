@@ -36,7 +36,7 @@ notify: true
 nfs: true
 installer_mac: aa:bb:aa:aa:bb:01
 
-policies_dir: extras/sample-site-policies
+spoke_policies_dir: extras/sample-site-policies
 vmrules:
 - lab-mgmt-spoke1-node-0:
    boot_order: true
