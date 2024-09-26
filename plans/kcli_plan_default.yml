@@ -3,7 +3,7 @@ info: |
     - stop the nodes to deploy through redfish
     - launch the install against a set of baremetal nodes (and optionally virtual ctlplanes)
     It can be used with a centos stream or rhel vm (which required to set rhn credentials in your kcli config)
-    default location for pull secret is openshift_pull.json unless overriding with pullsecret variable
+    default location for pull secret is openshift_pull.json unless overriding with pull_secret variable
     api_ip and ingress_ip need to be set along with ctlplanes and workers array to specify your nodes.
     Nfs can be set to true to deploy nfs provisioner using a share on the installer vm
     default network type is OVNKubernetes but you can also specify OpenShiftSDN
@@ -42,7 +42,7 @@ bmc_reset: false
 baremetal_cidr:
 baremetal_macs: []
 baremetal_ips: []
-pullsecret: openshift_pull.json
+pull_secret: openshift_pull.json
 notifyscript: scripts/notify.sh
 notify: false
 launch_steps: true

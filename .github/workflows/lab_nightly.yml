@@ -9,7 +9,7 @@ env:
  PLAN: lab
  INPUTFILE: plans/kcli_plan.yml
  PARAMFILE: paramfiles/lab_ipv6.yml
- PULLSECRET: /root/openshift_pull.json
+ PULL_SECRET: /root/openshift_pull.json
 
 jobs:
     requirements:
@@ -28,7 +28,7 @@ jobs:
       runs-on: libvirt
       steps:
       - name: Deploy kcli plan
-        run: kcli -c local create plan --force -f $INPUTFILE --paramfile $PARAMFILE -P pullsecret=$PULLSECRET $PLAN
+        run: kcli -c local create plan --force -f $INPUTFILE --paramfile $PARAMFILE -P pull_secret=$PULL_SECRET $PLAN
       #- name: Clean up
       #  if: always()
       #  run: kcli -c local delete plan --yes $PLAN

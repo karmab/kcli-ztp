@@ -96,7 +96,7 @@
    origin: mirror-registry/quay_haproxy.service
  - mirror-registry/quay_haproxy.cfg
 {% endif %}
- - origin: {{ pullsecret }}
+ - origin: {{ pull_secret }}
    path: /root/openshift_pull.json
  - path: /etc/systemd/system/registry.service
    origin: bin/registry.service

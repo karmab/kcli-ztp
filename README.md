@@ -162,7 +162,7 @@ Note that you can use the baseplan `kcli_plan_infra.yml` to deploy the infrastru
 |numcpus                                      |16                           |
 |openshift_image                              |None                         |
 |prs                                          |[]                           |
-|pullsecret                                   |openshift_pull.json          |
+|pull_secret                                  |openshift_pull.json          |
 |registry_image                               |quay.io/karmab/registry:amd64|
 |rhnregister                                  |True                         |
 |rhnwait                                      |30                           |
