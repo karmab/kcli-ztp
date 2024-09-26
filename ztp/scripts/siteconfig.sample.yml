@@ -32,7 +32,7 @@ spec:
 {% set protocol = 'ipv6' if ipv6 else 'ipv4' %}
 {% set dualprotocol = 'ipv4' if ipv6 else 'ipv6' %}
 {% set default_prefix = baremetal_cidr.split('/')[1] %}
-{% set default_gateway = baremetal_cidr|network_ip(1 if create_network else -2) %}
+{% set default_gateway = baremetal_cidr|network_ip(1 if fake_network else -2) %}
 {% set baremetal_gateway = static_baremetal_gateway or default_gateway %}
 {% if dns %}
 {% set baremetal_dns = installer_ip %}

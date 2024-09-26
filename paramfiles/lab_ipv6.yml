@@ -1,4 +1,4 @@
-create_network: true
+fake_network: true
 pool: default
 disconnected: true
 virtual_hub: true

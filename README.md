@@ -83,105 +83,112 @@ kcli ssh
 
 ## Parameters
 
-### virtual infrastructure only parameters
-
 Note that you can use the baseplan `kcli_plan_infra.yml` to deploy the infrastructure only
 
-|Parameter                           |Default Value   |
-|------------------------------------|--------------  |
-|api_ip                              |None            |
-|baremetal\_bootstrap\_mac           |None            |
-|baremetal_cidr                      |None            |
-|baremetal_ips                       |[]              |
-|baremetal_macs                      |[]              |
-|baremetal_net                       |baremetal       |
-|cluster                             |openshift       |
-|disk_size                           |30              |
-|domain                              |karmalabs.corp  |
-|dualstack                           |False           |
-|dualstack_cidr                      |None            |
-|extra_disks                         |[]              |
-|http_proxy                          |None            |
-|ingress_ip                          |None            |
-|keys                                |[]              |
-|create_network                      |False           |
-|memory                              |32768           |
-|model                               |dell            |
-|no_proxy                            |None            |
-|numcpus                             |16              |
-|pool                                |default         |
-|virtual_hub                         |True            |
-|ctlplanes                           |3               |
-|ctlplane\_memory                    |32768           |
-|ctlplanes\_numcpus                  |8               |
-|virtual_workers                     |False           |
-|workers                             |0               |
-|worker\_memory                      |16384           |
-|worker\_numcpus                     |8               |
-|wait_for_workers                    |True            |
-|wait_for_workers_number             |True            |
-|wait_for_workers_exit_if_error      |False           |
-|baremetal_ctlplanes                 |[]              |
-|baremetal_workers                   |[]              |
-
-### additional parameters
-
-The following parameters are available when deploying the default plan
-
-|Parameter                                    |Default Value                             |
-|---------------------------------------------|------------------------------------------|
-|bmc_password                                 |calvin                                    |
-|bmc_user                                     |root                                      |
-|cas                                          |[]                                        |
-|create_network                               |False                                     |
-|deploy_hub                                   |True                                      |
-|disconnected                                 |False                                     |
-|disconnected_operators                       |[]                                        |
-|disconnected\_operators\_deploy\_after\_openshift|False                                 |
-|disconnected_password                        |dummy                                     |
-|disconnected_user                            |dummy                                     |
-|dualstack                                    |False                                     |
-|dualstack_cidr                               |None                                      |
-|fips                                         |False                                     |
-|go_version                                   |1.13.8                                    |
-|http_proxy                                   |None                                      |
-|image                                        |centos8stream                             |
-|imagecontentsources                          |[]                                        |
-|imageregistry                                |False                                     |
-|installer_mac                                |None                                      |
-|installer_wait                               |False                                     |
-|keys                                         |[]                                        |
-|launch_steps                                 |True                                      |
-|model                                        |dell                                      |
-|nfs                                          |True                                      |
-|no_proxy                                     |None                                      |
-|notify                                       |True                                      |
-|notifyscript                                 |notify.sh                                 |
-|ntp                                          |False                                     |
-|ntp_server                                   |0.rhel.pool.ntp.org                       |
-|numcpus                                      |16                                        |
-|openshift_image                              |                                          |
-|pullsecret                                   |openshift_pull.json                       |
-|registry_image                               |quay.io/karmab/registry:amd64             |
-|rhnregister                                  |True                                      |
-|rhnwait                                      |30                                        |
-|tag                                          |4.15                                      |
-|version                                      |stable                                    |
-|spoke_nodes                                    |[]                                        |
-|spoke\_api\_ip                          |None                                      |
-|spoke\_deploy                           |True                                      |
-|spoke\_ingress\_ip                      |None                                      |
-|spoke\_ctlplanes\_number                |1                                         |
-|spoke\_name                             |mgmt-spoke1                               |
-|spoke\_wait                             |False                                     |
-|spoke\_wait_time                        |3600                                      |
-|spoke\_workers_number                   |0                                         |
-|spoke_virtual\_nodes                          |False                                     |
-|spoke\_virtual\_nodes\_baremetal\_mac\_prefix  |aa:aa:aa:cc:cc                            |
-|spoke\_virtual\_nodes\_disk\_size              |120                                       |
-|spoke\_virtual_nodes\_memory                   |38912                                     |
-|spoke\_virtual\_nodes\_number                  |1                                         |
-|spoke\_virtual\_nodes\_numcpus                 |8                                         |
+|Parameter                                    |Default Value                |
+|---------------------------------------------|-----------------------------|
+|KUBECONFIG                                   |None                         |
+|acm                                          |True                         |
+|apps                                         |[]                           |
+|apps_install_cr                              |False                        |
+|baremetal_cidr                               |None                         |
+|baremetal_ips                                |[]                           |
+|baremetal_macs                               |[]                           |
+|baseplan                                     |kcli_plan_infra.yml          |
+|bmc_password                                 |calvin                       |
+|bmc_reset                                    |False                        |
+|bmc_user                                     |root                         |
+|cas                                          |[]                           |
+|cluster_network_ipv4                         |10.132.0.0/14                |
+|cluster_network_ipv6                         |fd01::/48                    |
+|converged_flow                               |False                        |
+|cpu_partitioning                             |False                        |
+|deploy_hub                                   |True                         |
+|disable_validations                          |True                         |
+|disconnected                                 |False                        |
+|disconnected_certified_operators             |[]                           |
+|disconnected_certified_operators_version     |None                         |
+|disconnected_clean_pull_secret               |False                        |
+|disconnected_community_operators             |[]                           |
+|disconnected_community_operators_version     |None                         |
+|disconnected_extra_catalogs                  |[]                           |
+|disconnected_extra_images                    |[]                           |
+|disconnected_extra_releases                  |[]                           |
+|disconnected_marketplace_operators           |[]                           |
+|disconnected_marketplace_operators_version   |None                         |
+|disconnected_operators                       |[]                           |
+|disconnected_operators_deploy_after_openshift|False                        |
+|disconnected_operators_version               |None                         |
+|disconnected_password                        |dummy                        |
+|disconnected_quay                            |False                        |
+|disconnected_url                             |None                         |
+|disconnected_user                            |dummy                        |
+|dns                                          |False                        |
+|dualstack                                    |False                        |
+|dualstack_cidr                               |None                         |
+|dualstack_isolated                           |False                        |
+|fips                                         |False                        |
+|gitops_clusters_app_path                     |site-configs                 |
+|gitops_password                              |dummy                        |
+|gitops_policies_app_path                     |site-policies                |
+|gitops_repo_branch                           |main                         |
+|gitops_repo_url                              |None                         |
+|gitops_user                                  |dummy                        |
+|go_version                                   |1.13.8                       |
+|http_proxy                                   |None                         |
+|image                                        |centos9stream                |
+|imagecontentsources                          |[]                           |
+|imageregistry                                |False                        |
+|installer_disk_size                          |None                         |
+|installer_ip                                 |None                         |
+|installer_mac                                |None                         |
+|installer_memory                             |None                         |
+|installer_numcpus                            |None                         |
+|installer_wait                               |False                        |
+|keys                                         |[]                           |
+|launch_steps                                 |True                         |
+|localhost_fix                                |False                        |
+|manifests_dir                                |manifests                    |
+|monitoring_retention                         |None                         |
+|motd                                         |None                         |
+|nbde                                         |False                        |
+|network_type                                 |OVNKubernetes                |
+|nfs                                          |False                        |
+|no_proxy                                     |None                         |
+|notify                                       |False                        |
+|notifyscript                                 |scripts/notify.sh            |
+|ntp                                          |False                        |
+|ntp_server                                   |0.rhel.pool.ntp.org          |
+|numcpus                                      |16                           |
+|openshift_image                              |None                         |
+|prs                                          |[]                           |
+|pullsecret                                   |openshift_pull.json          |
+|registry_image                               |quay.io/karmab/registry:amd64|
+|rhnregister                                  |True                         |
+|rhnwait                                      |30                           |
+|schedulable_ctlplanes                        |False                        |
+|service_network_ipv4                         |172.30.0.0/16                |
+|service_network_ipv6                         |fd02::/112                   |
+|spoke_deploy                                 |True                         |
+|spoke_domain                                 |None                         |
+|spoke_network_type                           |OVNKubernetes                |
+|spoke_policies_dir                           |spoke_policies_dir           |
+|spoke_static_network                         |False                        |
+|spoke_wait                                   |True                         |
+|spoke_wait_time                              |3600                         |
+|static_baremetal_dns                         |None                         |
+|static_baremetal_gateway                     |None                         |
+|static_network                               |False                        |
+|tag                                          |4.16                         |
+|users_admin                                  |admin                        |
+|users_adminpassword                          |admin                        |
+|users_dev                                    |dev                          |
+|users_devpassword                            |dev                          |
+|version                                      |stable                       |
+|wait_for_workers                             |True                         |
+|wait_for_workers_number                      |None                         |
+|wait_for_workers_timeout                     |3600                         |
+|workflow_installer                           |False                        |
 
 ### Node parameters
 
