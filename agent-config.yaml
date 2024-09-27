@@ -45,7 +45,7 @@ hosts:
     wwn: "{{ host['wwn'] }}"
 {% else %}
   rootDeviceHints:
-    deviceName: "/dev/sda"
+    deviceName: "/dev/{{ default_disk|basename }}"
 {% endif %}
   interfaces:
   - macAddress: {{ baremetal_macs[loop.index0] }}

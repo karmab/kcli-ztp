@@ -122,7 +122,7 @@ spec:
       bootMACAddress: {{ mac }}
       bootMode: {{ 'UEFI' if spoke_uefi else 'legacy' }}
       rootDeviceHints:
-       deviceName: /dev/{{ node.disk|default('sda')|string|basename }}
+       deviceName: /dev/{{ node.disk|default(default_disk)|string|basename }}
 {% if 'ip' in node %}
       nodeNetwork:
         interfaces:

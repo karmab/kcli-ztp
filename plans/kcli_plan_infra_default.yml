@@ -30,6 +30,7 @@ memory: 32768
 ctlplanes: 3
 ctlplane_numcpus:
 ctlplane_memory:
+default_disk: sda
 workers: 0
 worker_numcpus:
 worker_memory:
