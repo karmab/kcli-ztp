@@ -43,6 +43,9 @@ hosts:
 {% elif 'wwn' in host %}
   rootDeviceHints:
     wwn: "{{ host['wwn'] }}"
+{% else %}
+  rootDeviceHints:
+    deviceName: "/dev/sda"
 {% endif %}
   interfaces:
   - macAddress: {{ baremetal_macs[loop.index0] }}
