@@ -1,7 +1,4 @@
-{% set virtual_disks = [{'size': disk_size, 'interface': disk_interface}] %}
-{% for extra_disk in extra_disks %}
-{% do virtual_disks.append({'size': extra_disk, 'interface': disk_interface}) %}
-{% endfor %}
+{% set virtual_disks = [{'size': disk_size, 'interface': disk_interface}] + extra_disks %}
 
 {% if fake_network %}
 {{ baremetal_net }}:
