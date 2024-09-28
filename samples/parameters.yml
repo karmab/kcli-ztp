@@ -10,11 +10,11 @@ ingress_ip: 11.0.0.4
 virtual_hub: False
 baremetal_ctlplanes:
 - redfish_address: 10.0.0.1
-  provisioning_mac: aa:aa:aa:bb:cc:01
+  mac: aa:aa:aa:bb:cc:01
 - redfish_address: 10.0.0.2
-  provisioning_mac: aa:aa:aa:bb:cc:02
+  mac: aa:aa:aa:bb:cc:02
 - redfish_address: 10.0.0.3
-  provisioning_mac: aa:aa:aa:bb:cc:03
+  mac: aa:aa:aa:bb:cc:03
 baremetal_workers:
 - redfish_address: 10.0.0.4
-  provisioning_mac: aa:aa:aa:bb:cc:04
+  mac: aa:aa:aa:bb:cc:04

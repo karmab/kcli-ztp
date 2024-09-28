@@ -156,6 +156,8 @@ echo disconnected_password will be forced to super{{ disconnected_password }}
 {% endif %}
 {% endif %}
 
+{% set baremetal_nodes_macs = [] %}
+
 # ZTP CHECKS
 {% set total_spoke_nodes_number = namespace(value=0) %}
 {% for spoke in spokes %}
@@ -185,6 +187,13 @@ echo no spoke_api_ip. This is mandatory for an HA spoke && exit 1
 echo no spoke_ingress_ip. This is mandatory for an HA spoke && exit 1
 {% endif %}
 {% endif %}
+
+{% for baremetal_node in spoke.get('baremetal_nodes', []) %}
+{% if baremetal_node.get('mac') != None %}
+{% do baremetal_nodes_macs.append(0) %}
+{% endif %}
+{% endfor %}
+
 {% set total_spoke_nodes_number.value = total_spoke_nodes_number.value + spoke_ctlplanes_number + spoke_workers_number %}
 {% endfor %}
 
@@ -203,7 +212,13 @@ echo You need to populate baremetal_ips with at least one ip for rendezvous
 exit 1
 {% endif %}
 
-{% if baremetal_macs|length < total_hub_nodes_number + total_spoke_nodes_number.value %}
-echo You need to populate baremetal_macs with the complete list of mac addresses including your spokes
+{% for baremetal_node in baremetal_ctlplanes + baremetal_workers %}
+{% if baremetal_node.get('mac') != None %}
+{% do baremetal_nodes_macs.append(0) %}
+{% endif %}
+{% endfor %}
+
+{% if baremetal_macs|length + baremetal_nodes_macs|length < total_hub_nodes_number + total_spoke_nodes_number.value %}
+echo You need to populate baremetal_macs with the complete list of mac addresses including your spokes or put that info in baremetal_nodes arrays
 exit 1
 {% endif %}

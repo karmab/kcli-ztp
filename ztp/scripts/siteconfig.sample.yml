@@ -98,8 +98,8 @@ spec:
 {% for node in nodes %}
 {% set num = loop.index0 %}
 {% set max_ctlplanes = 1 if spoke_snoplus else 3 %}
-{% if 'provisioning_mac' in node %}
-{% set mac = node['provisioning_mac'] %}
+{% if 'mac' in node %}
+{% set mac = node['mac'] %}
 {% else %}
 {% set mac = baremetal_macs[ctlplanes + workers + total_number.value + num] %}
 {% endif %}

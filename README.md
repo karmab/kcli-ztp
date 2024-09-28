@@ -51,7 +51,7 @@ Prepare a valid parameter file with the information needed. At least, you need t
 - api_ip
 - ingress_ip
 - bmc_user/bmc_password (for real baremetal)
-- an array of your ctlplanes (if thet are not virtual). Each entry in this array needs at least the provisioning_mac and redfish_address. Optionally you can indicate for each entry a specific bmc_user, bmc_password and disk (to be used as rootdevice hint) either as /dev/XXX or simply XXX
+- an array of your ctlplanes (if thet are not virtual). Each entry in this array needs at least the mac and redfish_address. Optionally you can indicate for each entry a specific bmc_user, bmc_password and disk (to be used as rootdevice hint) either as /dev/XXX or simply XXX
 - an array of your workers (can be left empty if you only want to deploy ctlplanes). The format of those entries follow the one indicated for ctlplanes.
 
 Here's a snippet what the workers variable might look like:
@@ -196,7 +196,7 @@ when specifying *baremetal_ctlplanes* or *baremetal_workers* as an array, the sp
 
 ```
 - redfish_address: 192.168.123.45
-  provisioning_mac: 98:03:9b:62:81:49
+  mac: 98:03:9b:62:81:49
 ```
 
 The following parameters can be used in this case:
