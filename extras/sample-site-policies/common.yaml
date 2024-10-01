@@ -15,7 +15,7 @@ spec:
     metadata:
       name: redhat-operator-index
     spec:
-      image: registry.redhat.io/redhat/redhat-operator-index:v4.16
+      image: registry.redhat.io/redhat/redhat-operator-index:v4.17
     policyName: config-policy
   - fileName: OperatorHub.yaml
     policyName: config-policy
@@ -30,7 +30,7 @@ spec:
     policyName: subscriptions-policy
   - fileName: StorageLVMSubscription.yaml
     spec:
-      channel: stable-4.16
+      channel: stable-4.17
       source: redhat-operator-index
     policyName: subscriptions-policy
   - fileName: LVMOperatorStatus.yaml

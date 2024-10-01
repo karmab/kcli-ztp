@@ -2,7 +2,6 @@ fake_network: true
 pool: default
 virtual_hub: true
 version: stable
-tag: "4.16"
 cluster: lab
 domain: karmalabs.corp
 dns: true

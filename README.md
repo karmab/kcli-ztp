@@ -179,7 +179,7 @@ Note that you can use the baseplan `kcli_plan_infra.yml` to deploy the infrastru
 |static_baremetal_dns                         |None                         |
 |static_baremetal_gateway                     |None                         |
 |static_network                               |False                        |
-|tag                                          |4.16                         |
+|tag                                          |4.17                         |
 |users_admin                                  |admin                        |
 |users_adminpassword                          |admin                        |
 |users_dev                                    |dev                          |

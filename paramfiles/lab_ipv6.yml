@@ -4,7 +4,6 @@ disconnected: true
 virtual_hub: true
 static_network: true
 version: stable
-tag: "4.16"
 dns: true
 installer_ip: 2620:52:0:1302::4
 cluster: lab

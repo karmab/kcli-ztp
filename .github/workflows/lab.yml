@@ -37,10 +37,6 @@ on:
         description: 'version'
         required: false
         default: stable
-      TAG:
-        description: 'tag'
-        required: false
-        default: "4.16"
 
 env:
  HOME: /root
@@ -54,7 +50,6 @@ env:
  LAUNCH_STEPS: ${{github.event.inputs.LAUNCH_STEPS}}
  DEPLOY_HUB: ${{github.event.inputs.DEPLOY_HUB}}
  VERSION: ${{github.event.inputs.VERSION}}
- TAG: ${{github.event.inputs.TAG}}
 
 jobs:
     requirements:
@@ -74,4 +69,4 @@ jobs:
       runs-on: ${{github.event.inputs.RUNNER}}
       steps:
        - name: Deploy kcli plan
-         run: kcli -C $CLIENT create plan --force -f $INPUTFILE --paramfile $PARAMFILE -P pull_secret=$PULL_SECRET -P launch_steps=$LAUNCH_STEPS -P deploy_hub=$DEPLOY_HUB -P version=$VERSION -P tag=$TAG $EXTRAPARAMS $PLAN
+         run: kcli -C $CLIENT create plan --force -f $INPUTFILE --paramfile $PARAMFILE -P pull_secret=$PULL_SECRET -P launch_steps=$LAUNCH_STEPS -P deploy_hub=$DEPLOY_HUB -P version=$VERSION $EXTRAPARAMS $PLAN

@@ -24,7 +24,7 @@ installer_ip:
 installer_mac:
 installer_wait: false
 version: stable
-tag: "4.16"
+tag: "4.17"
 openshift_image:
 network_type: OVNKubernetes
 dualstack: false
