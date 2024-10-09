@@ -64,7 +64,17 @@ if [ $(grep -c "No new images detected" /tmp/mirror-registry-output) -eq 1 ] ; t
   python3 /root/bin/mapping_to_icsp.py -m /root/oc-mirror-workspace/mapping.txt -o /root/oc-mirror-workspace/results-mapping/ -c /root/mirror-config.yaml
 fi
 
+{% if disconnected_prega_operators|length > 0 %}
+[ ! -d /root/idms ] || rm -rf /root/idms
+mkdir /root/idms
+sed -i -e '/source:/!b;/bundle/b;/cincinnati/b;s,quay.io/prega/test/,registry.redhat.io/,' /root/oc-mirror-workspace/results-*/*imageContentSourcePolicy.yaml
+oc adm migrate icsp /root/oc-mirror-workspace/results-*/*imageContentSourcePolicy.yaml --dest-dir /root/idms
+{% endif %}
+
 oc apply -f /root/oc-mirror-workspace/results-*/*imageContentSourcePolicy.yaml 2>/dev/null || cp /root/oc-mirror-workspace/results-*/*imageContentSourcePolicy.yaml /root/manifests
+if [ -d /root/idms ] ; then
+  oc apply -f /root/idms/* 2>/dev/null || cp /root/idms/* /root/manifests
+fi
 oc apply -f /root/oc-mirror-workspace/results-*/*catalogSource* 2>/dev/null || cp /root/oc-mirror-workspace/results-*/*catalogSource* /root/manifests
 
 {% if disconnected_clean_pull_secret %}
