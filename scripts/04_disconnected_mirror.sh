@@ -77,7 +77,8 @@ fi
 
 cp /root/machineconfigs/99-operatorhub.yaml /root/manifests
 
-{% for image in disconnected_extra_images + ['quay.io/edge-infrastructure/assisted-installer-agent:latest', 'quay.io/edge-infrastructure/assisted-installer:latest', 'quay.io/edge-infrastructure/assisted-installer-controller:latest', 'registry.redhat.io/rhel9/support-tools', 'quay.io/mavazque/gitea:1.17.3', 'registry.redhat.io/openshift4/ztp-site-generate-rhel8:v$MINOR' ] %}
+SITE_GENERATE_TAG={{ '4.17' if version in ['dev-preview', 'ci'] else '$MINOR' }}
+{% for image in disconnected_extra_images + ['quay.io/edge-infrastructure/assisted-installer-agent:latest', 'quay.io/edge-infrastructure/assisted-installer:latest', 'quay.io/edge-infrastructure/assisted-installer-controller:latest', 'registry.redhat.io/rhel9/support-tools', 'quay.io/mavazque/gitea:1.17.3', 'registry.redhat.io/openshift4/ztp-site-generate-rhel8:v$SITE_GENERATE_TAG' ] %}
 echo "Syncing image {{ image }}"
 /root/bin/sync_image.sh {{ image }}
 {% endfor %}

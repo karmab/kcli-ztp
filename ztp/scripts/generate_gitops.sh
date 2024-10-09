@@ -4,6 +4,7 @@ sleep 120
 cd /root/ztp/scripts/gitops
 OCP_RELEASE=$(openshift-install version | head -1 | cut -d' ' -f2)-x86_64
 export MINOR=$(echo $OCP_RELEASE | cut -d. -f1,2)
+export SITE_GENERATE_TAG={{ '4.17' if version in ['dev-preview', 'ci'] else '$MINOR' }}
 
 {% if dns and disconnected %}
 GIT_SERVER=registry.{{ cluster }}.{{ domain }}
