@@ -33,10 +33,6 @@ on:
         description: 'deploy_hub'
         required: false
         default: True
-      VERSION:
-        description: 'version'
-        required: false
-        default: stable
 
 env:
  HOME: /root
@@ -49,7 +45,6 @@ env:
  PULL_SECRET: ${{github.event.inputs.PULL_SECRET}}
  LAUNCH_STEPS: ${{github.event.inputs.LAUNCH_STEPS}}
  DEPLOY_HUB: ${{github.event.inputs.DEPLOY_HUB}}
- VERSION: ${{github.event.inputs.VERSION}}
 
 jobs:
     requirements:
@@ -69,4 +64,4 @@ jobs:
       runs-on: ${{github.event.inputs.RUNNER}}
       steps:
        - name: Deploy kcli plan
-         run: kcli -C $CLIENT create plan --force -f $INPUTFILE --paramfile $PARAMFILE -P pull_secret=$PULL_SECRET -P launch_steps=$LAUNCH_STEPS -P deploy_hub=$DEPLOY_HUB -P version=$VERSION $EXTRAPARAMS $PLAN
+         run: kcli -C $CLIENT create plan --force -f $INPUTFILE --paramfile $PARAMFILE -P pull_secret=$PULL_SECRET -P launch_steps=$LAUNCH_STEPS -P deploy_hub=$DEPLOY_HUB $EXTRAPARAMS $PLAN
