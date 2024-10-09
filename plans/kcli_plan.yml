@@ -22,6 +22,10 @@
 {{ disconnected_operators.append("lvms-operator") or "" }}
 {% endif %}
 
+{% if disconnected_prega_operators|length > 0 %}
+{% set disconnected_operators = [] %}
+{% endif %}
+
 {% set snoplus_spokes = [] %}
 
 {% for spoke in spokes %}

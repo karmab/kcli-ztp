@@ -119,6 +119,29 @@ mirror:
 {% endif %}
 {% endfor %}
 {% endif %}
+{% if disconnected_prega_operators %}
+  - catalog: quay.io/prega/prega-operator-index:v${OCP_RELEASE}
+    packages:
+{% for package in disconnected_prega_operators %}
+{% if package.name is defined %}
+    - name: {{ package.name }}
+{% else %}
+    - name: {{ package }}
+{% endif %}
+{% if package.channels is defined and package.channels|length > 0 %}
+      channels:
+{% for channel in package.channels %}
+      - name: {{ channel.name }}
+{% if channel.minVersion is defined %}
+        minVersion: {{ channel.minVersion }}
+{% endif %}
+{% if channel.maxVersion is defined %}
+        maxVersion: {{ channel.maxVersion }}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endfor %}
+{% endif %}
 {% if disconnected_extra_catalogs %}
 {% for catalog_image in disconnected_extra_catalogs %}
   - catalog: {{ catalog_image }}

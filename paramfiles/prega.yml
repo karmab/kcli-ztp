@@ -1,0 +1,60 @@
+version: dev-preview
+tag: 4.18.0-ec.1
+disconnected_prega_operators:
+- name: cluster-logging
+  channels:
+  - name: stable-6.0
+- name: compliance-operator
+  channels:
+  - name: stable
+- name: file-integrity-operator
+  channels:
+  - name: stable
+- name: kernel-module-management
+  channels:
+  - name: stable
+- name: local-storage-operator
+  channels:
+  - name: stable
+- name: loki-operator
+  channels:
+  - name: stable-6.0
+- name: lvms-operator
+  channels:
+  - name: stable-4.18
+- name: recipe
+  channels:
+  - name: stable-4.18
+- name: sriov-network-operator
+  channels:
+  - name: stable
+- name: advanced-cluster-management
+  channels:
+  - name: release-2.12
+- name: cluster-logging
+  channels:
+  - name: stable-6.0
+- name: kernel-module-management-hub
+  channels:
+  - name: stable
+- name: local-storage-operator
+  channels:
+  - name: stable
+- name: loki-operator
+  channels:
+  - name: stable-6.0
+- name: multicluster-engine
+  channels:
+  - name: stable-2.7
+- name: openshift-gitops-operator
+  channels:
+  - name: latest
+- name: openshift-pipelines-operator-rh
+  channels:
+  - name: latest
+- name: recipe
+  channels:
+  - name: stable-4.18
+- name: topology-aware-lifecycle-manager
+  channels:
+  - name: stable
