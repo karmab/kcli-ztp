@@ -26,7 +26,7 @@
  memory: {{ ctlplane_memory or memory }}
  nets:
  - name: {{ baremetal_net }}
-   mac: {{ baremetal_macs[num] }}
+   mac:  {{ "%s:%0.2d" % (virtual_mac_prefix, num + 1) }}
  disks: {{ virtual_disks }}
 {% endfor %}
 {% endif %}
@@ -46,7 +46,7 @@
  memory: {{ worker_memory or memory }}
  nets:
  - name: {{ baremetal_net }}
-   mac: {{ baremetal_macs[ctlplanes + num] }}
+   mac:  {{ "%s:%0.2d" % (virtual_mac_prefix, ctlplanes + num + 1) }}
  disks: {{ virtual_disks }}
 {% endfor %}
 {% endif %}
@@ -80,7 +80,7 @@
  memory: {{ spoke_memory }}
  nets:
  - name: {{ baremetal_net }}
-   mac: {{ baremetal_macs[ctlplanes + workers + total_number.value + num] }}
+   mac:  {{ "%s:%0.2d" % (virtual_mac_prefix, ctlplanes + workers + total_number.value + num + 1) }}
  disks:
  - size: {{ spoke_disk_size }}
    interface: {{ spoke_disk_interface }}

@@ -80,7 +80,7 @@ kcli start baremetal-host -P url={{ url }} -P user={{ user }} -P password={{ pas
 {% endfor %}
 
 {% if hosts|length == 1 %}
-SNO_IP={{ rendezvous_ip|default(static_ips[0]) }}
+SNO_IP={{ rendezvous_ip or static_ips[0] }}
 sed -i /api.{{ cluster }}.{{ domain }}/d /etc/hosts
 echo $SNO_IP api.{{ cluster }}.{{ domain }} >> /etc/hosts
 {% endif %}

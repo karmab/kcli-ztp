@@ -15,11 +15,6 @@ static_ips:
 - 192.168.130.21
 - 192.168.130.22
 - 192.168.130.23
-baremetal_macs:
-- aa:aa:aa:aa:bb:01
-- aa:aa:aa:aa:bb:02
-- aa:aa:aa:aa:bb:03
-- aa:aa:aa:aa:bb:04
 
 disconnected: true
 spoke_wait: true

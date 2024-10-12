@@ -19,7 +19,7 @@ disk_interface: scsi
 extra_disks: []
 baremetal_net: baremetal
 baremetal_cidr:
-baremetal_macs: []
+virtual_mac_prefix: aa:aa:aa:aa:bb
 static_ips: []
 baremetal_ctlplanes: []
 baremetal_workers: []

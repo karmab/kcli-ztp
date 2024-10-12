@@ -218,11 +218,6 @@ exit 1
 {% endif %}
 {% endfor %}
 
-{% if baremetal_macs|length + baremetal_nodes_macs|length < total_hub_nodes_number + total_spoke_nodes_number.value %}
-echo You need to populate baremetal_macs with the complete list of mac addresses including your spokes or put that info in baremetal_nodes arrays
-exit 1
-{% endif %}
-
 {% if prega %}
 if [ "$(grep quay.io/prega {{ pull_secret }})" == "" ] ; then 
 echo prega requires a valid pull secret entry

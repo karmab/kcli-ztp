@@ -101,7 +101,7 @@ spec:
 {% if 'mac' in node %}
 {% set mac = node['mac'] %}
 {% else %}
-{% set mac = baremetal_macs[ctlplanes + workers + total_number.value + num] %}
+{% set mac = "%s:%0.2d" % (virtual_mac_prefix, ctlplanes + workers + total_number.value + num + 1) %}
 {% endif %}
     - hostName: {{ cluster }}-{{ spoke_name }}-node-{{ num }}
       role: {{ "master" if num < max_ctlplanes else "worker" }}

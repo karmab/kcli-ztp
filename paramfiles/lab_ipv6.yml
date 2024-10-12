@@ -19,11 +19,6 @@ static_ips:
 - 2620:52:0:1302::21
 - 2620:52:0:1302::22
 - 2620:52:0:1302::23
-baremetal_macs:
-- aa:aa:aa:aa:bb:01
-- aa:aa:aa:aa:bb:02
-- aa:aa:aa:aa:bb:03
-- aa:aa:aa:aa:bb:04
 
 spokes:
 - name: mgmt-spoke1
