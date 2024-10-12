@@ -41,6 +41,9 @@ cp /root/machineconfigs/99-localhost-fix*.yaml /root/manifests
 {% if monitoring_retention != None %}
 cp /root/machineconfigs/99-monitoring.yaml /root/manifests
 {% endif %}
+{% if prega and not disconnected %}
+cp /root/machineconfigs/99-prega-catalog*.yaml /root/manifests
+{% endif %}
 find manifests -type f -empty -print -delete
 
 {% if api_ip != None %}
