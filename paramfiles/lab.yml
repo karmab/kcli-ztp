@@ -10,7 +10,7 @@ baremetal_cidr: 192.168.130.0/24
 baremetal_net: lab-baremetal
 api_ip: 192.168.130.253
 ingress_ip: 192.168.130.252
-baremetal_ips:
+static_ips:
 - 192.168.130.20
 - 192.168.130.21
 - 192.168.130.22

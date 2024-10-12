@@ -11,13 +11,13 @@
 {% set virtual_workers_nodes = [] %}
 {% if virtual_hub %}
 {% for num in range(0, ctlplanes) %}
-{% set new_ctlplane = {'ip': baremetal_ips[num]} if static_network and baremetal_ips|length > num else {} %}
+{% set new_ctlplane = {'ip': static_ips[num]} if static_network and static_ips|length > num else {} %}
 {% do virtual_ctlplanes_nodes.append(new_ctlplane) %}
 {% endfor %}
 {% endif %}
 {% if virtual_hub and workers > 0 %}
 {% for num in range(0, workers) %}
-{% set new_worker = {'ip': baremetal_ips[num]} if static_network and baremetal_ips|length > ctlplanes + num else {} %}
+{% set new_worker = {'ip': static_ips[num]} if static_network and static_ips|length > ctlplanes + num else {} %}
 {% do virtual_workers_nodes.append(new_worker) %}
 {% endfor %}
 {% endif %}
@@ -27,7 +27,7 @@ apiVersion: v1alpha1
 kind: AgentConfig
 metadata:
   name: {{ cluster }}
-rendezvousIP: {{ rendezvous_ip|default(baremetal_ips[0]) }}
+rendezvousIP: {{ rendezvous_ip|default(static_ips[0]) }}
 hosts:
 {% for host in hosts %}
 - hostname: {{ host['name']|default(cluster + "-" + loop.index0|string) }}.{{ domain }}

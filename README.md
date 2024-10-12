@@ -92,7 +92,6 @@ Note that you can use the baseplan `kcli_plan_infra.yml` to deploy the infrastru
 |apps                                         |[]                           |
 |apps_install_cr                              |False                        |
 |baremetal_cidr                               |None                         |
-|baremetal_ips                                |[]                           |
 |baremetal_macs                               |[]                           |
 |baseplan                                     |kcli_plan_infra.yml          |
 |bmc_password                                 |calvin                       |
@@ -178,6 +177,7 @@ Note that you can use the baseplan `kcli_plan_infra.yml` to deploy the infrastru
 |spoke_wait_time                              |3600                         |
 |static_baremetal_dns                         |None                         |
 |static_baremetal_gateway                     |None                         |
+|static_ips                                   |[]                           |
 |static_network                               |False                        |
 |tag                                          |4.17                         |
 |users_admin                                  |admin                        |

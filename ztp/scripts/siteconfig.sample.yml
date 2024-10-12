@@ -63,7 +63,7 @@ spec:
 {% if virtual_nodes_number > 0 %}
 {% set extra_nodes = [] %}
 {% for num in range(0, virtual_nodes_number) %}
-{% set new_node = {'ip': baremetal_ips[ctlplanes + workers + total_number.value + num]} if static_network and baremetal_ips|length > ctlplanes + workers + total_number.value + num else {} %}
+{% set new_node = {'ip': static_ips[ctlplanes + workers + total_number.value + num]} if static_network and static_ips|length > ctlplanes + workers + total_number.value + num else {} %}
 {% do extra_nodes.append(new_node) %}
 {% endfor %}
 {% set nodes = extra_nodes + nodes %}

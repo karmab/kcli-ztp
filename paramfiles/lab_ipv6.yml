@@ -14,7 +14,7 @@ baremetal_net: lab-baremetal
 # static_baremetal_gateway: 2620:52:0:1302::1
 api_ip: 2620:52:0:1302::2
 ingress_ip: 2620:52:0:1302::3
-baremetal_ips:
+static_ips:
 - 2620:52:0:1302::20
 - 2620:52:0:1302::21
 - 2620:52:0:1302::22

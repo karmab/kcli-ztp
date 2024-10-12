@@ -20,7 +20,7 @@ extra_disks: []
 baremetal_net: baremetal
 baremetal_cidr:
 baremetal_macs: []
-baremetal_ips: []
+static_ips: []
 baremetal_ctlplanes: []
 baremetal_workers: []
 model: dell

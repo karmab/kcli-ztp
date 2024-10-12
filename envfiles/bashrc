@@ -15,4 +15,4 @@ export PATH=/usr/local/bin:/root/bin:$PATH
 export REGISTRY_PASSWORD={{ disconnected_password }}
 export REGISTRY_USER={{ disconnected_user }}
 export PYTHONUNBUFFERED=true
-export AI_URL={{ rendezvous_ip|default(baremetal_ips[0])|ipv6_wrap }}:8090
+export AI_URL={{ rendezvous_ip|default(static_ips[0])|ipv6_wrap }}:8090

@@ -207,8 +207,8 @@ echo no spoke_ingress_ip. This is mandatory for an HA spoke && exit 1
 {% endif %}
 {% set total_hub_nodes_number = total_ctlplanes + total_workers %}
 
-{% if rendezvous_ip == None and baremetal_ips|length == 0 %}
-echo You need to specify rendezvous_ip by either defining the variable or populating baremetal_ips array
+{% if rendezvous_ip == None and static_ips|length == 0 %}
+echo You need to specify rendezvous_ip by either defining the variable or populating static_ips array
 exit 1
 {% endif %}
 
