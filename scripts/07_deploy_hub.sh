@@ -29,6 +29,8 @@ export KUBECONFIG=/root/ocp/auth/kubeconfig
 {% set user = host['bmc_user']|default(bmc_user) %}
 {% set password = host['bmc_password']|default(bmc_password) %}
 {% set reset = host['bmc_reset']|default(bmc_reset) %}
+kcli stop baremetal-host -P url={{ url }} -P user={{ user }} -P password={{ password }}
+kcli update baremetal-host -P url={{ url }} -P user={{ user }} -P password={{ password }} -P iso=None
 {% if reset %}
 kcli reset baremetal-host -P url={{ url }} -P user={{ user }} -P password={{ password }}
 {% endif %}
