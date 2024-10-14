@@ -19,4 +19,6 @@
        - ip: {{ ip }}
          prefix-length: {{ prefix }}
        enabled: true
+     {{ 'ipv4' if ':' in ip else 'ipv6' }}:
+       enabled: false
 {%- endmacro -%}
