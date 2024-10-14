@@ -24,6 +24,8 @@
 {% endfor %}
 {% endif %}
 {% set hosts = baremetal_ctlplanes + virtual_ctlplanes_nodes + baremetal_workers + virtual_workers_nodes %}
+{% set total_ctlplanes = (baremetal_ctlplanes + virtual_ctlplanes_nodes)|length %}
+{% set total_workers = (baremetal_workers + virtual_workers_nodes)|length %}
 
 apiVersion: v1
 {% if cpu_partitioning %}
@@ -34,12 +36,12 @@ compute:
 - architecture: amd64
   hyperthreading: Enabled
   name: worker
-  replicas: {{ (baremetal_workers + virtual_workers_nodes)|length }}
+  replicas: {{ total_workers }}
 controlPlane:
   architecture: amd64
   hyperthreading: Enabled
   name: master
-  replicas: {{ (baremetal_ctlplanes + virtual_ctlplanes_nodes)|length }}
+  replicas: {{ total_ctlplanes }}
 metadata:
   name: {{ cluster }}
 networking:
@@ -66,11 +68,12 @@ platform:
     - {{ api_ip }}
     hosts:
 {% for host in hosts %}
-    - name: {{ host['name']|default(cluster + "-" + loop.index0|string) }}
+{% set role = 'ctlplane' if loop.index0 < total_ctlplanes else 'worker' %}
+    - name: {{ host['name']|default("%s-%s-%s" % (cluster, role, loop.index0|string)) }}
 {% if 'mac' in host %}
       bootMACAddress: {{ host['mac'] }}
 {% endif %}
-      role: {{ host['role']|default('master' if loop.index0 < 3 else 'worker') }}
+      role: {{ 'master' if role == 'ctlplane' else 'worker' }}
 {% endfor %}
     ingressVips:
     - {{ ingress_ip }}

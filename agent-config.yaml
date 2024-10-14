@@ -22,6 +22,7 @@
 {% endfor %}
 {% endif %}
 {% set hosts = baremetal_ctlplanes + virtual_ctlplanes_nodes + baremetal_workers + virtual_workers_nodes %}
+{% set total_ctlplanes = (baremetal_ctlplanes + virtual_ctlplanes_nodes)|length %}
 
 apiVersion: v1alpha1
 kind: AgentConfig
@@ -30,7 +31,8 @@ metadata:
 rendezvousIP: {{ rendezvous_ip or static_ips[0] }}
 hosts:
 {% for host in hosts %}
-- hostname: {{ host['name']|default(cluster + "-" + loop.index0|string) }}.{{ domain }}
+{% set role = 'ctlplane' if loop.index0 < total_ctlplanes else 'worker' %}
+- hostname: {{ host['name']|default("%s-%s-%s" % (cluster, role, loop.index0|string)) }}.{{ domain }}
 {% if 'disk' in host %}
   rootDeviceHints:
     deviceName: "/dev/{{ host['disk'] | basename }}"
