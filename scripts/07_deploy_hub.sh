@@ -28,7 +28,6 @@ export KUBECONFIG=/root/ocp/auth/kubeconfig
 {% set url = host["redfish_address"]|default("http://127.0.0.1:9000/redfish/v1/Systems/kcli/%s-%s-%s" % (cluster, role, num)) %}
 {% set user = host['bmc_user']|default(bmc_user) %}
 {% set password = host['bmc_password']|default(bmc_password) %}
-kcli stop baremetal-host -P url={{ url }} -P user={{ user }} -P password={{ password }}
 {% set reset = host['bmc_reset']|default(bmc_reset) %}
 {% if reset %}
 kcli reset baremetal-host -P url={{ url }} -P user={{ user }} -P password={{ password }}
@@ -50,7 +49,9 @@ find manifests -type f -empty -print -delete
 echo {{ api_ip }} api.{{ cluster }}.{{ domain }} >> /etc/hosts
 {% endif %}
 
+{% if virtual_hub %}
 kcli delete iso --yes {{ cluster }}.iso || true
+{% endif %}
 
 mkdir -p ocp/openshift
 cp install-config.yaml ocp 

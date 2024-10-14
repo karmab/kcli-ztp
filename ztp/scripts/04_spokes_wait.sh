@@ -4,10 +4,13 @@ export PYTHONUNBUFFERED=true
 {% set spoke_deploy = spoke.get('deploy', spoke_deploy) %}
 {% set spoke_ctlplanes_number = spoke.get('ctlplanes', 1) %}
 {% set spoke_workers_number = spoke.get('workers', 0) %}
+{% set virtual_nodes_number = spoke.get('virtual_nodes', 0) %}
 {% if spoke_deploy and spoke.get('wait', spoke_wait) %}
 {% set spoke_wait_time = spoke.get('wait_time', spoke_wait_time) %}
 SPOKE={{ spoke.name }}
+{% if virtual_nodes_number > 0 %}
 kcli delete iso -y $SPOKE.iso || true
+{% endif %}
 timeout=0
 installed=false
 failed=false
