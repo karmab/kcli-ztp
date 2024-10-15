@@ -51,7 +51,7 @@ hosts:
 {% endif %}
   interfaces:
   - macAddress: {{ host['mac']|default("%s:%0.2d" % (virtual_mac_prefix, loop.index)) }}
-    name: {{ host['nic']|default('ens3') }}
+    name: {{ host['nic']|default(nic) }}
   {% if 'ip' in host %}
   networkConfig:
    {{ static_network.config(host['ip'], baremetal_prefix, host['gateway']|default(baremetal_gateway), host['dns']|default(baremetal_dns), cluster, domain, host['nic']|default(nic)) }}
