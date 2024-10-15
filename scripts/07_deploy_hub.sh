@@ -3,6 +3,8 @@
 set -euo pipefail
 
 cd /root
+export HUB={{ cluster }}
+export DOMAIN={{ domain }}
 export PATH=/root/bin:$PATH
 export HOME=/root
 export PYTHONUNBUFFERED=true
@@ -48,11 +50,11 @@ cp /root/machineconfigs/99-prega-catalog*.yaml /root/manifests
 find manifests -type f -empty -print -delete
 
 {% if api_ip != None %}
-echo {{ api_ip }} api.{{ cluster }}.{{ domain }} >> /etc/hosts
+echo {{ api_ip }} api.$HUB.$DOMAIN >> /etc/hosts
 {% endif %}
 
 {% if virtual_hub %}
-kcli delete iso --yes {{ cluster }}.iso || true
+kcli delete iso --yes $CLUSTER.iso || true
 {% endif %}
 
 mkdir -p ocp/openshift
@@ -66,9 +68,12 @@ fi
 
 openshift-install agent create image --dir ocp --log-level debug
 
-mv -f ocp/agent.x86_64.iso /var/www/html/{{ cluster }}.iso
+mv -f ocp/agent.x86_64.iso /var/www/html/$CLUSTER.iso
 restorecon -Frv /var/www/html
-chown apache.apache /var/www/html/{{ cluster }}.iso
+chown apache.apache /var/www/html/$CLUSTER.iso
+
+AI_TOKEN=$(jq '.["*image.Ignition"].Config.storage.files[] | select(.path == "/usr/local/share/assisted-service/assisted-service.env") | .contents.source' ocp/.openshift_install_state.json | cut -d, -f2 | sed 's/"//' | base64 -d | grep AGENT_AUTH_TOKEN | cut -d= -f2)
+[ "$AI_TOKEN" == "" ] || echo export AI_TOKEN=$AI_TOKEN >> /root/.bashrc
 
 PRIMARY_NIC=$(ls -1 /sys/class/net | grep -v podman | head -1)
 IP=$(ip -o addr show $PRIMARY_NIC | head -1 | awk '{print $4}' | cut -d "/" -f 1 | head -1)
@@ -79,13 +84,13 @@ echo $IP | grep -q ':' && IP=[$IP]
 {% set url = host["redfish_address"]|default("http://127.0.0.1:9000/redfish/v1/Systems/kcli/%s-%s-%s" % (cluster, role, num)) %}
 {% set user = host['bmc_user']|default(bmc_user) %}
 {% set password = host['bmc_password']|default(bmc_password) %}
-kcli start baremetal-host -P url={{ url }} -P user={{ user }} -P password={{ password }} -P iso_url=http://$IP/{{ cluster }}.iso
+kcli start baremetal-host -P url={{ url }} -P user={{ user }} -P password={{ password }} -P iso_url=http://$IP/$CLUSTER.iso
 {% endfor %}
 
 {% if hosts|length == 1 %}
 SNO_IP={{ rendezvous_ip or static_ips[0] }}
-sed -i /api.{{ cluster }}.{{ domain }}/d /etc/hosts
-echo $SNO_IP api.{{ cluster }}.{{ domain }} >> /etc/hosts
+sed -i "/api.$CLUSTER.$DOMAIN/d" /etc/hosts
+echo $SNO_IP api.$CLUSTER.$DOMAIN >> /etc/hosts
 {% endif %}
 
 openshift-install --dir ocp --log-level debug wait-for install-complete || openshift-install --dir ocp --log-level debug wait-for install-complete
