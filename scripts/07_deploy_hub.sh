@@ -32,7 +32,6 @@ export KUBECONFIG=/root/ocp/auth/kubeconfig
 {% set password = host['bmc_password']|default(bmc_password) %}
 {% set reset = host['bmc_reset']|default(bmc_reset) %}
 kcli stop baremetal-host -P url={{ url }} -P user={{ user }} -P password={{ password }}
-kcli update baremetal-host -P url={{ url }} -P user={{ user }} -P password={{ password }} -P iso=None
 {% if reset %}
 kcli reset baremetal-host -P url={{ url }} -P user={{ user }} -P password={{ password }}
 {% endif %}
@@ -84,7 +83,7 @@ echo $IP | grep -q ':' && IP=[$IP]
 {% set url = host["redfish_address"]|default("http://127.0.0.1:9000/redfish/v1/Systems/kcli/%s-%s-%s" % (cluster, role, num)) %}
 {% set user = host['bmc_user']|default(bmc_user) %}
 {% set password = host['bmc_password']|default(bmc_password) %}
-kcli start baremetal-host -P url={{ url }} -P user={{ user }} -P password={{ password }} -P iso_url=http://$IP/$HUBn.iso
+kcli start baremetal-host -P url={{ url }} -P user={{ user }} -P password={{ password }} -P iso_url=http://$IP/$HUB.iso
 {% endfor %}
 
 {% if hosts|length == 1 %}
