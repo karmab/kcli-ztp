@@ -9,6 +9,14 @@ export SSH_PUB_KEY=$(cat /root/.ssh/id_rsa.pub)
 BAREMETAL_IP=$(ip -o addr show eth0 | head -1 | awk '{print $4}' | cut -d'/' -f1)
 echo $BAREMETAL_IP | grep -q ':' && BAREMETAL_IP=[$BAREMETAL_IP]
 export BAREMETAL_IP
+
+{% for spoke in spokes %}
+{% if spoke.get('virtual_nodes', 0) > 0 %}
+kcli delete iso -y {{ spoke.name }}.iso || true
+{% endif %}
+{% endfor %}
+
+
 envsubst < /root/ztp/scripts/requirements.sample.yml > /root/ztp/scripts/requirements.yml
 envsubst < /root/ztp/scripts/siteconfig.sample.yml > /root/ztp/scripts/siteconfig.yml
 
