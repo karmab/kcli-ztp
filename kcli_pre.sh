@@ -212,11 +212,18 @@ echo You need to specify rendezvous_ip by either defining the variable or popula
 exit 1
 {% endif %}
 
-{% for baremetal_node in baremetal_ctlplanes + baremetal_workers %}
-{% if baremetal_node.get('mac') != None %}
-{% do baremetal_nodes_macs.append(0) %}
-{% endif %}
+boot_legacy=false
+{% for host in baremetal_ctlplanes + baremetal_workers %}
+{% set url = host["redfish_address"]%}
+{% set user = host['bmc_user']|default(bmc_user) %}
+{% set password = host['bmc_password']|default(bmc_password) %}
+kcli info baremetal-host -P url={{ url }} -P user={{ user }} -P password={{ password }} -f | grep BootSourceOverrideMode | grep -qi uefi
+if [ "$?" != "0" ] ; then
+echo Baremetal node with url {{url }} doesnt have boot mode set to uefi
+boot_legacy=true
+fi
 {% endfor %}
+[ "$boot_legacy" == 'false' ] || exit 1
 
 {% if prega %}
 if [ "$(grep quay.io/prega {{ pull_secret }})" == "" ] ; then 
