@@ -17,7 +17,7 @@
 {% endif %}
 {% if virtual_hub and workers > 0 %}
 {% for num in range(0, workers) %}
-{% set new_worker = {'ip': static_ips[num]} if static_network and static_ips|length > ctlplanes + num else {} %}
+{% set new_worker = {'ip': static_ips[ctlplanes + num]} if static_network and static_ips|length > ctlplanes + num else {} %}
 {% do virtual_workers_nodes.append(new_worker) %}
 {% endfor %}
 {% endif %}
@@ -32,7 +32,8 @@ rendezvousIP: {{ rendezvous_ip or static_ips[0] }}
 hosts:
 {% for host in hosts %}
 {% set role = 'ctlplane' if loop.index0 < total_ctlplanes else 'worker' %}
-- hostname: {{ host['name']|default("%s-%s-%s" % (cluster, role, loop.index0|string)) }}.{{ domain }}
+{% set index = loop.index0 - total_ctlplanes if role == 'worker' else loop.index0 %}
+- hostname: {{ host['name']|default("%s-%s-%s" % (cluster, role, index|string)) }}.{{ domain }}
 {% if 'disk' in host %}
   rootDeviceHints:
     deviceName: "/dev/{{ host['disk'] | basename }}"

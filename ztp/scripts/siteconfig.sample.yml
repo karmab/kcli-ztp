@@ -104,7 +104,7 @@ spec:
 {% set mac = "%s:%0.2d" % (virtual_mac_prefix, ctlplanes + workers + total_number.value + num + 1) %}
 {% endif %}
     - hostName: {{ cluster }}-{{ spoke_name }}-node-{{ num }}
-      role: {{ "master" if num < max_ctlplanes else "worker" }}
+      role: {{ 'master' if num < max_ctlplanes else 'worker' }}
       {% if 'redfish_address' in node %}
       disableCertificateVerification: True
       {% if node['redfish_address'].startswith('redfish-') or node['redfish_address'].startswith('idrac-') %}
