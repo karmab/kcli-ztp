@@ -22,7 +22,7 @@ static_ips:
 - 2620:52:0:1302::24
 
 spokes:
-- name: mgmt-spoke1
+- name: spoke1
   ctlplanes: 1
   workers: 0
   virtual_nodes: 1
@@ -33,7 +33,7 @@ installer_mac: aa:bb:aa:aa:bb:01
 
 spoke_policies_dir: extras/sample-site-policies
 vmrules:
-- lab-mgmt-spoke1-node-0:
+- lab-spoke1-node-0:
    boot_order: true
    disks:
    - size: 120

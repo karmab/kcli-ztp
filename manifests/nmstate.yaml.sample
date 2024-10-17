@@ -1,9 +1,9 @@
 apiVersion: agent-install.openshift.io/v1beta1
 kind: NMStateConfig
 metadata:
- name: mgmt-spoke1-node-0
+ name: spoke1-node-0
  labels:
-   cluster-name: mgmt-spoke1
+   cluster-name: spoke1
 spec:
  config:
    interfaces:

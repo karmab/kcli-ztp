@@ -19,7 +19,7 @@ static_ips:
 disconnected: true
 spoke_wait: true
 spokes:
-- name: mgmt-spoke1
+- name: spoke1
   ctlplanes: 1
   workers: 0
   virtual_nodes: 1
@@ -31,7 +31,7 @@ nfs: true
 
 spoke_policies_dir: extras/sample-site-policies
 vmrules:
-- lab-mgmt-spoke1-node-0:
+- lab-spoke1-node-0:
    boot_order: true
    disks:
    - size: 120
@@ -45,7 +45,7 @@ vmrules:
      reserveip: true
      reservedns: true
      alias:
-     - api.mgmt-spoke1.karmalabs.corp
-     - api-int.mgmt-spoke1.karmalabs.corp
+     - api.spoke1.karmalabs.corp
+     - api-int.spoke1.karmalabs.corp
    - name: sriov-network
      sriov: true
