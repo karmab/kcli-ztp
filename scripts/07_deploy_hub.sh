@@ -27,7 +27,8 @@ export KUBECONFIG=/root/ocp/auth/kubeconfig
 {% for host in hosts %}
 {% set num = loop.index0|string %}
 {% set role = 'ctlplane' if num|int < (baremetal_ctlplanes + virtual_ctlplanes_nodes)|length else 'worker' %}
-{% set url = host["redfish_address"]|default("http://127.0.0.1:9000/redfish/v1/Systems/kcli/%s-%s-%s" % (cluster, role, num)) %}
+{% set index = num|int - (baremetal_ctlplanes + virtual_ctlplanes_nodes)|length if role == 'worker' else num %}
+{% set url = host["redfish_address"]|default("http://127.0.0.1:9000/redfish/v1/Systems/kcli/%s-%s-%s" % (cluster, role, index)) %}
 {% set user = host['bmc_user']|default(bmc_user) %}
 {% set password = host['bmc_password']|default(bmc_password) %}
 {% set reset = host['bmc_reset']|default(bmc_reset) %}
@@ -80,7 +81,8 @@ echo $IP | grep -q ':' && IP=[$IP]
 {% for host in hosts %}
 {% set num = loop.index0|string %}
 {% set role = 'ctlplane' if num|int < (baremetal_ctlplanes + virtual_ctlplanes_nodes)|length else 'worker' %}
-{% set url = host["redfish_address"]|default("http://127.0.0.1:9000/redfish/v1/Systems/kcli/%s-%s-%s" % (cluster, role, num)) %}
+{% set index = num|int - (baremetal_ctlplanes + virtual_ctlplanes_nodes)|length if role == 'worker' else num %}
+{% set url = host["redfish_address"]|default("http://127.0.0.1:9000/redfish/v1/Systems/kcli/%s-%s-%s" % (cluster, role, index)) %}
 {% set user = host['bmc_user']|default(bmc_user) %}
 {% set password = host['bmc_password']|default(bmc_password) %}
 kcli start baremetal-host -P url={{ url }} -P user={{ user }} -P password={{ password }} -P iso_url=http://$IP/$HUB.iso
