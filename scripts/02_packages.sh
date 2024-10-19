@@ -13,7 +13,7 @@ update-ca-trust extract
 curl -Ls https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 > /usr/bin/jq	
 chmod u+x /usr/bin/jq
 
-curl -Ls https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv5.5.0/kustomize_v5.5.0_linux_amd64.tar.gz | tar zxf > /usr/bin/kustomize
+curl -Ls https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv5.5.0/kustomize_v5.5.0_linux_amd64.tar.gz | tar zxf - > /usr/bin/kustomize
 chmod u+x /usr/bin/kustomize
 
 kcli download oc
