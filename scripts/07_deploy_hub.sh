@@ -72,8 +72,11 @@ mv -f ocp/agent.x86_64.iso /var/www/html/$HUB.iso
 restorecon -Frv /var/www/html
 chown apache.apache /var/www/html/$HUB.iso
 
-AI_TOKEN=$(jq '.["*image.Ignition"].Config.storage.files[] | select(.path == "/usr/local/share/assisted-service/assisted-service.env") | .contents.source' ocp/.openshift_install_state.json | cut -d, -f2 | sed 's/"//' | base64 -d | grep AGENT_AUTH_TOKEN | cut -d= -f2)
-[ "$AI_TOKEN" == "" ] || echo export AI_TOKEN=$AI_TOKEN >> /root/.bashrc
+ASSISTED_DATA=$(jq '.["*image.Ignition"].Config.storage.files[] | select(.path == "/usr/local/share/assisted-service/assisted-service.env") | .contents.source' ocp/.openshift_install_state.json | cut -d, -f2 | sed 's/"//' | base64 -d)
+if [ "$(echo $ASSISTED_DATA | grep AGENT_AUTH_TOKEN)" != "" ] ; then
+  AI_TOKEN=$(echo $ASSISTED_DATA | grep AGENT_AUTH_TOKEN | cut -d= -f2)
+  echo export AI_TOKEN=$AI_TOKEN >> /root/.bashrc
+fi
 
 PRIMARY_NIC=$(ls -1 /sys/class/net | grep -v podman | head -1)
 IP=$(ip -o addr show $PRIMARY_NIC | head -1 | awk '{print $4}' | cut -d "/" -f 1 | head -1)

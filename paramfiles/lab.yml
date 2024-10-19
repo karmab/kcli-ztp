@@ -1,11 +1,13 @@
 fake_network: true
 pool: default
+disconnected: true
 virtual_hub: true
+static_network: true
 version: stable
-cluster: lab
-domain: karmalabs.corp
 dns: true
 installer_ip: 192.168.130.251
+cluster: lab
+domain: karmalabs.corp
 baremetal_cidr: 192.168.130.0/24
 baremetal_net: lab-baremetal
 api_ip: 192.168.130.253
@@ -19,8 +21,6 @@ static_ips:
 - 192.168.130.25
 - 192.168.130.26
 
-disconnected: true
-spoke_wait: true
 spokes:
 - name: spoke1
   ctlplanes: 1
@@ -31,6 +31,7 @@ spokes:
 installer_disk_size: 200
 notify: true
 nfs: true
+installer_mac: aa:bb:aa:aa:bb:01
 
 spoke_policies_dir: extras/sample-site-policies
 vmrules:
@@ -44,11 +45,5 @@ vmrules:
    nets:
    - name: lab-baremetal
      mac: aa:aa:aa:aa:bb:04
-     ip: 192.168.130.23
-     reserveip: true
-     reservedns: true
-     alias:
-     - api.spoke1.karmalabs.corp
-     - api-int.spoke1.karmalabs.corp
    - name: sriov-network
      sriov: true
