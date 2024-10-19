@@ -34,6 +34,7 @@ hosts:
 {% set role = 'ctlplane' if loop.index0 < total_ctlplanes else 'worker' %}
 {% set index = loop.index0 - total_ctlplanes if role == 'worker' else loop.index0 %}
 - hostname: {{ host['name']|default("%s-%s-%s" % (cluster, role, index|string)) }}.{{ domain }}
+  role: {{ 'master' if role == 'ctlplane' else 'worker' }}
 {% if 'disk' in host %}
   rootDeviceHints:
     deviceName: "/dev/{{ host['disk'] | basename }}"

@@ -73,7 +73,6 @@ platform:
 {% if 'mac' in host %}
       bootMACAddress: {{ host['mac'] }}
 {% endif %}
-      role: {{ 'master' if role == 'ctlplane' else 'worker' }}
 {% endfor %}
     ingressVips:
     - {{ ingress_ip }}
