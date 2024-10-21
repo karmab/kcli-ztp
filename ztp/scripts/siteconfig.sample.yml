@@ -70,6 +70,7 @@ spec:
 {% endif %}
   - clusterName: {{ spoke_name }}
     networkType: {{ spoke_network_type }}
+    installConfigOverrides: '{"capabilities":{"baselineCapabilitySet": "None", "additionalEnabledCapabilities": ["marketplace", "NodeTuning", "OperatorLifecycleManager", "Ingress"]}}'
     clusterLabels:
       common: "true"
       logicalGroup: "active"
@@ -94,6 +95,7 @@ spec:
   {% endfor %}
 {% if (spoke_ctlplanes_number > 1 or spoke_workers_number > 0) and spoke_api_ip == None and spoke_ingress_ip == None %}
     userManagedNetworking: True
+    cpuPartitioningMode: AllNodes
 {% endif %}
     nodes:
 {% for node in nodes %}
