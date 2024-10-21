@@ -9,6 +9,7 @@ spec:
     common: "true"
     logicalGroup: "active"
     hardware-type: "hw-type-platform-1"
+    provider: "kcli"
   mcp: master
   remediationAction: inform
   sourceFiles:

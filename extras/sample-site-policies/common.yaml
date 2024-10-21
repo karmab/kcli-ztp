@@ -8,6 +8,7 @@ spec:
   bindingRules:
     common: "true"
     logicalGroup: "active"
+    provider: "kcli"
   mcp: master
   remediationAction: inform
   sourceFiles:

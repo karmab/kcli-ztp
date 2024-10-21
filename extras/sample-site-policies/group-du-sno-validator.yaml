@@ -8,6 +8,7 @@ spec:
   bindingRules:
     group-du-sno: ""
     logicalGroup: "active"
+    provider: "kcli"
   bindingExcludedRules:
     ztp-done: ""
   mcp: "master"
