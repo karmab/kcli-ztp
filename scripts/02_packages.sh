@@ -30,3 +30,9 @@ chmod u+x /usr/bin/openshift-install
 openshift-install version | grep 'release image' | cut -d' ' -f3 > /root/version.txt
 
 oc completion bash >>/etc/bash_completion.d/oc_completion
+
+export OCP_RELEASE=$(openshift-install version | head -1 | cut -d' ' -f2)-x86_64
+export MINOR=$(echo $OCP_RELEASE | cut -d. -f1,2)
+SITE_GENERATE_TAG={{ '4.17' if version in ['dev-preview', 'ci'] else '$MINOR' }}
+podman cp $(podman create --name policygentool --rm registry.redhat.io/openshift4/ztp-site-generate-rhel8:$SITE_GENERATE_TAG):/kustomize/plugin/ran.openshift.io ~/.config/kustomize/plugin/
+podman rm -f policygentool
