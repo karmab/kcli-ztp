@@ -3,8 +3,8 @@
 apiVersion: ran.openshift.io/v1
 kind: SiteConfig
 metadata:
-  name: example-standard
-  namespace: example-standard
+  name: {{ cluster }}
+  namespace: {{ cluster }}
 spec:
   baseDomain: {{ spoke_domain or '${DOMAIN}' }}
   pullSecretRef:
@@ -70,11 +70,13 @@ spec:
 {% endif %}
   - clusterName: {{ spoke_name }}
     networkType: {{ spoke_network_type }}
-    installConfigOverrides: '{"capabilities":{"baselineCapabilitySet": "None", "additionalEnabledCapabilities": ["marketplace", "NodeTuning", "OperatorLifecycleManager", "Ingress"]}}'
+{% if spoke_ctlplanes_number == 1 %}
+    installConfigOverrides: '{"capabilities":{"baselineCapabilitySet": "None", "additionalEnabledCapabilities": ["marketplace", "NodeTuning", "Ingress", "OperatorLifecycleManager"]}}'
+    cpuPartitioningMode: AllNodes
+{% endif %}
     clusterLabels:
       common: "true"
       logicalGroup: "active"
-      sites : example-multinode
       hardware-type: "hw-type-platform-1"
       group-du-sno: ""
       provider: "kcli"
@@ -95,7 +97,6 @@ spec:
   {% endfor %}
 {% if (spoke_ctlplanes_number > 1 or spoke_workers_number > 0) and spoke_api_ip == None and spoke_ingress_ip == None %}
     userManagedNetworking: True
-    cpuPartitioningMode: AllNodes
 {% endif %}
     nodes:
 {% for node in nodes %}

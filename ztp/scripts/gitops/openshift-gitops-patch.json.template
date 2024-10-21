@@ -41,7 +41,7 @@
             }
           ],
           "terminationMessagePolicy": "File",
-          "image": "$REGISTRY/openshift4/ztp-site-generate-rhel8:v$SITE_GENERATE_TAG"
+          "image": "$REGISTRY/openshift4/ztp-site-generate-rhel8:$SITE_GENERATE_TAG"
         }
       ],
       "volumeMounts": [
