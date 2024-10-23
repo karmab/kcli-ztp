@@ -7,7 +7,7 @@ export USER=root
 PRIMARY_NIC=$(ls -1 /sys/class/net | grep -v podman | head -1)
 export PATH=/root/bin:$PATH
 export PULL_SECRET="/root/openshift_pull.json"
-dnf -y install podman httpd jq libseccomp-devel
+dnf -y install jq libseccomp-devel
 {% if dns %}
 REGISTRY_NAME=registry.{{ cluster }}.{{ domain }}
 {% else %}
