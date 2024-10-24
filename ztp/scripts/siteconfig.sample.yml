@@ -16,6 +16,7 @@ spec:
 {% set new_value = spoke["virtual_nodes"]|default(0) %}
 {% set spoke_name = spoke.name %}
 {% set spoke_network_type = spoke.get('network_type', spoke_network_type) %}
+{% set spoke_labels = spoke.get('labels', {})  %}
 {% set spoke_api_ip = spoke.get('api_ip') %}
 {% set spoke_ingress_ip= spoke.get('ingress_ip') %}
 {% set spoke_ctlplanes_number = spoke.get('ctlplanes', 1) %}
@@ -75,11 +76,10 @@ spec:
     cpuPartitioningMode: AllNodes
 {% endif %}
     clusterLabels:
-      common: "true"
-      logicalGroup: "active"
-      hardware-type: "hw-type-platform-1"
-      group-du-sno: ""
       provider: "kcli"
+{% for label, value in spoke_labels.items() %}
+      {{ label }}: {{ value }}
+{% endfor %}
 {% if spoke_ctlplanes_number > 1 and spoke_api_ip != None and spoke_ingress_ip != None %}
     apiVIP: {{ spoke_api_ip }}
     ingressVIP: {{ spoke_ingress_ip }}

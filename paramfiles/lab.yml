@@ -28,6 +28,11 @@ spokes:
   virtual_nodes: 1
   virtual_nodes_numcpus: 16
   virtual_nodes_memory: 38912
+  labels:
+    common: "true"
+    logicalGroup: active
+    hardware-type: hw-type-platform-1
+    group-du-sno: ""
 installer_disk_size: 200
 notify: true
 nfs: true

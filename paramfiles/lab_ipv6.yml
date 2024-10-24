@@ -29,6 +29,11 @@ spokes:
   ctlplanes: 1
   workers: 0
   virtual_nodes: 1
+  labels:
+    common: "true"
+    logicalGroup: active
+    hardware-type: hw-type-platform-1
+    group-du-sno: ""
 installer_disk_size: 200
 notify: true
 nfs: true

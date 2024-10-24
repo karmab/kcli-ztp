@@ -6,7 +6,7 @@ metadata:
   namespace: "ztp-policies"
 spec:
   bindingRules:
-    common: "true"
+    common: true
     logicalGroup: "active"
     provider: "kcli"
   mcp: master
