@@ -62,11 +62,6 @@ workers:
 - redfish_address: 192.168.1.6
 ```
 
-You can have a look at:
-
-- [parameters.yml](samples/parameters.yml) for a parameter file targetting baremetal nodes only
-- [parameters_virtual.yml](samples/parameters_virtual.yml) for one combining virtual ctlplanes and physical workers.
-
 Call the resulting file `kcli_parameters.yml` to avoid having to specify it in the creation command.
 
 Then you can launch deployment with:
@@ -145,7 +140,6 @@ Note that you can use the baseplan `kcli_plan_infra.yml` to deploy the infrastru
 |installer_wait                               |False                        |
 |keys                                         |[]                           |
 |launch_steps                                 |True                         |
-|localhost_fix                                |False                        |
 |manifests_dir                                |manifests                    |
 |monitoring_retention                         |None                         |
 |motd                                         |None                         |

@@ -77,7 +77,6 @@ nbde: false
 ntp: false
 ntp_server: 0.rhel.pool.ntp.org
 apps: []
-localhost_fix: false
 static_network: false
 schedulable_ctlplanes: false
 cpu_partitioning: false

@@ -38,9 +38,6 @@ kcli reset baremetal-host -P url={{ url }} -P user={{ user }} -P password={{ pas
 {% endif %}
 {% endfor %}
 
-{% if localhost_fix %}
-cp /root/machineconfigs/99-localhost-fix*.yaml /root/manifests
-{% endif %}
 {% if monitoring_retention != None %}
 cp /root/machineconfigs/99-monitoring.yaml /root/manifests
 {% endif %}
