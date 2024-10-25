@@ -14,12 +14,12 @@ REGISTRY_NAME={{ registry_name }}
 REGISTRY_PORT={{ registry_port }}
 {% elif dns %}
 REGISTRY_NAME=registry.{{ cluster }}.{{ domain }}
-REGISTRY_PORT={{ 8443 if disconnected_quay else 5000 }}
+REGISTRY_PORT=5000
 {% else %}
 PRIMARY_NIC=$(ls -1 /sys/class/net | grep 'eth\|en' | head -1)
 IP=$(ip -o addr show $PRIMARY_NIC | head -1 | awk '{print $4}' | cut -d'/' -f1)
 REGISTRY_NAME=$(echo $IP | sed 's/\./-/g' | sed 's/:/-/g').sslip.io
-REGISTRY_PORT={{ 8443 if disconnected_quay else 5000 }}
+REGISTRY_PORT=5000
 {% endif %}
 export LOCAL_REGISTRY=$REGISTRY_NAME:$REGISTRY_PORT
 export IMAGE_TAG=olm
@@ -30,8 +30,8 @@ jq ".transports.docker += {\"registry.redhat.io/redhat/certified-operator-index\
 mv /etc/containers/policy.json.new /etc/containers/policy.json
 
 # Login registries
-REGISTRY_USER={{ "init" if disconnected_quay else disconnected_user }}
-REGISTRY_PASSWORD={{ "super" + disconnected_password if disconnected_quay and disconnected_password|length < 8 else disconnected_password }}
+REGISTRY_USER={{ disconnected_user }}
+REGISTRY_PASSWORD={{ disconnected_password }}
 podman login -u $REGISTRY_USER -p $REGISTRY_PASSWORD $LOCAL_REGISTRY
 REDHAT_CREDS=$(cat /root/openshift_pull.json | jq .auths.\"registry.redhat.io\".auth -r | base64 -d)
 RHN_USER=$(echo $REDHAT_CREDS | cut -d: -f1)

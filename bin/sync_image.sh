@@ -5,12 +5,12 @@ REGISTRY_NAME={{ registry_name }}
 REGISTRY_PORT={{ registry_port }}
 {% elif dns %}
 REGISTRY_NAME=registry.{{ cluster }}.{{ domain }}
-REGISTRY_PORT={{ 8443 if disconnected_quay else 5000 }}
+REGISTRY_PORT=5000
 {% else %}
 PRIMARY_NIC=$(ls -1 /sys/class/net | grep 'eth\|en' | head -1)
 export IP=$(ip -o addr show $PRIMARY_NIC | head -1 | awk '{print $4}' | cut -d'/' -f1)
 REGISTRY_NAME=$(echo $IP | sed 's/\./-/g' | sed 's/:/-/g').sslip.io
-REGISTRY_PORT={{ 8443 if disconnected_quay else 5000 }}
+REGISTRY_PORT=5000
 {% endif %}
 
 PULL_SECRET="/root/openshift_pull.json"

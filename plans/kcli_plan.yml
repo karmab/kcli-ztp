@@ -91,11 +91,6 @@
  - path: /root/.kcli/config.yml
    origin: bin/kcli_config.yml
 {% endif %}
-{% if disconnected_quay and ':' in baremetal_cidr %}
- - path: /usr/lib/systemd/system/quay-haproxy.service
-   origin: mirror-registry/quay_haproxy.service
- - mirror-registry/quay_haproxy.cfg
-{% endif %}
  - origin: {{ pull_secret }}
    path: /root/openshift_pull.json
  - path: /etc/systemd/system/registry.service

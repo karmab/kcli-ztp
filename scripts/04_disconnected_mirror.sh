@@ -23,7 +23,7 @@ cp /opt/registry/certs/domain.crt /etc/pki/ca-trust/source/anchors
 update-ca-trust extract
 {% else %}
 REGISTRY_NAME={{ "registry.%s.%s" % (cluster, domain) if dns else "$(echo $IP | sed 's/\./-/g' | sed 's/:/-/g').sslip.io" }}
-REGISTRY_PORT={{ 8443 if disconnected_quay else 5000 }}
+REGISTRY_PORT=5000
 {% endif %}
 
 export OPENSHIFT_RELEASE_IMAGE=$(openshift-install version | grep 'release image' | awk -F ' ' '{print $3}')

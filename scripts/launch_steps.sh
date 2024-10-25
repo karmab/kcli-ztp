@@ -37,18 +37,14 @@ echo -e "${blue}************ RUNNING 03_dns.sh ************${clear}"
 
 {% if disconnected %}
 {% if disconnected_url == None %}
-echo -e "${blue}************ RUNNING 04_disconnected_{{ 'quay.sh' if disconnected_quay else 'registry.sh' }} ************${clear}"
-/root/scripts/04_disconnected_{{ 'quay.sh' if disconnected_quay else 'registry.sh' }} || exit 1
+echo -e "${blue}************ RUNNING 04_disconnected_registry.sh ************${clear}"
+/root/scripts/04_disconnected_registry.sh || exit 1
 {% endif %}
 echo -e "${blue}************ RUNNING 04_disconnected_mirror.sh ************${clear}"
 /root/scripts/04_disconnected_mirror.sh || exit 1
 {% if disconnected_operators or disconnected_certified_operators or disconnected_community_operators or disconnected_marketplace_operators or disconnected_extra_catalogs %}
 echo -e "${blue}************ RUNNING 04_disconnected_olm.sh ************${clear}"
 /root/scripts/04_disconnected_olm.sh
-{% if disconnected_url == None and disconnected_quay %}
-rm -rf /root/manifests-redhat-operator-index-*
-/root/scripts/04_disconnected_olm.sh
-{% endif %}
 {% endif %}
 {% endif %}
 

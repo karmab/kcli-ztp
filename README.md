@@ -112,7 +112,6 @@ Note that you can use the baseplan `kcli_plan_infra.yml` to deploy the infrastru
 |disconnected_operators                       |[]                           |
 |disconnected_operators_version               |None                         |
 |disconnected_password                        |dummy                        |
-|disconnected_quay                            |False                        |
 |disconnected_url                             |None                         |
 |disconnected_user                            |dummy                        |
 |dns                                          |False                        |

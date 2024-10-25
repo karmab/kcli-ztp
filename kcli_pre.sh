@@ -147,15 +147,6 @@ echo disconnected_url cant use an ip. Considering using sslip.io && exit 1
 {% endif %}
 {% endif %}
 
-# QUAY CHECK
-
-{% if disconnected_quay %}
-echo disconnected_user will be forced to 'init'
-{% if disconnected_password|length < 8  %}
-echo disconnected_password will be forced to super{{ disconnected_password }}
-{% endif %}
-{% endif %}
-
 {% set baremetal_nodes_macs = [] %}
 
 # ZTP CHECKS
