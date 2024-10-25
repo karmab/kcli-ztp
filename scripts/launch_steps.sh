@@ -42,7 +42,7 @@ echo -e "${blue}************ RUNNING 04_disconnected_{{ 'quay.sh' if disconnecte
 {% endif %}
 echo -e "${blue}************ RUNNING 04_disconnected_mirror.sh ************${clear}"
 /root/scripts/04_disconnected_mirror.sh || exit 1
-{% if (disconnected_operators or disconnected_certified_operators or disconnected_community_operators or disconnected_marketplace_operators or disconnected_extra_catalogs) and not disconnected_operators_deploy_after_openshift %}
+{% if disconnected_operators or disconnected_certified_operators or disconnected_community_operators or disconnected_marketplace_operators or disconnected_extra_catalogs %}
 echo -e "${blue}************ RUNNING 04_disconnected_olm.sh ************${clear}"
 /root/scripts/04_disconnected_olm.sh
 {% if disconnected_url == None and disconnected_quay %}
@@ -75,11 +75,6 @@ echo -e "${blue}************ RUNNING 08_nfs.sh ************${clear}"
 {% if imageregistry %}
 echo -e "${blue}************ RUNNING imageregistry patch ************${clear}"
 oc patch configs.imageregistry.operator.openshift.io cluster --type merge -p '{"spec":{"managementState":"Managed","storage":{"pvc":{}}}}'
-{% endif %}
-
-{% if disconnected and (disconnected_operators or disconnected_certified_operators or disconnected_community_operators or disconnected_marketplace_operators or disconnected_extra_catalogs) and disconnected_operators_deploy_after_openshift %}
-echo -e "${blue}************ RUNNING 04_disconnected_olm.sh ************${clear}"
-/root/scripts/04_disconnected_olm.sh
 {% endif %}
 
 echo -e "${blue}************ RUNNING 09_post_install.sh ************${clear}"

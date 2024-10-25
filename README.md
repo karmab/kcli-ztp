@@ -110,7 +110,6 @@ Note that you can use the baseplan `kcli_plan_infra.yml` to deploy the infrastru
 |disconnected_marketplace_operators           |[]                           |
 |disconnected_marketplace_operators_version   |None                         |
 |disconnected_operators                       |[]                           |
-|disconnected_operators_deploy_after_openshift|False                        |
 |disconnected_operators_version               |None                         |
 |disconnected_password                        |dummy                        |
 |disconnected_quay                            |False                        |
