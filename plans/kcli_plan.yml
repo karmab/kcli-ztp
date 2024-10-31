@@ -1,24 +1,30 @@
-{% if acm and 'advanced-cluster-management' not in disconnected_operators %}
+{% set all_operators = [] %}
+{% for operator in disconnected_operators %}
+{% set operator_name = operator.name if operator.name is defined else operator %}
+{{ all_operators.append(operator_name) or "" }}
+{% endfor %}
+
+{% if acm and 'advanced-cluster-management' not in all_operators %}
 {{ disconnected_operators.append("advanced-cluster-management") or "" }}
 {% endif %}
 
-{% if acm and 'multicluster-engine' not in disconnected_operators %}
+{% if acm and 'multicluster-engine' not in all_operators %}
 {{ disconnected_operators.append("multicluster-engine") or "" }}
 {% endif %}
 
-{% if 'openshift-gitops-operator' not in disconnected_operators %}
+{% if 'openshift-gitops-operator' not in all_operators %}
 {{ disconnected_operators.append("openshift-gitops-operator") or "" }}
 {% endif %}
 
-{% if 'topology-aware-lifecycle-manager' not in disconnected_operators %}
+{% if 'topology-aware-lifecycle-manager' not in all_operators %}
 {{ disconnected_operators.append("topology-aware-lifecycle-manager") or "" }}
 {% endif %}
 
-{% if spokes|length > 0 and 'sriov-network-operator' not in disconnected_operators %}
+{% if spokes|length > 0 and 'sriov-network-operator' not in all_operators %}
 {{ disconnected_operators.append("sriov-network-operator") or "" }}
 {% endif %}
 
-{% if spokes|length > 0 and 'lvms-operator' not in disconnected_operators %}
+{% if spokes|length > 0 and 'lvms-operator' not in all_operators %}
 {{ disconnected_operators.append("lvms-operator") or "" }}
 {% endif %}
 
