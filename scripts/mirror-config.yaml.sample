@@ -21,6 +21,12 @@ mirror:
 {% else %}
     - name: {{ package }}
 {% endif %}
+{% if package.minVersion is defined %}
+      minVersion: {{ package.minVersion }}
+{% endif %}
+{% if package.maxVersion is defined %}
+      maxVersion: {{ package.maxVersion }}
+{% endif %}
 {% if package.channels is defined and package.channels|length > 0 %}
       channels:
 {% for channel in package.channels %}
@@ -47,6 +53,12 @@ mirror:
     - name: {{ package.name }}
 {% else %}
     - name: {{ package }}
+{% endif %}
+{% if package.minVersion is defined %}
+      minVersion: {{ package.minVersion }}
+{% endif %}
+{% if package.maxVersion is defined %}
+      maxVersion: {{ package.maxVersion }}
 {% endif %}
 {% if package.channels is defined and package.channels|length > 0 %}
       channels:
@@ -75,6 +87,12 @@ mirror:
 {% else %}
     - name: {{ package }}
 {% endif %}
+{% if package.minVersion is defined %}
+      minVersion: {{ package.minVersion }}
+{% endif %}
+{% if package.maxVersion is defined %}
+      maxVersion: {{ package.maxVersion }}
+{% endif %}
 {% if package.channels is defined and package.channels|length > 0 %}
       channels:
 {% for channel in package.channels %}
@@ -101,6 +119,12 @@ mirror:
     - name: {{ package.name }}
 {% else %}
     - name: {{ package }}
+{% endif %}
+{% if package.minVersion is defined %}
+      minVersion: {{ package.minVersion }}
+{% endif %}
+{% if package.maxVersion is defined %}
+      maxVersion: {{ package.maxVersion }}
 {% endif %}
 {% if package.channels is defined and package.channels|length > 0 %}
       channels:
