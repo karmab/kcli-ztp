@@ -13,16 +13,17 @@ spec:
   sshPublicKey: ${SSH_PUB_KEY}
   clusters:
 {% for spoke in spokes %}
-{% set new_value = spoke["virtual_nodes"]|default(0) %}
+{% set new_value = spoke.virtual_nodes|default(0) %}
 {% set spoke_name = spoke.name %}
-{% set spoke_network_type = spoke.get('network_type', spoke_network_type) %}
-{% set spoke_labels = spoke.get('labels', {})  %}
+{% set spoke_network_type = spoke.network_type|default(spoke_network_type) %}
+{% set spoke_disk_minimum_size = spoke.disk_minimum_size|default(spoke_disk_minimum_size) %}
+{% set spoke_labels = spoke.labels|default({})  %}
 {% set spoke_api_ip = spoke.get('api_ip') %}
 {% set spoke_ingress_ip= spoke.get('ingress_ip') %}
-{% set spoke_ctlplanes_number = spoke.get('ctlplanes', 1) %}
-{% set spoke_workers_number = spoke.get('workers', 0) %}
+{% set spoke_ctlplanes_number = spoke.ctlplanes|default(1) %}
+{% set spoke_workers_number = spoke.workers|default(0) %}
 {% set spoke_snoplus = True if spoke_ctlplanes_number == 1 and spoke_workers_number == 1 else False %}
-{% set virtual_nodes_number = spoke.get('virtual_nodes', 0) %}
+{% set virtual_nodes_number = spoke.virtual_nodes|default(0) %}
 {% set ipv6 = True if (spoke_api_ip != None and ':' in spoke_api_ip) or ':' in baremetal_cidr  else False %}
 {% set cluster_network_ipv6 = {"cidr": "fd01::/48", "hostPrefix": 64} %}
 {% set cluster_network_ipv4 = {"cidr": "10.132.0.0/14", "hostPrefix": 23} %}
@@ -59,8 +60,8 @@ spec:
 {% set service_networks = service_network_ipv4 %}
 {% endif %}
 {% set spoke_name = spoke.name %}
-{% set virtual_nodes_number = spoke.get('virtual_nodes', 0) %}
-{% set nodes = spoke.get('baremetal_nodes', []) %}
+{% set virtual_nodes_number = spoke.virtual_nodes|default(0) %}
+{% set nodes = spoke.baremetal_nodes|default([]) %}
 {% if virtual_nodes_number > 0 %}
 {% set extra_nodes = [] %}
 {% for num in range(0, virtual_nodes_number) %}
@@ -88,8 +89,8 @@ spec:
     - cidr: {{ baremetal_cidr }}
     clusterNetwork:
   {% for network in cluster_networks %}
-    - cidr: {{ network['cidr'] }}
-      hostPrefix: {{ network['hostPrefix'] }}
+    - cidr: {{ network.cidr }}
+      hostPrefix: {{ network.hostPrefix }}
   {% endfor %}
     serviceNetwork:
   {% for network in service_networks %}
@@ -103,7 +104,7 @@ spec:
 {% set num = loop.index0 %}
 {% set max_ctlplanes = 1 if spoke_snoplus else 3 %}
 {% if 'mac' in node %}
-{% set mac = node['mac'] %}
+{% set mac = node.mac %}
 {% else %}
 {% set mac = "%s:%0.2d" % (virtual_mac_prefix, ctlplanes + workers + total_number.value + num + 1) %}
 {% endif %}
@@ -111,12 +112,12 @@ spec:
       role: {{ 'master' if num < max_ctlplanes else 'worker' }}
       {% if 'redfish_address' in node %}
       disableCertificateVerification: True
-      {% if node['redfish_address'].startswith('redfish-') or node['redfish_address'].startswith('idrac-') %}
-      bmcAddress: {{ node['redfish_address'] }}
-      {% elif node['model']|default(model) in ['hp', 'hpe', 'supermicro'] %}
-      bmcAddress: redfish-virtualmedia://{{ node['redfish_address'] }}/redfish/v1/Systems/1
+      {% if node.redfish_address.startswith('redfish-') or node.redfish_address.startswith('idrac-') %}
+      bmcAddress: {{ node.redfish_address }}
+      {% elif node.model|default(model) in ['hp', 'hpe', 'supermicro'] %}
+      bmcAddress: redfish-virtualmedia://{{ node.redfish_address }}/redfish/v1/Systems/1
       {% else %}
-      bmcAddress: idrac-virtualmedia://{{ node['redfish_address'] }}/redfish/v1/Systems/System.Embedded.1
+      bmcAddress: idrac-virtualmedia://{{ node.redfish_address }}/redfish/v1/Systems/System.Embedded.1
       {% endif %}
       {% else %}
       bmcAddress: redfish-virtualmedia+http://${BAREMETAL_IP}:9000/redfish/v1/Systems/kcli/{{cluster }}-{{ spoke_name }}-node-{{ num }}
@@ -126,7 +127,17 @@ spec:
       bootMACAddress: {{ mac }}
       bootMode: {{ 'UEFI' if spoke_uefi else 'legacy' }}
       rootDeviceHints:
+{% if 'disk_minimum_size' in node or spoke_disk_minimum_size != None %}
+       minSizeGigabytes: {{ node.disk_minimum_size|default(spoke_disk_minimum_size) }}
+{% elif 'disk_serial' in node %}
+       serialNumber: {{ node.disk_serial }}
+{% elif 'disk_wwn' in node %}
+       wwn: {{ node.disk_wwn }}
+{% elif 'disk_vendor' in node %}
+       wwn: {{ node.disk_vendor }}
+{% else %}
        deviceName: /dev/{{ node.disk|default(default_disk)|string|basename }}
+{% endif %}
 {% if 'ip' in node %}
       nodeNetwork:
         interfaces:

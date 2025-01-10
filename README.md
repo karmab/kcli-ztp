@@ -203,5 +203,5 @@ The following parameters can be used in this case:
 
 The following sample parameter files are available for you to deploy:
 
-- [lab.yml](lab.yml) This deploys 3 ctlplanes in a dedicated ipv4 network
-- [lab_ipv6.yml](lab_ipv6.yml) This deploys 3 ctlplanes in a dedicated ipv6 network (hence in a disconnected manner) and a SNO spoke on top
+- [lab.yml](paramfiles/lab.yml) This deploys 3 ctlplanes in a dedicated ipv4 network
+- [lab_ipv6.yml](paramfiles/lab_ipv6.yml) This deploys 3 ctlplanes in a dedicated ipv6 network (hence in a disconnected manner) and a SNO spoke on top

@@ -101,6 +101,7 @@ gitops_policies_app_path: site-policies
 spoke_policies_dir: spoke_policies_dir
 spoke_deploy: true
 spoke_network_type: OVNKubernetes
+spoke_disk_minimum_size:
 spoke_wait: true
 spoke_wait_time: 3600
 converged_flow: false
