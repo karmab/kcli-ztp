@@ -1,8 +1,10 @@
 {% set cluster_network_ipv6 = {"cidr": cluster_network_ipv6, "hostPrefix": 64} %}
 {% set cluster_network_ipv4 = {"cidr": cluster_network_ipv4, "hostPrefix": 23} %}
+{% set baremetal_cidrs = [baremetal_cidr] %}
 {% if dualstack|default(False) %}
 {% set cluster_networks = [cluster_network_ipv4] + [cluster_network_ipv6] %}
 {% set service_networks = [service_network_ipv4] + [service_network_ipv6] %}
+{% set baremetal_cidrs = baremetal_cidrs + [dualstack_cidr] %}
 {% elif ipv6|default(False) or (api_ip is defined and ':' in api_ip) %}
 {% set cluster_networks = [cluster_network_ipv6] %}
 {% set service_networks = [service_network_ipv6] %}
@@ -51,7 +53,7 @@ networking:
     hostPrefix: {{ network.hostPrefix }}
 {% endfor %}
   machineNetwork:
-{% for network in [baremetal_cidr] %}
+{% for network in baremetal_cidrs %}
   - cidr: {{ network }}
 {% endfor %}
   networkType: {{ network_type|default("OVNKubernetes") }}
