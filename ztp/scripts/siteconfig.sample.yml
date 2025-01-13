@@ -134,7 +134,7 @@ spec:
 {% elif 'disk_wwn' in node %}
        wwn: {{ node.disk_wwn }}
 {% elif 'disk_vendor' in node %}
-       wwn: {{ node.disk_vendor }}
+       vendor: {{ node.disk_vendor }}
 {% else %}
        deviceName: /dev/{{ node.disk|default(default_disk)|string|basename }}
 {% endif %}
