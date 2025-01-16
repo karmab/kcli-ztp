@@ -5,7 +5,7 @@ export PATH=/root/bin:$PATH
 
 {% if acm %}
 APP=advanced-cluster-management
-SOURCE_ARGS="-P acm_mce_catalog=$(kcli info app openshift multicluster-engine | grep ^source: | cut -d: -f2 | xargs)"
+SOURCE_ARGS="-P acm_mce_catalog=$(kcli info app multicluster-engine | grep ^source: | cut -d: -f2 | xargs)"
 {% else %}
 APP=multicluster-engine
 SOURCE_ARGS=""
@@ -28,5 +28,5 @@ DISCONNECTED_ARGS=""
 
 EXTRA_ARGS="{{ ' -P assisted=true -P pull_secret=/root/openshift_pull.json -P assisted_disable_validations=true' if disable_validations|default(False) else '' }}{{  ' -P assisted_converged_flow=true' if converged_flow|default(False) else '' }}"
 
-kcli create app openshift $APP $DISCONNECTED_ARGS $SOURCE_ARGS $EXTRA_ARGS
+kcli create app $APP $DISCONNECTED_ARGS $SOURCE_ARGS $EXTRA_ARGS
 sleep 120

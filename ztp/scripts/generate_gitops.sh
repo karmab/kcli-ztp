@@ -1,5 +1,5 @@
-kcli create app openshift openshift-gitops-operator
-kcli create app openshift topology-aware-lifecycle-manager
+kcli create app openshift-gitops-operator
+kcli create app topology-aware-lifecycle-manager
 sleep 120
 cd /root/ztp/scripts/gitops
 OCP_RELEASE=$(openshift-install version | head -1 | cut -d' ' -f2)-x86_64
