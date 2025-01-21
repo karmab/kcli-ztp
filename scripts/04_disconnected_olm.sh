@@ -40,7 +40,7 @@ podman login -u "$RHN_USER" -p "$RHN_PASSWORD" registry.redhat.io
 
 which oc-mirror >/dev/null 2>&1
 if [ "$?" != "0" ] ; then
-  TARGET={{ 'ocp-dev-preview' if version == 'dev-preview' else 'ocp' }}
+  TARGET={{ 'ocp-dev-preview' if version == 'candidate' else 'ocp' }}
   LONG_RELEASE={{ 'stable-4.17' if version == 'ci' else "$(cat /root/version.txt | awk -F: '{print $NF}' | rev | cut -d'-' -f2- | rev)" }}
   curl -sL https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/$TARGET/$LONG_RELEASE/oc-mirror.tar.gz | tar xvz -C /usr/bin
   chmod +x /usr/bin/oc-mirror

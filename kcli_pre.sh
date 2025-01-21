@@ -104,18 +104,18 @@ ip a l {{ baremetal_bridge }} >/dev/null 2>&1 || { echo Issue with network {{ ba
 # VERSION CHECK
 {% if version is defined %}
 
-{% if version not in ['dev-preview', 'stable', 'nightly', 'ci', 'latest'] %}
-  echo "Incorrect version {{ version }}. Should be stable, dev-preview, ci, latest or nightly" && exit 1
+{% if version not in ['candidate', 'stable', 'nightly', 'ci', 'latest'] %}
+  echo "Incorrect version {{ version }}. Should be stable, candidate, ci, latest or nightly" && exit 1
 {% endif %}
 
-{% if version in ['dev-preview', 'stable'] %}
+{% if version in ['candidate', 'stable'] %}
 {% set tag = tag|string %}
 {% if tag.split('.')|length > 2 %}
 TAG={{ tag }}
 {% else %}
 TAG={{"latest-" + tag }}
 {% endif %}
-OCP_REPO={{ 'ocp-dev-preview' if version == 'dev-preview' else 'ocp' }}
+OCP_REPO={{ 'ocp-dev-preview' if version == 'candidate' else 'ocp' }}
 export OPENSHIFT_RELEASE_IMAGE=$(curl -Ls https://mirror.openshift.com/pub/openshift-v4/clients/$OCP_REPO/$TAG/release.txt | grep 'Pull From: quay.io' | awk -F ' ' '{print $3}')
 {% elif version == 'latest' %}
 export OPENSHIFT_RELEASE_IMAGE=$(curl -Ls https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ version }}-{{ tag }}/release.txt | grep 'Pull From: quay.io' | awk -F ' ' '{print $3}')

@@ -1,4 +1,4 @@
-version: dev-preview
+version: candidate
 tag: 4.18.0-ec.1
 prega: true
 disconnected_operators:

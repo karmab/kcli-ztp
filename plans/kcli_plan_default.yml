@@ -10,7 +10,7 @@ info: |
     You can also use ca and imagecontentsources to customize your environments or drop specific manifests in the manifests directory
     If using virtual ctlplanes, the ctlplanes array can be omitted.
     For virtual hub, You can force the mac of your ctlplanes and workers
-    version can be set to stable, nightly, dev-preview or ci , along with tag, to gather the binary from public sources.
+    version can be set to stable, nightly, candidate or ci, along with tag, to gather the binary from public sources.
     The ci registry is targetted with the openshift_image variable.
     To skip the hub installation, KUBECONFIG variable can be pointed to an existing kubeconfig file
 baseplan: kcli_plan_infra.yml
