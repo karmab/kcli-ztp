@@ -106,7 +106,7 @@ Note that you can use the baseplan `kcli_plan_infra.yml` to deploy the infrastru
 |disconnected_community_operators_version     |None                         |
 |disconnected_extra_catalogs                  |[]                           |
 |disconnected_extra_images                    |[]                           |
-|disconnected_extra_releases                  |[]                           |
+|disconnected_extra_release                   |None                         |
 |disconnected_marketplace_operators           |[]                           |
 |disconnected_marketplace_operators_version   |None                         |
 |disconnected_operators                       |[]                           |
