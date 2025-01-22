@@ -4,20 +4,18 @@ set -euo pipefail
 
 PRIMARY_NIC=$(ls -1 /sys/class/net | grep -v podman | head -1)
 export PATH=/root/bin:$PATH
-export PULL_SECRET="/root/openshift_pull.json"
 dnf -y install httpd-tools jq skopeo libseccomp-devel
-{% if dns %}
-REGISTRY_NAME=registry.{{ cluster }}.{{ domain }}
+{% if disconnected_url != None %}
+REGISTRY={{ disconnected_url }}
+{% elif dns %}
+REGISTRY=registry.{{ cluster }}.{{ domain }}
 {% else %}
 export IP=$(ip -o addr show $PRIMARY_NIC | head -1 | awk '{print $4}' | cut -d'/' -f1)
-REGISTRY_NAME=$(echo $IP | sed 's/\./-/g' | sed 's/:/-/g').sslip.io
+REGISTRY=$(echo $IP | sed 's/\./-/g' | sed 's/:/-/g').sslip.io
 {% endif %}
 REGISTRY_USER={{ disconnected_user }}
 REGISTRY_PASSWORD={{ disconnected_password }}
-KEY=$(echo -n $REGISTRY_USER:$REGISTRY_PASSWORD | base64)
-echo "{\"auths\": {\"$REGISTRY_NAME:5000\": {\"auth\": \"$KEY\", \"email\": \"jhendrix@karmalabs.corp\"}}}" > /root/disconnected_pull.json
-mv /root/openshift_pull.json /root/openshift_pull.json.old
-jq ".auths += {\"$REGISTRY_NAME:5000\": {\"auth\": \"$KEY\",\"email\": \"jhendrix@karmalabs.corp\"}}" < /root/openshift_pull.json.old > $PULL_SECRET
+
 mkdir -p /opt/registry/{auth,certs,data,conf}
 cat <<EOF > /opt/registry/conf/config.yml
 version: 0.1
@@ -44,7 +42,7 @@ compatibility:
   schema1:
     enabled: true
 EOF
-openssl req -newkey rsa:4096 -nodes -sha256 -keyout /opt/registry/certs/domain.key -x509 -days 3650 -out /opt/registry/certs/domain.crt -subj "/C=US/ST=Madrid/L=San Bernardo/O=Karmalabs/OU=Guitar/CN=$REGISTRY_NAME" -addext "subjectAltName=DNS:$REGISTRY_NAME"
+openssl req -newkey rsa:4096 -nodes -sha256 -keyout /opt/registry/certs/domain.key -x509 -days 3650 -out /opt/registry/certs/domain.crt -subj "/C=US/ST=Madrid/L=San Bernardo/O=Karmalabs/OU=Guitar/CN=$REGISTRY" -addext "subjectAltName=DNS:$REGISTRY"
 cp /opt/registry/certs/domain.crt /etc/pki/ca-trust/source/anchors/
 update-ca-trust extract
 htpasswd -bBc /opt/registry/auth/htpasswd $REGISTRY_USER $REGISTRY_PASSWORD

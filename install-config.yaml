@@ -85,11 +85,13 @@ additionalTrustBundle: |
  {{ ca | certificate | replace('\n', '\n ') }}
 {% endfor %}
 {% endif %}
-{% if imagecontentsources %}
+{% if disconnected or disconnected_url != None %}
 imageContentSources:
-{% for source in imagecontentsources %}
 - mirrors:
-  - {{ source }}
-  source: image-registry.openshift-image-registry.svc:5000/openshift/{{ source | basename | replace("openshift-", "")}}
-{% endfor %}
+  - REGISTRY:PORT/openshift-release-dev/ocp-v4.0-art-dev
+  - REGISTRY:PORT/openshift/release
+  source: quay.io/openshift-release-dev/ocp-v4.0-art-dev
+- mirrors:
+  - REGISTRY:PORT/openshift-release-dev
+  source: {{ 'registry.ci.openshift.org/ocp/release' if version == 'ci' else 'quay.io/openshift-release-dev' }}
 {% endif %}
