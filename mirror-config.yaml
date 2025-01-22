@@ -1,24 +1,40 @@
-apiVersion: mirror.openshift.io/v1alpha2
+{% set release =  '4.' + (tag|string).split('.')[1] if tag|count('.') > 1 else tag %}
+
+{% set ztp_images = ['registry.redhat.io/rhel9/support-tools', 'quay.io/mavazque/gitea:1.17.3', 'registry.redhat.io/openshift4/ztp-site-generate-rhel8:v' + OPENSHIFT_TAG|string] %}
+
+apiVersion: mirror.openshift.io/v2alpha1
 kind: ImageSetConfiguration
-storageConfig:
-  registry:
-    imageURL: $LOCAL_REGISTRY/openshift/release/metadata:latest
 mirror:
-  #platform:
-  #  channels:
-  #  - name: stable-4.10
-  #    minVersion: 4.10.24
-  #    maxVersion: 4.10.24
-  #  graph: true
+  platform:
+    graph: false
+{% if version in ['ci', 'nightly'] %}
+    release: registry.ci.openshift.org/ocp/release:{{ tag }}
+{% else %}
+    channels:
+    - name: {{ 'candidate' if 'rc' in tag else version }}-{{ release }}
+{% if tag|count('.') > 1 %}
+      minVersion: {{ (disconnected_extra_release or tag)|min_ocp_version(tag) }}
+      maxVersion: {{ (disconnected_extra_release or tag)|max_ocp_version(tag) }}
+{% endif %}
+{% endif %}
+    architectures:
+#   - multi
+    - amd64
+  additionalImages:
+{% for image in ztp_images + extra_images|default([]) %}
+  - name: {{ image }}
+{% endfor %}
+{% set operators = disconnected_operators|default([]) + disconnected_certified_operators|default([]) + disconnected_community_operators|default([]) + disconnected_marketplace_operators|default([]) %}
+{% if operators %}
   operators:
-{% if disconnected_operators %}
-{% set catalog = 'quay.io/prega/prega-operator-index' if prega else 'registry.redhat.io/redhat/redhat-operator-index' %}
-  - catalog: {{ catalog }}:{{ disconnected_operators_version or 'v${OCP_RELEASE}' }}
+{% if disconnected_operators|default([]) %}
+{% set catalog = 'quay.io/prega/prega-operator-index' if prega|default(False) else 'registry.redhat.io/redhat/redhat-operator-index' %}
+  - catalog: {{ catalog }}:{{ disconnected_operators_version or "v%s" % OPENSHIFT_TAG }}
     packages:
 {% for package in disconnected_operators %}
 {% if package.name is defined %}
     - name: {{ package.name }}
-{% else %}
+{% else %}{# Comment: Support old syntax #}
     - name: {{ package }}
 {% endif %}
 {% if package.minVersion is defined %}
@@ -41,12 +57,8 @@ mirror:
 {% endif %}
 {% endfor %}
 {% endif %}
-{% if disconnected_certified_operators %}
-{% if disconnected_certified_operators_version %}
-  - catalog: registry.redhat.io/redhat/certified-operator-index:{{ disconnected_certified_operators_version }}
-{% else %}
-  - catalog: registry.redhat.io/redhat/certified-operator-index:v${OCP_RELEASE}
-{% endif %}
+{% if disconnected_certified_operators|default([]) %}
+  - catalog: registry.redhat.io/redhat/certified-operator-index:{{ disconnected_certified_operators_version or "v%s" % OPENSHIFT_TAG }}
     packages:
 {% for package in disconnected_certified_operators %}
 {% if package.name is defined %}
@@ -74,12 +86,8 @@ mirror:
 {% endif %}
 {% endfor %}
 {% endif %}
-{% if disconnected_community_operators %}
-{% if disconnected_community_operators_version %}
-  - catalog: registry.redhat.io/redhat/community-operator-index:{{ disconnected_community_operators_version }}
-{% else %}
-  - catalog: registry.redhat.io/redhat/community-operator-index:v${OCP_RELEASE}
-{% endif %}
+{% if disconnected_community_operators|default([]) %}
+  - catalog: registry.redhat.io/redhat/community-operator-index:{{ disconnected_community_operators_version or "v%s" % OPENSHIFT_TAG }}
     packages:
 {% for package in disconnected_community_operators %}
 {% if package.name is defined %}
@@ -107,12 +115,8 @@ mirror:
 {% endif %}
 {% endfor %}
 {% endif %}
-{% if disconnected_marketplace_operators %}
-{% if disconnected_marketplace_operators_version %}
-  - catalog: registry.redhat.io/redhat/redhat-marketplace-index:{{ disconnected_marketplace_operators_version }}
-{% else %}
-  - catalog: registry.redhat.io/redhat/redhat-marketplace-index:v${OCP_RELEASE}
-{% endif %}
+{% if disconnected_marketplace_operators|default([]) %}
+  - catalog: registry.redhat.io/redhat/redhat-marketplace-index:{{ disconnected_marketplace_operators_version or "v%s" % OPENSHIFT_TAG }}
     packages:
 {% for package in disconnected_marketplace_operators %}
 {% if package.name is defined %}
@@ -140,7 +144,8 @@ mirror:
 {% endif %}
 {% endfor %}
 {% endif %}
-{% if disconnected_extra_catalogs %}
+{% endif %}
+{% if disconnected_extra_catalogs|default([]) %}
 {% for catalog_image in disconnected_extra_catalogs %}
   - catalog: {{ catalog_image }}
 {% endfor %}

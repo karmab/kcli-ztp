@@ -7,7 +7,7 @@ info: |
     api_ip and ingress_ip need to be set along with ctlplanes and workers array to specify your nodes.
     Nfs can be set to true to deploy nfs provisioner using a share on the installer vm
     default network type is OVNKubernetes but you can also specify OpenShiftSDN
-    You can also use ca and imagecontentsources to customize your environments or drop specific manifests in the manifests directory
+    You can also use ca or drop specific manifests in the manifests directory
     If using virtual ctlplanes, the ctlplanes array can be omitted.
     For virtual hub, You can force the mac of your ctlplanes and workers
     version can be set to stable, nightly, candidate or ci, along with tag, to gather the binary from public sources.
@@ -50,6 +50,7 @@ registry_image: quay.io/karmab/registry:amd64
 disconnected_user: dummy
 disconnected_password: dummy
 disconnected_url:
+disconnected_update: false
 disconnected_operators: []
 disconnected_certified_operators: []
 disconnected_community_operators: []
@@ -60,18 +61,16 @@ disconnected_community_operators_version:
 disconnected_marketplace_operators_version:
 disconnected_extra_images: []
 disconnected_extra_catalogs: []
-disconnected_extra_releases: []
+disconnected_extra_release:
 disconnected_clean_pull_secret: false
 prega: false
 nfs: false
 imageregistry: false
 go_version: 1.13.8
 prs: []
-imagecontentsources: []
 fips: false
 cas: []
 dns: false
-nbde: false
 ntp: false
 ntp_server: 0.rhel.pool.ntp.org
 apps: []
@@ -90,6 +89,7 @@ wait_for_workers_number:
 wait_for_workers_timeout: 3600
 manifests_dir: manifests
 workflow_installer: false
+OPENSHIFT_TAG: 4.17
 
 acm: true
 gitops_user: dummy

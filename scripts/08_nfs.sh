@@ -4,7 +4,7 @@ set -euo pipefail
 
 PRIMARY_NIC=$(ls -1 /sys/class/net | grep 'eth\|en' | head -1)
 export KUBECONFIG=/root/ocp/auth/kubeconfig
-export PRIMARY_IP=$(ip -o addr show $PRIMARY_NIC | head -1 | awk '{print $4}' | cut -d'/' -f1)
+export IP=$(ip -o addr show $PRIMARY_NIC | head -1 | awk '{print $4}' | cut -d'/' -f1)
 # Latest nfs-utils 2.3.3-51 is broken
 rpm -qi nfs-utils >/dev/null 2>&1 || dnf -y install nfs-utils
 test ! -f /usr/lib/systemd/system/firewalld.service || systemctl disable --now firewalld
@@ -27,13 +27,13 @@ oc adm policy add-scc-to-user hostmount-anyuid system:serviceaccount:$NAMESPACE:
 if [ "$(podman ps | grep registry)" != "" ] ; then
  /root/bin/sync_image.sh registry.k8s.io/sig-storage/nfs-subdir-external-provisioner:v4.0.2
 {% if dns %}
- REGISTRY_NAME=registry.{{ cluster }}.{{ domain }}
+REGISTRY=registry.{{ cluster }}.{{ domain }}
 {% else %}
- REGISTRY_NAME=$(echo $PRIMARY_IP | sed 's/\./-/g' | sed 's/:/-/g').sslip.io
+REGISTRY=$(echo $IP | sed 's/\./-/g' | sed 's/:/-/g').sslip.io
 {% endif %}
- sed -i "s@registry.k8s.io@$REGISTRY_NAME:5000@" $BASEDIR/deploy/deployment.yaml
+ sed -i "s@registry.k8s.io@$REGISTRY:5000@" $BASEDIR/deploy/deployment.yaml
 fi
-sed -i -e "s@registry.k8s.io/nfs-subdir-external-provisioner@storage.io/nfs@" -e "s@10.3.243.101@$PRIMARY_IP@" -e "s@/ifs/kubernetes@/var/nfsshare@" $BASEDIR/deploy/deployment.yaml
+sed -i -e "s@registry.k8s.io/nfs-subdir-external-provisioner@storage.io/nfs@" -e "s@10.3.243.101@$/$IP@" -e "s@/ifs/kubernetes@/var/nfsshare@" $BASEDIR/deploy/deployment.yaml
 echo 'apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:

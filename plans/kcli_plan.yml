@@ -86,7 +86,10 @@
    path: /root/ocp/auth/kubeconfig
 {% endif %}
  - agent-config.yaml 
- - install-config.yaml 
+ - install-config.yaml
+{% if disconnected or disconnected_url != None %}
+ - mirror-config.yaml
+{% endif %}
 {% if motd != None %}
  - path: /etc/motd
    origin: {{ motd }}

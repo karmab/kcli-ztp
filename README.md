@@ -106,7 +106,7 @@ Note that you can use the baseplan `kcli_plan_infra.yml` to deploy the infrastru
 |disconnected_community_operators_version     |None                         |
 |disconnected_extra_catalogs                  |[]                           |
 |disconnected_extra_images                    |[]                           |
-|disconnected_extra_releases                  |[]                           |
+|disconnected_extra_release                   |None                         |
 |disconnected_marketplace_operators           |[]                           |
 |disconnected_marketplace_operators_version   |None                         |
 |disconnected_operators                       |[]                           |
@@ -128,7 +128,6 @@ Note that you can use the baseplan `kcli_plan_infra.yml` to deploy the infrastru
 |go_version                                   |1.13.8                       |
 |http_proxy                                   |None                         |
 |image                                        |centos9stream                |
-|imagecontentsources                          |[]                           |
 |imageregistry                                |False                        |
 |installer_disk_size                          |None                         |
 |installer_ip                                 |None                         |
@@ -141,7 +140,6 @@ Note that you can use the baseplan `kcli_plan_infra.yml` to deploy the infrastru
 |manifests_dir                                |manifests                    |
 |monitoring_retention                         |None                         |
 |motd                                         |None                         |
-|nbde                                         |False                        |
 |network_type                                 |OVNKubernetes                |
 |nfs                                          |False                        |
 |no_proxy                                     |None                         |

@@ -34,28 +34,14 @@ echo -e "${blue}************ RUNNING 03_dns.sh ************${clear}"
 /root/scripts/03_dns.sh
 {% endif %}
 
-{% if registry %}
-echo -e "${blue}************ RUNNING 04_disconnected_registry.sh ************${clear}"
-/root/scripts/04_disconnected_registry.sh || exit 1
-KEY=$(echo -n {{ disconnected_user }}:{{ disconnected_password }} | base64)
-REGISTRY_NAME={{ "registry.%s.%s" % (cluster, domain) if dns else "$(echo $IP | sed 's/\./-/g' | sed 's/:/-/g').sslip.io" }}
-jq ".auths += {\"$REGISTRY_NAME:5000\": {\"auth\": \"$KEY\",\"email\": \"jhendrix@karmalabs.corp\"}}" /root/openshift_pull.json /root/openshift_pull.json.old && mv /root/openshift_pull.json.old /root/openshift_pull.json
-{% elif disconnected %}
-{% if disconnected_url == None %}
-echo -e "${blue}************ RUNNING 04_disconnected_registry.sh ************${clear}"
-/root/scripts/04_disconnected_registry.sh || exit 1
-{% endif %}
-echo -e "${blue}************ RUNNING 04_disconnected_mirror.sh ************${clear}"
-/root/scripts/04_disconnected_mirror.sh || exit 1
-{% if disconnected_operators or disconnected_certified_operators or disconnected_community_operators or disconnected_marketplace_operators or disconnected_extra_catalogs %}
-echo -e "${blue}************ RUNNING 04_disconnected_olm.sh ************${clear}"
-/root/scripts/04_disconnected_olm.sh
-{% endif %}
+{% if registry or (disconnected and disconnected_url == None) %}
+echo -e "${blue}************ RUNNING 04_registry.sh ************${clear}"
+/root/scripts/04_registry.sh || exit 1
 {% endif %}
 
-{% if nbde %}
-echo -e "${blue}************ RUNNING 05_nbde.sh ************${clear}"
-/root/scripts/05_nbde.sh
+{% if disconnected or (disconnected_url != None and disconnected_update) %}
+echo -e "${blue}************ RUNNING 05_mirror.sh ************${clear}"
+/root/scripts/05_mirror.sh || exit 1
 {% endif %}
 
 {% if ntp %}
