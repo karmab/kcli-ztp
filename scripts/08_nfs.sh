@@ -33,7 +33,7 @@ REGISTRY=$(echo $IP | sed 's/\./-/g' | sed 's/:/-/g').sslip.io
 {% endif %}
  sed -i "s@registry.k8s.io@$REGISTRY:5000@" $BASEDIR/deploy/deployment.yaml
 fi
-sed -i -e "s@registry.k8s.io/nfs-subdir-external-provisioner@storage.io/nfs@" -e "s@10.3.243.101@$/$IP@" -e "s@/ifs/kubernetes@/var/nfsshare@" $BASEDIR/deploy/deployment.yaml
+sed -i -e "s@registry.k8s.io/nfs-subdir-external-provisioner@storage.io/nfs@" -e "s@10.3.243.101@$IP@" -e "s@/ifs/kubernetes@/var/nfsshare@" $BASEDIR/deploy/deployment.yaml
 echo 'apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
