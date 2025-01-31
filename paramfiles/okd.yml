@@ -1,0 +1,23 @@
+fake_network: true
+pool: default
+okd: true
+virtual_hub: true
+static_network: true
+version: ci
+tag: 4.18
+dns: true
+installer_ip: 192.168.130.251
+cluster: lab
+domain: karmalabs.corp
+baremetal_cidr: 192.168.130.0/24
+baremetal_net: lab-baremetal
+api_ip: 192.168.130.253
+ingress_ip: 192.168.130.252
+static_ips:
+- 192.168.130.20
+- 192.168.130.21
+- 192.168.130.22
+- 192.168.130.23
+- 192.168.130.24
+- 192.168.130.25
+- 192.168.130.26
