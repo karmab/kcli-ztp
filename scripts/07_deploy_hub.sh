@@ -63,6 +63,7 @@ cp manifests/*y*ml >/dev/null 2>&1 ocp/openshift
 openshift-install agent create cluster-manifests --dir ocp
 fi
 
+export OPENSHIFT_INSTALL_RELEASE_IMAGE_OVERRIDE=$(cat /root/version.txt)
 openshift-install agent create image --dir ocp --log-level debug
 
 mv -f ocp/agent.x86_64.iso /var/www/html/$HUB.iso
