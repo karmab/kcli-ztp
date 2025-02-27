@@ -55,10 +55,8 @@ OCP_RELEASE=$(grep 'Name:' /tmp/release.txt | awk -F ' ' '{print $2}')-x86_64
 
 {% if version == 'ci' %}
 {% set namespace = 'ocp/release' %}
-{% elif version == 'candidate' %}
-{% set namespace = 'openshift/release-images' %}
 {% else %}
-{% set namespace = 'openshift-release-dev/ocp-release' %}
+{% set namespace = 'openshift/release-images' %}
 {% endif %}
 NAMESPACE={{ namespace }}
 echo $REGISTRY:$REGISTRY_PORT/$NAMESPACE:$OCP_RELEASE > /root/version.txt
@@ -107,3 +105,5 @@ if [ "$(grep pullSecret /root/install-config.yaml)" == "" ] ; then
 fi
 
 cp /root/machineconfigs/99-operatorhub.yaml /root/manifests
+
+oc adm release extract --registry-config /root/openshift_pull.json --command=openshift-install --to /root/bin $(cat /root/version.txt)
