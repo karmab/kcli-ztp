@@ -90,11 +90,11 @@ imageContentSources:
 - mirrors:
   - REGISTRY:PORT/openshift-release-dev/ocp-v4.0-art-dev
   - REGISTRY:PORT/openshift/release
-  source: quay.io/openshift-release-dev/ocp-v4.0-art-dev
+  source: {{ 'registry.ci.openshift.org/origin' if okd else 'quay.io/openshift-release-dev/ocp-v4.0-art-dev' }}
 - mirrors:
   - REGISTRY:PORT/openshift-release-dev
   source: quay.io/openshift-release-dev
 - mirrors:
-  - REGISTRY:PORT/openshift-release-dev
-  source: registry.ci.openshift.org/ocp/release
+  - REGISTRY:PORT/{{ 'origin' if okd else 'openshift-release-dev' }}
+  source: registry.ci.openshift.org/{{ 'origin' if okd else 'ocp/release' }}
 {% endif %}
