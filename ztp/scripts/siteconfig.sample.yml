@@ -120,7 +120,7 @@ spec:
       bmcAddress: idrac-virtualmedia://{{ node.redfish_address }}/redfish/v1/Systems/System.Embedded.1
       {% endif %}
       {% else %}
-      bmcAddress: redfish-virtualmedia+http://${BAREMETAL_IP}:9000/redfish/v1/Systems/kcli/{{cluster }}-{{ spoke_name }}-node-{{ num }}
+      bmcAddress: redfish-virtualmedia://${BAREMETAL_IP}:9000/redfish/v1/Systems/kcli/{{cluster }}-{{ spoke_name }}-node-{{ num }}
       {% endif %}
       bmcCredentialsName:
         name: {{ cluster }}-ztp-{{ spoke_name }}-bmc-secret-{{ num }}

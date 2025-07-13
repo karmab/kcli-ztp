@@ -16,6 +16,5 @@ dnf -y install epel-release
 kcli install provider {{ config_type }}
 {% endif %}
 
-IPV6FLAG="{{ '--ipv6' if ':' in baremetal_cidr else '' }}"
 BOOTONCEFLAG="{{ '--bootonce --plan %s' % plan if bootonce|default(False) else '' }}"
-kcli create sushy-service $IPV6FLAG $BOOTONCEFLAG
+kcli create sushy-service $BOOTONCEFLAG
