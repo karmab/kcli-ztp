@@ -18,11 +18,11 @@ kcli delete iso -y {{ spoke.name }}.iso || true
 
 
 envsubst < /root/ztp/scripts/requirements.sample.yml > /root/ztp/scripts/requirements.yml
-envsubst < /root/ztp/scripts/siteconfig.sample.yml > /root/ztp/scripts/siteconfig.yml
+envsubst < /root/ztp/scripts/clusterinstances.sample.yml > /root/ztp/scripts/clusterinstances.yml
 
 if [ -f /root/ztp/scripts/snoplus.txt ] ; then
   for SPOKE in $(cat /root/ztp/scripts/snoplus.txt) ; do
-    sed -i "/$SPOKE-node-1/,$ s/^/##/" /root/ztp/scripts/siteconfig.yml
+    sed -i "/$SPOKE-node-1/,$ s/^/##/" /root/ztp/scripts/clusterinstances.yml
   done
 fi
 

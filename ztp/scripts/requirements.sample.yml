@@ -21,6 +21,11 @@
 
 ---
 apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ spoke_name }}
+---
+apiVersion: v1
 kind: Secret
 metadata:
   name: assisted-deployment-pull-secret

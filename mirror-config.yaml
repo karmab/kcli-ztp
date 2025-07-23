@@ -1,6 +1,6 @@
 {% set release =  '4.' + (tag|string).split('.')[1] if tag|count('.') > 1 else tag %}
 
-{% set ztp_images = ['registry.redhat.io/rhel9/support-tools', 'quay.io/mavazque/gitea:1.17.3', 'registry.redhat.io/openshift4/ztp-site-generate-rhel8:v' + OPENSHIFT_TAG|string] %}
+{% set ztp_images = ['registry.redhat.io/rhel9/support-tools', 'quay.io/mavazque/gitea:1.17.3', 'registry.redhat.io/openshift4/ztp-site-generate-rhel8:v' + OPENSHIFT_TAG|string, 'registry.redhat.io/rhacm2/multicluster-operators-subscription-rhel9:v2.13'] %}
 
 apiVersion: mirror.openshift.io/v2alpha1
 kind: ImageSetConfiguration

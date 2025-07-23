@@ -4,7 +4,7 @@ sleep 120
 cd /root/ztp/scripts/gitops
 OCP_RELEASE=$(openshift-install version | head -1 | cut -d' ' -f2)-x86_64
 export MINOR=$(echo $OCP_RELEASE | cut -d. -f1,2)
-export SITE_GENERATE_TAG=v{{ '4.19' if version in ['candidate', 'ci'] else '$MINOR' }}
+export MCE_TAG=$(oc get subscriptions.operators.coreos.com -n open-cluster-management advanced-cluster-management -o jsonpath='{.spec.channel}' | sed 's/release-//')
 
 {% if dns and disconnected %}
 GIT_SERVER=registry.{{ cluster }}.{{ domain }}
@@ -46,7 +46,7 @@ if [[ "$REPO_URL" =~ "$GIT_SERVER:3000" ]] ; then
   touch site-configs/$HUB/.gitkeep
   cp /root/ztp/scripts/kustomization.yaml site-configs
   mv /root/ztp/scripts/requirements.yml site-configs/$HUB
-  mv /root/ztp/scripts/siteconfig.yml site-configs/$HUB
+  mv /root/ztp/scripts/clusterinstances.yml site-configs/$HUB
   if [ -d /root/ztp/scripts/site-policies ] ; then
     if [ "$REGISTRY" != "registry.redhat.io" ] ; then
       sed -i "s/image: registry.redhat.io/image: $REGISTRY/" /root/ztp/scripts/site-policies/*

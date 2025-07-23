@@ -4,7 +4,7 @@ export HUB={{ cluster }}
 SPOKE_WAIT_TIME={{ spoke_wait_time }}
 
 for SPOKE in $(cat /root/ztp/scripts/snoplus.txt) ; do
-  sed -i "s/^##//" /root/git/site-configs/$HUB/siteconfig.yml
+  sed -i "s/^##//" /root/git/site-configs/$HUB/clusterinstances.yml
 done
 
 cd /root/git

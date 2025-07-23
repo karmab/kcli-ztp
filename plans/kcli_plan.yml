@@ -142,7 +142,7 @@
  - ztp/scripts/gitops
  - ztp/scripts/generate_gitops.sh
  - ztp/scripts/requirements.sample.yml
- - ztp/scripts/siteconfig.sample.yml
+ - ztp/scripts/clusterinstances.sample.yml
  - ztp/scripts/kustomization.yaml
  - ztp/scripts/kube_compare.sh
  - ztp/scripts/kube_compare_metadata.yaml
