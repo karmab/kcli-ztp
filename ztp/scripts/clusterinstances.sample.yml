@@ -1,17 +1,5 @@
 {% set total_number = namespace(value=0) %}
----
-apiVersion: ran.openshift.io/v1
-kind: SiteConfig
-metadata:
-  name: {{ cluster }}
-  namespace: {{ cluster }}
-spec:
-  baseDomain: {{ spoke_domain or '${DOMAIN}' }}
-  pullSecretRef:
-    name: assisted-deployment-pull-secret
-  clusterImageSetNameRef: openshift-v${MINOR}
-  sshPublicKey: ${SSH_PUB_KEY}
-  clusters:
+
 {% for spoke in spokes %}
 {% set new_value = spoke.virtual_nodes|default(0) %}
 {% set spoke_name = spoke.name %}
@@ -33,7 +21,7 @@ spec:
 {% set machine_cidr_ipv6 = ["fc00::/48"] %}
 {% set protocol = 'ipv6' if ipv6 else 'ipv4' %}
 {% set dualprotocol = 'ipv4' if ipv6 else 'ipv6' %}
-{% set default_prefix = baremetal_cidr.split('/')[1] %}
+{% set default_prefix = baremetal_cidr.split('/')[1] %}
 {% set default_gateway = baremetal_cidr|network_ip(1 if fake_network else -2) %}
 {% set baremetal_gateway = static_baremetal_gateway or default_gateway %}
 {% if dns %}
@@ -70,36 +58,64 @@ spec:
 {% endfor %}
 {% set nodes = extra_nodes + nodes %}
 {% endif %}
-  - clusterName: {{ spoke_name }}
-    networkType: {{ spoke_network_type }}
+
+---
+apiVersion: siteconfig.open-cluster-management.io/v1alpha1
+kind: ClusterInstance
+metadata:
+  name: {{ spoke_name }}
+  namespace: {{ spoke_name }}
+spec:
+  baseDomain: {{ spoke_domain or '${DOMAIN}' }}
+  clusterImageSetNameRef: openshift-v${MINOR}
+  clusterName: {{ spoke_name }}
+  clusterNetwork:
+  {% for network in cluster_networks %}
+  - cidr: {{ network.cidr }}
+    hostPrefix: {{ network.hostPrefix }}
+  {% endfor %}
 {% if spoke_ctlplanes_number == 1 %}
-    installConfigOverrides: '{"capabilities":{"baselineCapabilitySet": "None", "additionalEnabledCapabilities": ["marketplace", "NodeTuning", "Ingress", "OperatorLifecycleManager"]}}'
-    cpuPartitioningMode: AllNodes
+  cpuPartitioningMode: AllNodes
+  installConfigOverrides: |
+    {
+      "capabilities": {
+        "baselineCapabilitySet": "None",
+        "additionalEnabledCapabilities": [
+          "NodeTuning",
+          "OperatorLifecycleManager",
+          "Ingress"
+        ]
+      }
+    }
 {% endif %}
-    clusterLabels:
+  extraLabels:
+    ManagedCluster:
       provider: "kcli"
 {% for label, value in spoke_labels.items() %}
-      {{ label }}: {{ value }}
+      {{ label }}: "{{ value }}"
 {% endfor %}
 {% if spoke_ctlplanes_number > 1 and spoke_api_ip != None and spoke_ingress_ip != None %}
-    apiVIP: {{ spoke_api_ip }}
-    ingressVIP: {{ spoke_ingress_ip }}
+  apiVIP: {{ spoke_api_ip }}
+  ingressVIP: {{ spoke_ingress_ip }}
 {% endif %}
-    machineNetwork:
-    - cidr: {{ baremetal_cidr }}
-    clusterNetwork:
-  {% for network in cluster_networks %}
-    - cidr: {{ network.cidr }}
-      hostPrefix: {{ network.hostPrefix }}
-  {% endfor %}
-    serviceNetwork:
+  holdInstallation: false
+  machineNetwork:
+  - cidr: {{ baremetal_cidr }}
+  networkType: "OVNKubernetes"
+  pullSecretRef:
+    name: assisted-deployment-pull-secret
+  serviceNetwork:
   {% for network in service_networks %}
-    - {{ network }}
+  - cidr: {{ network }}
   {% endfor %}
 {% if (spoke_ctlplanes_number > 1 or spoke_workers_number > 0) and spoke_api_ip == None and spoke_ingress_ip == None %}
-    userManagedNetworking: True
+  userManagedNetworking: True
 {% endif %}
-    nodes:
+  sshPublicKey: ${SSH_PUB_KEY}
+  templateRefs:
+  - name: ai-cluster-templates-v1
+    namespace: open-cluster-management
+  nodes:
 {% for node in nodes %}
 {% set num = loop.index0 %}
 {% set max_ctlplanes = 1 if spoke_snoplus else 3 %}
@@ -108,66 +124,74 @@ spec:
 {% else %}
 {% set mac = "%s:%0.2d" % (virtual_mac_prefix, ctlplanes + workers + total_number.value + num + 1) %}
 {% endif %}
-    - hostName: {{ cluster }}-{{ spoke_name }}-node-{{ num }}
-      role: {{ 'master' if num < max_ctlplanes else 'worker' }}
-      {% if 'redfish_address' in node %}
-      disableCertificateVerification: True
-      {% if node.redfish_address.startswith('redfish-') or node.redfish_address.startswith('idrac-') %}
-      bmcAddress: {{ node.redfish_address }}
-      {% elif node.model|default(model) in ['hp', 'hpe', 'supermicro'] %}
-      bmcAddress: redfish-virtualmedia://{{ node.redfish_address }}/redfish/v1/Systems/1
-      {% else %}
-      bmcAddress: idrac-virtualmedia://{{ node.redfish_address }}/redfish/v1/Systems/System.Embedded.1
-      {% endif %}
-      {% else %}
-      bmcAddress: redfish-virtualmedia://${BAREMETAL_IP}:9000/redfish/v1/Systems/kcli/{{cluster }}-{{ spoke_name }}-node-{{ num }}
-      {% endif %}
-      bmcCredentialsName:
-        name: {{ cluster }}-ztp-{{ spoke_name }}-bmc-secret-{{ num }}
-      bootMACAddress: {{ mac }}
-      bootMode: {{ 'UEFI' if spoke_uefi else 'legacy' }}
-      rootDeviceHints:
-{% if 'disk_minimum_size' in node or spoke_disk_minimum_size != None %}
-       minSizeGigabytes: {{ node.disk_minimum_size|default(spoke_disk_minimum_size) }}
-{% elif 'disk_serial' in node %}
-       serialNumber: {{ node.disk_serial }}
-{% elif 'disk_wwn' in node %}
-       wwn: {{ node.disk_wwn }}
-{% elif 'disk_vendor' in node %}
-       vendor: {{ node.disk_vendor }}
-{% else %}
-       deviceName: /dev/{{ node.disk|default(default_disk)|string|basename }}
-{% endif %}
+  - automatedCleaningMode: "disabled"
+    {% if 'redfish_address' in node %}
+    disableCertificateVerification: True
+    {% if node.redfish_address.startswith('redfish-') or node.redfish_address.startswith('idrac-') %}
+    bmcAddress: {{ node.redfish_address }}
+    {% elif node.model|default(model) in ['hp', 'hpe', 'supermicro'] %}
+    bmcAddress: redfish-virtualmedia://{{ node.redfish_address }}/redfish/v1/Systems/1
+    {% else %}
+    bmcAddress: idrac-virtualmedia://{{ node.redfish_address }}/redfish/v1/Systems/System.Embedded.1
+    {% endif %}
+    {% else %}
+    bmcAddress: redfish-virtualmedia://${BAREMETAL_IP}:9000/redfish/v1/Systems/kcli/{{cluster }}-{{ spoke_name }}-node-{{ num }}
+    {% endif %}
+    bmcCredentialsName:
+      name: {{ cluster }}-ztp-{{ spoke_name }}-bmc-secret-{{ num }}
+    bootMACAddress: {{ mac }}
+    bootMode: {{ 'UEFI' if spoke_uefi else 'legacy' }}
+    extraAnnotations:
+      BareMetalHost:
+        inspect.metal3.io: disabled
+    hostName: {{ cluster }}-{{ spoke_name }}-node-{{ num }}
 {% if 'ip' in node %}
-      nodeNetwork:
+    nodeNetwork:
+      interfaces:
+      - name: eth0
+        macAddress: {{ mac }}
+      config:
         interfaces:
         - name: eth0
-          macAddress: {{ mac }}
-        config:
-          interfaces:
-          - name: eth0
-            type: ethernet
-            state: up
-            {{ 'ipv4' if ':' in node.ip else 'ipv6' }}:
-              enabled: false
-            {{ 'ipv6' if ':' in node.ip else 'ipv4' }}:
-              enabled: true
-              address:
-              - ip: {{ node.ip }}
-                prefix-length: {{ node.prefix|default(default_prefix) }}
-          dns-resolver:
-            config:
-              search:
-               - {{ node.domain|default(domain) }}
-              server:
-              - {{ node.dns|default(baremetal_dns) }}
-          routes:
-            config:
-            - destination: {{ '::/0' if ':' in node.ip else '0.0.0.0/0' }}
-              next-hop-interface: eth0
-              next-hop-address: {{ node.gateway|default(baremetal_gateway) }}
-              table-id: 254
+          type: ethernet
+          state: up
+          {{ 'ipv4' if ':' in node.ip else 'ipv6' }}:
+            enabled: false
+          {{ 'ipv6' if ':' in node.ip else 'ipv4' }}:
+            enabled: true
+            address:
+            - ip: {{ node.ip }}
+              prefix-length: {{ node.prefix|default(default_prefix) }}
+        dns-resolver:
+          config:
+            search:
+             - {{ node.domain|default(domain) }}
+            server:
+            - {{ node.dns|default(baremetal_dns) }}
+        routes:
+          config:
+          - destination: {{ '::/0' if ':' in node.ip else '0.0.0.0/0' }}
+            next-hop-interface: eth0
+            next-hop-address: {{ node.gateway|default(baremetal_gateway) }}
+            table-id: 254
 {% endif %}
+    role: {{ 'master' if num < max_ctlplanes else 'worker' }}
+    rootDeviceHints:
+{% if 'disk_minimum_size' in node or spoke_disk_minimum_size != None %}
+     minSizeGigabytes: {{ node.disk_minimum_size|default(spoke_disk_minimum_size) }}
+{% elif 'disk_serial' in node %}
+     serialNumber: {{ node.disk_serial }}
+{% elif 'disk_wwn' in node %}
+     wwn: {{ node.disk_wwn }}
+{% elif 'disk_vendor' in node %}
+     vendor: {{ node.disk_vendor }}
+{% else %}
+     deviceName: /dev/{{ node.disk|default(default_disk)|string|basename }}
+{% endif %}
+    templateRefs:
+    - name: ai-node-templates-v1
+      namespace: open-cluster-management
 {% endfor %}
+---
 {% set total_number.value = total_number.value + virtual_nodes_number %}
 {% endfor %}

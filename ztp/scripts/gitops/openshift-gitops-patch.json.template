@@ -42,6 +42,24 @@
           ],
           "terminationMessagePolicy": "File",
           "image": "$REGISTRY/openshift4/ztp-site-generate-rhel8:$SITE_GENERATE_TAG"
+        },
+        {
+          "args": [
+            "-c",
+            "mkdir -p /.config/kustomize/plugin/policy.open-cluster-management.io/v1/policygenerator && cp /policy-generator/PolicyGenerator-not-fips-compliant /.config/kustomize/plugin/policy.open-cluster-management.io/v1/policygenerator/PolicyGenerator"
+          ],
+          "command": [
+            "/bin/bash"
+          ],
+          "image": "$REGISTRY/rhacm2/multicluster-operators-subscription-rhel9:v2.13",
+          "name": "policy-generator-install",
+          "imagePullPolicy": "Always",
+          "volumeMounts": [
+            {
+              "mountPath": "/.config",
+              "name": "kustomize"
+            }
+          ]
         }
       ],
       "volumeMounts": [

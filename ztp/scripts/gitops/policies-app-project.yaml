@@ -1,3 +1,4 @@
+---
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
@@ -7,8 +8,8 @@ spec:
   clusterResourceWhitelist:
   - group: ''
     kind: Namespace
-  - group: ''
-    kind: ConfigMap
+  - group: 'hive.openshift.io'
+    kind: ClusterImageSet
   destinations:
   - namespace: 'ztp*'
     server: '*'
@@ -27,5 +28,13 @@ spec:
     kind: PlacementBinding
   - group: 'ran.openshift.io'
     kind: PolicyGenTemplate
+  - group: cluster.open-cluster-management.io
+    kind: Placement
+  - group: policy.open-cluster-management.io
+    kind: PolicyGenerator
+  - group: policy.open-cluster-management.io
+    kind: PolicySet
+  - group: cluster.open-cluster-management.io
+    kind: ManagedClusterSetBinding
   sourceRepos:
   - '*'
