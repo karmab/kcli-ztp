@@ -51,7 +51,7 @@
           "command": [
             "/bin/bash"
           ],
-          "image": "$REGISTRY/rhacm2/multicluster-operators-subscription-rhel9:v$MCE_TAG",
+          "image": "$REGISTRY/rhacm2/multicluster-operators-subscription-rhel9@$ACM_SHA",
           "name": "policy-generator-install",
           "imagePullPolicy": "Always",
           "volumeMounts": [

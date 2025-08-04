@@ -26,7 +26,9 @@ static_ips:
 
 spokes:
 - name: spoke1
-  ctlplanes: 1
+  ctlplanes: 3
+  api_ip: 2620:52:0:1302::28
+  ingress_ip: 2620:52:0:1302::29
   disk_minimum_size: 110
   workers: 0
   virtual_nodes: 1
