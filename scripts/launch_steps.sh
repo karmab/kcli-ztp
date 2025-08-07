@@ -72,8 +72,6 @@ echo -e "${blue}************ RUNNING 10_apps.sh ************${clear}"
 /root/scripts/10_apps.sh
 {% endif %}
 
-touch /root/cluster_ready.txt
-
 echo -e "${blue}************ RUNNING ZTP steps ************${clear}"
 /root/ztp/scripts/launch_steps.sh
 

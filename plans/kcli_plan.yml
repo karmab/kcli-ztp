@@ -28,6 +28,10 @@
 {{ disconnected_operators.append("lvms-operator") or "" }}
 {% endif %}
 
+{% if 'lifecycle-agent' not in all_operators %}
+{{ disconnected_operators.append("lifecycle-agent") or "" }}
+{% endif %}
+
 {% set snoplus_spokes = [] %}
 
 {% for spoke in spokes %}
@@ -139,10 +143,12 @@
  - ztp/scripts/04_spokes_wait.sh
  - ztp/scripts/05_snoplus.sh
  - ztp/scripts/06_compliance.sh
+ - ztp/scripts/07_ibi.sh
  - ztp/scripts/gitops
  - ztp/scripts/generate_gitops.sh
- - ztp/scripts/requirements.sample.yml
- - ztp/scripts/clusterinstances.sample.yml
+ - ztp/scripts/requirements.sample.yaml
+ - ztp/scripts/clusterinstances.sample.yaml
+ - ztp/scripts/ibi_seed.sample.yaml
  - ztp/scripts/kustomization.yaml
  - ztp/scripts/kube_compare.sh
  - ztp/scripts/kube_compare_metadata.yaml

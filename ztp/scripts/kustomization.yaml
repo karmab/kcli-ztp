@@ -1,5 +1,5 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- {{ cluster }}/requirements.yml
-- {{ cluster }}/clusterinstances.yml
+- {{ cluster }}/requirements.yaml
+- {{ cluster }}/clusterinstances.yaml

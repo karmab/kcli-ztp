@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: seedgen
+  namespace: openshift-lifecycle-agent
+type: Opaque
+stringData:
+  seedAuth: '{"auths": {"$REGISTRY": {"auth": "$KEY"}}}'
+---
+apiVersion: lca.openshift.io/v1
+kind: SeedGenerator
+metadata:
+  name: seedimage
+spec:
+  seedImage: $REGISTRY/ibi/seed:$VERSION
