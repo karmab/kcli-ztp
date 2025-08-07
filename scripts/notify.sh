@@ -9,19 +9,9 @@ echo "Cluster info:"
 oc get clusterversion
 echo "Nodes info:"
 oc get nodes
-echo -e "\nSpokes:\n"
-{% for spoke in spokes %}
-export SPOKE={{ spoke.name }}
-echo "Spoke $SPOKE"
-echo "Agents:"
-oc get agent -A
-echo "Cluster State:"
-oc get agentclusterinstall -n $SPOKE $SPOKE -o jsonpath={'.status.debugInfo.state'}
-echo "Cluster Info:"
-oc get agentclusterinstall -n $SPOKE $SPOKE -o jsonpath={'.status.debugInfo.stateInfo'}
-{% endfor%}
 
-echo -e "\nPolicies:\n"
-if [ -d /root/ztp/scripts/site-policies ] ; then
+echo -e "\nSpokes:"
+oc get clusterinstance -A
+
+echo -e "\nPolicies:"
 oc get policies -A
-fi

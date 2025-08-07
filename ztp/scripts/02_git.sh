@@ -25,3 +25,5 @@ curl -u "$GIT_USER:$GIT_PASSWORD" -H 'Content-Type: application/json' -d '{"user
 curl -u "$GIT_USER:$GIT_PASSWORD" -H 'Content-Type: application/json' -d '{"name":"ztp"}' http://$GIT_SERVER:3000/api/v1/org/karmalabs/repos
 
 git clone http://$GIT_USER:$GIT_PASSWORD@$GIT_SERVER:3000/karmalabs/ztp.git /root/git
+git config --global user.name "Jimi Hendrix"
+git config --global user.email jhendrix@karmalabs.corp

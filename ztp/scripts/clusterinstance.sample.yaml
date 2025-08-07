@@ -1,18 +1,18 @@
-{% set total_number = namespace(value=0) %}
 
-{% for spoke in spokes %}
+{% set spoke = spokes[index] %}
 {% set new_value = spoke.virtual_nodes|default(0) %}
 {% set spoke_name = spoke.name %}
-{% set spoke_network_type = spoke.network_type|default(spoke_network_type) %}
-{% set spoke_disk_minimum_size = spoke.disk_minimum_size|default(spoke_disk_minimum_size) %}
-{% set spoke_labels = spoke.labels|default({})  %}
-{% set spoke_api_ip = spoke.get('api_ip') %}
-{% set spoke_ingress_ip= spoke.get('ingress_ip') %}
-{% set spoke_ctlplanes_number = spoke.ctlplanes|default(1) %}
-{% set spoke_workers_number = spoke.workers|default(0) %}
-{% set spoke_snoplus = True if spoke_ctlplanes_number == 1 and spoke_workers_number == 1 else False %}
+{% set cluster_templates = 'ibi-cluster-templates-v1' if spoke.ibi|default(False) else 'ai-cluster-templates-v1 '%}
+{% set node_templates = 'ibi-node-templates-v1' if spoke.ibi|default(False) else 'ai-node-templates-v1 '%}
+{% set disk_path = spoke.disk_path|default(default_disk) %}
+{% set disk_minimum_size = spoke.disk_minimum_size|default(spoke_disk_minimum_size) %}
+{% set labels = spoke.labels|default({})  %}
+{% set api_ip = spoke.get('api_ip') %}
+{% set ingress_ip= spoke.get('ingress_ip') %}
+{% set ctlplanes_number = spoke.ctlplanes|default(1) %}
+{% set workers_number = spoke.workers|default(0) %}
 {% set virtual_nodes_number = spoke.virtual_nodes|default(0) %}
-{% set ipv6 = True if (spoke_api_ip != None and ':' in spoke_api_ip) or ':' in baremetal_cidr  else False %}
+{% set ipv6 = True if (api_ip != None and ':' in api_ip) or ':' in baremetal_cidr  else False %}
 {% set cluster_network_ipv6 = {"cidr": "fd01::/48", "hostPrefix": 64} %}
 {% set cluster_network_ipv4 = {"cidr": "10.132.0.0/14", "hostPrefix": 23} %}
 {% set service_network_ipv6 = ["fd02::/112"] %}
@@ -24,11 +24,7 @@
 {% set default_prefix = baremetal_cidr.split('/')[1] %}
 {% set default_gateway = baremetal_cidr|network_ip(1 if fake_network else -2) %}
 {% set baremetal_gateway = static_baremetal_gateway or default_gateway %}
-{% if dns %}
-{% set baremetal_dns = installer_ip %}
-{% else %}
-{% set baremetal_dns = static_baremetal_dns or baremetal_gateway %}
-{% endif %}
+{% set baremetal_dns = installer_ip if dns else (static_baremetal_dns or baremetal_gateway) %}
 {% if dualstack|default(False) %}
 {% set machine_cidrs = machine_cidr_ipv4 + machine_cidr_ipv6 %}
 {% set cluster_networks = [cluster_network_ipv4] + [cluster_network_ipv6] %}
@@ -47,19 +43,16 @@
 {% set cluster_networks = [cluster_network_ipv4] %}
 {% set service_networks = service_network_ipv4 %}
 {% endif %}
-{% set spoke_name = spoke.name %}
 {% set virtual_nodes_number = spoke.virtual_nodes|default(0) %}
 {% set nodes = spoke.baremetal_nodes|default([]) %}
 {% if virtual_nodes_number > 0 %}
 {% set extra_nodes = [] %}
 {% for num in range(0, virtual_nodes_number) %}
-{% set new_node = {'ip': static_ips[ctlplanes + workers + total_number.value + num]} if static_network and static_ips|length > ctlplanes + workers + total_number.value + num else {} %}
+{% set new_node = {'ip': static_ips[ctlplanes + workers + total_number + num]} if static_network and static_ips|length > ctlplanes + workers + total_number + num else {} %}
 {% do extra_nodes.append(new_node) %}
 {% endfor %}
 {% set nodes = extra_nodes + nodes %}
 {% endif %}
-
----
 apiVersion: siteconfig.open-cluster-management.io/v1alpha1
 kind: ClusterInstance
 metadata:
@@ -74,7 +67,7 @@ spec:
   - cidr: {{ network.cidr }}
     hostPrefix: {{ network.hostPrefix }}
   {% endfor %}
-{% if spoke_ctlplanes_number == 1 %}
+{% if ctlplanes_number == 1 %}
   cpuPartitioningMode: AllNodes
   installConfigOverrides: |
     {
@@ -92,14 +85,13 @@ spec:
   extraLabels:
     ManagedCluster:
       provider: "kcli"
-{% for label, value in spoke_labels.items() %}
+{% for label, value in labels.items() %}
       {{ label }}: "{{ value }}"
 {% endfor %}
-{% if spoke_ctlplanes_number > 1 and spoke_api_ip != None and spoke_ingress_ip != None %}
-  apiVIP: {{ spoke_api_ip }}
-  ingressVIP: {{ spoke_ingress_ip }}
+{% if ctlplanes_number > 1 and api_ip != None and ingress_ip != None %}
+  apiVIP: {{ api_ip }}
+  ingressVIP: {{ ingress_ip }}
 {% endif %}
-  holdInstallation: false
   ignitionConfigOverride: '{"ignition":{"version":"3.2.0"},"storage":{"files":[{"path":"/etc/containers/policy.json","mode":420,"overwrite":true,"contents":{"source":"data:text/plain;charset=utf-8;base64,ewogICAgImRlZmF1bHQiOiBbCiAgICAgICAgewogICAgICAgICAgICAidHlwZSI6ICJpbnNlY3VyZUFjY2VwdEFueXRoaW5nIgogICAgICAgIH0KICAgIF0sCiAgICAidHJhbnNwb3J0cyI6CiAgICAgICAgewogICAgICAgICAgICAiZG9ja2VyLWRhZW1vbiI6CiAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgIiI6IFt7InR5cGUiOiJpbnNlY3VyZUFjY2VwdEFueXRoaW5nIn1dCiAgICAgICAgICAgICAgICB9CiAgICAgICAgfQp9"}}]}}'
   machineNetwork:
   - cidr: {{ baremetal_cidr }}
@@ -110,21 +102,20 @@ spec:
   {% for network in service_networks %}
   - cidr: {{ network }}
   {% endfor %}
-{% if (spoke_ctlplanes_number > 1 or spoke_workers_number > 0) and spoke_api_ip == None and spoke_ingress_ip == None %}
+{% if (ctlplanes_number > 1 or workers_number > 0) and api_ip == None and ingress_ip == None %}
   userManagedNetworking: True
 {% endif %}
   sshPublicKey: ${SSH_PUB_KEY}
   templateRefs:
-  - name: ai-cluster-templates-v1
+  - name: {{ cluster_templates }}
     namespace: open-cluster-management
   nodes:
 {% for node in nodes %}
 {% set num = loop.index0 %}
-{% set max_ctlplanes = 1 if spoke_snoplus else 3 %}
 {% if 'mac' in node %}
 {% set mac = node.mac %}
 {% else %}
-{% set mac = "%s:%0.2d" % (virtual_mac_prefix, ctlplanes + workers + total_number.value + num + 1) %}
+{% set mac = "%s:%0.2d" % (virtual_mac_prefix, ctlplanes + workers + total_number + num + 1) %}
 {% endif %}
   - automatedCleaningMode: "disabled"
     {% if 'redfish_address' in node %}
@@ -144,15 +135,67 @@ spec:
     bootMACAddress: {{ mac }}
     bootMode: {{ 'UEFI' if spoke_uefi else 'legacy' }}
     hostName: {{ cluster }}-{{ spoke_name }}-node-{{ num }}
+    ignitionConfigOverride: |
+      {
+        "ignition": {
+          "version": "3.2.0"
+        },
+        "storage": {
+          "disks": [
+            {
+              "device": "{{ disk_path }}",
+              "partitions": [
+                {
+                  "label": "var-lib-containers",
+                  "sizeMiB": 0,
+                  "startMiB": 60000
+                }
+              ],
+              "wipeTable": false
+            }
+          ],
+          "filesystems": [
+            {
+              "device": "/dev/disk/by-partlabel/var-lib-containers",
+              "format": "xfs",
+              "mountOptions": [
+                "defaults",
+                "prjquota"
+              ],
+              "path": "/var/lib/containers",
+              "wipeFilesystem": true
+            }
+          ],
+          "files": [
+            {
+              "path": "/etc/containers/policy.json",
+              "mode":420,
+              "overwrite": true,
+              "contents": {
+                "source": "data:text/plain;charset=utf-8;base64,ewogICAgImRlZmF1bHQiOiBbCiAgICAgICAgewogICAgICAgICAgICAidHlwZSI6ICJpbnNlY3VyZUFjY2VwdEFueXRoaW5nIgogICAgICAgIH0KICAgIF0sCiAgICAidHJhbnNwb3J0cyI6CiAgICAgICAgewogICAgICAgICAgICAiZG9ja2VyLWRhZW1vbiI6CiAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgIiI6IFt7InR5cGUiOiJpbnNlY3VyZUFjY2VwdEFueXRoaW5nIn1dCiAgICAgICAgICAgICAgICB9CiAgICAgICAgfQp9"
+              }
+            }
+          ]
+        },
+        "systemd": {
+          "units": [
+            {
+              "contents": "# Generated by Butane\n[Unit]\nRequires=systemd-fsck@dev-disk-by\\x2dpartlabel-var\\x2dlib\\x2dcontainers.service\nAfter=systemd-fsck@dev-disk-by\\x2dpartlabel-var\\x2dlib\\x2dcontainers.service\n\n[Mount]\nWhere=/var/lib/containers\nWhat=/dev/disk/by-partlabel/var-lib-containers\nType=xfs\nOptions=defaults,prjquota\n\n[Install]\nRequiredBy=local-fs.target",
+              "enabled": true,
+              "name": "var-lib-containers.mount"
+            }
+          ]
+        }
+      }
     ironicInspect: "disabled"
 {% if 'ip' in node %}
     nodeNetwork:
       interfaces:
-      - name: eth0
+      - name: enp3s0
         macAddress: {{ mac }}
       config:
         interfaces:
-        - name: eth0
+        - name: enp3s0
           type: ethernet
           state: up
           {{ 'ipv4' if ':' in node.ip else 'ipv6' }}:
@@ -171,14 +214,14 @@ spec:
         routes:
           config:
           - destination: {{ '::/0' if ':' in node.ip else '0.0.0.0/0' }}
-            next-hop-interface: eth0
+            next-hop-interface: enp3s0
             next-hop-address: {{ node.gateway|default(baremetal_gateway) }}
             table-id: 254
 {% endif %}
-    role: {{ 'master' if num < max_ctlplanes else 'worker' }}
+    role: {{ 'master' if num < 3 else 'worker' }}
     rootDeviceHints:
-{% if 'disk_minimum_size' in node or spoke_disk_minimum_size != None %}
-     minSizeGigabytes: {{ node.disk_minimum_size|default(spoke_disk_minimum_size) }}
+{% if 'disk_minimum_size' in node or disk_minimum_size != None %}
+     minSizeGigabytes: {{ node.disk_minimum_size|default(disk_minimum_size) }}
 {% elif 'disk_serial' in node %}
      serialNumber: {{ node.disk_serial }}
 {% elif 'disk_wwn' in node %}
@@ -189,9 +232,6 @@ spec:
      deviceName: /dev/{{ node.disk|default(default_disk)|string|basename }}
 {% endif %}
     templateRefs:
-    - name: ai-node-templates-v1
+    - name: {{ node_templates }}
       namespace: open-cluster-management
-{% endfor %}
----
-{% set total_number.value = total_number.value + virtual_nodes_number %}
 {% endfor %}

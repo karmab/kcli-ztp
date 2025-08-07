@@ -119,11 +119,7 @@ Note that you can use the baseplan `kcli_plan_infra.yml` to deploy the infrastru
 |dualstack_cidr                               |None                         |
 |dualstack_isolated                           |False                        |
 |fips                                         |False                        |
-|gitops_clusters_app_path                     |site-configs                 |
 |gitops_password                              |dummy                        |
-|gitops_policies_app_path                     |site-policies                |
-|gitops_repo_branch                           |main                         |
-|gitops_repo_url                              |None                         |
 |gitops_user                                  |dummy                        |
 |go_version                                   |1.13.8                       |
 |http_proxy                                   |None                         |
@@ -157,9 +153,7 @@ Note that you can use the baseplan `kcli_plan_infra.yml` to deploy the infrastru
 |schedulable_ctlplanes                        |False                        |
 |service_network_ipv4                         |172.30.0.0/16                |
 |service_network_ipv6                         |fd02::/112                   |
-|spoke_deploy                                 |True                         |
 |spoke_domain                                 |None                         |
-|spoke_network_type                           |OVNKubernetes                |
 |spoke_policies_dir                           |spoke_policies_dir           |
 |spoke_static_network                         |False                        |
 |spoke_wait                                   |True                         |

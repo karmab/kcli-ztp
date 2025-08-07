@@ -23,13 +23,24 @@ static_ips:
 - 2620:52:0:1302::25
 - 2620:52:0:1302::26
 - 2620:52:0:1302::27
+- 2620:52:0:1302::28
 
 spokes:
 - name: spoke1
-  ctlplanes: 3
-  api_ip: 2620:52:0:1302::28
-  ingress_ip: 2620:52:0:1302::29
+  seed: true
+  ctlplanes: 1
+  workers: 0
   disk_minimum_size: 110
+  disk_path: /dev/disk/by-id/wwn-0x5000c50015ea71ad
+  virtual_nodes: 1
+  labels:
+    common: "true"
+    logicalGroup: active
+    hardware-type: hw-type-platform-1
+    group-du-sno: ""
+- name: spoke2
+  ibi: true
+  ctlplanes: 1
   workers: 0
   virtual_nodes: 1
   labels:
@@ -47,8 +58,9 @@ vmrules:
 - lab-spoke1-node-0:
    boot_order: true
    disks:
-   - size: 120
+   - size: 300
      interface: scsi
+     wwn: 5000c50015ea71ad
    - size: 100
      interface: scsi
    nets:
@@ -56,3 +68,7 @@ vmrules:
      mac: aa:aa:aa:aa:bb:04
    - name: sriov-network
      sriov: true
+- lab-spoke2-node-0:
+   disks:
+   - size: 300
+     interface: scsi

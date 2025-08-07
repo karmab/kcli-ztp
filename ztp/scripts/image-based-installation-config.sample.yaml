@@ -1,0 +1,85 @@
+{% set spoke = spokes[1] if spokes|length > 1 else {} %}
+{% set default_prefix = baremetal_cidr.split('/')[1] %}
+{% set default_gateway = baremetal_cidr|network_ip(1 if fake_network else -2) %}
+{% set baremetal_gateway = static_baremetal_gateway or default_gateway %}
+{% set baremetal_dns = installer_ip if dns else (static_baremetal_dns or baremetal_gateway) %}
+
+{% set virtual_node = {'ip': static_ips[ctlplanes + workers + total_number]} if spoke.virtual_nodes|default(0) > 0 and static_network and static_ips|length >= ctlplanes + workers + total_number else {} %}
+
+{% set node = spoke.nodes[0] if spoke.nodes|default([])|length > 0 else virtual_node %}
+apiVersion: v1beta1
+kind: ImageBasedInstallationConfig
+metadata:
+  name: image-based-installation-config
+seedImage: $REGISTRY/ibi/seed:v$VERSION
+seedVersion: $VERSION
+extraPartitionStart: "-60G"
+installationDisk: "{{ node.disk_path|default('/dev/' + default_disk) }}"
+ignitionConfigOverride: '{"ignition":{"version":"3.2.0"},"storage":{"files":[{"path":"/etc/containers/policy.json","mode":420,"overwrite":true,"contents":{"source":"data:text/plain;charset=utf-8;base64,ewogICAgImRlZmF1bHQiOiBbCiAgICAgICAgewogICAgICAgICAgICAidHlwZSI6ICJpbnNlY3VyZUFjY2VwdEFueXRoaW5nIgogICAgICAgIH0KICAgIF0sCiAgICAidHJhbnNwb3J0cyI6CiAgICAgICAgewogICAgICAgICAgICAiZG9ja2VyLWRhZW1vbiI6CiAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgIiI6IFt7InR5cGUiOiJpbnNlY3VyZUFjY2VwdEFueXRoaW5nIn1dCiAgICAgICAgICAgICAgICB9CiAgICAgICAgfQp9"}}]}}'
+sshKey: "$SSH_PUB_KEY"
+pullSecret: '{"auths": {"$REGISTRY": {"auth": "$KEY"}}}'
+shutdown: true
+imageDigestSources:
+- mirrors:
+  - $REGISTRY/multicluster-engine
+  source: registry.redhat.io/multicluster-engine
+- mirrors:
+  - $REGISTRY/openshift-gitops-1
+  source: registry.redhat.io/openshift-gitops-1
+- mirrors:
+  - $REGISTRY/rh-sso-7
+  source: registry.redhat.io/rh-sso-7
+- mirrors:
+  - $REGISTRY/lvms4
+  source: registry.redhat.io/lvms4
+- mirrors:
+  - $REGISTRY/openshift4
+  source: registry.redhat.io/openshift4
+- mirrors:
+  - $REGISTRY/rhacm2
+  source: registry.redhat.io/rhacm2
+- mirrors:
+  - $REGISTRY/rhel8
+  source: registry.redhat.io/rhel8
+- mirrors:
+  - $REGISTRY/oadp
+  source: registry.redhat.io/oadp
+- mirrors:
+  - $REGISTRY/rh-osbs
+  source: quay.io/prega/test/rh-osbs
+- mirrors:
+  - $REGISTRY/openshift-release-dev/ocp-v4.0-art-dev
+  - $REGISTRY/openshift/release
+  source: quay.io/openshift-release-dev/ocp-v4.0-art-dev
+- mirrors:
+  - $REGISTRY/openshift-release-dev
+  source: quay.io/openshift-release-dev
+- mirrors:
+  - $REGISTRY/openshift/release-images
+  source: quay.io/openshift-release-dev/ocp-release
+{% if 'ip' in node %}
+networkConfig:
+  interfaces:
+  - name: enp3s0
+    type: ethernet
+    state: up
+    {{ 'ipv4' if ':' in node.ip else 'ipv6' }}:
+      enabled: false
+    {{ 'ipv6' if ':' in node.ip else 'ipv4' }}:
+      enabled: true
+      address:
+      - ip: {{ node.ip }}
+        prefix-length: {{ node.prefix|default(default_prefix) }}
+  dns-resolver:
+    config:
+      search:
+       - {{ node.domain|default(domain) }}
+      server:
+      - {{ node.dns|default(baremetal_dns) }}
+  routes:
+    config:
+    - destination: {{ '::/0' if ':' in node.ip else '0.0.0.0/0' }}
+      next-hop-interface: enp3s0
+      next-hop-address: {{ node.gateway|default(baremetal_gateway) }}
+      table-id: 254
+{% endif %}
