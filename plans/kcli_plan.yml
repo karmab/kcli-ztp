@@ -28,7 +28,12 @@
 {{ disconnected_operators.append("lvms-operator") or "" }}
 {% endif %}
 
+{% if 'lifecycle-agent' not in all_operators %}
+{{ disconnected_operators.append("lifecycle-agent") or "" }}
+{% endif %}
+
 {% set snoplus_spokes = [] %}
+{% set seed_spokes = [] %}
 
 {% for spoke in spokes %}
 {% set spoke_name = spoke.name %}
@@ -37,6 +42,9 @@
 {% set spoke_snoplus = True if spoke_ctlplanes_number == 1 and spoke_workers_number == 1 else False %}
 {% if spoke_snoplus %}
 {% do snoplus_spokes.append(spoke_name) %}
+{% endif %}
+{% if spoke_ctlplanes_number == 1 and spoke_workers_number == 0 and spoke.get('seed', False) %}
+{% do seed_spokes.append(spoke_name) %}
 {% endif %}
 {% endfor %}
 
@@ -139,10 +147,12 @@
  - ztp/scripts/04_spokes_wait.sh
  - ztp/scripts/05_snoplus.sh
  - ztp/scripts/06_compliance.sh
+ - ztp/scripts/07_ibi.sh
  - ztp/scripts/gitops
  - ztp/scripts/generate_gitops.sh
- - ztp/scripts/requirements.sample.yml
- - ztp/scripts/clusterinstances.sample.yml
+ - ztp/scripts/requirements.sample.yaml
+ - ztp/scripts/clusterinstances.sample.yaml
+ - ztp/scripts/ibi_seed.sample.yaml
  - ztp/scripts/kustomization.yaml
  - ztp/scripts/kube_compare.sh
  - ztp/scripts/kube_compare_metadata.yaml
@@ -160,6 +170,13 @@
  - origin: {{ spoke_policies_dir }}
    path: /root/ztp/scripts/site-policies
    render: false
+{% endif %}
+{% if seed_spokes %}
+ - path: /root/ztp/scripts/seeds.txt
+   content: |
+{% for spoke in seed_spokes %}
+     {{ spoke }}
+{% endfor %}
 {% endif %}
 {% if launch_steps %}
  cmds:

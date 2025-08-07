@@ -32,4 +32,9 @@ if [ -d /root/ztp/scripts/site-policies ] ; then
   /root/ztp/scripts/06_compliance.sh
 fi
 
+if [ -f /root/ztp/scripts/seeds.txt ] ; then
+  echo -e "${blue}************ RUNNING ztp/scripts/07_ibi.sh ************${clear}"
+  /root/ztp/scripts/07_ibi.sh
+fi
+
 {% endif %}

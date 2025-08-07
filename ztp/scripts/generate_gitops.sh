@@ -46,8 +46,8 @@ if [[ "$REPO_URL" =~ "$GIT_SERVER:3000" ]] ; then
   mkdir -p site-configs/$HUB
   touch site-configs/$HUB/.gitkeep
   cp /root/ztp/scripts/kustomization.yaml site-configs
-  mv /root/ztp/scripts/requirements.yml site-configs/$HUB
-  mv /root/ztp/scripts/clusterinstances.yml site-configs/$HUB
+  mv /root/ztp/scripts/requirements.yaml site-configs/$HUB
+  mv /root/ztp/scripts/clusterinstances.yaml site-configs/$HUB
   if [ -d /root/ztp/scripts/site-policies ] ; then
     if [ "$REGISTRY" != "registry.redhat.io" ] ; then
       sed -i "s/image: registry.redhat.io/image: $REGISTRY/" /root/ztp/scripts/site-policies/*
