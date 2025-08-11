@@ -37,17 +37,17 @@ spokes:
     logicalGroup: active
     hardware-type: hw-type-platform-1
     group-du-sno: ""
-# - name: spoke2
-#   ibi: true
-#   ctlplanes: 1
-#   workers: 0
-#   disk_minimum_size: 110
-#   virtual_nodes: 1
-#   labels:
-#     common: "true"
-#     logicalGroup: active
-#     hardware-type: hw-type-platform-1
-#     group-du-sno: ""
+- name: spoke2
+  ibi: true
+  ctlplanes: 1
+  workers: 0
+  disk_minimum_size: 110
+  virtual_nodes: 1
+  labels:
+    common: "true"
+    logicalGroup: active
+    hardware-type: hw-type-platform-1
+    group-du-sno: ""
 installer_disk_size: 200
 notify: true
 nfs: true

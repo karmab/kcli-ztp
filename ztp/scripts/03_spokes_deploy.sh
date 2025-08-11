@@ -16,7 +16,6 @@ kcli delete iso -y {{ spoke.name }}.iso || true
 {% endif %}
 {% endfor %}
 
-
 envsubst < /root/ztp/scripts/requirements.sample.yaml > /root/ztp/scripts/requirements.yaml
 envsubst < /root/ztp/scripts/clusterinstances.sample.yaml > /root/ztp/scripts/clusterinstances.yaml
 

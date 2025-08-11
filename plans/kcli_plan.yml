@@ -34,6 +34,7 @@
 
 {% set snoplus_spokes = [] %}
 {% set seed_spokes = [] %}
+{% set ibi_spokes = [] %}
 
 {% for spoke in spokes %}
 {% set spoke_name = spoke.name %}
@@ -45,6 +46,9 @@
 {% endif %}
 {% if spoke_ctlplanes_number == 1 and spoke_workers_number == 0 and spoke.get('seed', False) %}
 {% do seed_spokes.append(spoke_name) %}
+{% endif %}
+{% if spoke_ctlplanes_number == 1 and spoke_workers_number == 0 and spoke.get('ibi', False) %}
+{% do ibi_spokes.append(spoke_name) %}
 {% endif %}
 {% endfor %}
 
@@ -153,6 +157,8 @@
  - ztp/scripts/requirements.sample.yaml
  - ztp/scripts/clusterinstances.sample.yaml
  - ztp/scripts/ibi_seed.sample.yaml
+ - ztp/scripts/image-based-installation-config.sample.yaml
+ - ztp/scripts/image-based-installation-config.sh
  - ztp/scripts/kustomization.yaml
  - ztp/scripts/kube_compare.sh
  - ztp/scripts/kube_compare_metadata.yaml
@@ -172,9 +178,13 @@
    render: false
 {% endif %}
 {% if seed_spokes %}
- - path: /root/ztp/scripts/seeds.txt
+ - path: /root/ztp/scripts/seed.txt
+   content: {{ seed_spokes[-1] }}
+{% endif %}
+{% if ibi_spokes %}
+ - path: /root/ztp/scripts/ibis.txt
    content: |
-{% for spoke in seed_spokes %}
+{% for spoke in ibi_spokes %}
      {{ spoke }}
 {% endfor %}
 {% endif %}

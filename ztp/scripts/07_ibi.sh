@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-oc delete managedcluster $(cat /root/ztp/scripts/seeds.txts | xargs)
-for SPOKE in $(cat /root/ztp/scripts/seeds.txt) ; do
+SPOKE=$(cat /root/ztp/scripts/seed.txt)
+oc delete managedcluster $SPOKE
 
 export KUBECONFIG=/root/kubeconfig.$SPOKE
 kcli create app lifecycle-agent
@@ -29,4 +29,9 @@ while [ "$(oc get seedgen | grep SeedGenCompleted)" == "" ] ; do
   sleep 60
 done
 
-done
+if [ -f /root/ibis.txt ] ; then
+  bash ztp/scripts/image-based-installation-config.sh
+  for spoke in $(cat /root/ibis.txt) ; do
+    echo $spoke
+  done
+fi

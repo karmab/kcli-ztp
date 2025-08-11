@@ -1,7 +1,9 @@
 export HOME=/root
 export PYTHONUNBUFFERED=true
 {% for spoke in spokes %}
-{% set spoke_deploy = spoke.get('deploy', spoke_deploy) %}
+{% set spoke_hold_installation = spoke.get('ibi', False) %}
+{% set spoke_deploy = spoke.get('deploy', spoke_deploy and not spoke_hold_installation) %}
+{% set spoke_hold_installation = spoke.get('ibi', False) %}
 {% set spoke_ctlplanes_number = spoke.get('ctlplanes', 1) %}
 {% set spoke_workers_number = spoke.get('workers', 0) %}
 {% set spoke_seed = spoke_ctlplanes_number == 1 and spoke_workers_number == 0 and spoke.get('seed', False) %}
