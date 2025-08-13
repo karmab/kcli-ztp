@@ -1,9 +1,7 @@
-{% set total_number = namespace(value=0) %}
 
-{% for spoke in spokes %}
+{% set spoke = spokes[index] %}
 {% set new_value = spoke.virtual_nodes|default(0) %}
 {% set spoke_name = spoke.name %}
-{% set spoke_hold_installation = spoke.get('ibi', False) %}
 {% set spoke_network_type = spoke.network_type|default(spoke_network_type) %}
 {% set spoke_disk_path = spoke.disk_path|default(default_disk) %}
 {% set spoke_disk_minimum_size = spoke.disk_minimum_size|default(spoke_disk_minimum_size) %}
@@ -55,13 +53,11 @@
 {% if virtual_nodes_number > 0 %}
 {% set extra_nodes = [] %}
 {% for num in range(0, virtual_nodes_number) %}
-{% set new_node = {'ip': static_ips[ctlplanes + workers + total_number.value + num]} if static_network and static_ips|length > ctlplanes + workers + total_number.value + num else {} %}
+{% set new_node = {'ip': static_ips[ctlplanes + workers + total_number + num]} if static_network and static_ips|length > ctlplanes + workers + total_number + num else {} %}
 {% do extra_nodes.append(new_node) %}
 {% endfor %}
 {% set nodes = extra_nodes + nodes %}
 {% endif %}
-
----
 apiVersion: siteconfig.open-cluster-management.io/v1alpha1
 kind: ClusterInstance
 metadata:
@@ -101,7 +97,6 @@ spec:
   apiVIP: {{ spoke_api_ip }}
   ingressVIP: {{ spoke_ingress_ip }}
 {% endif %}
-  holdInstallation: {{ spoke_hold_installation }}
   ignitionConfigOverride: '{"ignition":{"version":"3.2.0"},"storage":{"files":[{"path":"/etc/containers/policy.json","mode":420,"overwrite":true,"contents":{"source":"data:text/plain;charset=utf-8;base64,ewogICAgImRlZmF1bHQiOiBbCiAgICAgICAgewogICAgICAgICAgICAidHlwZSI6ICJpbnNlY3VyZUFjY2VwdEFueXRoaW5nIgogICAgICAgIH0KICAgIF0sCiAgICAidHJhbnNwb3J0cyI6CiAgICAgICAgewogICAgICAgICAgICAiZG9ja2VyLWRhZW1vbiI6CiAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgIiI6IFt7InR5cGUiOiJpbnNlY3VyZUFjY2VwdEFueXRoaW5nIn1dCiAgICAgICAgICAgICAgICB9CiAgICAgICAgfQp9"}}]}}'
   machineNetwork:
   - cidr: {{ baremetal_cidr }}
@@ -126,7 +121,7 @@ spec:
 {% if 'mac' in node %}
 {% set mac = node.mac %}
 {% else %}
-{% set mac = "%s:%0.2d" % (virtual_mac_prefix, ctlplanes + workers + total_number.value + num + 1) %}
+{% set mac = "%s:%0.2d" % (virtual_mac_prefix, ctlplanes + workers + total_number + num + 1) %}
 {% endif %}
   - automatedCleaningMode: "disabled"
     {% if 'redfish_address' in node %}
@@ -245,7 +240,4 @@ spec:
     templateRefs:
     - name: ai-node-templates-v1
       namespace: open-cluster-management
-{% endfor %}
----
-{% set total_number.value = total_number.value + virtual_nodes_number %}
 {% endfor %}

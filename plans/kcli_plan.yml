@@ -1,3 +1,4 @@
+{% set total_number = namespace(value=0) %}
 {% set all_operators = [] %}
 {% for operator in disconnected_operators %}
 {% set operator_name = operator.name if operator.name is defined else operator %}
@@ -154,8 +155,6 @@
  - ztp/scripts/07_ibi.sh
  - ztp/scripts/gitops
  - ztp/scripts/generate_gitops.sh
- - ztp/scripts/requirements.sample.yaml
- - ztp/scripts/clusterinstances.sample.yaml
  - ztp/scripts/ibi_seed.sample.yaml
  - ztp/scripts/image-based-installation-config.sample.yaml
  - ztp/scripts/image-based-installation-config.sh
@@ -165,6 +164,17 @@
  - path: /root/ztp/scripts/kubeconfig.sh
    origin: ztp/scripts/kubeconfig.sh
  - ztp/scripts/gitea.service
+{% for spoke in spokes %}
+{% set virtual_nodes_number = spoke.virtual_nodes|default(0) %}
+ - path: /spokes/requirements_{{ spoke.name }}.sample.yaml
+   origin: ztp/scripts/requirements.sample.yaml
+   index: {{ loop.index0 }}
+ - path: /spokes/clusterinstance_{{ spoke.name }}.sample.yaml
+   origin: ztp/scripts/clusterinstance.sample.yaml
+   index: {{ loop.index0 }}
+   total_number: {{ total_number.value }}
+{% set total_number.value = total_number.value + virtual_nodes_number %}
+{% endfor %}
 {% if snoplus_spokes %}
  - path: /root/ztp/scripts/snoplus.txt
    content: |

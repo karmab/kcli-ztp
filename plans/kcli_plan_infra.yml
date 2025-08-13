@@ -1,5 +1,9 @@
 {% set virtual_disks = [{'size': disk_size, 'interface': disk_interface}] + extra_disks %}
 
+{% if starlink %}
+{% set ctlplanes = 1 %}
+{% endif %}
+
 {% if fake_network %}
 {{ baremetal_net }}:
  type: network

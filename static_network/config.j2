@@ -1,4 +1,4 @@
-{% macro config(ip, prefix, gateway, dns, cluster, domain, nic) -%}
+{% macro config(ip, prefix, gateway, dns, cluster, domain, nic, dual_ip, dual_prefix) -%}
    routes:
      config:
      - destination: {{ '::/0' if ':' in ip else '0.0.0.0/0' }}
@@ -20,5 +20,12 @@
          prefix-length: {{ prefix }}
        enabled: true
      {{ 'ipv4' if ':' in ip else 'ipv6' }}:
+{% if dual_ip != None %}
+       address:
+       - ip: {{ dual_ip }}
+         prefix-length: {{ dual_prefix|default(24) }}
+       enabled: true
+{% else %}
        enabled: false
+{%- endif -%}
 {%- endmacro -%}
