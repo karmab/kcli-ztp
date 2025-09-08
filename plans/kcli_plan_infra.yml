@@ -54,16 +54,8 @@
 {% set total_number = namespace(value=0) %}
 {% for spoke in spokes %}
 {% set spoke_name = spoke.name %}
-{% set spoke_api_ip = spoke.get('api_ip') %}
-{% set spoke_ingress_ip= spoke.get('ingress_ip') %}
-{% set spoke_ctlplanes_number = spoke.get('ctlplanes', 1) %}
-{% set spoke_workers_number = spoke.get('workers', 0) %}
-{% set virtual_nodes_number = spoke.get('virtual_nodes', 0) %}
 {% set spoke_uefi = spoke.get('uefi', spoke_uefi) %}
-{% set spoke_virtual_nodes_numcpus = spoke.get('virtual_nodes_numcpus', spoke_virtual_nodes_numcpus) %}
-{% set spoke_virtual_nodes_memory = spoke.get('virtual_nodes_memory', spoke_virtual_nodes_memory) %}
-{% set spoke_virtual_nodes_disk_size = spoke.get('virtual_nodes_disk_size', spoke_virtual_nodes_disk_size) %}
-{% set spoke_virtual_nodes_disk_interface = spoke.get('virtual_nodes_disk_interface', spoke_virtual_nodes_disk_interface) %}
+{% set virtual_nodes_number = spoke.get('virtual_nodes', 0) %}
 
 {% if virtual_nodes_number > 0 %}
 {% for num in range(0, virtual_nodes_number) %}

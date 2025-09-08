@@ -1,5 +1,10 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- {{ cluster }}/requirements.yml
-- {{ cluster }}/clusterinstances.yml
+{% for spoke in spokes %}
+{% set ibi = spoke.get('ibi', False) %}
+{% if not ibi %}
+- {{ cluster }}/requirements_{{ spoke.name }}.yaml
+- {{ cluster }}/clusterinstance_{{ spoke.name }}.yaml
+{% endif %}
+{% endfor %}

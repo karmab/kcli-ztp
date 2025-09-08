@@ -153,10 +153,10 @@ echo disconnected_url cant use an ip. Considering using sslip.io && exit 1
 {% set total_spoke_nodes_number = namespace(value=0) %}
 {% for spoke in spokes %}
 {% set spoke_name = spoke.get('name') %}
-{% set spoke_api_ip = spoke.get('api_ip') %}
-{% set spoke_ingress_ip= spoke.get('ingress_ip') %}
-{% set spoke_ctlplanes_number = spoke.get('ctlplanes', 1) %}
-{% set spoke_workers_number = spoke.get('workers', 0) %}
+{% set api_ip = spoke.get('api_ip') %}
+{% set ingress_ip= spoke.get('ingress_ip') %}
+{% set ctlplanes_number = spoke.get('ctlplanes', 1) %}
+{% set workers_number = spoke.get('workers', 0) %}
 {% set virtual_nodes_number = spoke.get('virtual_nodes', 0) %}
 {% if spoke_name == None %}
 echo spoke_name needs to be on each entry of spokes && exit 1
@@ -164,18 +164,18 @@ echo spoke_name needs to be on each entry of spokes && exit 1
 echo Incorrect spoke_name {{ spoke_name }}: cant contain an underscore && exit 1
 {% endif %}
 kcli delete iso --yes {{ spoke_name }}.iso || true
-{% if spoke_ctlplanes_number <= 0 %}
-echo Incorrect spoke ctlplanes {{ spoke_ctlplanes_number }} in {{ spoke_name }}: must be higher than 0 && exit 1
+{% if ctlplanes_number <= 0 %}
+echo Incorrect spoke ctlplanes {{ ctlplanes_number }} in {{ spoke_name }}: must be higher than 0 && exit 1
 {% endif %}
-{% if spoke_workers_number < 0 %}
-echo Incorrect spoke workers {{ spoke_workers_number }} in {{ spoke_name }}: cant be negative && exit 1
+{% if workers_number < 0 %}
+echo Incorrect spoke workers {{ workers_number }} in {{ spoke_name }}: cant be negative && exit 1
 {% endif %}
-{% if spoke_ctlplanes_number > 1 %}
-{% if spoke_api_ip == None %}
-echo no spoke_api_ip. This is mandatory for an HA spoke && exit 1
+{% if ctlplanes_number > 1 %}
+{% if api_ip == None %}
+echo no spoke api_ip. This is mandatory for an HA spoke && exit 1
 {% endif %}
-{% if spoke_ingress_ip == None %}
-echo no spoke_ingress_ip. This is mandatory for an HA spoke && exit 1
+{% if ingress_ip == None %}
+echo no spoke ingress_ip. This is mandatory for an HA spoke && exit 1
 {% endif %}
 {% endif %}
 
@@ -185,7 +185,7 @@ echo no spoke_ingress_ip. This is mandatory for an HA spoke && exit 1
 {% endif %}
 {% endfor %}
 
-{% set total_spoke_nodes_number.value = total_spoke_nodes_number.value + spoke_ctlplanes_number + spoke_workers_number %}
+{% set total_spoke_nodes_number.value = total_spoke_nodes_number.value + ctlplanes_number + workers_number %}
 {% endfor %}
 
 {% set total_ctlplanes = baremetal_ctlplanes|length %}

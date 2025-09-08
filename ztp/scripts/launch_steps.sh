@@ -10,26 +10,28 @@ export KUBECONFIG=/root/ocp/auth/kubeconfig
 echo -e "${blue}************ RUNNING ztp/scripts/01_assisted-service.sh ************${clear}"
 /root/ztp/scripts/01_assisted-service.sh
 
-{% if gitops_repo_url == None %}
 echo -e "${blue}************ RUNNING ztp/scripts/02_git.sh ************${clear}"
 /root/ztp/scripts/02_git.sh
-{% endif %}
 
-{% if spoke_deploy and (spokes|length > 0 or gitops_repo_url != None) %}
+{% if spokes|length > 0 %}
 echo -e "${blue}************ RUNNING ztp/scripts/03_spokes_deploy.sh ************${clear}"
 /root/ztp/scripts/03_spokes_deploy.sh
 
 echo -e "${blue}************ RUNNING ztp/scripts/04_spokes_wait.sh ************${clear}"
 /root/ztp/scripts/04_spokes_wait.sh
 
-if [ -f /root/ztp/scripts/snoplus.txt ] ; then
-  echo -e "${blue}************ RUNNING ztp/scripts/05_snoplus.sh ************${clear}"
-  /root/ztp/scripts/05_snoplus.sh
-fi
-
 if [ -d /root/ztp/scripts/site-policies ] ; then
-  echo -e "${blue}************ RUNNING ztp/scripts/06_compliance.sh ************${clear}"
-  /root/ztp/scripts/06_compliance.sh
+  echo -e "${blue}************ RUNNING ztp/scripts/07_compliance.sh ************${clear}"
+  /root/ztp/scripts/05_compliance.sh
 fi
 
+if [ -f /root/ztp/scripts/seed.txt ] ; then
+  echo -e "${blue}************ RUNNING ztp/scripts/06_seed.sh ************${clear}"
+  /root/ztp/scripts/06_seed.sh
+fi
+
+if [ -f /root/ztp/scripts/ibis.txt ] ; then
+  echo -e "${blue}************ RUNNING ztp/scripts/07_ibis.sh ************${clear}"
+  /root/ztp/scripts/07_ibis.sh
+fi
 {% endif %}

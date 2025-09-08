@@ -23,20 +23,21 @@ spec:
     spec:
       disableDrain: true
       enableOperatorWebhook: '{{hub fromConfigMap "" "group-hardware-types-configmap" (printf "%s-supported-sriov-nic" (index .ManagedClusterLabels "hardware-type")) | toBool hub}}'
-  - fileName: StorageLVMCluster.yaml
-    # Using hub templating to obtain the storage device name for this hw type
-    spec:
-      storage:
-        deviceClasses:
-        - name: vg1
-          thinPoolConfig:
-            name: thin-pool-1
-            sizePercent: 90
-            overprovisionRatio: 10
-          deviceSelector:
-            paths:
-            - '{{hub fromConfigMap "" "group-hardware-types-configmap" (printf "%s-storage-path" (index .ManagedClusterLabels "hardware-type")) hub}}'
-    policyName: "group-policy"
+# Commented for ibi testing
+#  - fileName: StorageLVMCluster.yaml
+#    # Using hub templating to obtain the storage device name for this hw type
+#    spec:
+#      storage:
+#        deviceClasses:
+#        - name: vg1
+#          thinPoolConfig:
+#            name: thin-pool-1
+#            sizePercent: 90
+#            overprovisionRatio: 10
+#          deviceSelector:
+#            paths:
+#            - '{{hub fromConfigMap "" "group-hardware-types-configmap" (printf "%s-storage-path" (index .ManagedClusterLabels "hardware-type")) hub}}'
+#    policyName: "group-policy"
   - fileName: PerformanceProfile.yaml
     # Using hub templating to obtain if the tunning config for this hw type
     policyName: "group-policy"

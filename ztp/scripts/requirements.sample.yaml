@@ -1,11 +1,6 @@
-{% for spoke in spokes %}
-{% set spoke_name = spoke.name %}
+{% set spoke = spokes[index] %}
 {% set virtual_nodes_number = spoke.get('virtual_nodes', 0) %}
 
-{% set spoke_ctlplanes_number = spoke.get('ctlplanes', 1) %}
-{% set spoke_workers_number = spoke.get('workers', 0) %}
-
-{% set spoke_snoplus = True if spoke_ctlplanes_number == 1 and spoke_workers_number == 1 else False %}
 {% set nodes = spoke.get('baremetal_nodes', []) %}
 
 {% if virtual_nodes_number > 0 %}
@@ -14,22 +9,19 @@
 {% do extra_nodes.append({}) %}
 {% endfor %}
 {% set nodes = extra_nodes + nodes %}
-{% if spoke_snoplus %}
-{% set nodes = [nodes[0]] %}
-{% endif %}
 {% endif %}
 
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: {{ spoke_name }}
+  name: {{ spoke.name }}
 ---
 apiVersion: v1
 kind: Secret
 metadata:
   name: assisted-deployment-pull-secret
-  namespace: {{ spoke_name }}
+  namespace: {{ spoke.name }}
 stringData:
   .dockerconfigjson: '${PULLSECRET}'
   type: kubernetes.io/dockerconfigjson
@@ -42,9 +34,8 @@ data:
   username: {{ bmc_user|string|base64 }}
 kind: Secret
 metadata:
-  name: {{ cluster }}-ztp-{{ spoke_name }}-bmc-secret-{{ num }}
-  namespace: {{ spoke_name }}
+  name: {{ cluster }}-ztp-{{ spoke.name }}-bmc-secret-{{ num }}
+  namespace: {{ spoke.name }}
 type: Opaque
 ---
-{% endfor%}
 {% endfor%}

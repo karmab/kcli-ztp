@@ -1,3 +1,4 @@
+{% set total_number = namespace(value=0) %}
 {% set all_operators = [] %}
 {% for operator in disconnected_operators %}
 {% set operator_name = operator.name if operator.name is defined else operator %}
@@ -28,15 +29,18 @@
 {{ disconnected_operators.append("lvms-operator") or "" }}
 {% endif %}
 
-{% set snoplus_spokes = [] %}
+{% if 'lifecycle-agent' not in all_operators %}
+{{ disconnected_operators.append("lifecycle-agent") or "" }}
+{% endif %}
+
+{% set ibi_spokes = [] %}
 
 {% for spoke in spokes %}
 {% set spoke_name = spoke.name %}
 {% set spoke_ctlplanes_number = spoke.get('ctlplanes', 1) %}
 {% set spoke_workers_number = spoke.get('workers', 0) %}
-{% set spoke_snoplus = True if spoke_ctlplanes_number == 1 and spoke_workers_number == 1 else False %}
-{% if spoke_snoplus %}
-{% do snoplus_spokes.append(spoke_name) %}
+{% if spoke_ctlplanes_number == 1 and spoke_workers_number == 0 and spoke.get('ibi', False) %}
+{% do ibi_spokes.append(spoke_name) %}
 {% endif %}
 {% endfor %}
 
@@ -132,34 +136,51 @@
 {% if dns %}
  - dnsmasq.conf
 {% endif %}
+{% for spoke in spokes %}
+{% set virtual_nodes_number = spoke.virtual_nodes|default(0) %}
+ - path: /root/ztp/scripts/requirements_{{ spoke.name }}.sample.yaml
+   origin: ztp/scripts/requirements.sample.yaml
+   index: {{ loop.index0 }}
+ - path: /root/ztp/scripts/clusterinstance_{{ spoke.name }}.sample.yaml
+   origin: ztp/scripts/clusterinstance.sample.yaml
+   index: {{ loop.index0 }}
+   total_number: {{ total_number.value }}
+{% set total_number.value = total_number.value + virtual_nodes_number %}
+{% if loop.index0 == 0 and spoke.get('ctlplanes', 1) == 1 and spoke.get('workers', 0) == 0 and spoke.get('seed', False) %}
+ - path: /root/ztp/scripts/seed.txt
+   content: {{ spoke.name }}
+{% endif %}
+{% endfor %}
  - ztp/scripts/launch_steps.sh
  - ztp/scripts/01_assisted-service.sh
  - ztp/scripts/02_git.sh
  - ztp/scripts/03_spokes_deploy.sh
  - ztp/scripts/04_spokes_wait.sh
- - ztp/scripts/05_snoplus.sh
- - ztp/scripts/06_compliance.sh
+ - ztp/scripts/05_compliance.sh
+ - ztp/scripts/06_seed.sh
+ - ztp/scripts/07_ibis.sh
  - ztp/scripts/gitops
- - ztp/scripts/generate_gitops.sh
- - ztp/scripts/requirements.sample.yml
- - ztp/scripts/clusterinstances.sample.yml
+ - ztp/scripts/ibi_seed.sample.yaml
+ - origin: ztp/scripts/image-based-installation-config.sample.yaml
+   path: /root/ztp/scripts/image-based-installation-config.sample.yaml
+   total_number: {{ total_number.value }}
  - ztp/scripts/kustomization.yaml
  - ztp/scripts/kube_compare.sh
  - ztp/scripts/kube_compare_metadata.yaml
  - path: /root/ztp/scripts/kubeconfig.sh
    origin: ztp/scripts/kubeconfig.sh
  - ztp/scripts/gitea.service
-{% if snoplus_spokes %}
- - path: /root/ztp/scripts/snoplus.txt
-   content: |
-{% for spoke in snoplus_spokes %}
-     {{ spoke }}
-{% endfor %}
-{% endif %}
 {% if spoke_policies_dir|exists %}
  - origin: {{ spoke_policies_dir }}
    path: /root/ztp/scripts/site-policies
    render: false
+{% endif %}
+{% if ibi_spokes %}
+ - path: /root/ztp/scripts/ibis.txt
+   content: |
+{% for spoke in ibi_spokes %}
+     {{ spoke }}
+{% endfor %}
 {% endif %}
 {% if launch_steps %}
  cmds:
