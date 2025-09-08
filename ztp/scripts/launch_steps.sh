@@ -31,7 +31,9 @@ if [ -f /root/ztp/scripts/seed.txt ] ; then
 fi
 
 if [ -f /root/ztp/scripts/ibis.txt ] ; then
-  echo -e "${blue}************ RUNNING ztp/scripts/07_ibis.sh ************${clear}"
-  /root/ztp/scripts/07_ibis.sh
+  echo -e "${blue}************ RUNNING ztp/scripts/07_ibis_deploy.sh ************${clear}"
+  /root/ztp/scripts/07_ibis_deploy.sh
+  echo -e "${blue}************ RUNNING ztp/scripts/07_ibis_wait.sh ************${clear}"
+  /root/ztp/scripts/08_ibis_wait.sh
 fi
 {% endif %}

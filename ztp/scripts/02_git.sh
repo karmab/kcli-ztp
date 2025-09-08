@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+export HOME=/root
 {% if dns and disconnected %}
 GIT_SERVER=registry.{{ cluster }}.{{ domain }}
 {% else %}

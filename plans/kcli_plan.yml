@@ -149,6 +149,8 @@
 {% if loop.index0 == 0 and spoke.get('ctlplanes', 1) == 1 and spoke.get('workers', 0) == 0 and spoke.get('seed', False) %}
  - path: /root/ztp/scripts/seed.txt
    content: {{ spoke.name }}
+ - ztp/scripts/06_seed.sh
+ - ztp/scripts/ibi_seed.sample.yaml
 {% endif %}
 {% endfor %}
  - ztp/scripts/launch_steps.sh
@@ -157,30 +159,29 @@
  - ztp/scripts/03_spokes_deploy.sh
  - ztp/scripts/04_spokes_wait.sh
  - ztp/scripts/05_compliance.sh
- - ztp/scripts/06_seed.sh
- - ztp/scripts/07_ibis.sh
  - ztp/scripts/gitops
- - ztp/scripts/ibi_seed.sample.yaml
- - origin: ztp/scripts/image-based-installation-config.sample.yaml
-   path: /root/ztp/scripts/image-based-installation-config.sample.yaml
-   total_number: {{ total_number.value }}
  - ztp/scripts/kustomization.yaml
  - ztp/scripts/kube_compare.sh
  - ztp/scripts/kube_compare_metadata.yaml
  - path: /root/ztp/scripts/kubeconfig.sh
    origin: ztp/scripts/kubeconfig.sh
  - ztp/scripts/gitea.service
-{% if spoke_policies_dir|exists %}
- - origin: {{ spoke_policies_dir }}
-   path: /root/ztp/scripts/site-policies
-   render: false
-{% endif %}
 {% if ibi_spokes %}
+ - origin: ztp/scripts/image-based-installation-config.sample.yaml
+   path: /root/ztp/scripts/image-based-installation-config.sample.yaml
+   total_number: {{ total_number.value }}
+ - ztp/scripts/07_ibis_deploy.sh
+ - ztp/scripts/08_ibis_wait.sh
  - path: /root/ztp/scripts/ibis.txt
    content: |
 {% for spoke in ibi_spokes %}
      {{ spoke }}
 {% endfor %}
+{% endif %}
+{% if spoke_policies_dir|exists %}
+ - origin: {{ spoke_policies_dir }}
+   path: /root/ztp/scripts/site-policies
+   render: false
 {% endif %}
 {% if launch_steps %}
  cmds:
