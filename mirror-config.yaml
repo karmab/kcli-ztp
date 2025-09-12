@@ -30,7 +30,7 @@ mirror:
   operators:
 {% if disconnected_operators|default([]) %}
 {% set catalog = 'quay.io/prega/prega-operator-index' if prega|default(False) else 'registry.redhat.io/redhat/redhat-operator-index' %}
-  - catalog: {{ catalog }}:{{ disconnected_operators_version or "v%s" % OPENSHIFT_TAG }}
+  - catalog: {{ catalog }}:{{ prega_tag or disconnected_operators_version or "v%s" % OPENSHIFT_TAG }}
     packages:
 {% for package in disconnected_operators %}
 {% if package.name is defined %}

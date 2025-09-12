@@ -65,6 +65,7 @@ disconnected_extra_catalogs: []
 disconnected_extra_release:
 disconnected_clean_pull_secret: false
 prega: false
+prega_tag:
 nfs: false
 imageregistry: false
 go_version: 1.13.8
