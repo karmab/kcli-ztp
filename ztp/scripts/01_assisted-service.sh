@@ -5,7 +5,7 @@ export PATH=/root/bin:$PATH
 
 {% if acm %}
 APP=advanced-cluster-management
-SOURCE_ARGS="-P acm_mce_catalog=$(kcli info app multicluster-engine | grep ^source: | cut -d: -f2 | xargs)"
+SOURCE_ARGS="-P acm_ibi=true -P acm_mce_catalog=$(kcli info app multicluster-engine | grep ^source: | cut -d: -f2 | xargs)"
 {% else %}
 APP=multicluster-engine
 SOURCE_ARGS=""
