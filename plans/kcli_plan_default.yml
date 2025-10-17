@@ -65,6 +65,7 @@ disconnected_extra_catalogs: []
 disconnected_extra_release:
 disconnected_clean_pull_secret: false
 disconnected_to_file: false
+disconnected_to_registry: false
 prega: false
 prega_tag:
 nfs: false
@@ -91,7 +92,6 @@ wait_for_workers: true
 wait_for_workers_number:
 wait_for_workers_timeout: 3600
 manifests_dir: manifests
-workflow_installer: false
 OPENSHIFT_TAG: 4.19
 
 acm: true

@@ -100,7 +100,7 @@
 {% endif %}
  - path: /root/.bashrc
    origin: envfiles/bashrc
-{% if not offline|default(False) and not workflow_installer %}
+{% if not offline|default(False) %}
  - path: /root/.kcli/config.yml
    origin: bin/kcli_config.yml
 {% endif %}
