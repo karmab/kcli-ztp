@@ -112,6 +112,7 @@ Note that you can use the baseplan `kcli_plan_infra.yml` to deploy the infrastru
 |disconnected_operators                       |[]                           |
 |disconnected_operators_version               |None                         |
 |disconnected_password                        |dummy                        |
+|disconnected_to_file                         |False                        |
 |disconnected_url                             |None                         |
 |disconnected_user                            |dummy                        |
 |dns                                          |False                        |
@@ -171,7 +172,6 @@ Note that you can use the baseplan `kcli_plan_infra.yml` to deploy the infrastru
 |wait_for_workers                             |True                         |
 |wait_for_workers_number                      |None                         |
 |wait_for_workers_timeout                     |3600                         |
-|workflow_installer                           |False                        |
 
 ### Node parameters
 
