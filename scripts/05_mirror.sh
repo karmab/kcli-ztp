@@ -79,7 +79,8 @@ fi
 mkdir -p /root/.docker
 cp -f /root/openshift_pull.json /root/.docker/config.json
 
-oc-mirror --v2 --workspace file:// --config=mirror-config.yaml docker://$REGISTRY:$REGISTRY_PORT
+DESTINATION={{ 'file:///root/ocp-mirroring' if disconnected_to_file else 'docker://$REGISTRY:$REGISTRY_PORT' }}
+oc-mirror --v2 --workspace file:// --config=mirror-config.yaml $DESTINATION
 
 sed -i 's@quay.io/prega/test@registry.redhat.io@' /root/working-dir/cluster-resources/idms-oc-mirror.yaml
 

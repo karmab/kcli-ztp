@@ -64,6 +64,7 @@ disconnected_extra_images: []
 disconnected_extra_catalogs: []
 disconnected_extra_release:
 disconnected_clean_pull_secret: false
+disconnected_to_file: false
 prega: false
 prega_tag:
 nfs: false
