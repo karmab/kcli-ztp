@@ -24,12 +24,15 @@ exit 1
 {% endif %}
 {% set ctlplanes_hosts = baremetal_ctlplanes + virtual_ctlplanes_nodes %}
 
-{% if ctlplanes_hosts|length > 1 and api_ip == None %}
-echo api_ip not set. No network, no party!
+{% if ctlplanes_hosts|length < 1 %}
+echo No ctlplanes specified
+exit 1
+{% elif ctlplanes_hosts|length > 1 and api_ip == None %}
+echo api_ip not set
 exit 1
 {% endif %}
 {% if ctlplanes_hosts|length > 1 and ingress_ip == None %}
-echo ingress_ip not set. No network, no party!
+echo ingress_ip not set
 exit 1
 {% endif %}
 {% if api_ip != None and ingress_ip != None and api_ip == ingress_ip %}
