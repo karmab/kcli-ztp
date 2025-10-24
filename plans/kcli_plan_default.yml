@@ -22,7 +22,7 @@ installer_ip:
 installer_mac:
 installer_wait: false
 version: stable
-tag: "4.19"
+tag: "4.20"
 openshift_image:
 network_type: OVNKubernetes
 dualstack: false
@@ -92,7 +92,7 @@ wait_for_workers: true
 wait_for_workers_number:
 wait_for_workers_timeout: 3600
 manifests_dir: manifests
-OPENSHIFT_TAG: 4.19
+OPENSHIFT_TAG: '4.20'
 
 acm: true
 gitops_user: dummy

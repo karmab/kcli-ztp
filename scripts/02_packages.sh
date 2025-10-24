@@ -33,7 +33,7 @@ oc completion bash >>/etc/bash_completion.d/oc_completion
 export OCP_RELEASE=$(openshift-install version | head -1 | cut -d' ' -f2)-x86_64
 export MINOR=$(echo $OCP_RELEASE | cut -d. -f1,2)
 SITE_GENERATE_REGISTRY={{ 'registry.stage.redhat.io' if 'rc' in tag else 'registry.redhat.io' }}
-SITE_GENERATE_TAG=v{{ '4.19' if version in ['candidate', 'ci'] else '$MINOR' }}
+SITE_GENERATE_TAG=v{{ '4.20' if version in ['candidate', 'ci'] else '$MINOR' }}
 REDHAT_CREDS=$(cat /root/openshift_pull.json | jq .auths.\"$SITE_GENERATE_REGISTRY\".auth -r | base64 -d)
 RHN_USER=$(echo $REDHAT_CREDS | cut -d: -f1)
 RHN_PASSWORD=$(echo $REDHAT_CREDS | cut -d: -f2)
