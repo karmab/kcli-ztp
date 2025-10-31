@@ -26,7 +26,7 @@ DISCONNECTED_ARGS="-P disconnected_url=${REGISTRY_NAME}:$LOCAL_PORT"
 DISCONNECTED_ARGS=""
 {% endif %}
 
-EXTRA_ARGS="{{ ' -P assisted=true -P pull_secret=/root/openshift_pull.json -P assisted_disable_validations=true' if disable_validations|default(False) else '' }}{{  ' -P assisted_converged_flow=true' if converged_flow|default(False) else '' }}"
+EXTRA_ARGS="{{ ' -P kubetype=openshift -P assisted=true -P pull_secret=/root/openshift_pull.json -P assisted_disable_validations=true' if disable_validations|default(False) else '' }}{{  ' -P assisted_converged_flow=true' if converged_flow|default(False) else '' }}"
 
 kcli create app $APP $DISCONNECTED_ARGS $SOURCE_ARGS $EXTRA_ARGS
 sleep 120

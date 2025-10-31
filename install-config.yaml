@@ -5,7 +5,7 @@
 {% set cluster_networks = [cluster_network_ipv4] + [cluster_network_ipv6] %}
 {% set service_networks = [service_network_ipv4] + [service_network_ipv6] %}
 {% set baremetal_cidrs = baremetal_cidrs + [dualstack_cidr] %}
-{% elif ipv6|default(False) or (api_ip is defined and ':' in api_ip) %}
+{% elif ipv6|default(False) or (api_ip != None and ':' in api_ip) %}
 {% set cluster_networks = [cluster_network_ipv6] %}
 {% set service_networks = [service_network_ipv6] %}
 {% else %}
