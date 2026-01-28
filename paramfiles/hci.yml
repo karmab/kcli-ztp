@@ -1,0 +1,125 @@
+fake_network: true
+pool: default
+disconnected: true
+virtual_hub: true
+static_network: true
+version: stable
+tag: '4.20'
+dns: true
+spoke_numcpus: 32
+installer_ip: 192.168.130.251
+cluster: lab
+domain: karmalabs.corp
+baremetal_net: lab-baremetal
+disconnected_operators:
+- cephcsi-operator
+- local-storage-operator
+- mcg-operator
+- ocs-client-operator
+- ocs-operator
+- odf-csi-addons-operator
+- odf-dependencies
+- odf-external-snapshotter-operator
+- odf-operator
+- odf-prometheus-operator
+- recipe
+- rook-ceph-operator
+#baremetal_cidr: 2620:52:0:1302::/64
+#api_ip: 2620:52:0:1302::2
+#ingress_ip: 2620:52:0:1302::3
+#static_ips:
+#- 2620:52:0:1302::20
+#- 2620:52:0:1302::21
+#- 2620:52:0:1302::22
+#- 2620:52:0:1302::23
+#- 2620:52:0:1302::24
+#- 2620:52:0:1302::25
+#- 2620:52:0:1302::26
+#- 2620:52:0:1302::27
+#- 2620:52:0:1302::28
+#- 2620:52:0:1302::29
+#- 2620:52:0:1302::30
+#- 2620:52:0:1302::31
+#- 2620:52:0:1302::32
+
+baremetal_cidr: 192.168.130.0/24
+api_ip: 192.168.130.253
+ingress_ip: 192.168.130.252
+static_ips:
+- 192.168.130.20
+- 192.168.130.21
+- 192.168.130.22
+- 192.168.130.23
+- 192.168.130.24
+- 192.168.130.25
+- 192.168.130.26
+- 192.168.130.27
+- 192.168.130.28
+- 192.168.130.29
+- 192.168.130.30
+- 192.168.130.31
+- 192.168.130.32
+- 192.168.130.33
+
+spokes:
+- name: hci
+  hci: true
+  ctlplanes: 3
+  api_ip: 192.168.130.250
+  ingress_ip: 192.168.130.249
+  workers: 2
+  disk_minimum_size: 110
+  disk_path: /dev/disk/by-id/wwn-0x5000c50015ea71ad
+  virtual_nodes: 5
+  labels:
+    common: "true"
+    logicalGroup: active
+    hardware-type: hw-type-platform-1
+    group-du-sno: ""
+installer_disk_size: 200
+notify: true
+nfs: true
+installer_mac: aa:bb:aa:aa:bb:01
+
+spoke_policies_dir: extras/hci-site-policies
+vmrules:
+- lab-hci-node-0:
+   disks:
+   - size: 300
+     interface: scsi
+     wwn: 5000c50015ea71ad
+   - size: 100
+- lab-hci-node-1:
+   disks:
+   - size: 300
+     interface: scsi
+     wwn: 5000c50015ea71ad
+   - size: 100
+- lab-hci-node-2:
+   disks:
+   - size: 300
+     interface: scsi
+     wwn: 5000c50015ea71ad
+   - size: 100
+- lab-hci-node-3:
+   boot_order: true
+   disks:
+   - size: 300
+     interface: scsi
+     wwn: 5000c50015ea71ad
+   nets:
+   - name: lab-baremetal
+     mac: aa:aa:aa:aa:bb:07
+   - name: sriov-network
+     sriov: true
+- lab-hci-node-4:
+   boot_order: true
+   disks:
+   - size: 300
+     interface: scsi
+     wwn: 5000c50015ea71ad
+   nets:
+   - name: lab-baremetal
+     mac: aa:aa:aa:aa:bb:08
+   - name: sriov-network
+     sriov: true

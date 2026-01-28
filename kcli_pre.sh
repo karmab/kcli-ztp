@@ -166,7 +166,7 @@ echo spoke_name needs to be on each entry of spokes && exit 1
 {% elif '_' in spoke_name %}
 echo Incorrect spoke_name {{ spoke_name }}: cant contain an underscore && exit 1
 {% endif %}
-kcli delete iso --yes {{ spoke_name }}.iso || true
+kcli delete iso -y $(kcli list iso -o name | grep {{ spoke_name }} | xargs) || true
 {% if ctlplanes_number <= 0 %}
 echo Incorrect spoke ctlplanes {{ ctlplanes_number }} in {{ spoke_name }}: must be higher than 0 && exit 1
 {% endif %}

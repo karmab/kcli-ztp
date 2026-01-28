@@ -1,0 +1,21 @@
+apiVersion: ocs.openshift.io/v1
+kind: StorageCluster
+metadata:
+  name: odf-storagecluster
+  namespace: openshift-storage
+spec:
+  monDataDirHostPath: /var/lib/rook
+  storageDeviceSets:
+  - count: 1
+    dataPVCTemplate:
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 60Gi
+        storageClassName: localstorage-sc
+        volumeMode: Block
+    name: odf-deviceset
+    portable: False
+    replica: 3

@@ -12,9 +12,6 @@ export BAREMETAL_IP
 
 {% for spoke in spokes %}
 SPOKE={{ spoke.name }}
-{% if spoke.get('virtual_nodes', 0) > 0 %}
-kcli delete iso -y $SPOKE.iso || true
-{% endif %}
 [ -d /root/spokes ] || mkdir /root/spokes
 envsubst < /root/ztp/scripts/requirements_$SPOKE.sample.yaml > /root/spokes/requirements_$SPOKE.yaml
 envsubst < /root/ztp/scripts/clusterinstance_$SPOKE.sample.yaml > /root/spokes/clusterinstance_$SPOKE.yaml

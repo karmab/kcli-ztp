@@ -34,7 +34,6 @@ restorecon -Frvv /var/www/html/rhcos-ibi.iso
 {% set password = host['bmc_password']|default(bmc_password) %}
 echo $BAREMETAL_IP | grep -q ':' && BAREMETAL_IP=[$BAREMETAL_IP]
 kcli start baremetal -u {{ user }} -p {{ password }} -P iso_url=http://$BAREMETAL_IP/rhcos-ibi.iso {{ url }}
-kcli delete iso -y {{ spoke.name }}.iso || true
 sleep 300
 
 

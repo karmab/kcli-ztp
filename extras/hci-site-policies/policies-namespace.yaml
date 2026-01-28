@@ -1,0 +1,7 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ztp-policies
+  labels:
+    name: ztp-policies

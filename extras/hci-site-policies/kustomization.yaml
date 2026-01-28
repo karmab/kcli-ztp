@@ -1,0 +1,6 @@
+kind: Kustomization
+resources:
+- policies-namespace.yaml
+- group-hardware-types-configmap.yaml
+generators:
+- hci.yaml

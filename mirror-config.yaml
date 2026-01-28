@@ -1,5 +1,5 @@
 {% set release =  '4.' + (tag|string).split('.')[1] if tag|count('.') > 1 else tag %}
-{% set site_generate_registry = 'registry.stage.redhat.io' if 'rc' in tag else 'registry.redhat.io' %}
+{% set site_generate_registry = 'registry.stage.redhat.io' if 'rc' in tag|string else 'registry.redhat.io' %}
 
 {% set ztp_images = ['registry.redhat.io/rhel9/support-tools:latest', 'quay.io/mavazque/gitea:1.17.3', site_generate_registry + '/openshift4/ztp-site-generate-rhel8:v' + OPENSHIFT_TAG|string, 'registry.redhat.io/rhacm2/multicluster-operators-subscription-rhel9:v2.13'] %}
 
@@ -12,7 +12,7 @@ mirror:
     release: registry.ci.openshift.org/ocp/release:{{ tag }}
 {% else %}
     channels:
-    - name: {{ 'candidate' if 'rc' in tag else version }}-{{ release }}
+    - name: {{ 'candidate' if 'rc' in tag|string else version }}-{{ release }}
 {% if tag|count('.') > 1 %}
       minVersion: {{ (disconnected_extra_release or tag)|min_ocp_version(tag) }}
       maxVersion: {{ (disconnected_extra_release or tag)|max_ocp_version(tag) }}

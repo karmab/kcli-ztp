@@ -62,7 +62,7 @@
 
 {{ cluster }}-{{ spoke_name }}-node-{{ num }}:
  pool: {{ pool }}
- redfish_iso: {{ spoke_name }}.iso
+ redfish_iso: {{ spoke_name }}-node-{{ num }}.iso
  image:
  numcpus: {{ spoke_numcpus }}
  start: false

@@ -1,0 +1,95 @@
+---
+apiVersion: ran.openshift.io/v1
+kind: PolicyGenTemplate
+metadata:
+  name: "common"
+  namespace: "ztp-policies"
+spec:
+  bindingRules:
+    common: true
+    logicalGroup: "active"
+    provider: "kcli"
+  mcp: master
+  remediationAction: inform
+  sourceFiles:
+  - fileName: custom/MastersSchedulable.yaml
+    policyName: config
+    spec:
+      mastersSchedulable: true
+  - fileName: DefaultCatsrc.yaml
+    metadata:
+      name: redhat-operator-index
+    spec:
+      image: registry.redhat.io/redhat/redhat-operator-index:v4.20
+    policyName: config-policy
+  - fileName: OperatorHub.yaml
+    policyName: config-policy
+  - fileName: ReduceMonitoringFootprint.yaml
+    policyName: config-policy
+    ################
+    # subscriptions
+    ################
+  - fileName: SriovSubscriptionNS.yaml
+    policyName: subscriptions-policy
+  - fileName: SriovSubscriptionOperGroup.yaml
+    policyName: subscriptions-policy
+  - fileName: SriovSubscription.yaml
+    spec:
+      channel: stable
+      source: redhat-operator-index
+      config:
+        env:
+        - name: "DEV_MODE"
+          value: "TRUE"
+    policyName: subscriptions-policy
+  - fileName: SriovOperatorStatus.yaml
+    policyName: subscriptions-policy
+  - fileName: StorageNS.yaml
+    policyName: subscriptions-policy
+  - fileName: StorageOperGroup.yaml
+    policyName: subscriptions-policy
+  - fileName: StorageSubscription.yaml
+    policyName: subscriptions-policy
+    spec:
+      channel: stable
+      source: redhat-operator-index
+  - fileName: StorageOperatorStatus.yaml
+    policyName: subscriptions-policy
+  - fileName: custom/odf/ns.yaml
+    policyName: subscriptions-policy
+  - fileName: custom/odf/operatorGroup.yaml
+    policyName: subscriptions-policy
+  - fileName: custom/odf/subscription.yaml
+    policyName: subscriptions-policy
+    spec:
+      config:
+        nodeSelector:
+          node-role.kubernetes.io/master: ""
+        tolerations:
+          - effect: NoSchedule
+            key: node-role.kubernetes.io/master
+    ################
+    # storage
+    ################
+  - fileName: StorageLV.yaml
+    policyName: group-policy
+    spec:
+      nodeSelector:
+        nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+              - lab-hci-node-0
+              - lab-hci-node-1
+              - lab-hci-node-2
+      storageClassDevices:
+        - storageClassName: localstorage-sc
+          volumeMode: Block
+          fsType: xfs
+          devicePaths:
+          - /dev/vda
+  - fileName: custom/odf/odf-storage-cluster.yaml
+    policyName: group-policy
+  - fileName: custom/odf/storageClass.yaml
+    policyName: group-policy
