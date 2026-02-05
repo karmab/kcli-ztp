@@ -163,7 +163,7 @@ Note that you can use the baseplan `kcli_plan_infra.yml` to deploy the infrastru
 |static_baremetal_gateway                     |None                         |
 |static_ips                                   |[]                           |
 |static_network                               |False                        |
-|tag                                          |4.20                         |
+|tag                                          |4.21                         |
 |users_admin                                  |admin                        |
 |users_adminpassword                          |admin                        |
 |users_dev                                    |dev                          |
