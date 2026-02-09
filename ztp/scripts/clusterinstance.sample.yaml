@@ -1,4 +1,3 @@
-
 {% set spoke = spokes[index] %}
 {% set new_value = spoke.virtual_nodes|default(0) %}
 {% set spoke_name = spoke.name %}
