@@ -136,7 +136,7 @@ spec:
       name: {{ cluster }}-ztp-{{ spoke_name }}-bmc-secret-{{ num }}
     bootMACAddress: {{ mac }}
     bootMode: {{ 'UEFI' if spoke_uefi else 'legacy' }}
-    hostName: {{ cluster }}-{{ spoke_name }}-node-{{ num }}
+    hostName: {{ node.hostname|default("%s-node-%s" % (spoke_name, num)) }}
     ignitionConfigOverride: |
       {
         "ignition": {
