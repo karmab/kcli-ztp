@@ -67,7 +67,7 @@ spec:
   - cidr: {{ network.cidr }}
     hostPrefix: {{ network.hostPrefix }}
   {% endfor %}
-{% if ctlplanes_number == 1 %}
+{% if ctlplanes_number == 1 or hci %}
   cpuPartitioningMode: AllNodes
   installConfigOverrides: |
     {
