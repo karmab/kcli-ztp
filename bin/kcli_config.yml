@@ -2,6 +2,9 @@
 {% set user = 'root' if config_user == 'apache' else config_user %}
 kcli:
  type: {{ config_type }}
+{% if config_type == 'kubevirt ' %}
+ kubeconfig: /root/kubeconfig
+{% else %}
  host: {{ ip }}
 {% if config_type == 'vsphere'  %}
  user: {{ config_user }}
@@ -12,4 +15,5 @@ kcli:
 {% else %}
  user: {{ user }}
  pool: {{ pool }}
+{% endif %}
 {% endif %}
