@@ -94,7 +94,6 @@ Note that you can use the baseplan `kcli_plan_infra.yml` to deploy the infrastru
 |cas                                          |[]                           |
 |cluster_network_ipv4                         |10.132.0.0/14                |
 |cluster_network_ipv6                         |fd01::/48                    |
-|converged_flow                               |False                        |
 |cpu_partitioning                             |False                        |
 |deploy_hub                                   |True                         |
 |disable_validations                          |True                         |

@@ -3,6 +3,7 @@
 set -euo pipefail
 
 dnf -y copr enable karmab/kcli
+uname -r | grep -q el9 && sudo sed -i 's@epel@centos-stream@g' '/etc/yum.repos.d/_copr:copr.fedorainfracloud.org:karmab:kcli.repo'
 dnf -y install libvirt-libs libvirt-client mkisofs tmux make git bash-completion vim-enhanced nmstate python3 podman skopeo httpd bind-utils kcli  net-tools
 
 systemctl enable --now httpd

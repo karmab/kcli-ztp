@@ -27,12 +27,14 @@ on:
         default: /root/openshift_pull.json
       LAUNCH_STEPS:
         description: 'launch_steps'
-        required: false
-        default: True
+        required: true
+        default: true
+        type: boolean
       DEPLOY_HUB:
         description: 'deploy_hub'
-        required: false
-        default: True
+        required: true
+        default: true
+        type: boolean
 
 env:
  HOME: /root
