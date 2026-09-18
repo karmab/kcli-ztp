@@ -62,7 +62,6 @@ vmrules:
      interface: scsi
      wwn: 5000c50015ea71ad
    - size: 100
-     interface: scsi
    nets:
    - name: lab-baremetal
      mac: aa:aa:aa:aa:bb:04
