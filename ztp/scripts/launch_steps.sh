@@ -21,7 +21,7 @@ echo -e "${blue}************ RUNNING ztp/scripts/04_spokes_wait.sh ************$
 /root/ztp/scripts/04_spokes_wait.sh
 
 if [ -d /root/ztp/scripts/site-policies ] ; then
-  echo -e "${blue}************ RUNNING ztp/scripts/07_compliance.sh ************${clear}"
+  echo -e "${blue}************ RUNNING ztp/scripts/05_compliance.sh ************${clear}"
   /root/ztp/scripts/05_compliance.sh
 fi
 

@@ -2,7 +2,7 @@ timeout=0
 compliant=false
 while [ "$timeout" -lt "1800" ] ; do
   TOTAL_POLICIES=$(oc get policies -A -o name | wc -l)
-  COMPLIANT_POLICIES=$(oc get policies -A -o jsonpath='{.items[*].status.compliant}' | wc -w)
+  COMPLIANT_POLICIES=$(oc get policies -A -o jsonpath='{.items[*].status.compliant}' | tr ' ' '\n' | grep -cx "Compliant")
   [ $TOTAL_POLICIES != "0" ] && [ "$TOTAL_POLICIES" == "$COMPLIANT_POLICIES" ] && compliant=true && break;
   echo "Waiting for all policies to be marked as compliant"
   sleep 60
