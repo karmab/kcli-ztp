@@ -24,6 +24,7 @@ static_ips:
 - 2620:52:0:1302::26
 - 2620:52:0:1302::27
 - 2620:52:0:1302::28
+- 2620:52:0:1302::29
 
 spokes:
 - name: spoke1
@@ -71,3 +72,8 @@ vmrules:
    disks:
    - size: 300
      interface: scsi
+   nets:
+   - name: lab-baremetal
+     mac: aa:aa:aa:aa:bb:05
+   - name: sriov-network
+     sriov: true
