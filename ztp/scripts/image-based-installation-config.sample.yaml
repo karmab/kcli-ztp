@@ -48,9 +48,9 @@ imageDigestSources:
   - $REGISTRY/rh-osbs
   source: quay.io/prega/test/rh-osbs
 - mirrors:
-  - $REGISTRY/openshift-release-dev/ocp-v4.0-art-dev
+  - $REGISTRY/openshift-release-dev/ocp-v{{ tag|string|first }}-art-dev
   - $REGISTRY/openshift/release
-  source: quay.io/openshift-release-dev/ocp-v4.0-art-dev
+  source: quay.io/openshift-release-dev/ocp-v{{ tag|string|first }}-art-dev
 - mirrors:
   - $REGISTRY/openshift-release-dev
   source: quay.io/openshift-release-dev
